@@ -1,6 +1,6 @@
 use yew::{function_component, html, Properties};
 
-#[derive(Properties, PartialEq)]
+#[derive(Properties, PartialEq, Eq)]
 pub struct CloudinaryImageProps {
     #[prop_or_default]
     pub transformations: Vec<String>,

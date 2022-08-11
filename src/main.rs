@@ -9,7 +9,7 @@ use pages::{Contact, Home, NotFound, Web};
 
 mod api;
 
-#[derive(Clone, Routable, PartialEq)]
+#[derive(Clone, Routable, PartialEq, Eq)]
 enum Route {
     #[at("/")]
     Home,
