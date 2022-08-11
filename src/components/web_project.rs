@@ -3,14 +3,14 @@ use yew::{function_component, html, Html, Properties};
 
 use crate::components::{CloudinaryImage, HeadingTwo, Paragraph};
 
-#[derive(Serialize, Deserialize, PartialEq)]
+#[derive(Serialize, Deserialize, PartialEq, Eq)]
 pub struct WebProjectAnalytics {
     pub campaign: String,
     pub medium: String,
     pub source: String,
 }
 
-#[derive(Properties, PartialEq)]
+#[derive(Properties, PartialEq, Eq)]
 pub struct WebProjectProps {
     #[prop_or_default]
     pub analytics: Option<WebProjectAnalytics>,

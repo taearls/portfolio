@@ -4,7 +4,7 @@ pub enum InputToggleMsg {
     InputToggled,
 }
 
-#[derive(Properties, PartialEq, Clone)]
+#[derive(Properties, PartialEq, Eq, Clone)]
 pub struct InputToggleProps {
     #[prop_or_default]
     toggled: bool,

@@ -1,7 +1,7 @@
 use crate::components::InlineAnchor;
 use yew::{function_component, html, Properties};
 
-#[derive(Properties, PartialEq)]
+#[derive(Properties, PartialEq, Eq)]
 pub struct MailtoLinkProps {
     #[prop_or("tyler.a.earls@gmail.com".to_string())]
     contact_email: String,

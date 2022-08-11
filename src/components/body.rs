@@ -12,7 +12,7 @@ pub fn body(props: &BodyProps) -> Html {
     // https://github.com/yewstack/yew/pull/2346
     let BodyProps { children } = props;
     html! {
-        <div class="min-h-screen bg-soft-black w-full overflow-hidden">
+        <div class="min-h-screen dark:bg-soft-black bg-white w-full overflow-hidden">
             { for children.iter() }
         </div>
     }
