@@ -19,8 +19,8 @@ pub fn page(props: &PageProps) -> Html {
     } = props;
 
     html! {
-        <section class={classes!("px-4 mx-auto w-4/5 max-w-4xl leading-8".to_string(), class.clone())} style={style.clone()}>
+        <div class={classes!("px-4 mx-auto w-4/5 max-w-4xl leading-8".to_string(), class.clone())} style={style.clone()}>
             { for children.iter() }
-        </section>
+        </div>
     }
 }
