@@ -1,6 +1,9 @@
 use yew::{function_component, html};
 
-use crate::components::{HeadingAlignment, HeadingOne, InlineAnchor, Page, Paragraph};
+use crate::components::{
+    layout::{HeadingOne, Page, Paragraph},
+    HeadingAlignment, InlineAnchor,
+};
 
 #[function_component(Home)]
 pub fn home() -> Html {
@@ -15,22 +18,23 @@ pub fn home() -> Html {
                 {"My name is Tyler Earls."}
                 <br />
                 {"I am a software engineer and musician."}
-                <br />
-                {"Please hire me!"}
             </HeadingOne>
 
             <Paragraph>
-                {"I'm currently between full-time positions. I have experience working on frontend applications with React and Vue, and I have backend experience in Node and Java. I have been learning Rust (which this website is written in) independently for 2 years as well, which I would be thrilled to put into practice full-time."}
+                {"Professionally, I write software as a consultant for "}
+                <InlineAnchor href="https://www.inspire11.com" aria_label="Go to Inspire11's website">
+                    {"Inspire11"}
+                </InlineAnchor>
+                {". I look forward to collaborating with clients to build  modern user experiences with a11y in mind."}
+            </Paragraph>
+
+            <Paragraph>
+                {"As an engineer, my perspective is informed by my musical education. I find that both music and tech require one to be autodidactic, studying continuously in order to stay sharp."}
             </Paragraph>
             <Paragraph>
-                {"I have a passion for learning new things and I'm always looking to learn more. If you're hiring, or if you simply want to say hello, please feel free to email me at "}
-                <InlineAnchor href="mailto:tyler.a.earls@gmail.com" aria_label="Send Tyler Earls an email">{"tyler.a.earls@gmail.com"}</InlineAnchor>
+                {"For example, since the start of the Covid-19 pandemic, I have been studying Rust, and now I use it regularly both on side projects (including this website!) and on Exercism's "}
+                <InlineAnchor href="https://www.exercism.io" aria_label="Go to Exercism">{"dedicated Rust track"}</InlineAnchor>
                 {"."}
-            </Paragraph>
-            <Paragraph>
-                {"Since the start of the Covid-19 pandemic, I have been studying Rust, and now I use it regularly both on side projects (including this website!) and on Exercism's "}
-                <InlineAnchor href="https://www.exercism.io" aria_label="Go to Exercism">{"Rust track"}</InlineAnchor>
-                {". Ideally my next role will be at a company that's interested in adopting Rust."}
             </Paragraph>
             <Paragraph>
                 {"I'm also developing a Rust crate that leverages music theory to generate valid chords and scales from user input. If you'd like, check out the "}
@@ -39,6 +43,7 @@ pub fn home() -> Html {
                 </InlineAnchor>
                 {" for Audiate to keep up-to-date with my progress."}
             </Paragraph>
+
             <Paragraph>
                 {"Outside of tech, I write songs and lead a band called "}
                     <InlineAnchor href="https://www.cuckooandthebirds.com/" aria_label="Go the Cuckoo and the Birds website">
@@ -50,6 +55,7 @@ pub fn home() -> Html {
                     </InlineAnchor>
                 {"."}
             </Paragraph>
+
             <Paragraph>
                 {"I'm also a very avid Star Trek fan. During these difficult times, I find comfort in its optimistic view on the potential of humanity and its future."}
             </Paragraph>

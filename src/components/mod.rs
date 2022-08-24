@@ -1,4 +1,4 @@
-mod layout;
+pub mod layout;
 pub use layout::{headings::*, Footer, Header, Page, Paragraph};
 
 mod navigation;

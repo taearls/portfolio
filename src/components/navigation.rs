@@ -11,6 +11,7 @@ struct NavigationLink {
     href: String,
     #[prop_or_default]
     is_external: bool,
+    // TODO: remove this, read index in vec instead.
     is_last: bool,
 }
 
@@ -63,8 +64,8 @@ impl Component for Navigation {
                             links.into_iter().enumerate().map(|(index, link)| {
                                 html! {
                                     <NavigationLinkListItem
-                                        is_last={link.is_last}
                                         key={index}
+                                        is_last={link.is_last}
                                         aria_label={link.aria_label}
                                         is_external={link.is_external}
                                         href={link.href}
