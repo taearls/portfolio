@@ -12,6 +12,3 @@ pub use page::Page;
 
 mod paragraph;
 pub use paragraph::Paragraph;
-
-mod viewport_card;
-pub use viewport_card::ViewportCard;
