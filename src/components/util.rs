@@ -1,4 +1,4 @@
-use yew::{classes, function_component, html, Children, Properties};
+use yew::{classes, function_component, html, Children, Html, Properties};
 
 #[derive(Properties, PartialEq)]
 pub struct InlineAnchorProps {

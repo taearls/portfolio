@@ -1,4 +1,5 @@
 use yew::prelude::*;
+use yew::Html;
 use yew_router::prelude::*;
 
 mod components;
@@ -22,7 +23,7 @@ enum Route {
     NotFound,
 }
 
-fn switch(routes: &Route) -> Html {
+fn switch(routes: Route) -> Html {
     match routes {
         Route::Home => html! { <Home /> },
         Route::Web => html! { <Web /> },
@@ -37,7 +38,7 @@ fn app() -> Html {
         <BrowserRouter>
             <Body>
                 <Header />
-                <Switch<Route> render={Switch::render(switch)} />
+                <Switch<Route> render={switch} />
                 <Footer />
             </Body>
         </BrowserRouter>
@@ -46,5 +47,5 @@ fn app() -> Html {
 
 fn main() {
     wasm_logger::init(wasm_logger::Config::default());
-    yew::start_app::<App>();
+    yew::Renderer::<App>::new().render();
 }

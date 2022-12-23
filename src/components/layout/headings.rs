@@ -1,5 +1,5 @@
 use std::fmt::{Display, Formatter};
-use yew::{classes, function_component, html, Children, Classes, Properties};
+use yew::{classes, function_component, html, Children, Classes, Html, Properties};
 
 #[derive(PartialEq, Eq)]
 pub enum HeadingAlignment {

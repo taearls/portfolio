@@ -1,4 +1,4 @@
-use yew::{classes, function_component, html, Children, Classes, Properties};
+use yew::{classes, function_component, html, Children, Classes, Html, Properties};
 
 #[derive(Properties, PartialEq)]
 pub struct ErrorMessageProps {

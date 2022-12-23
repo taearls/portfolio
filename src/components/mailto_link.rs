@@ -1,5 +1,5 @@
 use crate::components::InlineAnchor;
-use yew::{function_component, html, Properties};
+use yew::{function_component, html, Html, Properties};
 
 #[derive(Properties, PartialEq, Eq)]
 pub struct MailtoLinkProps {
