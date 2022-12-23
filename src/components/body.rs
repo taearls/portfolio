@@ -1,4 +1,4 @@
-use yew::{function_component, html, Children, Properties};
+use yew::{function_component, html, Children, Html, Properties};
 
 #[derive(Properties, PartialEq, Clone)]
 pub struct BodyProps {

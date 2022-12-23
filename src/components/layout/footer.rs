@@ -1,5 +1,5 @@
 use chrono::{Datelike, Utc};
-use yew::{function_component, html};
+use yew::{function_component, html, Html};
 
 use crate::components::social_media_icons::SocialMediaIcons;
 

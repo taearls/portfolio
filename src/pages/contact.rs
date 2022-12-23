@@ -1,6 +1,6 @@
 use lazy_static::lazy_static;
 
-use yew::{function_component, html};
+use yew::{function_component, html, Html};
 
 #[cfg(any(feature = "email-service", feature = "contact-form-mailto-link"))]
 use crate::components::ContactForm;
