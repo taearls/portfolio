@@ -1,9 +1,6 @@
-// use log::error;
-// use serde::de::DeserializeOwned;
-use wasm_bindgen_futures::spawn_local;
-// use yew::UseStateHandle;
+use gloo_console::{error, log};
 use reqwest::Client;
-use weblog::{console_error, console_log};
+use wasm_bindgen_futures::spawn_local;
 
 use lazy_static::lazy_static;
 
@@ -14,9 +11,11 @@ lazy_static! {
 pub fn post(url: String, body: String) {
     spawn_local(async move {
         match post_inner(&url, body).await {
-            Ok(value) => console_log!("value is: ", value),
+            Ok(value) => {
+                log!("value is: ", value);
+            }
             Err(e) => {
-                console_error!("failed to fetch: ", e.to_string());
+                error!("failed to fetch: ", e.to_string());
             }
         }
     });

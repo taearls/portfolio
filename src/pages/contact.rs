@@ -2,9 +2,7 @@ use lazy_static::lazy_static;
 
 use yew::{function_component, html, Html};
 
-#[cfg(any(feature = "email-service", feature = "contact-form-mailto-link"))]
-use crate::components::ContactForm;
-use crate::components::{HeadingOne, MailtoLink, Page, Paragraph};
+use crate::components::{ContactForm, HeadingOne, MailtoLink, Page, Paragraph};
 
 lazy_static! {
     static ref PORTFOLIO_EMAIL: &'static str = "tyler.a.earls@gmail.com";
@@ -26,7 +24,7 @@ pub fn contact() -> Html {
                 {"."}
             </Paragraph>
             // uncomment to re-add contact form
-            // <ContactForm></ContactForm>
+            <ContactForm></ContactForm>
         </Page>
     }
 }

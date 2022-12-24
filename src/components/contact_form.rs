@@ -1,12 +1,13 @@
+use gloo_console::{error, log};
 use lazy_static::lazy_static;
 use regex::Regex;
 use serde::{Deserialize, Serialize};
 use std::fmt;
 use std::fmt::{Display, Formatter};
 use web_sys::{HtmlInputElement, HtmlTextAreaElement};
-use yew::{html, Component, Context, FocusEvent, Html, TargetCast};
+use yew::{html, Component, Context, FocusEvent, Html, SubmitEvent, TargetCast};
 
-use crate::components::{ErrorMessage, HeadingOne, Page, Paragraph, SuccessMessage};
+use crate::components::{ErrorMessage, SuccessMessage};
 
 pub struct ContactForm {
     form_data: ContactFormData,
@@ -99,21 +100,21 @@ impl Component for ContactForm {
     fn update(&mut self, _ctx: &Context<Self>, msg: Self::Message) -> bool {
         match msg {
             ContactMsg::FormSubmitted => {
-                // let ContactFormData {
-                //     name,
-                //     email,
-                //     message,
-                //     to,
-                // } = &self.form_data;
+                let ContactFormData {
+                    name,
+                    email,
+                    message,
+                    to,
+                } = &self.form_data;
                 // dev: "http://localhost:3000/send";
                 // prod: "https://tyler-shared-email-service.herokuapp.com/send"
-                // console_log!("name is: ", name);
-                // console_log!("email is: ", email);
-                // console_log!("message is: ", message);
-                // console_log!("to is: ", to);
-                // self.errors.iter().for_each(|error| {
-                //     console_log!("error: ", error.to_string());
-                // });
+                log!("name is: ", name);
+                log!("email is: ", email);
+                log!("message is: ", message);
+                log!("to is: ", to);
+                self.errors.iter().for_each(|error| {
+                    error!("error: {}", error.to_string());
+                });
 
                 send_email(&self.form_data);
 
@@ -175,7 +176,7 @@ impl Component for ContactForm {
 
     fn view(&self, ctx: &Context<Self>) -> Html {
         let link = ctx.link();
-        let onsubmit = link.callback(|e: FocusEvent| {
+        let onsubmit = link.callback(|e: SubmitEvent| {
             e.prevent_default();
             ContactMsg::FormSubmitted
         });
@@ -248,7 +249,7 @@ impl Component for ContactForm {
                         <input
                             id="contactName"
                             onblur={on_name_change}
-                            class="form-input w-full mb-2 text-soft-black placeholder-gray-600 focus:bg-white focus:outline-none focus:shadow-outline-light dark:focus:shadow-outline-dark"
+                            class="w-full px-2 text-soft-black placeholder-gray-600 focus:bg-white focus:outline-none focus:shadow-outline-light dark:focus:shadow-outline-dark"
                             type="text"
                             name="name"
                         />
@@ -257,10 +258,7 @@ impl Component for ContactForm {
                         </ErrorMessage>
                     </div>
 
-                    <div
-                        class="flex flex-col"
-                        // :class="{'mb-2': !$v.email.text.$error}"
-                    >
+                    <div class="flex flex-col">
                         <label
                             class="block text-purple-700 dark:text-purple-400 font-bold mb-1 md:mb-0 pr-4"
                             for="contactEmail"
@@ -270,15 +268,12 @@ impl Component for ContactForm {
                         </label>
                         <input
                             id="contactEmail"
-                            // v-model.trim="email.text"
-                            class="form-input w-full text-soft-black placeholder-gray-600 focus:bg-white focus:outline-none focus:shadow-outline-light dark:focus:shadow-outline-dark"
+                            class="w-full px-2 text-soft-black placeholder-gray-600 focus:bg-white focus:outline-none focus:shadow-outline-light dark:focus:shadow-outline-dark"
                             type="email"
                             name="email"
                             required={true}
                             onblur={on_email_change}
                             placeholder="beammeup@scotty.com"
-                            // @input="$v.email.text.$reset(); isUserTyping = true;"
-                            // @blur="$v.email.text.$touch(); isUserTyping = false;"
                         />
                         <ErrorMessage show={self.errors.contains(&ContactFormError::RequiredField(RequiredField::Email))}>
                             {"Please enter your email."}
@@ -288,10 +283,7 @@ impl Component for ContactForm {
                         </ErrorMessage>
                     </div>
 
-                    <div
-                        class="flex flex-col"
-                        // :class="{'mb-4': !$v.message.text.$error}"
-                    >
+                    <div class="flex flex-col">
                         <label
                             class="block text-purple-700 dark:text-purple-400 font-bold mb-1 md:mb-0 pr-4"
                             for="contactMessage"
@@ -300,7 +292,7 @@ impl Component for ContactForm {
                         </label>
                         <textarea
                             id="contactMessage"
-                            class="form-textarea w-full h-32 text-soft-black placeholder-gray-600 focus:bg-white focus:outline-none focus:shadow-outline-light dark:focus:shadow-outline-dark"
+                            class="form-textarea w-full h-32 px-2 text-soft-black placeholder-gray-600 focus:bg-white focus:outline-none focus:shadow-outline-light dark:focus:shadow-outline-dark"
                             name="message"
                             required={true}
                             onblur={on_message_change}
@@ -314,9 +306,6 @@ impl Component for ContactForm {
                         <SuccessMessage>
                             {"Thank you. I look forward to working with you!"}
                         </SuccessMessage>
-                        // <client-only>
-                        //     <loading-state v-if="requestState === 'loading'" />
-                        // </client-only>
                         <SuccessMessage>
                             {"Success! I'll be in touch shortly."}
                         </SuccessMessage>
@@ -329,15 +318,8 @@ impl Component for ContactForm {
                                 type="submit"
                                 value="Send Email"
                                 disabled={is_form_disabled(self)}
-                                // :disabled="saveDisabled"
-                                class="inline-block my-2 cursor-pointer text-white transition-colors transition-padding ease-in-out duration-200 bg-purple-700 dark:bg-purple-400 rounded-lg pl-2 pr-10 disabled:pr-2 disabled:cursor-not-allowed disabled:opacity-50 focus:outline-none focus:shadow-outline-light dark:focus:shadow-outline-dark"
+                                class="inline-block my-2 px-2 cursor-pointer text-white transition-colors transition-padding ease-in-out duration-200 bg-purple-700 dark:bg-purple-400 rounded-lg disabled:cursor-not-allowed disabled:opacity-50 focus:outline-none focus:shadow-outline-light dark:focus:shadow-outline-dark"
                             />
-                            // <transition name="draw">
-                            // <right-arrow-icon
-                            //     v-if="!saveDisabled"
-                            //     style="margin-left: -32px;"
-                            // />
-                            // </transition>
                         </div>
                     </div>
                 </fieldset>
@@ -399,19 +381,19 @@ fn email_service_base_url() -> String {
     // }
 }
 
-#[cfg(feature = "email-service")]
-fn is_dev() -> bool {
-    match std::env::var("DEVELOPMENT") {
-        Ok(value) => {
-            console_log!("value is: ", value.clone());
-            value.trim().to_lowercase() == "true"
-        }
-        Err(err) => {
-            console_error!("error reading env var DEVELOPMENT: ", err.to_string());
-            false
-        }
-    }
-}
+// #[cfg(feature = "email-service")]
+// fn is_dev() -> bool {
+//     match std::env::var("DEVELOPMENT") {
+//         Ok(value) => {
+//             // console_log!("value is: ", value.clone());
+//             value.trim().to_lowercase() == "true"
+//         }
+//         Err(err) => {
+//             // console_error!("error reading env var DEVELOPMENT: ", err.to_string());
+//             false
+//         }
+//     }
+// }
 
 #[cfg(any(feature = "email-service", feature = "contact-form-mailto-link"))]
 fn send_email(form_data: &ContactFormData) {

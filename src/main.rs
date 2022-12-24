@@ -46,6 +46,7 @@ fn app() -> Html {
 }
 
 fn main() {
-    wasm_logger::init(wasm_logger::Config::default());
+    // wasm_logger::init(wasm_logger::Config::default());
+    // console_log::init_with_level(Level::Debug);
     yew::Renderer::<App>::new().render();
 }
