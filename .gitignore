@@ -1,7 +1,6 @@
 /target
 /.idea/
 static/css/tailwind.css
-Cargo.lock
 /dist/
 node_modules
 .env

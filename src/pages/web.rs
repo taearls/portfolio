@@ -1,8 +1,7 @@
 use yew::{function_component, html, Html};
 
 use crate::components::{
-    web_project::{WebProject, WebProjectAnalytics, WebProjectProps},
-    HeadingOne, InlineAnchor, Page, Paragraph,
+    HeadingOne, InlineAnchor, Page, Paragraph, WebProject, WebProjectAnalytics, WebProjectProps,
 };
 
 #[function_component(Web)]
