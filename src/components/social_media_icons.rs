@@ -1,9 +1,9 @@
-use yew::{classes, html, Component, Context, Html};
+use yew::{classes, html, AttrValue, Component, Context, Html};
 
 pub struct SocialMediaIcon {
-    aria_label: String,
-    href: String,
-    class: String,
+    aria_label: AttrValue,
+    href: AttrValue,
+    class: AttrValue,
 }
 
 pub struct SocialMediaIcons;

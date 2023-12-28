@@ -1,13 +1,13 @@
-use yew::{classes, function_component, html, Children, Html, Properties};
+use yew::{classes, function_component, html, AttrValue, Children, Html, Properties};
 
 #[derive(Properties, PartialEq)]
 pub struct InlineAnchorProps {
     #[prop_or_default]
     pub children: Children,
-    pub aria_label: String,
-    pub href: String,
+    pub aria_label: AttrValue,
+    pub href: AttrValue,
     #[prop_or("p-0 m-0".to_string())]
-    pub classes: String,
+    pub classes: AttrValue,
     #[prop_or(true)]
     pub is_external: bool,
 }

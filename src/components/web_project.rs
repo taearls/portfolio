@@ -1,31 +1,31 @@
 use serde::{Deserialize, Serialize};
-use yew::{function_component, html, Html, Properties};
+use yew::{function_component, html, AttrValue, Html, Properties};
 
 use crate::components::{CloudinaryImage, HeadingTwo, Paragraph};
 
 #[derive(Serialize, Deserialize, PartialEq, Eq)]
 pub struct WebProjectAnalytics {
-    pub campaign: String,
-    pub medium: String,
-    pub source: String,
+    pub campaign: AttrValue,
+    pub medium: AttrValue,
+    pub source: AttrValue,
 }
 
 #[derive(Properties, PartialEq, Eq)]
 pub struct WebProjectProps {
     #[prop_or_default]
     pub analytics: Option<WebProjectAnalytics>,
-    pub cloudinary_id: String,
-    pub image_extension: String,
-    pub alt: String,
+    pub cloudinary_id: AttrValue,
+    pub image_extension: AttrValue,
+    pub alt: AttrValue,
     #[prop_or("pointer".to_string())]
-    pub cursor_style: String,
+    pub cursor_style: AttrValue,
     #[prop_or_default]
     pub descriptions: Vec<String>,
     #[prop_or_default]
     pub emoji: Option<String>,
-    pub href: String,
-    pub name: String,
-    pub tagline: String,
+    pub href: AttrValue,
+    pub name: AttrValue,
+    pub tagline: AttrValue,
     #[prop_or_default]
     pub is_last: bool,
 }

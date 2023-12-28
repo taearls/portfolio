@@ -1,4 +1,4 @@
-use yew::{classes, function_component, html, Component, Context, Html, Properties};
+use yew::{classes, function_component, html, AttrValue, Component, Context, Html, Properties};
 
 use crate::components::InlineAnchor;
 
@@ -6,9 +6,9 @@ pub struct Navigation;
 
 #[derive(Properties, PartialEq, Clone)]
 struct NavigationLink {
-    aria_label: String,
-    display_text: String,
-    href: String,
+    aria_label: AttrValue,
+    display_text: AttrValue,
+    href: AttrValue,
     #[prop_or_default]
     is_external: bool,
     // TODO: remove this, read index in vec instead.
