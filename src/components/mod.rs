@@ -10,6 +10,7 @@ mod body;
 pub use body::Body;
 
 mod input_toggle;
+#[allow(unused_imports)]
 pub use input_toggle::InputToggle;
 
 pub mod util;
@@ -22,9 +23,11 @@ mod cloudinary_image;
 pub use cloudinary_image::CloudinaryImage;
 
 mod error_message;
+#[allow(unused_imports)]
 pub use error_message::ErrorMessage;
 
 mod success_message;
+#[allow(unused_imports)]
 pub use success_message::SuccessMessage;
 
 mod mailto_link;
