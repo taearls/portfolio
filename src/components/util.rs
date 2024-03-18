@@ -6,7 +6,7 @@ pub struct InlineAnchorProps {
     pub children: Children,
     pub aria_label: AttrValue,
     pub href: AttrValue,
-    #[prop_or("p-0 m-0".to_string())]
+    #[prop_or("p-0 m-0".into())]
     pub classes: AttrValue,
     #[prop_or(true)]
     pub is_external: bool,

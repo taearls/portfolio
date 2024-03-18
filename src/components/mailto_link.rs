@@ -3,7 +3,7 @@ use yew::{function_component, html, AttrValue, Html, Properties};
 
 #[derive(Properties, PartialEq, Eq)]
 pub struct MailtoLinkProps {
-    #[prop_or("tyler.a.earls@gmail.com".to_string())]
+    #[prop_or("tyler.a.earls@gmail.com".into())]
     contact_email: AttrValue,
     #[prop_or_default]
     is_external: bool,

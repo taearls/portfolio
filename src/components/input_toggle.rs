@@ -8,9 +8,9 @@ pub enum InputToggleMsg {
 pub struct InputToggleProps {
     #[prop_or_default]
     toggled: bool,
-    #[prop_or("input-toggle".to_string())]
+    #[prop_or("input-toggle".into())]
     id: AttrValue,
-    #[prop_or("input-toggle".to_string())]
+    #[prop_or("input-toggle".into())]
     name: AttrValue,
 }
 

@@ -5,7 +5,7 @@ pub struct CloudinaryImageProps {
     #[prop_or_default]
     pub transformations: Vec<AttrValue>,
     pub alt: AttrValue,
-    #[prop_or("jpg".to_string())]
+    #[prop_or("jpg".into())]
     pub extension: AttrValue,
     pub public_id: AttrValue,
 }

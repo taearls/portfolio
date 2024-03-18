@@ -1,9 +1,8 @@
-use serde::{Deserialize, Serialize};
 use yew::{function_component, html, AttrValue, Html, Properties};
 
 use crate::components::{CloudinaryImage, HeadingTwo, Paragraph};
 
-#[derive(Serialize, Deserialize, PartialEq, Eq)]
+#[derive(PartialEq, Eq)]
 pub struct WebProjectAnalytics {
     pub campaign: AttrValue,
     pub medium: AttrValue,
@@ -17,7 +16,7 @@ pub struct WebProjectProps {
     pub cloudinary_id: AttrValue,
     pub image_extension: AttrValue,
     pub alt: AttrValue,
-    #[prop_or("pointer".to_string())]
+    #[prop_or("pointer".into())]
     pub cursor_style: AttrValue,
     #[prop_or_default]
     pub descriptions: Vec<String>,
@@ -64,7 +63,7 @@ pub fn web_project(props: &WebProjectProps) -> Html {
                                 alt={alt.clone()}
                                 public_id={cloudinary_id.clone()}
                                 extension={image_extension.clone()}
-                                transformations={vec!["q_auto".to_string(), "w_400".to_string()]}
+                                transformations={vec!["q_auto".into(), "w_400".into()]}
                             />
                         </a>
                     </div>
