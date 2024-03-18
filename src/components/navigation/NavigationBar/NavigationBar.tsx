@@ -1,26 +1,29 @@
-import NavigationLink, { NavigationLinkProps } from "../NavigationLink";
+import InlineAnchor, { InlineAnchorProps } from "@/components/InlineAnchor";
 
 export type NavigationBarProps = {
-  links: Array<NavigationLinkProps>;
+  links: Array<InlineAnchorProps>;
 };
 
 export default function NavigationBar({ links }: NavigationBarProps) {
   return (
-    <div className="mb-4 h-fit w-full">
-      <nav className="dark:bg-soft-black font-default fixed top-0 mb-4 flex h-48 w-full flex-col items-center justify-evenly border border-b border-l-0 border-r-0 border-t-0 bg-white font-mono text-black sm:h-16 sm:flex-row sm:justify-center dark:text-white">
-        <ul className="flex h-auto w-40 flex-col items-center justify-center sm:h-16 sm:w-full sm:flex-row">
+    <div className="h-fit w-full">
+      <nav className="dark:bg-soft-black font-default fixed top-0 flex h-48 w-full flex-col items-center justify-evenly border border-b border-l-0 border-r-0 border-t-0 bg-white font-mono text-black sm:h-16 sm:flex-row sm:justify-center dark:text-white">
+        <ul
+          role="menu"
+          className="flex h-auto w-40 flex-col items-center justify-center sm:h-16 sm:w-full sm:flex-row"
+        >
           {links.map((link, index) => (
-            <NavigationLink
-              key={index}
-              ariaLabel={link.ariaLabel}
-              isExternal={link.isExternal}
-              href={link.href}
-              text={link.text}
-            />
+            <li key={index} role="menuitem" className="mx-4">
+              <InlineAnchor
+                ariaLabel={link.ariaLabel}
+                isExternal={link.isExternal}
+                href={link.href}
+                text={link.text}
+              />
+            </li>
           ))}
         </ul>
       </nav>
-      <div className={"top-0 h-48 w-screen bg-none sm:h-16"}></div>
     </div>
   );
 }

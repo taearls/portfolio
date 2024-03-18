@@ -1,6 +1,5 @@
 import NavigationBar, { NavigationBarProps } from "./NavigationBar";
-import NavigationLink, { NavigationLinkProps } from "./NavigationLink";
 
-export { NavigationBar, NavigationLink };
+export { NavigationBar };
 
-export type { NavigationBarProps, NavigationLinkProps };
+export type { NavigationBarProps };

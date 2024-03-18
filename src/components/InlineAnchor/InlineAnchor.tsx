@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ExternalLinkIcon } from "../icons";
 
 export type InlineAnchorProps = {
@@ -15,17 +16,18 @@ export default function InlineAnchor({
 }: InlineAnchorProps) {
   return (
     <span className="group inline-block">
-      <a
-        className={
-          "focus:shadow-outline-light dark:focus:shadow-outline-dark inline-block rounded-sm text-lg font-extrabold text-purple-700 focus:outline-none group-hover:text-cyan-400 sm:items-center sm:justify-center dark:text-purple-400 dark:group-hover:text-cyan-300"
-        }
-        aria-label={ariaLabel}
-        target={isExternal ? "_blank" : "_self"}
+      <Link
         href={href}
+        aria-label={ariaLabel}
+        target={isExternal ? "_blank" : undefined}
       >
-        <span>{text}</span>
-        {isExternal && <ExternalLinkIcon />}
-      </a>
+        {text}
+        {isExternal && (
+          <span className="mx-1">
+            <ExternalLinkIcon />
+          </span>
+        )}
+      </Link>
     </span>
   );
 }
