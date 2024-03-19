@@ -22,7 +22,7 @@ export default function ExternalLinkIcon({
       className="inline-block fill-current stroke-current text-purple-700 group-hover:text-cyan-400 dark:text-purple-400 dark:group-hover:text-cyan-300"
       height="24px"
       width="24px"
-      stroke-width="5"
+      strokeWidth="5"
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
       x="0px"
