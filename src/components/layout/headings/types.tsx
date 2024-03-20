@@ -1,6 +1,6 @@
-export type TextAlignment = "left" | "center" | "right";
+import { TextAlignment } from "@/util";
 
 export type HeadingProps = {
   children: React.ReactNode | React.ReactNode[];
-  align: TextAlignment;
+  align?: TextAlignment;
 };

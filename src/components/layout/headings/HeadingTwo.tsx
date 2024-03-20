@@ -1,11 +1,11 @@
 import { HeadingProps } from "./types";
-import { getAlignmentClass } from "./util";
+import { getTextAlignmentClass } from "@/util";
 
 export default function HeadingTwo({
   children,
   align = "center",
 }: HeadingProps) {
-  const alignmentClass = getAlignmentClass(align);
+  const alignmentClass = getTextAlignmentClass(align);
 
   return (
     <h2

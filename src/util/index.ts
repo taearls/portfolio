@@ -1,2 +1,15 @@
-export const cloneDeep = <T extends object>(item: T) =>
-  JSON.parse(JSON.stringify(item));
+import {
+  cloneDeep,
+  getTextAlignmentClass,
+  getCloudinarySrc,
+  getLinkWithAnalytics,
+} from "./utils";
+import { TextAlignment } from "./types";
+
+export {
+  cloneDeep,
+  getTextAlignmentClass,
+  getCloudinarySrc,
+  getLinkWithAnalytics,
+};
+export type { TextAlignment };
