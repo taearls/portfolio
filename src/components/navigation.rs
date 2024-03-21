@@ -1,4 +1,4 @@
-use yew::{classes, function_component, html, Component, Context, Html, Properties};
+use yew::{classes, function_component, html, AttrValue, Component, Context, Html, Properties};
 
 use crate::components::InlineAnchor;
 
@@ -6,9 +6,9 @@ pub struct Navigation;
 
 #[derive(Properties, PartialEq, Clone)]
 struct NavigationLink {
-    aria_label: String,
-    display_text: String,
-    href: String,
+    aria_label: AttrValue,
+    display_text: AttrValue,
+    href: AttrValue,
     #[prop_or_default]
     is_external: bool,
     // TODO: remove this, read index in vec instead.
@@ -26,30 +26,30 @@ impl Component for Navigation {
     fn view(&self, _ctx: &Context<Self>) -> Html {
         let links = vec![
             NavigationLink {
-                aria_label: "Visit Home Page".to_string(),
-                display_text: "Home".to_string(),
-                href: "/".to_string(),
+                aria_label: "Visit Home Page".into(),
+                display_text: "Home".into(),
+                href: "/".into(),
                 is_external: false,
                 is_last: false,
             },
             NavigationLink {
-                aria_label: "Visit Web Projects Page".to_string(),
-                display_text: "Web".to_string(),
-                href: "/web-projects".to_string(),
+                aria_label: "Visit Web Projects Page".into(),
+                display_text: "Web".into(),
+                href: "/web-projects".into(),
                 is_external: false,
                 is_last: false,
             },
             NavigationLink {
-                aria_label: "Visit Contact Page".to_string(),
-                display_text: "Contact".to_string(),
-                href: "/contact".to_string(),
+                aria_label: "Visit Contact Page".into(),
+                display_text: "Contact".into(),
+                href: "/contact".into(),
                 is_external: false,
                 is_last: false,
             },
             NavigationLink {
-                aria_label: "Listen to Tyler's music on Bandcamp".to_string(),
-                display_text: "Music".to_string(),
-                href: "https://cuckooandthebirds.bandcamp.com".to_string(),
+                aria_label: "Listen to Tyler's music on Bandcamp".into(),
+                display_text: "Music".into(),
+                href: "https://cuckooandthebirds.bandcamp.com".into(),
                 is_external: true,
                 is_last: true,
             },

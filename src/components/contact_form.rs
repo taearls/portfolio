@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 use std::fmt;
 use std::fmt::{Display, Formatter};
 use web_sys::{HtmlInputElement, HtmlTextAreaElement};
-use yew::{html, Component, Context, FocusEvent, Html, TargetCast};
+use yew::{html, AttrValue, Component, Context, FocusEvent, Html, TargetCast};
 
 use crate::components::{ErrorMessage, HeadingOne, Page, Paragraph, SuccessMessage};
 
@@ -19,10 +19,10 @@ lazy_static! {
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct ContactFormData {
-    name: String,
-    email: String,
-    message: String,
-    to: String,
+    name: AttrValue,
+    email: AttrValue,
+    message: AttrValue,
+    to: AttrValue,
 }
 
 impl Default for ContactFormData {
@@ -259,7 +259,6 @@ impl Component for ContactForm {
 
                     <div
                         class="flex flex-col"
-                        // :class="{'mb-2': !$v.email.text.$error}"
                     >
                         <label
                             class="block text-purple-700 dark:text-purple-400 font-bold mb-1 md:mb-0 pr-4"
@@ -270,15 +269,12 @@ impl Component for ContactForm {
                         </label>
                         <input
                             id="contactEmail"
-                            // v-model.trim="email.text"
                             class="form-input w-full text-soft-black placeholder-gray-600 focus:bg-white focus:outline-none focus:shadow-outline-light dark:focus:shadow-outline-dark"
                             type="email"
                             name="email"
                             required={true}
                             onblur={on_email_change}
                             placeholder="beammeup@scotty.com"
-                            // @input="$v.email.text.$reset(); isUserTyping = true;"
-                            // @blur="$v.email.text.$touch(); isUserTyping = false;"
                         />
                         <ErrorMessage show={self.errors.contains(&ContactFormError::RequiredField(RequiredField::Email))}>
                             {"Please enter your email."}
@@ -290,7 +286,6 @@ impl Component for ContactForm {
 
                     <div
                         class="flex flex-col"
-                        // :class="{'mb-4': !$v.message.text.$error}"
                     >
                         <label
                             class="block text-purple-700 dark:text-purple-400 font-bold mb-1 md:mb-0 pr-4"
@@ -314,9 +309,6 @@ impl Component for ContactForm {
                         <SuccessMessage>
                             {"Thank you. I look forward to working with you!"}
                         </SuccessMessage>
-                        // <client-only>
-                        //     <loading-state v-if="requestState === 'loading'" />
-                        // </client-only>
                         <SuccessMessage>
                             {"Success! I'll be in touch shortly."}
                         </SuccessMessage>
@@ -332,12 +324,6 @@ impl Component for ContactForm {
                                 // :disabled="saveDisabled"
                                 class="inline-block my-2 cursor-pointer text-white transition-colors transition-padding ease-in-out duration-200 bg-purple-700 dark:bg-purple-400 rounded-lg pl-2 pr-10 disabled:pr-2 disabled:cursor-not-allowed disabled:opacity-50 focus:outline-none focus:shadow-outline-light dark:focus:shadow-outline-dark"
                             />
-                            // <transition name="draw">
-                            // <right-arrow-icon
-                            //     v-if="!saveDisabled"
-                            //     style="margin-left: -32px;"
-                            // />
-                            // </transition>
                         </div>
                     </div>
                 </fieldset>

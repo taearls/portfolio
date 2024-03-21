@@ -1,13 +1,13 @@
-use yew::{function_component, html, Html, Properties};
+use yew::{function_component, html, AttrValue, Html, Properties};
 
 #[derive(Properties, PartialEq, Eq)]
 pub struct CloudinaryImageProps {
     #[prop_or_default]
-    pub transformations: Vec<String>,
-    pub alt: String,
-    #[prop_or("jpg".to_string())]
-    pub extension: String,
-    pub public_id: String,
+    pub transformations: Vec<AttrValue>,
+    pub alt: AttrValue,
+    #[prop_or("jpg".into())]
+    pub extension: AttrValue,
+    pub public_id: AttrValue,
 }
 
 #[function_component(CloudinaryImage)]

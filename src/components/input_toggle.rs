@@ -1,4 +1,4 @@
-use yew::{html, Component, Context, Html, Properties};
+use yew::{html, AttrValue, Component, Context, Html, Properties};
 
 pub enum InputToggleMsg {
     InputToggled,
@@ -8,16 +8,16 @@ pub enum InputToggleMsg {
 pub struct InputToggleProps {
     #[prop_or_default]
     toggled: bool,
-    #[prop_or("input-toggle".to_string())]
-    id: String,
-    #[prop_or("input-toggle".to_string())]
-    name: String,
+    #[prop_or("input-toggle".into())]
+    id: AttrValue,
+    #[prop_or("input-toggle".into())]
+    name: AttrValue,
 }
 
 pub struct InputToggle {
     toggled: bool,
-    id: String,
-    name: String,
+    id: AttrValue,
+    name: AttrValue,
 }
 
 impl Component for InputToggle {

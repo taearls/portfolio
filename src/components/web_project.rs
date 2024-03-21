@@ -1,31 +1,30 @@
-use serde::{Deserialize, Serialize};
-use yew::{function_component, html, Html, Properties};
+use yew::{function_component, html, AttrValue, Html, Properties};
 
 use crate::components::{CloudinaryImage, HeadingTwo, Paragraph};
 
-#[derive(Serialize, Deserialize, PartialEq, Eq)]
+#[derive(PartialEq, Eq)]
 pub struct WebProjectAnalytics {
-    pub campaign: String,
-    pub medium: String,
-    pub source: String,
+    pub campaign: AttrValue,
+    pub medium: AttrValue,
+    pub source: AttrValue,
 }
 
 #[derive(Properties, PartialEq, Eq)]
 pub struct WebProjectProps {
     #[prop_or_default]
     pub analytics: Option<WebProjectAnalytics>,
-    pub cloudinary_id: String,
-    pub image_extension: String,
-    pub alt: String,
-    #[prop_or("pointer".to_string())]
-    pub cursor_style: String,
+    pub cloudinary_id: AttrValue,
+    pub image_extension: AttrValue,
+    pub alt: AttrValue,
+    #[prop_or("pointer".into())]
+    pub cursor_style: AttrValue,
     #[prop_or_default]
     pub descriptions: Vec<String>,
     #[prop_or_default]
     pub emoji: Option<String>,
-    pub href: String,
-    pub name: String,
-    pub tagline: String,
+    pub href: AttrValue,
+    pub name: AttrValue,
+    pub tagline: AttrValue,
     #[prop_or_default]
     pub is_last: bool,
 }
@@ -64,7 +63,7 @@ pub fn web_project(props: &WebProjectProps) -> Html {
                                 alt={alt.clone()}
                                 public_id={cloudinary_id.clone()}
                                 extension={image_extension.clone()}
-                                transformations={vec!["q_auto".to_string(), "w_400".to_string()]}
+                                transformations={vec!["q_auto".into(), "w_400".into()]}
                             />
                         </a>
                     </div>

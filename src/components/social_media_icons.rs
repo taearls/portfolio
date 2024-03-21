@@ -1,9 +1,9 @@
-use yew::{classes, html, Component, Context, Html};
+use yew::{classes, html, AttrValue, Component, Context, Html};
 
 pub struct SocialMediaIcon {
-    aria_label: String,
-    href: String,
-    class: String,
+    aria_label: AttrValue,
+    href: AttrValue,
+    class: AttrValue,
 }
 
 pub struct SocialMediaIcons;
@@ -19,24 +19,19 @@ impl Component for SocialMediaIcons {
     fn view(&self, _ctx: &Context<Self>) -> Html {
         let icons: Vec<SocialMediaIcon> = vec![
             SocialMediaIcon {
-                aria_label: "Go to Tyler's LinkedIn".to_string(),
-                href: "https://www.linkedin.com/in/tylerearls".to_string(),
-                class: "fa-brands fa-linkedin".to_string(),
+                aria_label: "Go to Tyler's LinkedIn".into(),
+                href: "https://www.linkedin.com/in/tylerearls".into(),
+                class: "fa-brands fa-linkedin".into(),
             },
             SocialMediaIcon {
-                aria_label: "Go to Tyler's Github".to_string(),
-                href: "https://www.github.com/taearls".to_string(),
-                class: "fa-brands fa-github".to_string(),
+                aria_label: "Go to Tyler's Github".into(),
+                href: "https://www.github.com/taearls".into(),
+                class: "fa-brands fa-github".into(),
             },
             SocialMediaIcon {
-                aria_label: "Go to Tyler's Twitter".to_string(),
-                href: "https://www.twitter.com/taearls".to_string(),
-                class: "fa-brands fa-twitter".to_string(),
-            },
-            SocialMediaIcon {
-                aria_label: "Go to Tyler's Bandcamp".to_string(),
-                href: "https://cuckooandthebirds.bandcamp.com".to_string(),
-                class: "fa-brands fa-bandcamp".to_string(),
+                aria_label: "Go to Tyler's Bandcamp".into(),
+                href: "https://cuckooandthebirds.bandcamp.com".into(),
+                class: "fa-brands fa-bandcamp".into(),
             },
         ];
         html! {
