@@ -29,11 +29,6 @@ impl Component for SocialMediaIcons {
                 class: "fa-brands fa-github".into(),
             },
             SocialMediaIcon {
-                aria_label: "Go to Tyler's Twitter".into(),
-                href: "https://www.twitter.com/taearls".into(),
-                class: "fa-brands fa-twitter".into(),
-            },
-            SocialMediaIcon {
                 aria_label: "Go to Tyler's Bandcamp".into(),
                 href: "https://cuckooandthebirds.bandcamp.com".into(),
                 class: "fa-brands fa-bandcamp".into(),
