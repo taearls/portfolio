@@ -1,6 +1,6 @@
 import HeadingOne from "./HeadingOne";
 import HeadingTwo from "./HeadingTwo";
-import { HeadingProps, TextAlignment } from "./types";
+import { HeadingProps } from "./types";
 
 export { HeadingOne, HeadingTwo };
-export type { HeadingProps, TextAlignment };
+export type { HeadingProps };

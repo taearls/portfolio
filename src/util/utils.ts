@@ -1,5 +1,5 @@
 import { WebProjectAnalytics } from "@/components/WebProject/WebProject";
-import { TextAlignment } from "@/components/layout/headings";
+import { TextAlignment } from ".";
 
 export const cloneDeep = <T extends object>(item: T) =>
   JSON.parse(JSON.stringify(item));
