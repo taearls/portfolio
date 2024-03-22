@@ -1,5 +1,6 @@
 import {
   cloneDeep,
+  getCurrentYear,
   getTextAlignmentClass,
   getCloudinarySrc,
   getLinkWithAnalytics,
@@ -8,6 +9,7 @@ import { TextAlignment } from "./types";
 
 export {
   cloneDeep,
+  getCurrentYear,
   getTextAlignmentClass,
   getCloudinarySrc,
   getLinkWithAnalytics,

@@ -14,6 +14,8 @@ export const getTextAlignmentClass = (alignment: TextAlignment): string => {
     }
     case "right":
       return "text-right";
+    default:
+      return "text-center";
   }
 };
 
@@ -41,4 +43,8 @@ export const getLinkWithAnalytics = (
   }
 
   return urlString;
+};
+
+export const getCurrentYear = () => {
+  return new Date().getFullYear();
 };
