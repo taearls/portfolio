@@ -1,0 +1,13 @@
+.page-container {
+  min-height: calc(100vh - (var(--expanded-nav-height) + var(--footer-height)));
+}
+
+/* 640px = "sm" breakpoint in Tailwind */
+/* https://tailwindcss.com/docs/screens */
+@media (min-width: 640px) {
+  .page-container {
+    min-height: calc(
+      100vh - (var(--collapsed-nav-height) + var(--footer-height))
+    );
+  }
+}

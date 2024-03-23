@@ -1,4 +1,5 @@
 "use client";
+// if I don't add the "use client" directive, this component won't work.
 import { BandcampIcon, GithubIcon, LinkedInIcon } from ".";
 
 export type SocialMediaIconLink = {

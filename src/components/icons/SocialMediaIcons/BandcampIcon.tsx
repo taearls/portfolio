@@ -24,7 +24,7 @@ export default function BandcampIcon({
       />
       <path
         d="M28.36 31.1025H12L19.6398 16.9999H36L28.36 31.1025Z"
-        className="fill-soft-black"
+        className="fill-white dark:fill-soft-black"
       />
     </svg>
   );
