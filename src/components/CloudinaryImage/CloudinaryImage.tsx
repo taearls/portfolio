@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { getCloudinarySrc } from "./util";
 
 export type CloudinaryImageProps = {
@@ -13,9 +14,8 @@ export default function CloudinaryImage({
   extension,
   publicId,
 }: CloudinaryImageProps) {
-  // TODO: see if there's a React-specific api to make this more streamlined
   return (
-    <img
+    <Image
       src={getCloudinarySrc(publicId, extension, transformations)}
       alt={alt}
     />

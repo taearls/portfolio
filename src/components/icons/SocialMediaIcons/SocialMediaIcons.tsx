@@ -8,7 +8,7 @@ export type SocialMediaIconLink = {
 };
 
 // svg icons sourced from https://www.svgrepo.com/
-let SOCIAL_MEDIA_ICONS: Array<SocialMediaIconLink> = [
+const SOCIAL_MEDIA_ICONS: Array<SocialMediaIconLink> = [
   {
     ariaLabel: "Go to Tyler's LinkedIn",
     href: "https://www.linkedin.com/in/tylerearls",
