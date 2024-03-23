@@ -1,4 +1,4 @@
-import { WebProjectAnalytics } from "../components/WebProject/WebProject";
+import { WebProjectAnalytics } from "@/components/WebProject/WebProject";
 import { TextAlignment } from ".";
 
 export const cloneDeep = <T extends object>(item: T) =>
