@@ -18,7 +18,8 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "styles/*": ["./styles/*"]
     }
   },
   "include": [
@@ -26,8 +27,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "postcss.config.js",
-    "**/*.module.css"
+    "postcss.config.js"
   ],
   "exclude": ["node_modules"]
 }
