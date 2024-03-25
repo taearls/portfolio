@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --expanded-nav-height: 191px;
+  --collapsed-nav-height: 64px;
+  --footer-height: 80px;
+  --body-padding-y: 16px;
+}
+
+@media (prefers-color-scheme: dark) {
+}
