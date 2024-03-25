@@ -54,6 +54,8 @@ export default function WebProject({
                 publicId={cloudinaryId}
                 extension={imageExtension}
                 transformations={["q_auto", "w_400"]}
+                width={400}
+                height={400}
               />
             </a>
           </div>

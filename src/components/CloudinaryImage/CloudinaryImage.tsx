@@ -6,6 +6,8 @@ export type CloudinaryImageProps = {
   alt: string;
   extension: string;
   publicId: string;
+  width: number;
+  height: number;
 };
 
 export default function CloudinaryImage({
@@ -13,11 +15,15 @@ export default function CloudinaryImage({
   alt,
   extension,
   publicId,
+  width,
+  height,
 }: CloudinaryImageProps) {
   return (
     <Image
       src={getCloudinarySrc(publicId, extension, transformations)}
       alt={alt}
+      width={width}
+      height={height}
     />
   );
 }
