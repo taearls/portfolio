@@ -12,7 +12,7 @@ export const WEB_PROJECTS: Array<Omit<WebProjectProps, "isLast">> = [
     cursorStyle: "pointer",
     descriptions: [
       "A website I made for my band, Cuckoo and the Birds, where you can find all our info, social media links, and press.",
-      "If you're interested to listen, please consider supporting our music by streaming us on Spotify or your preferred platform.",
+      "If you're interested to listen, please consider supporting our music by streaming us on Spotify or any other streaming platform.",
       "Built mobile-first with Nuxt, Tailwind, and a (mostly) healthy dose of rock 'n' roll 🤘",
     ],
     emoji: "🎵",
