@@ -14,8 +14,15 @@ export default function WebProjects() {
         }
       </Paragraph>
       <Paragraph>
+        {"In addition to this website, which has been rebuilt with "}
+        <InlineAnchor
+          href="https://nextjs.org"
+          ariaLabel="Go to Next's official documentation website"
+          text="Next.js"
+          isExternal
+        />
         {
-          "In addition to this website, which has been rebuilt with Rust and Yew, my open sourced work includes the personal and freelance projects listed below. If you're interested to see more, feel free to stalk me on my "
+          "(a React framework), my open sourced work includes the personal and freelance projects listed below. If you're interested to see more, feel free to stalk me on my "
         }
         <InlineAnchor
           href="https://github.com/taearls"

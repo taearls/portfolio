@@ -22,7 +22,7 @@ export default function Home() {
           isExternal
         />
         {
-          ". I look forward to collaborating with clients to build  modern user experiences with a11y in mind."
+          ". I look forward to collaborating with clients to build modern user experiences with scalability, maintainability, and a11y in mind."
         }
       </Paragraph>
 
@@ -33,7 +33,7 @@ export default function Home() {
       </Paragraph>
       <Paragraph>
         {
-          "For example, since the start of the Covid-19 pandemic, I have been studying Rust, and now I use it regularly both on side projects (including this website!) and on Exercism's "
+          "For example, since the start of the Covid-19 pandemic, I have been studying Rust, and now I use it regularly both on side projects and on Exercism's "
         }
         <InlineAnchor
           href="https://www.exercism.io"
