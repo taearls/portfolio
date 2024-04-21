@@ -19,7 +19,6 @@ export default function NavigationBar({ links }: NavigationBarProps) {
               isLast={index === links.length - 1}
             >
               <InlineAnchor
-                noColor
                 bold={false}
                 ariaLabel={link.ariaLabel}
                 isExternal={link.isExternal}

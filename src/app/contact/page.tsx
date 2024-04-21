@@ -1,6 +1,7 @@
 import InlineAnchor from "@/components/InlineAnchor";
 import { Paragraph } from "@/components/layout/Paragraph";
 import { HeadingOne } from "@/components/layout/headings";
+import { PORTFOLIO_EMAIL } from "@/util/constants";
 
 export default function Contact() {
   return (
@@ -14,13 +15,13 @@ export default function Contact() {
       <Paragraph>
         {"The best way to reach me is via email at "}
         <InlineAnchor
-          href="mailto:tyler.a.earls@gmail.com"
+          href={`mailto:${PORTFOLIO_EMAIL}`}
           ariaLabel="Send an email to Tyler Earls"
-          text="tyler.a.earls@gmail.com"
+          text={PORTFOLIO_EMAIL}
         />
         {"."}
       </Paragraph>
-      {/* uncomment to re-add contact form <ContactForm></ContactForm> */}
+      {/* <ContactForm /> */}
     </main>
   );
 }

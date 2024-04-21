@@ -57,3 +57,10 @@ export const WEB_PROJECTS: Array<Omit<WebProjectProps, "isLast">> = [
     imageExtension: "png",
   },
 ];
+
+export const PORTFOLIO_EMAIL = "tyler.a.earls@gmail.com";
+
+export const EMAIL_REGEX = new RegExp(
+  "^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$",
+  "gi",
+);
