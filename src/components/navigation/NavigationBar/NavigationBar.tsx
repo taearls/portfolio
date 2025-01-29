@@ -1,34 +1,97 @@
-import InlineAnchor, { InlineAnchorProps } from "@/components/InlineAnchor";
+import { useMachine } from "@xstate/react";
+import { NavLink } from "react-router";
+
+import DarkModeToggle from "@/components/DarkModeToggle/DarkModeToggle";
+import { InlineAnchorContent } from "@/components/InlineAnchor/InlineAnchor";
+import FlexContainer from "@/components/layout/containers/FlexContainer/FlexContainer";
+import RenderIf from "@/components/layout/RenderIf";
+import {
+  NAVIGATION_EVENT,
+  NAVIGATION_STATE,
+  navigationMachine,
+} from "@/state/navigationMachine";
+import { FlexFlowCSSValue, MediaQueryPrefixValue } from "@/types/layout";
+import { RouteDataItem } from "@/util/constants/data/navigation/navigationData";
+import { mergeClasses } from "@/util/styling/styling.utils";
+import NavigationToggle from "../NavigationToggle/NavigationToggle";
+import styles from "./NavigationBar.module.css";
 import NavigationBarListItem from "./NavigationBarListItem";
 
 export type NavigationBarProps = {
-  links: Array<InlineAnchorProps>;
+  links: Array<RouteDataItem>;
 };
 
 export default function NavigationBar({ links }: NavigationBarProps) {
+  const [current, send] = useMachine(navigationMachine);
+
+  const handleToggle = () => {
+    send({ type: NAVIGATION_EVENT.TOGGLE });
+  };
+
   return (
-    <div className="h-fit w-full">
-      <nav className="font-default fixed top-0 flex h-48 w-full flex-col items-center justify-evenly border border-b border-l-0 border-r-0 border-t-0 bg-white font-mono text-black sm:h-16 sm:flex-row sm:justify-center dark:bg-soft-black dark:text-white">
-        <ul
-          role="menu"
-          className="flex h-auto w-40 flex-col items-center justify-center sm:h-16 sm:w-full sm:flex-row"
-        >
-          {links.map((link, index) => (
-            <NavigationBarListItem
-              key={index}
-              isLast={index === links.length - 1}
-            >
-              <InlineAnchor
-                bold={false}
-                ariaLabel={link.ariaLabel}
-                isExternal={link.isExternal}
-                href={link.href}
-                text={link.text}
-              />
-            </NavigationBarListItem>
-          ))}
-        </ul>
-      </nav>
-    </div>
+    <nav
+      id="navigation-bar"
+      className={mergeClasses(
+        styles["navigation-bar"],
+        current.value === NAVIGATION_STATE.CLOSED && styles["closed"],
+      )}
+    >
+      <ul
+        role="menu"
+        className={mergeClasses(styles["navigation-list-container"])}
+      >
+        <RenderIf condition={current.value === NAVIGATION_STATE.OPEN}>
+          <FlexContainer
+            flexFlow={FlexFlowCSSValue.COLUMN}
+            responsive={{
+              flexFlow: {
+                prefix: MediaQueryPrefixValue.SM,
+                value: FlexFlowCSSValue.ROW,
+              },
+              gapX: { prefix: MediaQueryPrefixValue.SM, value: 4 },
+            }}
+          >
+            {links
+              .filter((link) => !link.hidden)
+              .map((link, index) => {
+                return (
+                  <NavigationBarListItem
+                    key={index}
+                    isLast={
+                      index === links.filter((link) => !link.hidden).length - 1
+                    }
+                  >
+                    <NavLink
+                      to={link.href}
+                      aria-label={link.ariaLabel}
+                      className={({ isActive }) =>
+                        mergeClasses(isActive && "active")
+                      }
+                    >
+                      <InlineAnchorContent
+                        isExternal={Boolean(link.isExternal)}
+                        bold
+                        underline={false}
+                      >
+                        {link.name}
+                      </InlineAnchorContent>
+                    </NavLink>
+                  </NavigationBarListItem>
+                );
+              })}
+          </FlexContainer>
+        </RenderIf>
+      </ul>
+
+      <div className={mergeClasses(styles["navigation-toggle-container"])}>
+        <RenderIf condition={current.value === NAVIGATION_STATE.OPEN}>
+          <DarkModeToggle />
+        </RenderIf>
+        <NavigationToggle
+          active={current.value === NAVIGATION_STATE.OPEN}
+          onClick={handleToggle}
+        />
+      </div>
+    </nav>
   );
 }

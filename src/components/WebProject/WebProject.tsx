@@ -1,7 +1,7 @@
-import { CloudinaryImage } from "../CloudinaryImage";
-import { Paragraph } from "../layout/Paragraph";
-import { HeadingTwo } from "../layout/headings";
 import { getLinkWithAnalytics } from "@/util";
+import CloudinaryImage from "../CloudinaryImage/CloudinaryImage";
+import HeadingTwo from "../layout/headings/HeadingTwo";
+import Paragraph from "../layout/Paragraph/Paragraph";
 
 export type WebProjectProps = {
   analytics?: WebProjectAnalytics;
@@ -43,7 +43,7 @@ export default function WebProject({
         <div className="sm:clearfix mx-auto mb-2 w-11/12 text-center sm:float-left sm:mb-0 sm:mr-4 sm:w-1/2">
           <div className="flex justify-center">
             <a
-              className="focus:shadow-outline-light dark:focus:shadow-outline-dark block rounded-sm focus:outline-none"
+              className="block rounded-sm focus:shadow-outline-light focus:outline-none dark:focus:shadow-outline-dark"
               target="_blank"
               href={getLinkWithAnalytics(href, analytics)}
               rel={analytics != null ? "noopener" : "noreferrer"}
@@ -52,15 +52,13 @@ export default function WebProject({
               <CloudinaryImage
                 alt={alt}
                 publicId={cloudinaryId}
-                extension={imageExtension}
-                transformations={["q_auto", "w_400"]}
                 width={400}
                 height={400}
               />
             </a>
           </div>
           <a
-            className="focus:shadow-outline-light dark:focus:shadow-outline-dark mt-1 block cursor-pointer rounded-sm font-semibold text-purple-700 focus:outline-none dark:text-purple-400"
+            className="mt-1 block cursor-pointer rounded-sm font-semibold text-purple-700 focus:shadow-outline-light focus:outline-none dark:text-purple-400 dark:focus:shadow-outline-dark"
             target="_blank"
             rel="noreferrer"
             href={href}

@@ -450,17 +450,14 @@ export default function ContactForm() {
     >
       <fieldset className="px-4 py-2">
         <div>
-          <label
-            className="mb-1 block pr-4 font-bold text-purple-700 md:mb-0 dark:text-purple-400"
-            htmlFor="contactName"
-          >
+          <label className="mb-1 block pr-4 font-bold" htmlFor="contactName">
             {"Name"}
             <span>{" *"}</span>
           </label>
           <input
             id="contactName"
             // onBlur={on_name_change}
-            className="form-input focus:shadow-outline-light dark:focus:shadow-outline-dark mb-2 w-full text-soft-black placeholder-gray-600 focus:bg-white focus:outline-none"
+            className="form-input mb-2 w-full text-soft-black placeholder-gray-600 focus:bg-white focus:shadow-outline-light focus:outline-none dark:focus:shadow-outline-dark"
             type="text"
             name="name"
           />
@@ -479,7 +476,7 @@ export default function ContactForm() {
           </label>
           <input
             id="contactEmail"
-            className="form-input focus:shadow-outline-light dark:focus:shadow-outline-dark w-full text-soft-black placeholder-gray-600 focus:bg-white focus:outline-none"
+            className="form-input w-full text-soft-black placeholder-gray-600 focus:bg-white focus:shadow-outline-light focus:outline-none dark:focus:shadow-outline-dark"
             type="email"
             name="email"
             required
@@ -496,7 +493,7 @@ export default function ContactForm() {
 
         <div className="flex flex-col">
           <label
-            className="mb-1 block pr-4 font-bold text-purple-700 md:mb-0 dark:text-purple-400"
+            className="mb-1 block pr-4 font-bold md:mb-0"
             htmlFor="contactMessage"
           >
             {"Message "}
@@ -504,7 +501,7 @@ export default function ContactForm() {
           </label>
           <textarea
             id="contactMessage"
-            className="form-textarea focus:shadow-outline-light dark:focus:shadow-outline-dark h-32 w-full text-soft-black placeholder-gray-600 focus:bg-white focus:outline-none"
+            className="form-textarea h-32 w-full text-soft-black placeholder-gray-600 focus:bg-white focus:shadow-outline-light focus:outline-none dark:focus:shadow-outline-dark"
             name="message"
             required
             // onBlur={on_message_change}
@@ -530,7 +527,7 @@ export default function ContactForm() {
               type="submit"
               value="Send Email"
               disabled={isFormDisabled()}
-              className="transition-padding focus:shadow-outline-light dark:focus:shadow-outline-dark my-2 inline-block cursor-pointer rounded-lg bg-purple-700 pl-2 pr-10 text-white transition-colors duration-200 ease-in-out focus:outline-none disabled:cursor-not-allowed disabled:pr-2 disabled:opacity-50 dark:bg-purple-400"
+              className="transition-padding my-2 inline-block cursor-pointer rounded-lg bg-purple-700 pl-2 pr-10 text-white transition-colors duration-200 ease-in-out focus:shadow-outline-light focus:outline-none disabled:cursor-not-allowed disabled:pr-2 disabled:opacity-50 dark:bg-purple-400 dark:focus:shadow-outline-dark"
             />
           </div>
         </div>

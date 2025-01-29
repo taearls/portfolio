@@ -1,6 +1,8 @@
+import { ReactNode } from "react";
+
 export type NavigationBarListItemProps = {
   isLast: boolean;
-  children: React.ReactNode | React.ReactNode[];
+  children: ReactNode | Array<ReactNode>;
 };
 
 export default function NavigationBarListItem({
@@ -14,7 +16,7 @@ export default function NavigationBarListItem({
   return (
     <li
       role="menuitem"
-      className={`${borderClass} mx-auto flex w-full justify-center py-2 sm:mx-2 sm:inline-block sm:h-fit sm:w-auto sm:py-0`}
+      className={`${borderClass} flex w-full justify-center py-2 sm:inline-block sm:h-fit sm:w-auto sm:py-0`}
     >
       {children}
     </li>

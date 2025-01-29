@@ -1,0 +1,33 @@
+#custom-toggler {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  flex-flow: column;
+  gap: 0.5rem 0;
+  justify-content: center;
+}
+
+#custom-toggler > div {
+  width: 36px;
+  height: 2px;
+  transition:
+    transform 500ms ease,
+    opacity 500ms;
+  will-change: transform, opacity;
+  background-color: var(--accent-color);
+}
+
+#custom-toggler:hover > div {
+  background-color: var(--active-color);
+}
+
+.active #toggler-top {
+  transform: translateY(10px) rotate(-135deg);
+}
+.active #toggler-middle {
+  opacity: 0;
+  transform: rotate(135deg);
+}
+.active #toggler-bottom {
+  transform: translateY(-10px) rotate(-45deg);
+}

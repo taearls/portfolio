@@ -1,46 +1,74 @@
-import Link from "next/link";
-import { ExternalLinkIcon } from "../icons";
+import { JSX } from "react";
+
+import { mergeClasses } from "@/util/styling/styling.utils";
+import ExternalLinkIcon from "../icons/ExternalLinkIcon";
 
 export type InlineAnchorProps = {
   ariaLabel: string;
   href: string;
-  text: string;
+  children: JSX.Element | string;
+  accent?: boolean;
   isExternal?: boolean;
   bold?: boolean;
   noColor?: boolean;
+  underline?: boolean;
 };
 
 export default function InlineAnchor({
   ariaLabel,
   href,
-  text,
+  children,
   isExternal = false,
   bold = true,
-  noColor = false,
+  accent = false,
+  underline = true,
 }: InlineAnchorProps) {
-  const boldClass = bold ? "font-extrabold" : "font-normal";
-  const colorClass = noColor
-    ? "text-soft-black dark:text-white"
-    : "text-purple-700 dark:text-purple-400";
   return (
-    <span className="group inline-block">
-      <Link
-        className={`${boldClass} focus:shadow-outline-light dark:focus:shadow-outline-dark group inline-flex items-center rounded-sm  text-lg focus:outline-none sm:items-center sm:justify-center`}
+    <span className="inline-block">
+      <a
         href={href}
         aria-label={ariaLabel}
         target={isExternal ? "_blank" : undefined}
+        rel="noreferrer"
       >
-        <span
-          className={`${colorClass} inline-flex group-hover:text-cyan-400  dark:group-hover:text-cyan-300`}
+        <InlineAnchorContent
+          isExternal={isExternal}
+          accent={accent}
+          bold={bold}
+          underline={underline}
         >
-          {text}
+          {children}
+        </InlineAnchorContent>
+      </a>
+    </span>
+  );
+}
+
+export function InlineAnchorContent({
+  children,
+  isExternal = false,
+  bold = true,
+  accent = false,
+  underline = true,
+}: Omit<InlineAnchorProps, "href" | "ariaLabel">) {
+  const boldClass = bold ? "font-extrabold" : "font-normal";
+
+  return (
+    <span
+      className={mergeClasses(
+        boldClass,
+        accent && "accent",
+        "group inline-flex items-center gap-x-1 rounded-sm text-lg focus:shadow-outline-light focus:outline-none sm:items-center sm:justify-center dark:focus:shadow-outline-dark",
+      )}
+    >
+      <span className={mergeClasses(underline && "underline", "inline-flex")}>
+        {children}
+      </span>
+      {isExternal && (
+        <span className="inline-flex">
+          <ExternalLinkIcon />
         </span>
-        {isExternal && (
-          <span className="ml-1 inline-flex">
-            <ExternalLinkIcon noColor={noColor} />
-          </span>
-        )}
-      </Link>
+      )}
     </span>
   );
 }

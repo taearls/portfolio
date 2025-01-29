@@ -48,3 +48,16 @@ export const getLinkWithAnalytics = (
 export const getCurrentYear = () => {
   return new Date().getFullYear();
 };
+
+/**
+ * Helper function to safely convert a type T into an Array<T>
+ * @param item - the item to convert into an array
+ * @returns - an array of type Array<T>
+ */
+export const intoArray = <T>(item: T | Array<T> | undefined): Array<T> => {
+  if (!item) {
+    return [] as Array<T>;
+  }
+
+  return Array.isArray(item) ? item : [item];
+};
