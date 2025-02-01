@@ -29,13 +29,7 @@ export default function NavigationBar({ links }: NavigationBarProps) {
   };
 
   return (
-    <nav
-      id="navigation-bar"
-      className={mergeClasses(
-        styles["navigation-bar"],
-        current.value === NAVIGATION_STATE.CLOSED && styles["closed"],
-      )}
-    >
+    <nav id="navigation-bar" className={mergeClasses(styles["navigation-bar"])}>
       <ul
         role="menu"
         className={mergeClasses(styles["navigation-list-container"])}

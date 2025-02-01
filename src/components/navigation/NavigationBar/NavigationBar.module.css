@@ -1,17 +1,13 @@
 .navigation-bar {
   display: grid;
-  position: fixed;
   top: 0;
+  position: absolute;
   min-height: 4rem;
   width: 100%;
   border-bottom: 1px;
   border-style: solid;
   grid-template-columns: 1fr min-content;
   grid-template-areas: "list toggle";
-}
-
-.navigation-bar.closed {
-  border: 0;
 }
 
 .navigation-list-container {
