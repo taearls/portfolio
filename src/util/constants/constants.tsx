@@ -25,7 +25,7 @@ export const SHUFFLED_IMAGE_GROUPS = Object.assign(
 
 export const CLOUDINARY_INSTANCE = new Cloudinary({
   cloud: {
-    cloudName: "cuckooandthebirds",
+    cloudName: "taearls",
     // TODO: set up API key
   },
 });
