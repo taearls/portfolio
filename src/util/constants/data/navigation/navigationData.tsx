@@ -1,5 +1,6 @@
 import { JSX } from "react";
 
+import ContactPage from "@/pages/ContactPage";
 import HomePage from "@/pages/HomePage";
 import NotFoundPage from "@/pages/NotFoundPage";
 import WebProjects from "@/pages/WebProjectsPage";
@@ -43,6 +44,12 @@ const routes: Array<RouteDataItem> = [
     // component: <MusicPageOutlet />,
     href: "/web-projects",
     name: "Code",
+  },
+  {
+    ariaLabel: "Visit Contact Page",
+    component: <ContactPage />,
+    href: "/contact",
+    name: "Contact",
   },
   // {
   //   href: "/shows",

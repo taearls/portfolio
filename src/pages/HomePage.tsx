@@ -3,7 +3,6 @@ import FlexContainer from "@/components/layout/containers/FlexContainer/FlexCont
 import HeadingOne from "@/components/layout/headings/HeadingOne";
 import Paragraph from "@/components/layout/Paragraph/Paragraph";
 import { AlignItemsCSSValue, FlexFlowCSSValue } from "@/types/layout";
-import { WEBSITE_EMAIL } from "@/util/constants/constants";
 
 export default function Home() {
   return (
