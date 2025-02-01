@@ -20,8 +20,9 @@ export default function Contact() {
           <InlineAnchor
             href={`mailto:${PORTFOLIO_EMAIL}`}
             ariaLabel="Send an email to Tyler Earls"
-            text={PORTFOLIO_EMAIL}
-          />
+          >
+            {PORTFOLIO_EMAIL}
+          </InlineAnchor>
           {"."}
         </Paragraph>
       </FlexContainer>
