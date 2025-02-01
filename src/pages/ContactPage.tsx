@@ -17,7 +17,7 @@ export default function Contact() {
         alignItems={AlignItemsCSSValue.BASELINE}
         gapY={4}
       >
-        <FlexContainer justifyContent={JustifyContentCSSValue.CENTER}>
+        <FlexContainer justifyContent={JustifyContentCSSValue.CENTER} fullWidth>
           <HeadingOne>{"Contact Tyler Earls"}</HeadingOne>
         </FlexContainer>
         <FlexContainer>
