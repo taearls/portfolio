@@ -68,7 +68,7 @@ export default function FlexContainer({
     <div
       id={id}
       className={mergeClasses(
-        "flex",
+        "flex w-full",
         flexFlowClass,
         justifyContentClass != null && justifyContentClass.toString(),
         alignItemsClass != null && alignItemsClass.toString(),
