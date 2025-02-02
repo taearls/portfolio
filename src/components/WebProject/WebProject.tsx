@@ -6,6 +6,7 @@ import { getLinkWithAnalytics } from "@/util/utils.ts";
 export type WebProjectProps = {
   analytics?: WebProjectAnalytics;
   cloudinaryId: string;
+  // TODO: remove this prop
   imageExtension: string;
   alt: string;
   cursorStyle?: string;
@@ -26,7 +27,6 @@ export type WebProjectAnalytics = {
 export default function WebProject({
   analytics,
   cloudinaryId,
-  imageExtension,
   alt,
   cursorStyle = "pointer",
   descriptions,
