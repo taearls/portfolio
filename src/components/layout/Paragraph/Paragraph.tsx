@@ -1,8 +1,8 @@
-import { TextAlignment, TextAlignmentType } from "@/types/layout";
+import { TextAlignment, TextAlignmentType } from "@/types/layout.ts";
 import {
   getTextAlignmentClass,
   mergeClasses,
-} from "@/util/styling/styling.utils";
+} from "@/util/styling/styling.utils.ts";
 
 export type ParagraphProps = {
   children: React.ReactNode | Array<React.ReactNode>;

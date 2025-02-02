@@ -1,10 +1,10 @@
-import { WebProjectAnalytics } from "@/components/WebProject/WebProject";
-import { TextAlignment } from ".";
+import { WebProjectAnalytics } from "@/components/WebProject/WebProject.tsx";
+import { TextAlignmentType } from "@/types/layout.ts";
 
 export const cloneDeep = <T extends object>(item: T) =>
   JSON.parse(JSON.stringify(item));
 
-export const getTextAlignmentClass = (alignment: TextAlignment): string => {
+export const getTextAlignmentClass = (alignment: TextAlignmentType): string => {
   switch (alignment) {
     case "left": {
       return "text-left";
@@ -60,4 +60,14 @@ export const intoArray = <T>(item: T | Array<T> | undefined): Array<T> => {
   }
 
   return Array.isArray(item) ? item : [item];
+};
+
+export const getRandomNumberInRange = ({
+  max,
+  min = 1,
+}: {
+  max: number;
+  min?: number;
+}): number => {
+  return Math.floor(Math.random() * (max - min + 1) + min);
 };

@@ -1,10 +1,12 @@
-import { JustifyContentCSSValue } from "@/types/layout";
-import BandcampIcon from "../icons/BandcampIcon";
-import InstagramIcon from "../icons/InstagramIcon";
-import SpotifyIcon from "../icons/SpotifyIcon";
-import YoutubeIcon from "../icons/YouTubeIcon";
-import FlexContainer from "../layout/containers/FlexContainer/FlexContainer";
-import SocialMediaIcon, { SocialMediaIconProps } from "./SocialMediaIcon";
+import BandcampIcon from "@/components/icons/BandcampIcon.tsx";
+import InstagramIcon from "@/components/icons/InstagramIcon.tsx";
+import SpotifyIcon from "@/components/icons/SpotifyIcon.tsx";
+import YoutubeIcon from "@/components/icons/YouTubeIcon.tsx";
+import FlexContainer from "@/components/layout/containers/FlexContainer/FlexContainer.tsx";
+import SocialMediaIcon, {
+  SocialMediaIconProps,
+} from "@/components/SocialMediaIcons/SocialMediaIcon.tsx";
+import { JustifyContentCSSValue } from "@/types/layout.ts";
 
 const SOCIAL_MEDIA_ICONS: Array<SocialMediaIconProps> = [
   {

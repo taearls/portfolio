@@ -1,8 +1,8 @@
-import InlineAnchor from "@/components/InlineAnchor/InlineAnchor";
-import HeadingOne from "@/components/layout/headings/HeadingOne";
-import Paragraph from "@/components/layout/Paragraph/Paragraph";
-import WebProject from "@/components/WebProject/WebProject";
-import { WEB_PROJECTS } from "@/util/constants";
+import InlineAnchor from "@/components/InlineAnchor/InlineAnchor.tsx";
+import HeadingOne from "@/components/layout/headings/HeadingOne.tsx";
+import Paragraph from "@/components/layout/Paragraph/Paragraph.tsx";
+import WebProject from "@/components/WebProject/WebProject.tsx";
+import { WEB_PROJECTS } from "@/util/constants.ts";
 
 export default function WebProjects() {
   return (

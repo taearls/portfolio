@@ -1,8 +1,8 @@
-import { HeadingProps, TextAlignment } from "@/types/layout";
+import { HeadingProps, TextAlignment } from "@/types/layout.ts";
 import {
   getTextAlignmentClass,
   mergeClasses,
-} from "@/util/styling/styling.utils";
+} from "@/util/styling/styling.utils.ts";
 
 export default function HeadingTwo({
   children,

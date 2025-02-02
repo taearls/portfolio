@@ -6,14 +6,14 @@ import {
   GapCSSType,
   JustifyContentCSSType,
   ResponsiveValue,
-} from "@/types/layout";
+} from "@/types/layout.ts";
 import {
   getAlignItemsClass,
   getFlexFlowClass,
   getGapClass,
   getJustifyContentClass,
   mergeClasses,
-} from "@/util/styling/styling.utils";
+} from "@/util/styling/styling.utils.ts";
 
 export type FlexContainerProps = {
   flexFlow?: FlexFlowCSSType;

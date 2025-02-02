@@ -1,4 +1,4 @@
-import { WebProjectProps } from "@/components/WebProject/WebProject";
+import { WebProjectProps } from "@/components/WebProject/WebProject.tsx";
 
 export const WEB_PROJECTS: Array<Omit<WebProjectProps, "isLast">> = [
   {
@@ -17,24 +17,25 @@ export const WEB_PROJECTS: Array<Omit<WebProjectProps, "isLast">> = [
     ],
     emoji: "🎵",
     href: "https://www.cuckooandthebirds.com",
+    imageExtension: "png",
     name: "Cuckoo and the Birds Website",
     tagline: "Give our music a listen!",
-    imageExtension: "png",
   },
   {
     alt: "Image of Road Ranger Banner",
     analytics: undefined,
     cloudinaryId: "screenshots/v2/roadranger-desktop",
+    cursorStyle: "pointer",
     descriptions: [
       "A navigation header that I built while freelancing for Trekk.",
       "Both the mobile and desktop versions are based on designs their web designers prepared for the client and had me implement. Built with SCSS, JavaScript, and PHP.",
     ],
-    cursorStyle: "pointer",
-    href: "https://www.roadrangerusa.com",
     emoji: "⛽",
+    href: "https://www.roadrangerusa.com",
+    imageExtension: "jpg",
+
     name: "Road Ranger",
     tagline: "Check it out!",
-    imageExtension: "jpg",
   },
   {
     alt: "Image of Space Clones Title Screen",
@@ -47,9 +48,9 @@ export const WEB_PROJECTS: Array<Omit<WebProjectProps, "isLast">> = [
     ],
     emoji: "😉",
     href: "https://space-clones.netlify.com",
+    imageExtension: "png",
     name: "Space Clones",
     tagline: "Beat my high score!",
-    imageExtension: "png",
   },
 ];
 

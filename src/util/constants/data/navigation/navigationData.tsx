@@ -1,9 +1,9 @@
 import { JSX } from "react";
 
-import ContactPage from "@/pages/ContactPage";
-import HomePage from "@/pages/HomePage";
-import NotFoundPage from "@/pages/NotFoundPage";
-import WebProjects from "@/pages/WebProjectsPage";
+import ContactPage from "@/pages/ContactPage.tsx";
+import HomePage from "@/pages/HomePage.tsx";
+import NotFoundPage from "@/pages/NotFoundPage.tsx";
+import WebProjects from "@/pages/WebProjectsPage.tsx";
 
 export type RouteDataChildItem = {
   href: string;

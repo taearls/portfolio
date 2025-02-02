@@ -4,11 +4,11 @@ import { BrowserRouter } from "react-router";
 
 import "./styles/globals.css";
 
-import PageContainer from "./components/layout/containers/PageContainer/PageContainer";
-import Footer from "./components/layout/Footer/Footer";
-import Header from "./components/layout/Header/Header";
-import Meta from "./components/layout/Meta/Meta";
-import routes from "./routes";
+import PageContainer from "./components/layout/containers/PageContainer/PageContainer.tsx";
+import Footer from "./components/layout/Footer/Footer.tsx";
+import Header from "./components/layout/Header/Header.tsx";
+import Meta from "./components/layout/Meta/Meta.tsx";
+import routes from "./routes.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

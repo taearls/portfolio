@@ -1,4 +1,4 @@
-import { mergeClasses } from "@/util/styling/styling.utils";
+import { mergeClasses } from "@/util/styling/styling.utils.ts";
 import styles from "./NavigationToggle.module.css";
 
 export type NavigationToggleProps = {

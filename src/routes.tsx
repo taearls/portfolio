@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router";
 
-import routes from "./util/constants/data/navigation/navigationData";
+import routes from "./util/constants/data/navigation/navigationData.tsx";
 
 export default (
   <Routes>

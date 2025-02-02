@@ -1,13 +1,13 @@
-import InlineAnchor from "@/components/InlineAnchor/InlineAnchor";
-import FlexContainer from "@/components/layout/containers/FlexContainer/FlexContainer";
-import HeadingOne from "@/components/layout/headings/HeadingOne";
-import Paragraph from "@/components/layout/Paragraph/Paragraph";
+import InlineAnchor from "@/components/InlineAnchor/InlineAnchor.tsx";
+import FlexContainer from "@/components/layout/containers/FlexContainer/FlexContainer.tsx";
+import HeadingOne from "@/components/layout/headings/HeadingOne.tsx";
+import Paragraph from "@/components/layout/Paragraph/Paragraph.tsx";
 import {
   AlignItemsCSSValue,
   FlexFlowCSSValue,
   JustifyContentCSSValue,
-} from "@/types/layout";
-import { PORTFOLIO_EMAIL } from "@/util/constants";
+} from "@/types/layout.ts";
+import { PORTFOLIO_EMAIL } from "@/util/constants.ts";
 
 export default function Contact() {
   return (

@@ -1,21 +1,21 @@
 import { useMachine } from "@xstate/react";
 import { NavLink } from "react-router";
 
-import DarkModeToggle from "@/components/DarkModeToggle/DarkModeToggle";
-import { InlineAnchorContent } from "@/components/InlineAnchor/InlineAnchor";
-import FlexContainer from "@/components/layout/containers/FlexContainer/FlexContainer";
-import RenderIf from "@/components/layout/RenderIf";
+import DarkModeToggle from "@/components/DarkModeToggle/DarkModeToggle.tsx";
+import { InlineAnchorContent } from "@/components/InlineAnchor/InlineAnchor.tsx";
+import FlexContainer from "@/components/layout/containers/FlexContainer/FlexContainer.tsx";
+import RenderIf from "@/components/layout/RenderIf.tsx";
+import NavigationBarListItem from "@/components/navigation/NavigationBar/NavigationBarListItem.tsx";
+import NavigationToggle from "@/components/navigation/NavigationToggle/NavigationToggle.tsx";
 import {
   NAVIGATION_EVENT,
   NAVIGATION_STATE,
   navigationMachine,
-} from "@/state/navigationMachine";
-import { FlexFlowCSSValue, MediaQueryPrefixValue } from "@/types/layout";
-import { RouteDataItem } from "@/util/constants/data/navigation/navigationData";
-import { mergeClasses } from "@/util/styling/styling.utils";
-import NavigationToggle from "../NavigationToggle/NavigationToggle";
+} from "@/state/navigationMachine.ts";
+import { FlexFlowCSSValue, MediaQueryPrefixValue } from "@/types/layout.ts";
+import { RouteDataItem } from "@/util/constants/data/navigation/navigationData.tsx";
+import { mergeClasses } from "@/util/styling/styling.utils.ts";
 import styles from "./NavigationBar.module.css";
-import NavigationBarListItem from "./NavigationBarListItem";
 
 export type NavigationBarProps = {
   links: Array<RouteDataItem>;

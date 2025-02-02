@@ -1,5 +1,5 @@
-import NavigationBar from "@/components/navigation/NavigationBar/NavigationBar";
-import routes from "@/util/constants/data/navigation/navigationData";
+import NavigationBar from "@/components/navigation/NavigationBar/NavigationBar.tsx";
+import routes from "@/util/constants/data/navigation/navigationData.tsx";
 
 export default function Header() {
   return (

@@ -1,7 +1,7 @@
 import { JSX } from "react";
 
-import { mergeClasses } from "@/util/styling/styling.utils";
-import ExternalLinkIcon from "../icons/ExternalLinkIcon";
+import ExternalLinkIcon from "@/components/icons/ExternalLinkIcon.tsx";
+import { mergeClasses } from "@/util/styling/styling.utils.ts";
 
 export type InlineAnchorProps = {
   ariaLabel: string;

@@ -1,5 +1,5 @@
-import SocialMediaIcons from "@/components/SocialMediaIcons/SocialMediaIcons";
-import { getCurrentYear } from "@/util/utils";
+import SocialMediaIcons from "@/components/SocialMediaIcons/SocialMediaIcons.tsx";
+import { getCurrentYear } from "@/util/utils.ts";
 
 export default function Footer() {
   return (
