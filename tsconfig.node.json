@@ -3,12 +3,11 @@
   "include": [
     "vite.config.*",
     "vitest.config.*",
-    "cypress.config.*",
     "src/types/globals.d.ts",
     "src/**/*",
-    "tests/**/*",
-    "setupTests.ts"
+    "tests/**/*"
   ],
+  "exclude": ["tests/integration/**", "cypress.d.ts"],
   "compilerOptions": {
     "composite": true,
     "noEmit": true,

@@ -13,7 +13,7 @@ export default function NotFoundPage() {
     <main>
       <FlexContainer flexFlow={FlexFlowCSSValue.COLUMN} gapY={8}>
         <HeadingOne>Oh no!</HeadingOne>
-        <Paragraph>
+        <Paragraph data-testid="does-not-exist">
           <code>
             {`${window.location.host}${location.pathname}${location.search}${location.hash}`}
           </code>{" "}

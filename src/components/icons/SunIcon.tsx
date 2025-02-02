@@ -2,6 +2,7 @@ export default function SunIcon() {
   return (
     <svg
       id="sun-icon"
+      data-testid="sun-icon"
       className="hover:opacity-75"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 128 128"

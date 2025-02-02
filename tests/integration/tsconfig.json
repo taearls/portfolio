@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["es5", "dom"],
+    // without adding mocha to the types, "describe" and "it" are not defined in TS scope.
+    "types": ["cypress", "node", "mocha", "@testing-library/cypress"]
+  },
+  "extends": "../../tsconfig.json",
+  "include": ["../../cypress.d.ts", "./specs/*.ts", "./support/*.ts"]
+}

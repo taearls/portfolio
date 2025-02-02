@@ -1,5 +1,5 @@
 {
-  "include": ["src/**/*", "public"],
+  "include": ["src/**/*", "public", "cypress.d.ts"],
   "exclude": [],
   "compilerOptions": {
     "composite": true,
@@ -11,6 +11,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
+    "allowImportingTsExtensions": true,
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "types": ["vite/client"],

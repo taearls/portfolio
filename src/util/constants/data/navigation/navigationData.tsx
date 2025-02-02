@@ -42,7 +42,7 @@ const routes: Array<RouteDataItem> = [
       // },
     ],
     // component: <MusicPageOutlet />,
-    href: "/web-projects",
+    href: "/code",
     name: "Code",
   },
   {

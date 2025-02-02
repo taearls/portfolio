@@ -45,7 +45,6 @@ const config: Array<Linter.Config> = [
     ...importPluginFlatConfigs.recommended,
     settings: {
       ...importPluginFlatConfigs.recommended.settings,
-
       // ignore npm packages starting with @; e.g., @vitejs/plugin-react in vite.config.mts
       "import/ignore": ["@[^/]"],
       "import/parsers": {
@@ -75,6 +74,8 @@ const config: Array<Linter.Config> = [
         "warn",
         { argsIgnorePattern: "_*", varsIgnorePattern: "_*" },
       ],
+      // https://vite.dev/guide/performance#reduce-resolve-operations
+      "import/extensions": ["warn", "ignorePackages"],
       "no-unused-vars": [
         "warn",
         { argsIgnorePattern: "_*", varsIgnorePattern: "_*" },

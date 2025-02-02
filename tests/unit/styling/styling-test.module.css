@@ -1,0 +1,11 @@
+.test-class1 {
+  display: "block";
+}
+
+.test-class2 {
+  display: "flex";
+}
+
+.test-class3 {
+  display: "grid";
+}

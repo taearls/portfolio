@@ -2,6 +2,7 @@ export default function MoonIcon() {
   return (
     <svg
       id="moon-icon"
+      data-testid="moon-icon"
       className="hover:opacity-75"
       // className="dark-mode-toggle"
       xmlns="http://www.w3.org/2000/svg"

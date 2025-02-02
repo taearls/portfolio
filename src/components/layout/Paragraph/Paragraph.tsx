@@ -10,9 +10,11 @@ export type ParagraphProps = {
   italic?: boolean;
   width?: string;
   alignment?: TextAlignmentType;
+  "data-testid"?: string;
 };
 
 export default function Paragraph({
+  "data-testid": testId,
   children,
   accent = false,
   italic = false,
@@ -22,6 +24,7 @@ export default function Paragraph({
   const alignmentClass = getTextAlignmentClass(alignment);
   return (
     <p
+      data-testid={testId}
       className={mergeClasses(
         accent && "accent",
         italic && "italic",

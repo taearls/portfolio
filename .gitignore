@@ -32,3 +32,7 @@ yarn-error.log*
 
 # react router output
 .react-router/
+
+# cypress test artifacts
+tests/integration/screenshots
+tests/integration/videos
