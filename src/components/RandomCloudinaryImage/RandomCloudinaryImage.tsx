@@ -1,6 +1,6 @@
+import CloudinaryImage from "@/components/CloudinaryImage/CloudinaryImage.tsx";
 import { capitalizeText } from "@/util/styling/styling.utils.ts";
 import { getRandomNumberInRange } from "@/util/utils.ts";
-import CloudinaryImage from "../CloudinaryImage/CloudinaryImage.tsx";
 
 // TODO: implement cache
 // const PHOTO_GROUP_CACHE = Object.entries(IMAGE_GROUPS).map(

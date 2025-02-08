@@ -1,6 +1,8 @@
 import { useMemo } from "react";
 
 import CloudinaryImage from "@/components/CloudinaryImage/CloudinaryImage.tsx";
+import InlineAnchor from "@/components/InlineAnchor/InlineAnchor.tsx";
+import FlexContainer from "@/components/layout/containers/FlexContainer/FlexContainer.tsx";
 import HeadingTwo from "@/components/layout/headings/HeadingTwo.tsx";
 import Paragraph from "@/components/layout/Paragraph/Paragraph.tsx";
 import { WebProjectAnalytics } from "@/types/WebProject.ts";
@@ -43,7 +45,7 @@ export default function WebProject({
       <HeadingTwo>{name}</HeadingTwo>
       <div className="mb-8 flow-root">
         <div className="sm:clearfix mx-auto mb-2 w-11/12 text-center sm:float-left sm:mb-0 sm:mr-4 sm:w-1/2">
-          <div className="flex justify-center">
+          <FlexContainer>
             <a
               className="block rounded-sm focus:shadow-outline-light focus:outline-none dark:focus:shadow-outline-dark"
               target="_blank"
@@ -58,18 +60,18 @@ export default function WebProject({
                 height={400}
               />
             </a>
-          </div>
-          <a
-            className="mt-1 block cursor-pointer rounded-sm font-semibold text-purple-700 focus:shadow-outline-light focus:outline-none dark:text-purple-400 dark:focus:shadow-outline-dark"
-            target="_blank"
-            rel="noreferrer"
+          </FlexContainer>
+          <InlineAnchor
+            isExternal
+            accent
+            ariaLabel={`Navigate to ${name}`}
             href={href}
           >
-            <span className="text-purple-700 md:text-lg dark:text-purple-400">
-              {tagline}
-            </span>
-            {emoji != null && <span>{emoji}</span>}
-          </a>
+            <>
+              <Paragraph>{tagline}</Paragraph>
+              {emoji != null && <span className="no-underline">{emoji}</span>}
+            </>
+          </InlineAnchor>
         </div>
         <div>
           {descriptions.map((description) => (
