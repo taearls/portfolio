@@ -1,4 +1,4 @@
-import { FlexContainerProps } from "@/components/layout/containers/FlexContainer/FlexContainer.tsx";
+import { FlexContainerProps } from "@/types/FlexContainer.ts";
 import {
   AlignItemsCSSType,
   AlignItemsCSSValue,

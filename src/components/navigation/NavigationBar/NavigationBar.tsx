@@ -4,9 +4,7 @@ import { NavLink, NavLinkRenderProps } from "react-router";
 
 import DarkModeToggle from "@/components/DarkModeToggle/DarkModeToggle.tsx";
 import { InlineAnchorContent } from "@/components/InlineAnchor/InlineAnchor.tsx";
-import FlexContainer, {
-  FlexContainerProps,
-} from "@/components/layout/containers/FlexContainer/FlexContainer.tsx";
+import FlexContainer from "@/components/layout/containers/FlexContainer/FlexContainer.tsx";
 import RenderIf from "@/components/layout/RenderIf.tsx";
 import NavigationBarListItem from "@/components/navigation/NavigationBar/NavigationBarListItem.tsx";
 import NavigationToggle from "@/components/navigation/NavigationToggle/NavigationToggle.tsx";
@@ -15,6 +13,7 @@ import {
   NAVIGATION_STATE,
   navigationMachine,
 } from "@/state/navigationMachine.ts";
+import { FlexContainerProps } from "@/types/FlexContainer.ts";
 import { FlexFlowCSSValue, MediaQueryPrefixValue } from "@/types/layout.ts";
 import { RouteDataItem } from "@/util/constants/data/navigation/navigationData.tsx";
 import { mergeClasses } from "@/util/styling/styling.utils.ts";
@@ -60,7 +59,7 @@ export default function NavigationBar({ links }: NavigationBarProps) {
               .map((link, index) => {
                 return (
                   <NavigationBarListItem
-                    key={index}
+                    key={link.name}
                     isLast={
                       index === links.filter((link) => !link.hidden).length - 1
                     }

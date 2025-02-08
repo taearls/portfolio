@@ -3,6 +3,7 @@ import { useMemo } from "react";
 import CloudinaryImage from "@/components/CloudinaryImage/CloudinaryImage.tsx";
 import HeadingTwo from "@/components/layout/headings/HeadingTwo.tsx";
 import Paragraph from "@/components/layout/Paragraph/Paragraph.tsx";
+import { WebProjectAnalytics } from "@/types/WebProject.ts";
 import { getLinkWithAnalytics } from "@/util/utils.ts";
 
 export type WebProjectProps = {
@@ -18,12 +19,6 @@ export type WebProjectProps = {
   name: string;
   tagline: string;
   isLast: boolean;
-};
-
-export type WebProjectAnalytics = {
-  campaign: string;
-  medium: string;
-  source: string;
 };
 
 export default function WebProject({
@@ -77,8 +72,8 @@ export default function WebProject({
           </a>
         </div>
         <div>
-          {descriptions.map((description, index) => (
-            <Paragraph key={index}>{description}</Paragraph>
+          {descriptions.map((description) => (
+            <Paragraph key={description}>{description}</Paragraph>
           ))}
         </div>
       </div>

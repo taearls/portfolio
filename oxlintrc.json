@@ -1,0 +1,32 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["import", "typescript", "unicorn", "react", "vitest", "oxc"],
+  "env": {
+    "browser": true
+  },
+  "categories": {
+    "correctness": "error",
+    "perf": "warn"
+  },
+  "settings": {},
+  "rules": {
+    "eqeqeq": ["warn", "smart"],
+    "import/no-cycle": "error",
+    "typescript/array-type": ["error", { "default": "generic" }],
+    "typescript/no-unused-vars": [
+      "warn",
+      { "argsIgnorePattern": "_*", "varsIgnorePattern": "_*" }
+    ],
+    // https://vite.dev/guide/performance#reduce-resolve-operations
+    // this rule is not supported by oxc yet.
+    "import/extensions": ["warn", "ignorePackages"],
+    // this rule is not supported by oxc yet.
+    "import/no-extraneous-dependencies": "error",
+    "no-unused-vars": [
+      "warn",
+      { "argsIgnorePattern": "_*", "varsIgnorePattern": "_*" }
+    ],
+    "react/react-in-jsx-scope": "off",
+    "sort-keys": "warn"
+  }
+}

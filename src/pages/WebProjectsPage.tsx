@@ -37,7 +37,7 @@ export default function WebProjects() {
 
       {WEB_PROJECTS.map((webProject, index) => (
         <WebProject
-          key={index}
+          key={webProject.name}
           analytics={webProject.analytics}
           cloudinaryId={webProject.cloudinaryId}
           alt={webProject.alt}

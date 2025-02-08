@@ -129,6 +129,7 @@ describe("Styling util testing", () => {
       // if the expected name is in the actual string, that's fine.
       expected
         .split(" ")
+        // TODO: open oxc linter issue. this should not throw an error.
         .forEach((className) => expect(actual).toMatch(className));
     });
 
