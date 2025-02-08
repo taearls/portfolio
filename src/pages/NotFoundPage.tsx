@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { useLocation, useNavigate } from "react-router";
 
 import FlexContainer from "@/components/layout/containers/FlexContainer/FlexContainer.tsx";
@@ -8,6 +9,8 @@ import { FlexFlowCSSValue } from "@/types/layout.ts";
 export default function NotFoundPage() {
   const location = useLocation();
   const navigate = useNavigate();
+
+  const navigateToPreviousPage = useCallback(() => navigate(-1), [navigate]);
 
   return (
     <main>
@@ -21,10 +24,7 @@ export default function NotFoundPage() {
         </Paragraph>
         <button
           className={"accent w-fit text-xl underline"}
-          onClick={
-            // Attempt to recover by navigating to previous page
-            () => navigate(-1)
-          }
+          onClick={navigateToPreviousPage}
         >
           Return to Previous Page
         </button>

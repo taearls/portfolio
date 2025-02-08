@@ -1,3 +1,5 @@
+import { useMemo } from "react";
+
 export type VideoPlayerProps = {
   title: string;
   src: string;
@@ -13,11 +15,16 @@ export default function VideoPlayer({
   height = 315,
   allowFullScreen = true,
 }: VideoPlayerProps) {
+  const maxWidthStyle = useMemo(
+    () => ({ maxWidth: "var(--max-width-mobile)" }),
+    [],
+  );
+
   return (
     <iframe
       width={width}
       height={height}
-      style={{ maxWidth: "var(--max-width-mobile)" }}
+      style={maxWidthStyle}
       src={src}
       title={title}
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

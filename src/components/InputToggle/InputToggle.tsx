@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export type InputToggleProps = {
   id: string;
@@ -19,6 +19,11 @@ export default function InputToggle({
     setChecked(Boolean(isChecked));
   }, [isChecked]);
 
+  const handleCheckboxChange = useCallback(() => {
+    setChecked((prevState) => !prevState);
+    onToggle();
+  }, [setChecked, onToggle]);
+
   return (
     <div className="duration-800 relative mr-2 inline-block h-auto w-10 select-none align-middle transition ease-in">
       <input
@@ -27,10 +32,7 @@ export default function InputToggle({
         id={id}
         name={name}
         checked={checked}
-        onChange={() => {
-          setChecked((prevState) => !prevState);
-          onToggle();
-        }}
+        onChange={handleCheckboxChange}
       />
       <label
         className="input-toggle-label block h-5 cursor-pointer overflow-hidden rounded-full bg-gray-400"

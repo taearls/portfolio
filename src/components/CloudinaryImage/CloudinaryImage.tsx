@@ -1,4 +1,5 @@
 import { fill } from "@cloudinary/url-gen/actions/resize";
+import { useMemo } from "react";
 
 import { CLOUDINARY_INSTANCE } from "@/util/constants/constants.ts";
 
@@ -19,11 +20,10 @@ export default function CloudinaryImage({
 
   img.resize(fill().width(width).height(height));
 
-  return (
-    <img
-      src={img.toURL()}
-      alt={alt}
-      style={{ height: "auto", maxWidth: "var(--max-width-mobile)", width }}
-    />
+  const style = useMemo(
+    () => ({ height: "auto", maxWidth: "var(--max-width-mobile)", width }),
+    [width],
   );
+
+  return <img src={img.toURL()} alt={alt} style={style} />;
 }

@@ -1,3 +1,5 @@
+import { useMemo } from "react";
+
 import CloudinaryImage from "@/components/CloudinaryImage/CloudinaryImage.tsx";
 import HeadingTwo from "@/components/layout/headings/HeadingTwo.tsx";
 import Paragraph from "@/components/layout/Paragraph/Paragraph.tsx";
@@ -36,6 +38,11 @@ export default function WebProject({
   tagline,
   isLast,
 }: WebProjectProps) {
+  const cursorStyleProp = useMemo(
+    () => ({ cursor: cursorStyle }),
+    [cursorStyle],
+  );
+
   return (
     <div className="mx-auto mt-12">
       <HeadingTwo>{name}</HeadingTwo>
@@ -47,7 +54,7 @@ export default function WebProject({
               target="_blank"
               href={getLinkWithAnalytics(href, analytics)}
               rel={analytics != null ? "noopener" : "noreferrer"}
-              style={{ cursor: cursorStyle }}
+              style={cursorStyleProp}
             >
               <CloudinaryImage
                 alt={alt}

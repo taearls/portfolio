@@ -8,6 +8,7 @@ import pluginJs from "@eslint/js";
 import eslintConfigPrettier from "eslint-config-prettier";
 import { flatConfigs as importPluginFlatConfigs } from "eslint-plugin-import";
 import pluginReact from "eslint-plugin-react";
+import reactPerfPlugin from "eslint-plugin-react-perf";
 import reactRefresh from "eslint-plugin-react-refresh";
 import globals from "globals";
 import tseslint from "typescript-eslint";
@@ -33,6 +34,7 @@ const config: Array<Linter.Config> = [
   },
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
+  reactPerfPlugin.configs.flat.recommended,
   {
     plugins: {
       react: {
@@ -46,7 +48,7 @@ const config: Array<Linter.Config> = [
     settings: {
       ...importPluginFlatConfigs.recommended.settings,
       // ignore npm packages starting with @; e.g., @vitejs/plugin-react in vite.config.mts
-      "import/ignore": ["@[^/]"],
+      "import/ignore": ["@[^/]", "node_modules"],
       "import/parsers": {
         "@typescript-eslint/parser": [".ts", ".tsx"],
       },

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import MoonIcon from "@/components/icons/MoonIcon.tsx";
 import SunIcon from "@/components/icons/SunIcon.tsx";
@@ -10,6 +10,11 @@ export default function DarkModeToggle() {
   );
   const [isDarkMode, setIsDarkMode] = useState<boolean>(
     prefersDarkColorScheme.matches,
+  );
+
+  const handleToggle = useCallback(
+    () => setIsDarkMode((prevState) => !prevState),
+    [setIsDarkMode],
   );
 
   useEffect(() => {
@@ -27,7 +32,7 @@ export default function DarkModeToggle() {
   }, [isDarkMode]);
 
   return (
-    <button onClick={() => setIsDarkMode(!isDarkMode)}>
+    <button onClick={handleToggle}>
       <RenderIf condition={isDarkMode} fallback={<MoonIcon />}>
         <SunIcon />
       </RenderIf>

@@ -3,6 +3,8 @@ import { render } from "@testing-library/react";
 import DarkModeToggle from "@/components/DarkModeToggle/DarkModeToggle.tsx";
 import { setColorSchemeForTest } from "./utils.ts";
 
+const lightModeStyle = { colorScheme: "light" };
+
 describe("<DarkModeToggle />", () => {
   it("will show a sun icon in dark mode", async () => {
     setColorSchemeForTest("dark");
@@ -17,7 +19,7 @@ describe("<DarkModeToggle />", () => {
     setColorSchemeForTest("light");
 
     const component = render(
-      <div style={{ colorScheme: "light" }}>
+      <div style={lightModeStyle}>
         <DarkModeToggle />
       </div>,
     );
