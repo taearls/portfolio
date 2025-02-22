@@ -50,7 +50,7 @@ export default function WebProject({
               className="block rounded-sm focus:shadow-outline-light focus:outline-none dark:focus:shadow-outline-dark"
               target="_blank"
               href={getLinkWithAnalytics(href, analytics)}
-              rel={analytics != null ? "noopener" : "noreferrer"}
+              rel={"noreferrer"}
               style={cursorStyleProp}
             >
               <CloudinaryImage

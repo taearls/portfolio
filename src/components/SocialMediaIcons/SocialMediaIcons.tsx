@@ -34,9 +34,9 @@ const SOCIAL_MEDIA_ICONS: Array<SocialMediaIconProps> = [
 export default function SocialMediaIcons() {
   return (
     <FlexContainer justifyContent={JustifyContentCSSValue.CENTER} gapX={2}>
-      {SOCIAL_MEDIA_ICONS.map(({ name, href, icon, ariaLabel }, index) => (
+      {SOCIAL_MEDIA_ICONS.map(({ name, href, icon, ariaLabel }) => (
         <SocialMediaIcon
-          key={`${icon}-${index}`}
+          key={name}
           name={name}
           href={href}
           icon={icon}

@@ -35,14 +35,8 @@ const config: Array<Linter.Config> = [
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
   reactPerfPlugin.configs.flat.recommended,
-  {
-    plugins: {
-      react: {
-        ...pluginReact.configs.flat!.recommended,
-        version: "detect",
-      },
-    },
-  },
+  pluginReact.configs.flat!.recommended,
+
   {
     ...importPluginFlatConfigs.recommended,
     settings: {
@@ -64,6 +58,9 @@ const config: Array<Linter.Config> = [
         },
         typescript: true,
       },
+      react: {
+        version: "detect",
+      },
     },
   },
   {
@@ -77,7 +74,11 @@ const config: Array<Linter.Config> = [
         { argsIgnorePattern: "_*", varsIgnorePattern: "_*" },
       ],
       // https://vite.dev/guide/performance#reduce-resolve-operations
-      "import/extensions": ["warn", "ignorePackages"],
+      "import/extensions": [
+        "error",
+        "ignorePackages",
+        { checkTypeImports: true },
+      ],
       "import/no-deprecated": "warn",
       "import/no-extraneous-dependencies": "error",
       "import/no-mutable-exports": "warn",
@@ -85,10 +86,10 @@ const config: Array<Linter.Config> = [
         "warn",
         { argsIgnorePattern: "_*", varsIgnorePattern: "_*" },
       ],
+      "react/no-array-index-key": "error",
+      "react/prop-types": "off",
       "react/react-in-jsx-scope": "off",
       "sort-keys": "warn",
-      // not currently supported in eslint-react-plugin with eslint v9
-      // "react/no-array-index-key": "error",
     },
   },
   {

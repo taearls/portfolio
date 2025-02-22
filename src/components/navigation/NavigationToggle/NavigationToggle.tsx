@@ -14,7 +14,7 @@ export default function NavigationToggle({
     <button
       id={styles["custom-toggler"]}
       className={mergeClasses(active && styles["active"])}
-      aria-Label={`${active ? "Close Navigation" : "Open Navigation"}`}
+      aria-label={`${active ? "Close Navigation" : "Open Navigation"}`}
       onClick={onClick}
     >
       <div id={styles["toggler-top"]} />
