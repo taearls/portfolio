@@ -4,14 +4,14 @@ import { dirname } from "path";
 import { fileURLToPath } from "url";
 
 import { FlatCompat } from "@eslint/eslintrc";
-import pluginJs from "@eslint/js";
+import eslintJsPlugin from "@eslint/js";
 import eslintConfigPrettier from "eslint-config-prettier";
-import { flatConfigs as importPluginFlatConfigs } from "eslint-plugin-import";
-import pluginReact from "eslint-plugin-react";
-import reactPerfPlugin from "eslint-plugin-react-perf";
-import reactRefresh from "eslint-plugin-react-refresh";
+import { flatConfigs as eslintPluginImportFlatConfigs } from "eslint-plugin-import";
+import eslintPluginReact from "eslint-plugin-react";
+import eslintPluginReactPerf from "eslint-plugin-react-perf";
+import eslintPluginReactRefresh from "eslint-plugin-react-refresh";
 import globals from "globals";
-import tseslint from "typescript-eslint";
+import typescriptEslint from "typescript-eslint";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -23,6 +23,14 @@ const compat = new FlatCompat({
 const config: Array<Linter.Config> = [
   { files: ["**/*.{js,mjs,cjs,ts,mts,jsx,tsx}"] },
   {
+    ignores: [
+      "dist/*",
+      ".react-router/*",
+      "node_modules",
+      "prettier.config.mjs",
+    ],
+  },
+  {
     languageOptions: {
       ecmaVersion: "latest",
       globals: {
@@ -32,15 +40,18 @@ const config: Array<Linter.Config> = [
       sourceType: "module",
     },
   },
-  pluginJs.configs.recommended,
-  ...tseslint.configs.recommended,
-  reactPerfPlugin.configs.flat.recommended,
-  pluginReact.configs.flat!.recommended,
+  eslintJsPlugin.configs.recommended,
+  ...typescriptEslint.configs.recommended,
+  eslintPluginReactPerf.configs.flat.recommended,
+  eslintPluginReact.configs.flat!.recommended,
+  eslintPluginReactRefresh.configs.recommended,
+  eslintConfigPrettier,
 
+  // import plugin settings
   {
-    ...importPluginFlatConfigs.recommended,
+    ...eslintPluginImportFlatConfigs.recommended,
     settings: {
-      ...importPluginFlatConfigs.recommended.settings,
+      ...eslintPluginImportFlatConfigs.recommended.settings,
       // ignore npm packages starting with @; e.g., @vitejs/plugin-react in vite.config.mts
       "import/ignore": ["@[^/]", "node_modules"],
       "import/parsers": {
@@ -63,6 +74,8 @@ const config: Array<Linter.Config> = [
       },
     },
   },
+
+  // specific rule declarations
   {
     linterOptions: {
       reportUnusedDisableDirectives: "warn",
@@ -92,15 +105,8 @@ const config: Array<Linter.Config> = [
       "sort-keys": "warn",
     },
   },
-  {
-    ignores: [
-      "dist/*",
-      ".react-router/*",
-      "node_modules",
-      "prettier.config.mjs",
-    ],
-  },
-  eslintConfigPrettier,
+
+  // eslint-plugin-barrel-files config
   ...compat.config({
     env: {
       es2020: true,
@@ -113,7 +119,6 @@ const config: Array<Linter.Config> = [
       "barrel-files/avoid-re-export-all": "error",
     },
   }),
-  reactRefresh.configs.recommended,
 ];
 
 export default config;
