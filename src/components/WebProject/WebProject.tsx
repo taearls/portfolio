@@ -81,7 +81,7 @@ export default function WebProject({
           ))}
         </FlexContainer>
       </FlexContainer>
-      <RenderIf condition={isLast}>
+      <RenderIf condition={!isLast}>
         <hr className="line-break" />
       </RenderIf>
     </FlexContainer>
