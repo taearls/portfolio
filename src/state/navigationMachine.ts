@@ -26,7 +26,7 @@ export const NAVIGATION_EVENT = {
 
 export const navigationMachine = createMachine({
   id: "navigation",
-  initial: NAVIGATION_STATE.CLOSED,
+  initial: NAVIGATION_STATE.OPEN,
   states: {
     [NAVIGATION_STATE.CLOSED]: {
       on: {

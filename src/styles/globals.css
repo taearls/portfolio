@@ -20,6 +20,11 @@
   --active-color: light-dark(var(--active-light), var(--active-dark));
   --accent-color: light-dark(var(--accent-light), var(--accent-dark));
   --text-color: light-dark(var(--text-light), var(--text-dark));
+  --font-default: "Ubuntu", sans-serif;
+  /* --font-emphasis:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono,
+    Courier New, monospace; */
+  --font-emphasis: "Limelight", sans-serif;
   --background-color: light-dark(
     var(--background-light),
     var(--background-dark)
@@ -30,6 +35,14 @@
 html {
   min-height: 100vh;
   min-width: 100vw;
+  font-family: var(--font-default);
+}
+
+#navigation-bar,
+#navigation-bar * {
+  font-family: var(--font-emphasis);
+  font-weight: 400;
+  font-size: 24px;
 }
 
 /* 
