@@ -14,7 +14,7 @@
     "allowImportingTsExtensions": true,
     "module": "ESNext",
     "moduleResolution": "Bundler",
-    "types": ["vite/client"],
+    "types": ["vite/client", "vite-plugin-svg-icons/client"],
     "lib": ["dom", "es2022"],
     "skipLibCheck": true
   }

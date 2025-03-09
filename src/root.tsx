@@ -9,6 +9,8 @@ import Footer from "./components/layout/Footer/Footer.tsx";
 import Header from "./components/layout/Header/Header.tsx";
 import Meta from "./components/layout/Meta/Meta.tsx";
 import routes from "./routes.tsx";
+// eslint-disable-next-line import/no-unresolved
+import "virtual:svg-icons-register";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

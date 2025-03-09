@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
+import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
 
 export type ViteConfigInput = {
   mode: "development" | "production";
@@ -27,7 +28,15 @@ export default (args: ViteConfigInput) => {
         localsConvention: "camelCase",
       },
     },
-    plugins: [react()],
+    plugins: [
+      react(),
+      createSvgIconsPlugin({
+        // Specify the icon folder to be cached
+        iconDirs: [fileURLToPath(new URL("./src/icons", import.meta.url))],
+        // Specify symbolId format
+        symbolId: "[name]",
+      }),
+    ],
     resolve: {
       alias: {
         "@": fileURLToPath(new URL("./src", import.meta.url)),

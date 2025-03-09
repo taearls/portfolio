@@ -1,18 +1,17 @@
-import BandcampIcon from "@/components/icons/BandcampIcon.tsx";
+import type { SocialMediaIconProps } from "@/components/SocialMediaIcons/SocialMediaIcon.tsx";
+
 import InstagramIcon from "@/components/icons/InstagramIcon.tsx";
 import SpotifyIcon from "@/components/icons/SpotifyIcon.tsx";
 import YoutubeIcon from "@/components/icons/YouTubeIcon.tsx";
 import FlexContainer from "@/components/layout/containers/FlexContainer/FlexContainer.tsx";
-import type {
-  SocialMediaIconProps,
-} from "@/components/SocialMediaIcons/SocialMediaIcon.tsx";
 import SocialMediaIcon from "@/components/SocialMediaIcons/SocialMediaIcon.tsx";
 import { JustifyContentCSSValue } from "@/types/layout.ts";
+import SvgIcon from "../SvgIcon/SvgIcon.tsx";
 
 const SOCIAL_MEDIA_ICONS: Array<SocialMediaIconProps> = [
   {
     href: "https://cuckooandthebirds.bandcamp.com",
-    icon: <BandcampIcon />,
+    icon: <SvgIcon name="BandcampIcon" />,
     name: "Bandcamp",
   },
   {
