@@ -1,4 +1,5 @@
-import { TextAlignment, TextAlignmentType } from "@/types/layout.ts";
+import type { TextAlignmentType } from "@/types/layout.ts";
+import { TextAlignment } from "@/types/layout.ts";
 import {
   getTextAlignmentClass,
   mergeClasses,

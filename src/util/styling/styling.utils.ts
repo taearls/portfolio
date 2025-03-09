@@ -1,15 +1,16 @@
-import { FlexContainerProps } from "@/types/FlexContainer.ts";
-import {
+import type { FlexContainerProps } from "@/types/FlexContainer.ts";
+import type {
   AlignItemsCSSType,
-  AlignItemsCSSValue,
   FlexFlowCSSType,
-  FlexFlowCSSValue,
   GapCSSType,
   JustifyContentCSSType,
-  JustifyContentCSSValue,
   MediaQueryPrefix,
-  TextAlignment,
-  TextAlignmentType,
+  TextAlignmentType} from "@/types/layout.ts";
+import {
+  AlignItemsCSSValue,
+  FlexFlowCSSValue,
+  JustifyContentCSSValue,
+  TextAlignment
 } from "@/types/layout.ts";
 import { intoArray } from "@/util/utils.ts";
 

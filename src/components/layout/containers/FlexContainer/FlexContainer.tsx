@@ -1,4 +1,4 @@
-import { FlexContainerProps } from "@/types/FlexContainer.ts";
+import type { FlexContainerProps } from "@/types/FlexContainer.ts";
 import {
   getAlignItemsClass,
   getFlexFlowClass,

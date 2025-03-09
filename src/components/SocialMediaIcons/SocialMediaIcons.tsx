@@ -3,9 +3,10 @@ import InstagramIcon from "@/components/icons/InstagramIcon.tsx";
 import SpotifyIcon from "@/components/icons/SpotifyIcon.tsx";
 import YoutubeIcon from "@/components/icons/YouTubeIcon.tsx";
 import FlexContainer from "@/components/layout/containers/FlexContainer/FlexContainer.tsx";
-import SocialMediaIcon, {
+import type {
   SocialMediaIconProps,
 } from "@/components/SocialMediaIcons/SocialMediaIcon.tsx";
+import SocialMediaIcon from "@/components/SocialMediaIcons/SocialMediaIcon.tsx";
 import { JustifyContentCSSValue } from "@/types/layout.ts";
 
 const SOCIAL_MEDIA_ICONS: Array<SocialMediaIconProps> = [

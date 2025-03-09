@@ -6,7 +6,7 @@ import WebProject from "@/components/WebProject/WebProject.tsx";
 import { AlignItemsCSSValue, FlexFlowCSSValue } from "@/types/layout.ts";
 import { WEB_PROJECTS } from "@/util/constants.ts";
 
-export default function WebProjects() {
+export default function WebProjectsPage() {
   return (
     <main>
       <FlexContainer
@@ -26,6 +26,7 @@ export default function WebProjects() {
             href="https://nextjs.org"
             ariaLabel="Go to Next's official documentation website"
             isExternal
+            accent
           >
             React
           </InlineAnchor>
@@ -36,6 +37,7 @@ export default function WebProjects() {
             href="https://github.com/taearls"
             ariaLabel="Go to Tyler's Github"
             isExternal
+            accent
           >
             Github
           </InlineAnchor>

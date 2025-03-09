@@ -1,12 +1,14 @@
-import { useMemo } from "react";
+import type { WebProjectAnalytics } from "@/types/WebProject.ts";
+
+import { Fragment, useMemo } from "react";
 
 import CloudinaryImage from "@/components/CloudinaryImage/CloudinaryImage.tsx";
 import InlineAnchor from "@/components/InlineAnchor/InlineAnchor.tsx";
 import FlexContainer from "@/components/layout/containers/FlexContainer/FlexContainer.tsx";
 import HeadingTwo from "@/components/layout/headings/HeadingTwo.tsx";
 import Paragraph from "@/components/layout/Paragraph/Paragraph.tsx";
-import { WebProjectAnalytics } from "@/types/WebProject.ts";
 import { getLinkWithAnalytics } from "@/util/utils.ts";
+import RenderIf from "../layout/RenderIf.tsx";
 
 export type WebProjectProps = {
   analytics?: WebProjectAnalytics;
@@ -41,10 +43,10 @@ export default function WebProject({
   );
 
   return (
-    <div className="mx-auto mt-12">
+    <FlexContainer>
       <HeadingTwo>{name}</HeadingTwo>
-      <div className="mb-8 flow-root">
-        <div className="sm:clearfix mx-auto mb-2 w-11/12 text-center sm:float-left sm:mb-0 sm:mr-4 sm:w-1/2">
+      <FlexContainer>
+        <FlexContainer>
           <FlexContainer>
             <a
               className="block rounded-sm focus:shadow-outline-light focus:outline-none dark:focus:shadow-outline-dark"
@@ -67,19 +69,21 @@ export default function WebProject({
             ariaLabel={`Navigate to ${name}`}
             href={href}
           >
-            <>
+            <Fragment key={href}>
               <Paragraph>{tagline}</Paragraph>
               {emoji != null && <span className="no-underline">{emoji}</span>}
-            </>
+            </Fragment>
           </InlineAnchor>
-        </div>
-        <div>
+        </FlexContainer>
+        <FlexContainer>
           {descriptions.map((description) => (
             <Paragraph key={description}>{description}</Paragraph>
           ))}
-        </div>
-      </div>
-      {!isLast && <hr className="line-break" />}
-    </div>
+        </FlexContainer>
+      </FlexContainer>
+      <RenderIf condition={isLast}>
+        <hr className="line-break" />
+      </RenderIf>
+    </FlexContainer>
   );
 }

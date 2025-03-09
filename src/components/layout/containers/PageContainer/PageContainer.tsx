@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 import useWindowResize from "@/hooks/useWindowResize.ts";
 import { checkNavHeight } from "@/state/navigationMachine.ts";

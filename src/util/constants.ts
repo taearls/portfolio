@@ -1,4 +1,4 @@
-import { WebProjectProps } from "@/components/WebProject/WebProject.tsx";
+import type { WebProjectProps } from "@/components/WebProject/WebProject.tsx";
 
 export const WEB_PROJECTS: Array<Omit<WebProjectProps, "isLast">> = [
   {

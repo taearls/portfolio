@@ -4,7 +4,7 @@ import HeadingOne from "@/components/layout/headings/HeadingOne.tsx";
 import Paragraph from "@/components/layout/Paragraph/Paragraph.tsx";
 import { AlignItemsCSSValue, FlexFlowCSSValue } from "@/types/layout.ts";
 
-export default function Home() {
+export default function HomePage() {
   return (
     <main>
       <FlexContainer

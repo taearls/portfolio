@@ -1,16 +1,17 @@
 import { describe, expect, it } from "vitest";
 
+import type {
+  GapCSSType,
+  MediaQueryPrefix,
+  ResponsiveValue} from "@/types/layout.ts";
 import {
   AlignItemsCSSValue,
   FlexFlowCSSValue,
-  GapCSSType,
   JustifyContentCSSValue,
-  MediaQueryPrefix,
   MediaQueryPrefixValue,
-  ResponsiveValue,
   TextAlignment,
 } from "@/types/layout.ts";
-import { ValueOf } from "@/types/util.ts";
+import type { ValueOf } from "@/types/util.ts";
 import {
   capitalizeText,
   combineBaseAndResponsiveClasses,
@@ -127,6 +128,12 @@ describe("Styling util testing", () => {
 
       // we don't know what the class name hash would be.
       // if the expected name is in the actual string, that's fine.
+
+      // TODO: running the tests this way throws another error.
+      // for (const className of expected.split(" ")) {
+      //   expect(actual).toMatch(className);
+      // }
+
       expected
         .split(" ")
         // TODO: open oxc linter issue. this should not throw an error.

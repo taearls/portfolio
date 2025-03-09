@@ -1,4 +1,4 @@
-import { JSX } from "react";
+import type { JSX } from "react";
 
 import ExternalLinkIcon from "@/components/icons/ExternalLinkIcon.tsx";
 import { mergeClasses } from "@/util/styling/styling.utils.ts";

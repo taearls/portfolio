@@ -1,6 +1,6 @@
-import { ReactElement } from "react";
+import type { ReactElement } from "react";
 
-import {
+import type {
   AlignItemsCSSType,
   FlexFlowCSSType,
   GapCSSType,

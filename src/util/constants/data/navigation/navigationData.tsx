@@ -1,4 +1,4 @@
-import { JSX } from "react";
+import type { JSX } from "react";
 
 import ContactPage from "@/pages/ContactPage.tsx";
 import HomePage from "@/pages/HomePage.tsx";

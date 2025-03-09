@@ -1,6 +1,7 @@
 import { useMachine } from "@xstate/react";
 import { useCallback } from "react";
-import { NavLink, NavLinkRenderProps } from "react-router";
+import type { NavLinkRenderProps } from "react-router";
+import { NavLink } from "react-router";
 
 import DarkModeToggle from "@/components/DarkModeToggle/DarkModeToggle.tsx";
 import { InlineAnchorContent } from "@/components/InlineAnchor/InlineAnchor.tsx";
@@ -13,9 +14,9 @@ import {
   NAVIGATION_STATE,
   navigationMachine,
 } from "@/state/navigationMachine.ts";
-import { FlexContainerProps } from "@/types/FlexContainer.ts";
+import type { FlexContainerProps } from "@/types/FlexContainer.ts";
 import { FlexFlowCSSValue, MediaQueryPrefixValue } from "@/types/layout.ts";
-import { RouteDataItem } from "@/util/constants/data/navigation/navigationData.tsx";
+import type { RouteDataItem } from "@/util/constants/data/navigation/navigationData.tsx";
 import { mergeClasses } from "@/util/styling/styling.utils.ts";
 import styles from "./NavigationBar.module.css";
 
