@@ -38,13 +38,6 @@ html {
   font-family: var(--font-default);
 }
 
-#navigation-bar,
-#navigation-bar * {
-  font-family: var(--font-emphasis);
-  font-weight: 400;
-  font-size: 24px;
-}
-
 /* 
 Initially, we use the system settings, but
 when these classes are applied to the root html element, 

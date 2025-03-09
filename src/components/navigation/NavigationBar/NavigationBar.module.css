@@ -1,4 +1,7 @@
 .navigation-bar {
+  font-family: var(--font-emphasis);
+  font-weight: 400;
+  font-size: 24px;
   display: grid;
   top: 0;
   position: absolute;
@@ -8,6 +11,12 @@
   border-style: solid;
   grid-template-columns: 1fr min-content;
   grid-template-areas: "list toggle";
+}
+
+.navigation-bar * {
+  font-family: var(--font-emphasis);
+  font-weight: 400;
+  font-size: 24px;
 }
 
 .navigation-list-container {
