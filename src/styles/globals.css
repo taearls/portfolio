@@ -13,14 +13,10 @@
   --text-dark: #faf9f6;
   --background-light: #faf9f6;
   --background-dark: #121212;
-  --active-light: rgb(
-    34 211 238 / var(--tw-text-opacity, 1)
-  ); /* tailwind-cyan-400 */
-  --active-dark: rgb(
-    103 232 249 / var(--tw-text-opacity, 1)
-  ); /* tailwind cyan-300 */
-  --accent-dark: #ef4444; /* tailwind-red-500 */
-  --accent-light: #e11d48; /* tailwind-rose-600 */
+  --active-light: rgb(34 211 238 / 1); /* tailwind cyan-400 */
+  --active-dark: rgb(103 232 249 / 1); /* tailwind cyan-300 */
+  --accent-dark: rgb(192 132 252 / 1); /* tailwind purple-400 */
+  --accent-light: rgb(126 34 206 / 1); /* tailwind purple-700 */
   --active-color: light-dark(var(--active-light), var(--active-dark));
   --accent-color: light-dark(var(--accent-light), var(--accent-dark));
   --text-color: light-dark(var(--text-light), var(--text-dark));
