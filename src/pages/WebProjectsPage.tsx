@@ -24,15 +24,24 @@ export default function WebProjectsPage() {
           <Paragraph>
             {"In addition to this website, which has been rebuilt with "}
             <InlineAnchor
-              href="https://nextjs.org"
-              ariaLabel="Go to Next's official documentation website"
+              href="https://react.dev"
+              ariaLabel="Go to React's official documentation website"
               isExternal
               accent
             >
               React
             </InlineAnchor>
+            {" and "}
+            <InlineAnchor
+              href="https://vite.dev"
+              ariaLabel="Go to Vite's official documentation website"
+              isExternal
+              accent
+            >
+              Vite
+            </InlineAnchor>
             {
-              "(a React framework), my open sourced work includes the personal and freelance projects listed below. If you're interested to see more, feel free to stalk me on my "
+              ", my open sourced work includes the personal and freelance projects listed below. If you're interested to see more, feel free to stalk me on my "
             }
             <InlineAnchor
               href="https://github.com/taearls"
