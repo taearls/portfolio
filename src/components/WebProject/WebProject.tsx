@@ -7,14 +7,13 @@ import InlineAnchor from "@/components/InlineAnchor/InlineAnchor.tsx";
 import FlexContainer from "@/components/layout/containers/FlexContainer/FlexContainer.tsx";
 import HeadingTwo from "@/components/layout/headings/HeadingTwo.tsx";
 import Paragraph from "@/components/layout/Paragraph/Paragraph.tsx";
+import { AlignItemsCSSValue, FlexFlowCSSValue } from "@/types/layout.ts";
 import { getLinkWithAnalytics } from "@/util/utils.ts";
 import RenderIf from "../layout/RenderIf.tsx";
 
 export type WebProjectProps = {
   analytics?: WebProjectAnalytics;
   cloudinaryId: string;
-  // TODO: remove this prop
-  imageExtension: string;
   alt: string;
   cursorStyle?: string;
   descriptions: Array<string>;
@@ -43,26 +42,27 @@ export default function WebProject({
   );
 
   return (
-    <FlexContainer>
+    <FlexContainer flexFlow={FlexFlowCSSValue.COLUMN} gapY={8}>
       <HeadingTwo>{name}</HeadingTwo>
-      <FlexContainer>
-        <FlexContainer>
-          <FlexContainer>
-            <a
-              className="block rounded-sm focus:shadow-outline-light focus:outline-none dark:focus:shadow-outline-dark"
-              target="_blank"
-              href={getLinkWithAnalytics(href, analytics)}
-              rel={"noreferrer"}
-              style={cursorStyleProp}
-            >
-              <CloudinaryImage
-                alt={alt}
-                publicId={cloudinaryId}
-                width={400}
-                height={400}
-              />
-            </a>
-          </FlexContainer>
+      <FlexContainer gapX={8} gapY={4}>
+        <FlexContainer
+          inline
+          flexFlow={FlexFlowCSSValue.COLUMN}
+          alignItems={AlignItemsCSSValue.CENTER}
+        >
+          <InlineAnchor
+            href={getLinkWithAnalytics(href, analytics)}
+            ariaLabel={`Go to ${href}`}
+            // rel={"noreferrer"}
+            // style={cursorStyleProp}
+          >
+            <CloudinaryImage
+              alt={alt}
+              publicId={cloudinaryId}
+              width={400}
+              height={400}
+            />
+          </InlineAnchor>
           <InlineAnchor
             isExternal
             accent
@@ -75,7 +75,7 @@ export default function WebProject({
             </Fragment>
           </InlineAnchor>
         </FlexContainer>
-        <FlexContainer>
+        <FlexContainer inline flexFlow={FlexFlowCSSValue.COLUMN}>
           {descriptions.map((description) => (
             <Paragraph key={description}>{description}</Paragraph>
           ))}

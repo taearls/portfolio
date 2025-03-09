@@ -93,6 +93,7 @@ const config: Array<Linter.Config> = [
         "ignorePackages",
         { checkTypeImports: true },
       ],
+      "import/no-cycle": "error",
       "import/no-deprecated": "warn",
       "import/no-extraneous-dependencies": "error",
       "import/no-mutable-exports": "warn",

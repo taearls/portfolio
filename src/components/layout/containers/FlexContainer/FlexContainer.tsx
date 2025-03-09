@@ -1,4 +1,5 @@
 import type { FlexContainerProps } from "@/types/FlexContainer.ts";
+
 import {
   getAlignItemsClass,
   getFlexFlowClass,
@@ -16,6 +17,7 @@ export default function FlexContainer({
   justifyContent,
   alignItems,
   children,
+  inline = false,
   fullWidth = false,
 }: FlexContainerProps) {
   const flexFlowClass = getFlexFlowClass(flexFlow, responsive?.flexFlow);
@@ -34,7 +36,7 @@ export default function FlexContainer({
     <div
       id={id}
       className={mergeClasses(
-        "flex",
+        inline ? "inline-flex" : "flex",
         fullWidth && "w-full",
         flexFlowClass,
         justifyContentClass != null && justifyContentClass.toString(),

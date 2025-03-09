@@ -1,5 +1,4 @@
 import type { ReactElement } from "react";
-
 import type {
   AlignItemsCSSType,
   FlexFlowCSSType,
@@ -9,6 +8,7 @@ import type {
 } from "./layout.ts";
 
 export type FlexContainerProps = {
+  inline?: boolean;
   flexFlow?: FlexFlowCSSType;
   responsive?: {
     flexFlow?:
