@@ -1,14 +1,17 @@
-// // eslint-disable-next-line import/no-unresolved
-// import ids from "virtual:svg-icons-names";
+import type { SvgIconVariant } from "@/types/svg.ts";
 
 import { mergeClasses } from "@/util/styling/styling.utils.ts";
-import { SocialMediaIconVariants } from "../SocialMediaIcons/SocialMediaIcons";
+import RenderIf from "../layout/RenderIf.tsx";
 
 export type SvgIconProps = {
-  name: string;
+  name: SvgIconVariant;
   accent?: boolean;
   color?: string;
+  title?: string;
   hoverOpacity?: boolean;
+  width?: string;
+  height?: string;
+  description?: string;
 };
 
 const defaultColor = window
@@ -19,6 +22,10 @@ export default function SvgIcon({
   name,
   accent = true,
   color = defaultColor,
+  width,
+  title,
+  description,
+  height,
   hoverOpacity = false,
 }: SvgIconProps) {
   const symbolId = `/icons/sprite.svg#${name}`;
@@ -26,12 +33,17 @@ export default function SvgIcon({
   return (
     <svg
       fill={color}
+      width={width}
+      height={height}
       className={mergeClasses(
         accent && "accent",
         hoverOpacity && "hover:opacity-75",
       )}
     >
-      <title>{name.replace("Icon", "")}</title>
+      <title>{title ?? name.replace("Icon", "")}</title>
+      <RenderIf condition={description != null}>
+        <desc>{description}</desc>
+      </RenderIf>
       <use href={symbolId}></use>
     </svg>
   );

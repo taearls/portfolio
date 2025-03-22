@@ -3,7 +3,6 @@ import type { SocialMediaIconProps } from "@/components/SocialMediaIcons/SocialM
 import FlexContainer from "@/components/layout/containers/FlexContainer/FlexContainer.tsx";
 import SocialMediaIcon from "@/components/SocialMediaIcons/SocialMediaIcon.tsx";
 import { JustifyContentCSSValue } from "@/types/layout.ts";
-import { ValueOf } from "@/types/util.ts";
 import BandcampIcon from "../icons/BandcampIcon.tsx";
 import BlueskyIcon from "../icons/BlueskyIcon.tsx";
 import GithubIcon from "../icons/GithubIcon.tsx";
@@ -12,19 +11,6 @@ import MoonIcon from "../icons/MoonIcon.tsx";
 import SpotifyIcon from "../icons/SpotifyIcon.tsx";
 import SunIcon from "../icons/SunIcon.tsx";
 import YouTubeIcon from "../icons/YouTubeIcon.tsx";
-
-export const SocialMediaIconVariants = {
-  BANDCAMP: "BandcampIcon",
-  BLUESKY: "BlueskyIcon",
-  GITHUB: "GithubIcon",
-  INSTAGRAM: "InstagramIcon",
-  MOON: "MoonIcon",
-  SPOTIFY: "SpotifyIcon",
-  SUN: "SunIcon",
-  YOUTUBE: "YouTubeIcon",
-} as const;
-
-type SocialMediaIconVariant = ValueOf<typeof SocialMediaIconVariants>;
 
 const SOCIAL_MEDIA_ICONS: Array<SocialMediaIconProps> = [
   {
@@ -48,16 +34,16 @@ const SOCIAL_MEDIA_ICONS: Array<SocialMediaIconProps> = [
     name: "YouTube",
   },
   {
+    accent: false,
     href: "",
     icon: <SunIcon />,
     name: "Sun",
-    accent: false,
   },
   {
+    accent: false,
     href: "",
     icon: <MoonIcon />,
     name: "Moon",
-    accent: false,
   },
   {
     href: "https://www.github.com/taearls",
