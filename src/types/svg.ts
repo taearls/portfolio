@@ -6,6 +6,7 @@ export const SVG_ICON_VARIANTS = {
   EXTERNAL_LINK: "ExternalLinkIcon",
   GITHUB: "GithubIcon",
   INSTAGRAM: "InstagramIcon",
+  LINKEDIN: "LinkedInIcon",
   MOON: "MoonIcon",
   SPOTIFY: "SpotifyIcon",
   SUN: "SunIcon",

@@ -3,8 +3,6 @@ import { useCallback, useEffect, useState } from "react";
 import RenderIf from "@/components/layout/RenderIf.tsx";
 import MoonIcon from "../icons/MoonIcon.tsx";
 import SunIcon from "../icons/SunIcon.tsx";
-import { SocialMediaIconVariants } from "../SocialMediaIcons/SocialMediaIcons.tsx";
-import SvgIcon from "../SvgIcon/SvgIcon.tsx";
 
 export default function DarkModeToggle() {
   const prefersDarkColorScheme = window.matchMedia(

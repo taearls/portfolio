@@ -39,6 +39,7 @@ export default function SvgIcon({
         accent && "accent",
         hoverOpacity && "hover:opacity-75",
       )}
+      role="presentation"
     >
       <title>{title ?? name.replace("Icon", "")}</title>
       <RenderIf condition={description != null}>

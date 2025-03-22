@@ -3,20 +3,15 @@ import type { SocialMediaIconProps } from "@/components/SocialMediaIcons/SocialM
 import FlexContainer from "@/components/layout/containers/FlexContainer/FlexContainer.tsx";
 import SocialMediaIcon from "@/components/SocialMediaIcons/SocialMediaIcon.tsx";
 import { JustifyContentCSSValue } from "@/types/layout.ts";
-import BandcampIcon from "../icons/BandcampIcon.tsx";
 import BlueskyIcon from "../icons/BlueskyIcon.tsx";
 import GithubIcon from "../icons/GithubIcon.tsx";
-import InstagramIcon from "../icons/InstagramIcon.tsx";
-import MoonIcon from "../icons/MoonIcon.tsx";
-import SpotifyIcon from "../icons/SpotifyIcon.tsx";
-import SunIcon from "../icons/SunIcon.tsx";
-import YouTubeIcon from "../icons/YouTubeIcon.tsx";
+import LinkedInIcon from "../icons/LinkedInIcon.tsx";
 
 const SOCIAL_MEDIA_ICONS: Array<SocialMediaIconProps> = [
   {
-    href: "https://cuckooandthebirds.bandcamp.com",
-    icon: <BandcampIcon />,
-    name: "Bandcamp",
+    href: "https://www.github.com/taearls",
+    icon: <GithubIcon />,
+    name: "Github",
   },
   {
     href: "https://bsky.app/profile/tylerearls.com",
@@ -24,36 +19,9 @@ const SOCIAL_MEDIA_ICONS: Array<SocialMediaIconProps> = [
     name: "Bluesky",
   },
   {
-    href: "https://www.instagram.com/tyler__earls",
-    icon: <InstagramIcon />,
-    name: "Instagram",
-  },
-  {
-    href: "https://www.youtube.com/@cuckooandthebirdsmusic",
-    icon: <YouTubeIcon />,
-    name: "YouTube",
-  },
-  {
-    accent: false,
-    href: "",
-    icon: <SunIcon />,
-    name: "Sun",
-  },
-  {
-    accent: false,
-    href: "",
-    icon: <MoonIcon />,
-    name: "Moon",
-  },
-  {
-    href: "https://www.github.com/taearls",
-    icon: <GithubIcon />,
-    name: "Github",
-  },
-  {
-    href: "",
-    icon: <SpotifyIcon />,
-    name: "Spotify",
+    href: "https://www.linkedin.com/in/tylerearls",
+    icon: <LinkedInIcon />,
+    name: "LinkedIn",
   },
 ];
 
