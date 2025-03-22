@@ -7,12 +7,14 @@ export type SocialMediaIconProps = {
   name: string;
   href: string;
   ariaLabel?: string;
+  accent?: boolean;
   icon: ReactNode;
 };
 
 export default function SocialMediaIcon({
   name,
-  ariaLabel = `Go to Cuckoo and the Birds's ${name}`,
+  ariaLabel = `Go to ${name}`,
+  accent = true,
   href,
   icon,
 }: SocialMediaIconProps) {
@@ -20,7 +22,11 @@ export default function SocialMediaIcon({
     <a
       href={href}
       aria-label={ariaLabel}
-      className={mergeClasses(styles["icon-base"], styles["icon"], "accent")}
+      className={mergeClasses(
+        styles["icon-base"],
+        styles["icon"],
+        accent && "accent",
+      )}
       target="_blank"
       rel="noreferrer"
     >

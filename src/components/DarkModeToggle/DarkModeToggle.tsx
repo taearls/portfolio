@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 
-import MoonIcon from "@/components/icons/MoonIcon.tsx";
-import SunIcon from "@/components/icons/SunIcon.tsx";
 import RenderIf from "@/components/layout/RenderIf.tsx";
+import { SocialMediaIconVariants } from "../SocialMediaIcons/SocialMediaIcons.tsx";
+import SvgIcon from "../SvgIcon/SvgIcon.tsx";
 
 export default function DarkModeToggle() {
   const prefersDarkColorScheme = window.matchMedia(
@@ -33,8 +33,13 @@ export default function DarkModeToggle() {
 
   return (
     <button onClick={handleToggle}>
-      <RenderIf condition={isDarkMode} fallback={<MoonIcon />}>
-        <SunIcon />
+      <RenderIf
+        condition={isDarkMode}
+        fallback={
+          <SvgIcon name={SocialMediaIconVariants.MOON} accent={false} />
+        }
+      >
+        <SvgIcon name={SocialMediaIconVariants.SUN} accent={false} color="" />
       </RenderIf>
     </button>
   );
