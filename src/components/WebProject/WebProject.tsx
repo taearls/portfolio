@@ -1,3 +1,4 @@
+import type { FlexContainerProps } from "@/types/FlexContainer.ts";
 import type { WebProjectAnalytics } from "@/types/WebProject.ts";
 
 import { Fragment, useMemo } from "react";
@@ -11,6 +12,7 @@ import {
   AlignItemsCSSValue,
   FlexFlowCSSValue,
   JustifyContentCSSValue,
+  MediaQueryPrefixValue,
 } from "@/types/layout.ts";
 import { getLinkWithAnalytics } from "@/util/utils.ts";
 import RenderIf from "../layout/RenderIf.tsx";
@@ -27,6 +29,18 @@ export type WebProjectProps = {
   tagline: string;
   isLast: boolean;
 };
+
+const webProjectContainerResponsiveStyle: FlexContainerProps["responsive"] = {
+  alignItems: [
+    { prefix: MediaQueryPrefixValue.MD, value: AlignItemsCSSValue.START },
+  ],
+  flexFlow: [{ prefix: MediaQueryPrefixValue.MD, value: FlexFlowCSSValue.ROW }],
+};
+
+const webProjectDescriptionContainerResponsiveStyle: FlexContainerProps["responsive"] =
+  {
+    alignSelf: { prefix: "md", value: AlignItemsCSSValue.BASELINE },
+  };
 
 export default function WebProject({
   analytics,
@@ -53,6 +67,9 @@ export default function WebProject({
         gapX={8}
         gapY={4}
         justifyContent={JustifyContentCSSValue.CENTER}
+        flexFlow={FlexFlowCSSValue.COLUMN}
+        alignItems={AlignItemsCSSValue.CENTER}
+        responsive={webProjectContainerResponsiveStyle}
       >
         <FlexContainer
           inline
@@ -84,9 +101,15 @@ export default function WebProject({
             </Fragment>
           </InlineAnchor>
         </FlexContainer>
-        <FlexContainer inline flexFlow={FlexFlowCSSValue.COLUMN} gapY={4}>
+        <FlexContainer
+          inline
+          flexFlow={FlexFlowCSSValue.COLUMN}
+          alignSelf={AlignItemsCSSValue.START}
+          responsive={webProjectDescriptionContainerResponsiveStyle}
+          gapY={4}
+        >
           {descriptions.map((description) => (
-            <Paragraph key={description} width="w-[30ch]">
+            <Paragraph key={description} width="md:w-[25ch] lg:w-fit">
               {description}
             </Paragraph>
           ))}

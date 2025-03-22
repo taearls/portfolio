@@ -7,30 +7,26 @@ import type {
   ResponsiveValue,
 } from "./layout.ts";
 
+type ResponsiveFlexContainerProp<T> =
+  | Array<ResponsiveValue<T>>
+  | ResponsiveValue<T>;
+
 export type FlexContainerProps = {
   inline?: boolean;
   flexFlow?: FlexFlowCSSType;
   responsive?: {
-    flexFlow?:
-      | Array<ResponsiveValue<FlexFlowCSSType>>
-      | ResponsiveValue<FlexFlowCSSType>;
-    gapX?:
-      | Array<ResponsiveValue<GapCSSType["value"]>>
-      | ResponsiveValue<GapCSSType["value"]>;
-    gapY?:
-      | Array<ResponsiveValue<GapCSSType["value"]>>
-      | ResponsiveValue<GapCSSType["value"]>;
-    justifyContent?:
-      | Array<ResponsiveValue<JustifyContentCSSType>>
-      | ResponsiveValue<JustifyContentCSSType>;
-    alignItems?:
-      | Array<ResponsiveValue<AlignItemsCSSType>>
-      | ResponsiveValue<AlignItemsCSSType>;
+    flexFlow?: ResponsiveFlexContainerProp<FlexFlowCSSType>;
+    gapX?: ResponsiveFlexContainerProp<GapCSSType["value"]>;
+    gapY?: ResponsiveFlexContainerProp<GapCSSType["value"]>;
+    justifyContent?: ResponsiveFlexContainerProp<JustifyContentCSSType>;
+    alignItems?: ResponsiveFlexContainerProp<AlignItemsCSSType>;
+    alignSelf?: ResponsiveFlexContainerProp<AlignItemsCSSType>;
   };
   id?: string;
   gapX?: GapCSSType["value"];
   gapY?: GapCSSType["value"];
   justifyContent?: JustifyContentCSSType;
+  alignSelf?: AlignItemsCSSType;
   alignItems?: AlignItemsCSSType;
   children: ReactElement | Array<ReactElement>;
   fullWidth?: boolean;

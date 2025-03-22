@@ -5,12 +5,14 @@ import type {
   GapCSSType,
   JustifyContentCSSType,
   MediaQueryPrefix,
-  TextAlignmentType} from "@/types/layout.ts";
+  TextAlignmentType,
+} from "@/types/layout.ts";
+
 import {
   AlignItemsCSSValue,
   FlexFlowCSSValue,
   JustifyContentCSSValue,
-  TextAlignment
+  TextAlignment,
 } from "@/types/layout.ts";
 import { intoArray } from "@/util/utils.ts";
 
@@ -170,6 +172,51 @@ export const getFlexFlowClass = (
         responsiveValue.value === FlexFlowCSSValue.COLUMN
           ? "flex-col"
           : "flex-row";
+
+      return getResponsiveClass(responsiveValue.prefix, responsiveBaseClass);
+    }) || [];
+
+  return combineBaseAndResponsiveClasses(baseClass, responsiveClasses);
+};
+
+/**
+ * Helper function to get a flex flow class based on the FlexFlowCSSType passed in. If a responsive value is passed, it will be merged into the resulting class.
+ * @param val - the flex flow css type used to determine the base (non-responsive) class
+ * @param responsive - an optional responsive value which will build the responsive classes to append to the resulting class
+ * @returns a flex flow css class
+ */
+export const getAlignSelfClass = (
+  val?: AlignItemsCSSType,
+  responsive?: NonNullable<FlexContainerProps["responsive"]>["alignSelf"],
+) => {
+  const alignSelfTransform = (classToTransform: string | undefined): string => {
+    let result = "";
+    switch (classToTransform) {
+      case AlignItemsCSSValue.BASELINE:
+        result = "self-baseline";
+        break;
+      case AlignItemsCSSValue.CENTER:
+        result = "self-center";
+        break;
+      case AlignItemsCSSValue.END:
+        result = "self-end";
+        break;
+      case AlignItemsCSSValue.START:
+        result = "self-start";
+        break;
+      case AlignItemsCSSValue.STRETCH:
+        result = "self-stretch";
+        break;
+    }
+
+    return result;
+  };
+
+  const baseClass = alignSelfTransform(val);
+  const array = intoArray(responsive);
+  const responsiveClasses =
+    array.map((responsiveValue) => {
+      const responsiveBaseClass = alignSelfTransform(responsiveValue.value);
 
       return getResponsiveClass(responsiveValue.prefix, responsiveBaseClass);
     }) || [];

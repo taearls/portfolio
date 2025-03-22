@@ -7,6 +7,7 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   safelist: [
+    // FlexContainer classes need to be white listed so they can be added dynamically.
     {
       pattern: /flex-(row|col)/,
       variants: ["sm", "md", "lg", "xl", "2xl"],
@@ -18,6 +19,10 @@ const config: Config = {
     },
     {
       pattern: /items-(baseline|center|end|start|stretch)/,
+      variants: ["sm", "md", "lg", "xl", "2xl"],
+    },
+    {
+      pattern: /self-(baseline|center|end|start|stretch)/,
       variants: ["sm", "md", "lg", "xl", "2xl"],
     },
     {

@@ -2,6 +2,7 @@ import type { FlexContainerProps } from "@/types/FlexContainer.ts";
 
 import {
   getAlignItemsClass,
+  getAlignSelfClass,
   getFlexFlowClass,
   getGapClass,
   getJustifyContentClass,
@@ -11,6 +12,7 @@ import {
 export default function FlexContainer({
   flexFlow,
   responsive,
+  alignSelf,
   id,
   gapX,
   gapY,
@@ -21,6 +23,7 @@ export default function FlexContainer({
   fullWidth = false,
 }: FlexContainerProps) {
   const flexFlowClass = getFlexFlowClass(flexFlow, responsive?.flexFlow);
+  const alignSelfClass = getAlignSelfClass(alignSelf, responsive?.alignSelf);
   const justifyContentClass = getJustifyContentClass(
     justifyContent,
     responsive?.justifyContent,
@@ -39,6 +42,7 @@ export default function FlexContainer({
         inline ? "inline-flex" : "flex",
         fullWidth && "w-full",
         flexFlowClass,
+        alignSelfClass != null && alignSelfClass.toString(),
         justifyContentClass != null && justifyContentClass.toString(),
         alignItemsClass != null && alignItemsClass.toString(),
         gapXClass,
