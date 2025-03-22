@@ -40,7 +40,8 @@ export default function WebProject({
   tagline,
   isLast,
 }: WebProjectProps) {
-  const cursorStyleProp = useMemo(
+  // TODO: figure out how to apply this to space clones project on hover.
+  const _cursorStyleProp = useMemo(
     () => ({ cursor: cursorStyle }),
     [cursorStyle],
   );
