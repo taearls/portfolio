@@ -7,7 +7,11 @@ import InlineAnchor from "@/components/InlineAnchor/InlineAnchor.tsx";
 import FlexContainer from "@/components/layout/containers/FlexContainer/FlexContainer.tsx";
 import HeadingTwo from "@/components/layout/headings/HeadingTwo.tsx";
 import Paragraph from "@/components/layout/Paragraph/Paragraph.tsx";
-import { AlignItemsCSSValue, FlexFlowCSSValue } from "@/types/layout.ts";
+import {
+  AlignItemsCSSValue,
+  FlexFlowCSSValue,
+  JustifyContentCSSValue,
+} from "@/types/layout.ts";
 import { getLinkWithAnalytics } from "@/util/utils.ts";
 import RenderIf from "../layout/RenderIf.tsx";
 
@@ -44,7 +48,11 @@ export default function WebProject({
   return (
     <FlexContainer flexFlow={FlexFlowCSSValue.COLUMN} gapY={8}>
       <HeadingTwo>{name}</HeadingTwo>
-      <FlexContainer gapX={8} gapY={4}>
+      <FlexContainer
+        gapX={8}
+        gapY={4}
+        justifyContent={JustifyContentCSSValue.CENTER}
+      >
         <FlexContainer
           inline
           flexFlow={FlexFlowCSSValue.COLUMN}
@@ -75,9 +83,11 @@ export default function WebProject({
             </Fragment>
           </InlineAnchor>
         </FlexContainer>
-        <FlexContainer inline flexFlow={FlexFlowCSSValue.COLUMN}>
+        <FlexContainer inline flexFlow={FlexFlowCSSValue.COLUMN} gapY={4}>
           {descriptions.map((description) => (
-            <Paragraph key={description}>{description}</Paragraph>
+            <Paragraph key={description} width="w-[30ch]">
+              {description}
+            </Paragraph>
           ))}
         </FlexContainer>
       </FlexContainer>

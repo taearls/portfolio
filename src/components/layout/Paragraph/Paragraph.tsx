@@ -1,4 +1,5 @@
 import type { TextAlignmentType } from "@/types/layout.ts";
+
 import { TextAlignment } from "@/types/layout.ts";
 import {
   getTextAlignmentClass,
@@ -10,6 +11,7 @@ export type ParagraphProps = {
   accent?: boolean;
   italic?: boolean;
   width?: string;
+  maxWidth?: string;
   alignment?: TextAlignmentType;
   "data-testid"?: string;
 };
@@ -19,6 +21,7 @@ export default function Paragraph({
   children,
   accent = false,
   italic = false,
+  maxWidth = "max-w-65ch",
   width,
   alignment = TextAlignment.LEFT,
 }: ParagraphProps) {
@@ -31,7 +34,8 @@ export default function Paragraph({
         italic && "italic",
         width != null && width,
         alignmentClass,
-        "max-w-65ch text-lg leading-normal md:text-xl",
+        maxWidth,
+        "text-lg leading-normal md:text-xl",
       )}
     >
       {children}

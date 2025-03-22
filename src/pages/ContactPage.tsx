@@ -14,21 +14,23 @@ export default function Contact() {
     <main>
       <FlexContainer
         flexFlow={FlexFlowCSSValue.COLUMN}
-        alignItems={AlignItemsCSSValue.BASELINE}
+        alignItems={AlignItemsCSSValue.CENTER}
         gapY={4}
       >
         <FlexContainer justifyContent={JustifyContentCSSValue.CENTER} fullWidth>
           <HeadingOne>{"Contact Tyler Earls"}</HeadingOne>
         </FlexContainer>
-        <FlexContainer>
+        <FlexContainer
+          justifyContent={JustifyContentCSSValue.CENTER}
+          flexFlow={FlexFlowCSSValue.COLUMN}
+          gapY={4}
+        >
           <Paragraph>
             {
               "If you're interested in hiring me for coding work, my music, or just want to say hello—I'd love to hear from you. I'm a voracious learner, and nothing is too nerdy or niche for my taste."
             }
           </Paragraph>
-        </FlexContainer>
 
-        <FlexContainer>
           <Paragraph>
             {"The best way to reach me is via email at "}
             <InlineAnchor
