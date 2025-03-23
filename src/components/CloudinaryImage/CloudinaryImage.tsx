@@ -1,3 +1,5 @@
+import type { Transformation } from "@cloudinary/url-gen/index";
+
 import { fill } from "@cloudinary/url-gen/actions/resize";
 import { useMemo } from "react";
 
@@ -8,6 +10,7 @@ export type CloudinaryImageProps = {
   publicId: string;
   width?: number;
   height?: number;
+  transformation?: Transformation | string;
 };
 
 export default function CloudinaryImage({
@@ -15,10 +18,15 @@ export default function CloudinaryImage({
   publicId,
   width = 500,
   height = 500,
+  transformation,
 }: CloudinaryImageProps) {
   const img = CLOUDINARY_INSTANCE.image(publicId);
 
-  img.resize(fill().width(width).height(height));
+  if (transformation) {
+    img.addTransformation(transformation);
+  } else {
+    img.resize(fill().width(width).height(height));
+  }
 
   const style = useMemo(
     () => ({ height: "auto", maxWidth: "var(--max-width-mobile)", width }),

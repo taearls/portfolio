@@ -1,3 +1,4 @@
+import CloudinaryImage from "@/components/CloudinaryImage/CloudinaryImage.tsx";
 import InlineAnchor from "@/components/InlineAnchor/InlineAnchor.tsx";
 import FlexContainer from "@/components/layout/containers/FlexContainer/FlexContainer.tsx";
 import HeadingOne from "@/components/layout/headings/HeadingOne.tsx";
@@ -26,6 +27,16 @@ export default function HomePage() {
             {"I am a software engineer and musician."}
           </HeadingOne>
         </FlexContainer>
+
+        <CloudinaryImage
+          publicId="profile_pic"
+          width={400}
+          height={400}
+          alt="Picture of Tyler Earls standing in front of a brick wall"
+          transformation={
+            "ar_1:1,c_thumb,g_xy_center,r_max,w_800,x_730,y_800,f_png"
+          }
+        />
 
         <Paragraph>
           {"Professionally, I write software as a consultant for "}
