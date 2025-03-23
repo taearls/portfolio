@@ -3,7 +3,7 @@ import type { CSSProperties, ReactNode } from "react";
 import { Fragment } from "react";
 
 import { mergeClasses } from "@/util/styling/styling.utils.ts";
-import RenderIf from "../layout/RenderIf";
+import RenderIf from "../layout/RenderIf.tsx";
 
 export type TodoProps = {
   description: string;
