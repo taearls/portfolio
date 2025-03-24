@@ -12,8 +12,6 @@ const DEFAULT_PROP_VALUES: ExternalLinkIconProps = {
   title: "External Link",
 };
 
-// TODO: remove whitespace around this image.
-
 export default function ExternalLinkIcon({
   title = DEFAULT_PROP_VALUES.title,
   description = DEFAULT_PROP_VALUES.description,
@@ -24,8 +22,8 @@ export default function ExternalLinkIcon({
       accent={false}
       title={title}
       description={description}
-      width="24"
-      height="24"
+      width="18"
+      height="18"
     />
   );
 }
