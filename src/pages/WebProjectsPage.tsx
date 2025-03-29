@@ -2,6 +2,7 @@ import InlineAnchor from "@/components/InlineAnchor/InlineAnchor.tsx";
 import FlexContainer from "@/components/layout/containers/FlexContainer/FlexContainer.tsx";
 import HeadingOne from "@/components/layout/headings/HeadingOne.tsx";
 import Paragraph from "@/components/layout/Paragraph/Paragraph.tsx";
+import Todo from "@/components/Todo/Todo.tsx";
 import WebProject from "@/components/WebProject/WebProject.tsx";
 import { AlignItemsCSSValue, FlexFlowCSSValue } from "@/types/layout.ts";
 import { WEB_PROJECTS } from "@/util/constants.ts";
@@ -54,6 +55,8 @@ export default function WebProjectsPage() {
             {"."}
           </Paragraph>
         </FlexContainer>
+
+        <Todo description="Make this into a carousel component" />
 
         <FlexContainer flexFlow={FlexFlowCSSValue.COLUMN} gapY={8}>
           {WEB_PROJECTS.map((webProject, index) => (

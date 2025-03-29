@@ -65,6 +65,8 @@ export default function HomePage() {
           }
         </Paragraph>
 
+        <Todo description="some sort of tech-looking pic" />
+
         <FlexContainer gapY={2}>
           <Paragraph>
             {
@@ -81,7 +83,7 @@ export default function HomePage() {
             {"."}
           </Paragraph>
         </FlexContainer>
-        <Paragraph>
+        {/* <Paragraph>
           {
             "I'm also developing a Rust crate that leverages music theory to generate valid chords and scales from user input. If you'd like, check out the "
           }
@@ -94,7 +96,9 @@ export default function HomePage() {
             documentation
           </InlineAnchor>
           {" for Audiate to keep up-to-date with my progress."}
-        </Paragraph>
+        </Paragraph> */}
+
+        <Todo description="Add a band pic" />
 
         <Paragraph>
           {"Outside of tech, I write songs and lead a band called "}
@@ -118,6 +122,8 @@ export default function HomePage() {
           </InlineAnchor>
           {"."}
         </Paragraph>
+
+        <Todo description="add a fun star trek pic, maybe myself at the convention." />
 
         <Paragraph>
           {
