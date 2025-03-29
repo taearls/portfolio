@@ -3,6 +3,7 @@ import InlineAnchor from "@/components/InlineAnchor/InlineAnchor.tsx";
 import FlexContainer from "@/components/layout/containers/FlexContainer/FlexContainer.tsx";
 import HeadingOne from "@/components/layout/headings/HeadingOne.tsx";
 import Paragraph from "@/components/layout/Paragraph/Paragraph.tsx";
+import Todo from "@/components/Todo/Todo.tsx";
 import { AlignItemsCSSValue, FlexFlowCSSValue } from "@/types/layout.ts";
 
 export default function HomePage() {
@@ -52,6 +53,11 @@ export default function HomePage() {
             ". I look forward to collaborating with clients to build modern user experiences with scalability, maintainability, and a11y in mind."
           }
         </Paragraph>
+
+        <Todo
+          className="h-[500px] w-[500px] rounded-md bg-pink-500 text-2xl font-bold dark:bg-pink-400 dark:text-soft-black"
+          description="I should add a pic of my guitars / amps, or myself at a show or something."
+        />
 
         <Paragraph>
           {

@@ -1,7 +1,10 @@
+import type { FlexContainerProps } from "@/types/FlexContainer.ts";
+import type { RouteDataItem } from "@/util/constants/data/navigation/navigationData.tsx";
+import type { NavLinkRenderProps } from "react-router";
+
 import { useMachine } from "@xstate/react";
 import { useCallback } from "react";
-import type { NavLinkRenderProps } from "react-router";
-import { NavLink } from "react-router";
+import { NavLink, useLocation } from "react-router";
 
 import DarkModeToggle from "@/components/DarkModeToggle/DarkModeToggle.tsx";
 import { InlineAnchorContent } from "@/components/InlineAnchor/InlineAnchor.tsx";
@@ -14,9 +17,7 @@ import {
   NAVIGATION_STATE,
   navigationMachine,
 } from "@/state/navigationMachine.ts";
-import type { FlexContainerProps } from "@/types/FlexContainer.ts";
 import { FlexFlowCSSValue, MediaQueryPrefixValue } from "@/types/layout.ts";
-import type { RouteDataItem } from "@/util/constants/data/navigation/navigationData.tsx";
 import { mergeClasses } from "@/util/styling/styling.utils.ts";
 import styles from "./NavigationBar.module.css";
 
@@ -33,14 +34,18 @@ const navigationContainerResponsiveProp: FlexContainerProps["responsive"] = {
 };
 
 export default function NavigationBar({ links }: NavigationBarProps) {
-  const [current, send] = useMachine(navigationMachine);
+  const [isNavigationOpen, sendNavigationUpdate] =
+    useMachine(navigationMachine);
+  const location = useLocation();
+  const selectedLink = links.find((link) => link.href === location.pathname);
 
   const handleToggle = useCallback(() => {
-    send({ type: NAVIGATION_EVENT.TOGGLE });
-  }, [send]);
+    sendNavigationUpdate({ type: NAVIGATION_EVENT.TOGGLE });
+  }, [sendNavigationUpdate]);
 
   const getNavLinkClass = useCallback(
-    (props: NavLinkRenderProps) => mergeClasses(props.isActive && "active"),
+    (props: NavLinkRenderProps) =>
+      mergeClasses(props.isActive && "active underline decoration-4"),
     [],
   );
 
@@ -50,7 +55,7 @@ export default function NavigationBar({ links }: NavigationBarProps) {
         role="menu"
         className={mergeClasses(styles["navigation-list-container"])}
       >
-        <RenderIf condition={current.value === NAVIGATION_STATE.OPEN}>
+        <RenderIf condition={isNavigationOpen.value === NAVIGATION_STATE.OPEN}>
           <FlexContainer
             flexFlow={FlexFlowCSSValue.COLUMN}
             responsive={navigationContainerResponsiveProp}
@@ -73,7 +78,7 @@ export default function NavigationBar({ links }: NavigationBarProps) {
                       <InlineAnchorContent
                         isExternal={Boolean(link.isExternal)}
                         bold
-                        underline={false}
+                        underline={selectedLink?.href === link.href}
                       >
                         {link.name}
                       </InlineAnchorContent>
@@ -86,11 +91,11 @@ export default function NavigationBar({ links }: NavigationBarProps) {
       </ul>
 
       <div className={mergeClasses(styles["navigation-toggle-container"])}>
-        <RenderIf condition={current.value === NAVIGATION_STATE.OPEN}>
+        <RenderIf condition={isNavigationOpen.value === NAVIGATION_STATE.OPEN}>
           <DarkModeToggle />
         </RenderIf>
         <NavigationToggle
-          active={current.value === NAVIGATION_STATE.OPEN}
+          active={isNavigationOpen.value === NAVIGATION_STATE.OPEN}
           onClick={handleToggle}
         />
       </div>

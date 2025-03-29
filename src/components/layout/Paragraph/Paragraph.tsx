@@ -35,7 +35,7 @@ export default function Paragraph({
         width != null && width,
         alignmentClass,
         maxWidth,
-        "text-lg leading-normal md:text-xl",
+        "text-lg leading-normal lg:text-xl",
       )}
     >
       {children}
