@@ -3,6 +3,7 @@ import type { JSX } from "react";
 import ContactPage from "@/pages/ContactPage.tsx";
 import HomePage from "@/pages/HomePage.tsx";
 import NotFoundPage from "@/pages/NotFoundPage.tsx";
+import ResumePage from "@/pages/ResumePage.tsx";
 import WebProjects from "@/pages/WebProjectsPage.tsx";
 
 export type RouteDataChildItem = {
@@ -36,12 +37,7 @@ const routes: Array<RouteDataItem> = [
         href: "",
         index: true,
       },
-      // {
-      //   component: <MusicDetailsPage />,
-      //   href: ":releaseId",
-      // },
     ],
-    // component: <MusicPageOutlet />,
     href: "/code",
     name: "Code",
   },
@@ -51,29 +47,12 @@ const routes: Array<RouteDataItem> = [
     href: "/contact",
     name: "Contact",
   },
-  // {
-  //   href: "/shows",
-  //   name: "Shows",
-  //   childLinks: [],
-  // },
-  // {
-  //   ariaLabel: "Visit Press Page",
-  //   component: <PressPage />,
-  //   href: "/press",
-  //   name: "Press",
-  // },
-  // {
-  //   ariaLabel: "Visit Booking Page",
-  //   component: <BookingPage />,
-  //   href: "/booking",
-  //   name: "Booking",
-  // },
-  // {
-  //   ariaLabel: "Listen to Tyler's music on Bandcamp",
-  //   href: "https://cuckooandthebirds.bandcamp.com",
-  //   isExternal: true,
-  //   name: "Bandcamp",
-  // },
+  {
+    ariaLabel: "Visit Resume Page",
+    component: <ResumePage />,
+    href: "/resume",
+    name: "Resume",
+  },
   {
     ariaLabel: "Navigate To 404 Page",
     component: <NotFoundPage />,
