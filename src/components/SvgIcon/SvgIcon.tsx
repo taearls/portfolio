@@ -5,6 +5,8 @@ import RenderIf from "../layout/RenderIf.tsx";
 
 export type SvgIconProps = {
   name: SvgIconVariant;
+  id?: string;
+  "data-testid"?: string;
   accent?: boolean;
   color?: string;
   title?: string;
@@ -19,7 +21,9 @@ const defaultColor = window
   .getPropertyValue("--accent-color");
 
 export default function SvgIcon({
+  id,
   name,
+  "data-testid": testId,
   accent = true,
   color = defaultColor,
   width,
@@ -32,6 +36,8 @@ export default function SvgIcon({
 
   return (
     <svg
+      id={id}
+      data-testid={testId}
       fill={color}
       width={width}
       height={height}

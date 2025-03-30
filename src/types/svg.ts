@@ -11,7 +11,7 @@ export const SVG_ICON_VARIANTS = {
   SPOTIFY: "SpotifyIcon",
   SUN: "SunIcon",
   YOUTUBE: "YouTubeIcon",
-} as const;
+} as const satisfies Record<string, string>;
 
 export type SvgIconVariants = typeof SVG_ICON_VARIANTS;
 

@@ -6,6 +6,8 @@ export default function SunIcon() {
     <SvgIcon
       name={SVG_ICON_VARIANTS.SUN}
       accent={false}
+      id="sun-icon"
+      data-testid="sun-icon"
       color=""
       hoverOpacity
       height="24"

@@ -6,6 +6,8 @@ export default function MoonIcon() {
     <SvgIcon
       name={SVG_ICON_VARIANTS.MOON}
       accent={false}
+      id="moon-icon"
+      data-testid="moon-icon"
       color=""
       hoverOpacity
       height="24"
