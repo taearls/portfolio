@@ -1,6 +1,6 @@
 import { Cloudinary } from "@cloudinary/url-gen";
 
-export const WEBSITE_EMAIL = "cuckooandthebirds@gmail.com";
+export const WEBSITE_EMAIL = "tyler.a.earls@gmail.com";
 
 export const EMAIL_REGEX = new RegExp(
   "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$",
