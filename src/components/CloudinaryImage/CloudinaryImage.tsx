@@ -8,6 +8,7 @@ import { CLOUDINARY_INSTANCE } from "@/util/constants/constants.ts";
 export type CloudinaryImageProps = {
   alt: string;
   publicId: string;
+  directory?: string;
   width?: number;
   height?: number;
   transformation?: Transformation | string;
@@ -16,11 +17,14 @@ export type CloudinaryImageProps = {
 export default function CloudinaryImage({
   alt,
   publicId,
+  directory,
   width = 500,
   height = 500,
   transformation,
 }: CloudinaryImageProps) {
-  const img = CLOUDINARY_INSTANCE.image(publicId);
+  const img = CLOUDINARY_INSTANCE.image(
+    `${directory != null ? directory + "/" : ""}${publicId}`,
+  );
 
   if (transformation) {
     img.addTransformation(transformation);

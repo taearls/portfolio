@@ -30,10 +30,11 @@ export default function HomePage() {
         </FlexContainer>
 
         <CloudinaryImage
-          publicId="profile_pic"
+          publicId="front_of_brick_wall_smiling"
+          directory="profile"
           width={400}
           height={400}
-          alt="Picture of Tyler Earls standing in front of a brick wall"
+          alt="Picture of Tyler Earls standing in front of a brick wall and smiling"
           transformation={
             "ar_1:1,c_thumb,g_xy_center,r_max,w_800,x_730,y_800,f_png"
           }
@@ -54,9 +55,11 @@ export default function HomePage() {
           }
         </Paragraph>
 
-        <Todo
-          className="h-[500px] w-[500px] rounded-md bg-pink-500 text-2xl font-bold dark:bg-pink-400 dark:text-soft-black"
-          description="I should add a pic of my guitars / amps, or myself at a show or something."
+        <CloudinaryImage
+          publicId="cuckoo_show_at_bungalow"
+          directory="profile"
+          alt="Tyler talking in the microphone while preparing for the next song at a basement show with their band, Cuckoo and the Birds."
+          transformation={"ar_3:4,c_crop,g_face,w_900"}
         />
 
         <Paragraph>
@@ -123,8 +126,11 @@ export default function HomePage() {
           {"."}
         </Paragraph>
 
-        <Todo description="add a fun star trek pic, maybe myself at the convention." />
-
+        <CloudinaryImage
+          publicId="star_trek_convention_captains_chair"
+          alt="Tyler sitting in a replica of Captain Picard's chair at the Star Trek convention in Chicago, circa 2022."
+          transformation={"c_crop,e_upscale,g_center,q_auto:best"}
+        />
         <Paragraph>
           {
             "I'm also a very avid Star Trek fan. During these difficult times, I find comfort in its optimistic view on the potential of humanity and its future."
