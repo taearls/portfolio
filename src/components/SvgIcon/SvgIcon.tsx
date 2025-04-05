@@ -1,4 +1,5 @@
 import type { SvgIconVariant } from "@/types/svg.ts";
+import type { SVGAttributes } from "react";
 
 import { mergeClasses } from "@/util/styling/styling.utils.ts";
 import RenderIf from "../layout/RenderIf.tsx";
@@ -14,6 +15,7 @@ export type SvgIconProps = {
   width?: string;
   height?: string;
   description?: string;
+  role?: SVGAttributes<SVGSVGElement>["role"];
 };
 
 const defaultColor = window
@@ -31,6 +33,7 @@ export default function SvgIcon({
   description,
   height,
   hoverOpacity = false,
+  role,
 }: SvgIconProps) {
   const symbolId = `/icons/sprite.svg#${name}`;
 
@@ -45,9 +48,9 @@ export default function SvgIcon({
         accent && "accent",
         hoverOpacity && "hover:opacity-75",
       )}
-      role="presentation"
+      role={role}
     >
-      <title>{title ?? name.replace("Icon", "")}</title>
+      <title>{title ?? name}</title>
       <RenderIf condition={description != null}>
         <desc>{description}</desc>
       </RenderIf>
