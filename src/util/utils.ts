@@ -1,10 +1,10 @@
-import { WebProjectAnalytics } from "@/components/WebProject/WebProject";
-import { TextAlignment } from ".";
+import type { TextAlignmentType } from "@/types/layout.ts";
+import type { WebProjectAnalytics } from "@/types/WebProject.ts";
 
 export const cloneDeep = <T extends object>(item: T) =>
   JSON.parse(JSON.stringify(item));
 
-export const getTextAlignmentClass = (alignment: TextAlignment): string => {
+export const getTextAlignmentClass = (alignment: TextAlignmentType): string => {
   switch (alignment) {
     case "left": {
       return "text-left";
@@ -47,4 +47,27 @@ export const getLinkWithAnalytics = (
 
 export const getCurrentYear = () => {
   return new Date().getFullYear();
+};
+
+/**
+ * Helper function to safely convert a type T into an Array<T>
+ * @param item - the item to convert into an array
+ * @returns - an array of type Array<T>
+ */
+export const intoArray = <T>(item: T | Array<T> | undefined): Array<T> => {
+  if (!item) {
+    return [] as Array<T>;
+  }
+
+  return Array.isArray(item) ? item : [item];
+};
+
+export const getRandomNumberInRange = ({
+  max,
+  min = 1,
+}: {
+  max: number;
+  min?: number;
+}): number => {
+  return Math.floor(Math.random() * (max - min + 1) + min);
 };

@@ -28,10 +28,14 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  /* animation: loading-light-mode 1s infinite ease; */
+}
+
+html.light-theme .loading-spinner {
   animation: loading-light-mode 1s infinite ease;
 }
-/* TODO: figure out how to target dark mode */
-.loading-spinner-dark {
+
+html.dark-theme .loading-spinner {
   animation: loading-dark-mode 1s infinite ease;
 }
 

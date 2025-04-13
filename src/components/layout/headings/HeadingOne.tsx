@@ -1,14 +1,23 @@
-import { HeadingProps } from "./types";
-import { getTextAlignmentClass } from "@/util";
+import type { HeadingProps} from "@/types/layout.ts";
+import { TextAlignment } from "@/types/layout.ts";
+import {
+  getTextAlignmentClass,
+  mergeClasses,
+} from "@/util/styling/styling.utils.ts";
 
 export default function HeadingOne({
   children,
-  align = "center",
+  align = TextAlignment.CENTER,
+  accent = true,
 }: HeadingProps) {
   const alignmentClass = getTextAlignmentClass(align);
   return (
     <h1
-      className={`${alignmentClass} mb-4 text-4xl font-extrabold text-purple-700 dark:text-purple-400`}
+      className={mergeClasses(
+        alignmentClass,
+        accent && "accent",
+        "text-4xl font-extrabold",
+      )}
     >
       {children}
     </h1>
