@@ -3,7 +3,6 @@ import type { JSX } from "react";
 import ContactPage from "@/pages/ContactPage.tsx";
 import HomePage from "@/pages/HomePage.tsx";
 import NotFoundPage from "@/pages/NotFoundPage.tsx";
-import ResumePage from "@/pages/ResumePage.tsx";
 import WebProjects from "@/pages/WebProjectsPage.tsx";
 
 export type RouteDataChildItem = {
@@ -46,12 +45,6 @@ const routes: Array<RouteDataItem> = [
     component: <ContactPage />,
     href: "/contact",
     name: "Contact",
-  },
-  {
-    ariaLabel: "Visit Resume Page",
-    component: <ResumePage />,
-    href: "/resume",
-    name: "Resume",
   },
   {
     ariaLabel: "Navigate To 404 Page",

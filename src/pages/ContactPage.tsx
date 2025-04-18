@@ -2,7 +2,6 @@ import InlineAnchor from "@/components/InlineAnchor/InlineAnchor.tsx";
 import FlexContainer from "@/components/layout/containers/FlexContainer/FlexContainer.tsx";
 import HeadingOne from "@/components/layout/headings/HeadingOne.tsx";
 import Paragraph from "@/components/layout/Paragraph/Paragraph.tsx";
-import Todo from "@/components/Todo/Todo.tsx";
 import {
   AlignItemsCSSValue,
   FlexFlowCSSValue,
@@ -44,11 +43,6 @@ export default function Contact() {
             {"."}
           </Paragraph>
         </FlexContainer>
-
-        <Todo
-          description="I should add a pic of myself, something fun."
-          className="h-[500px] w-[500px] rounded-md bg-pink-500 text-2xl font-bold dark:bg-pink-400 dark:text-soft-black"
-        ></Todo>
       </FlexContainer>
 
       {/* <ContactForm /> */}

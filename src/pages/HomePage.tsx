@@ -94,12 +94,12 @@ export default function HomePage() {
           {"."}
         </Paragraph>
 
-        <CloudinaryImage
+        {/* <CloudinaryImage
           publicId="cuckoo_show_at_bungalow"
           directory="profile"
           alt="Tyler talking in the microphone while preparing for the next song at a basement show with their band, Cuckoo and the Birds."
           transformation={"ar_3:4,c_crop,g_face,w_900"}
-        />
+        /> */}
 
         <Paragraph>
           {
@@ -113,11 +113,11 @@ export default function HomePage() {
           transformation={"c_crop,e_upscale,g_center,q_auto:best"}
         /> */}
 
-        <CloudinaryImage
+        {/* <CloudinaryImage
           publicId="star_trek_convention_photo_abstract"
           alt="A heavily distorted and abstract photo of Tyler sitting in a replica of Captain Picard's chair at the Star Trek convention in Chicago, circa 2022."
           transformation={"c_crop,e_upscale,g_center,q_auto:best"}
-        />
+        /> */}
       </FlexContainer>
     </main>
   );
