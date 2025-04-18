@@ -1,4 +1,5 @@
 import type { TextAlignmentType } from "@/types/layout.ts";
+import type { ReactNode } from "react";
 
 import { TextAlignment } from "@/types/layout.ts";
 import {
@@ -7,7 +8,7 @@ import {
 } from "@/util/styling/styling.utils.ts";
 
 export type ParagraphProps = {
-  children: React.ReactNode | Array<React.ReactNode>;
+  children: ReactNode | Array<ReactNode>;
   accent?: boolean;
   italic?: boolean;
   width?: string;

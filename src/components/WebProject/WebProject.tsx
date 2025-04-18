@@ -1,7 +1,6 @@
 import type { FlexContainerProps } from "@/types/FlexContainer.ts";
 import type { WebProjectAnalytics } from "@/types/WebProject.ts";
-
-import { Fragment, useMemo } from "react";
+import type { ReactNode } from "react";
 
 import CloudinaryImage from "@/components/CloudinaryImage/CloudinaryImage.tsx";
 import InlineAnchor from "@/components/InlineAnchor/InlineAnchor.tsx";
@@ -23,7 +22,7 @@ export type WebProjectProps = {
   alt: string;
   cursorStyle?: string;
   descriptions: Array<string>;
-  emoji?: string;
+  emoji?: ReactNode;
   href: string;
   name: string;
   tagline: string;
@@ -46,19 +45,19 @@ export default function WebProject({
   analytics,
   cloudinaryId,
   alt,
-  cursorStyle = "pointer",
+  // cursorStyle = "pointer",
   descriptions,
-  emoji,
+  // emoji,
   href,
   name,
   tagline,
   isLast,
 }: WebProjectProps) {
-  // TODO: figure out how to apply this to space clones project on hover.
-  const _cursorStyleProp = useMemo(
-    () => ({ cursor: cursorStyle }),
-    [cursorStyle],
-  );
+  // // TODO: figure out how to apply this to space clones project on hover.
+  // const _cursorStyleProp = useMemo(
+  //   () => ({ cursor: cursorStyle }),
+  //   [cursorStyle],
+  // );
 
   return (
     <FlexContainer flexFlow={FlexFlowCSSValue.COLUMN} gapY={8}>
@@ -78,9 +77,7 @@ export default function WebProject({
         >
           <InlineAnchor
             href={getLinkWithAnalytics(href, analytics)}
-            ariaLabel={`Go to ${href}`}
-            // rel={"noreferrer"}
-            // style={cursorStyleProp}
+            ariaLabel={`Navigate to ${name}`}
           >
             <CloudinaryImage
               alt={alt}
@@ -95,10 +92,9 @@ export default function WebProject({
             ariaLabel={`Navigate to ${name}`}
             href={href}
           >
-            <Fragment key={href}>
+            <FlexContainer gapX={2}>
               <Paragraph>{tagline}</Paragraph>
-              {emoji != null && <span className="no-underline">{emoji}</span>}
-            </Fragment>
+            </FlexContainer>
           </InlineAnchor>
         </FlexContainer>
         <FlexContainer

@@ -9,7 +9,9 @@ export type PageContainerProps = {
 };
 
 export default function PageContainer({ children }: PageContainerProps) {
-  useWindowResize(checkNavHeight, []);
+  useWindowResize(() => {
+    checkNavHeight();
+  }, []);
 
   // height of page container controlled in NavigationBar via navigationMachine
   return (

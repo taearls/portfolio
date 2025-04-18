@@ -28,7 +28,6 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  /* animation: loading-light-mode 1s infinite ease; */
 }
 
 html.light-theme .loading-spinner {

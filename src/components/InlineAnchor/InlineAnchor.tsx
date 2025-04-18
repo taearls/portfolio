@@ -1,18 +1,17 @@
-import type { JSX } from "react";
+import type { PropsWithChildren } from "react";
 
 import ExternalLinkIcon from "@/components/icons/ExternalLinkIcon.tsx";
 import { mergeClasses } from "@/util/styling/styling.utils.ts";
 
-export type InlineAnchorProps = {
+export type InlineAnchorProps = PropsWithChildren<{
   ariaLabel: string;
   href: string;
-  children: JSX.Element | string;
   accent?: boolean;
   isExternal?: boolean;
   bold?: boolean;
   noColor?: boolean;
   underline?: boolean;
-};
+}>;
 
 export default function InlineAnchor({
   ariaLabel,

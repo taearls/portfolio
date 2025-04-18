@@ -1,7 +1,9 @@
+import type { ReactNode } from "react";
+
 import styles from "./LoadingSpinner.module.css";
 
 export type LoadingSpinnerContainerProps = {
-  children: React.ReactNode | Array<React.ReactNode>;
+  children: ReactNode | Array<ReactNode>;
 };
 
 export default function LoadingSpinnerContainer({

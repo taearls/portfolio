@@ -24,9 +24,17 @@ export const NAVIGATION_EVENT = {
   TOGGLE: "toggle",
 } as const satisfies Record<string, string>;
 
+const getInitialNavState = () => {
+  if (window.innerWidth <= 640) {
+    return NAVIGATION_STATE.CLOSED;
+  }
+
+  return NAVIGATION_STATE.OPEN;
+};
+
 export const navigationMachine = createMachine({
   id: "navigation",
-  initial: NAVIGATION_STATE.OPEN,
+  initial: getInitialNavState(),
   states: {
     [NAVIGATION_STATE.CLOSED]: {
       on: {

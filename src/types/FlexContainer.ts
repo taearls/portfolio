@@ -1,4 +1,4 @@
-import type { ReactElement } from "react";
+import type { PropsWithChildren } from "react";
 import type {
   AlignItemsCSSType,
   FlexFlowCSSType,
@@ -11,7 +11,7 @@ type ResponsiveFlexContainerProp<T> =
   | Array<ResponsiveValue<T>>
   | ResponsiveValue<T>;
 
-export type FlexContainerProps = {
+export type FlexContainerProps = PropsWithChildren<{
   inline?: boolean;
   flexFlow?: FlexFlowCSSType;
   responsive?: {
@@ -28,6 +28,5 @@ export type FlexContainerProps = {
   justifyContent?: JustifyContentCSSType;
   alignSelf?: AlignItemsCSSType;
   alignItems?: AlignItemsCSSType;
-  children: ReactElement | Array<ReactElement>;
   fullWidth?: boolean;
-};
+}>;

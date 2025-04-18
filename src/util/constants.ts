@@ -12,13 +12,13 @@ export const WEB_PROJECTS: Array<Omit<WebProjectProps, "isLast">> = [
     cursorStyle: "pointer",
     descriptions: [
       "A website I made for my band, Cuckoo and the Birds, where you can find all our info, social media links, and press.",
-      "If you're interested to listen, please consider supporting our music by streaming us on Spotify or any other streaming platform.",
-      "Built mobile-first with Nuxt, Tailwind, and a (mostly) healthy dose of rock 'n' roll 🤘",
+      "If you're interested to listen, please consider streaming our music on your preferred platform.",
+      "Built mobile-first with React, TypeScript, TailwindCSS, and a (mostly) healthy dose of rock 'n' roll 🤘",
     ],
     emoji: "🎵",
     href: "https://www.cuckooandthebirds.com",
     name: "Cuckoo and the Birds Website",
-    tagline: "Give our music a listen!",
+    tagline: "Visit our website!",
   },
   {
     alt: "Image of Road Ranger Banner",
@@ -46,7 +46,7 @@ export const WEB_PROJECTS: Array<Omit<WebProjectProps, "isLast">> = [
     emoji: "😉",
     href: "https://space-clones.netlify.com",
     name: "Space Clones",
-    tagline: "Beat my high score!",
+    tagline: "Beat my high score (if you dare)!",
   },
 ];
 
