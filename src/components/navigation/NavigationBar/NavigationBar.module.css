@@ -1,0 +1,47 @@
+.navigation-bar {
+  font-family: var(--font-emphasis);
+  font-weight: 400;
+  font-size: 24px;
+  display: grid;
+  top: 0;
+  position: absolute;
+  min-height: 4rem;
+  width: 100%;
+  border-bottom: 1px;
+  border-style: solid;
+  grid-template-columns: 1fr min-content;
+  grid-template-areas: "list toggle";
+}
+
+.navigation-bar * {
+  font-family: var(--font-emphasis);
+  font-weight: 400;
+  font-size: 24px;
+}
+
+.navigation-list-container {
+  grid-area: list;
+  display: inline-flex;
+  height: auto;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  justify-self: center;
+  align-self: center;
+  width: 10rem;
+  /* 68 px height = 36px height of toggle container + 32px vertical padding */
+  @apply sm:h-[68px] sm:w-full sm:flex-row;
+}
+
+.navigation-toggle-container {
+  position: absolute;
+  top: 0;
+  right: 0.25rem;
+  grid-area: toggle;
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  column-gap: 1rem;
+  width: fit-content;
+  margin: 1rem;
+}

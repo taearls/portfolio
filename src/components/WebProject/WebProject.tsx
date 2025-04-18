@@ -1,83 +1,119 @@
-import { CloudinaryImage } from "../CloudinaryImage";
-import { Paragraph } from "../layout/Paragraph";
-import { HeadingTwo } from "../layout/headings";
-import { getLinkWithAnalytics } from "@/util";
+import type { FlexContainerProps } from "@/types/FlexContainer.ts";
+import type { WebProjectAnalytics } from "@/types/WebProject.ts";
+import type { ReactNode } from "react";
+
+import CloudinaryImage from "@/components/CloudinaryImage/CloudinaryImage.tsx";
+import InlineAnchor from "@/components/InlineAnchor/InlineAnchor.tsx";
+import FlexContainer from "@/components/layout/containers/FlexContainer/FlexContainer.tsx";
+import HeadingTwo from "@/components/layout/headings/HeadingTwo.tsx";
+import Paragraph from "@/components/layout/Paragraph/Paragraph.tsx";
+import {
+  AlignItemsCSSValue,
+  FlexFlowCSSValue,
+  JustifyContentCSSValue,
+  MediaQueryPrefixValue,
+} from "@/types/layout.ts";
+import { getLinkWithAnalytics } from "@/util/utils.ts";
+import RenderIf from "../layout/RenderIf.tsx";
 
 export type WebProjectProps = {
   analytics?: WebProjectAnalytics;
   cloudinaryId: string;
-  imageExtension: string;
   alt: string;
   cursorStyle?: string;
   descriptions: Array<string>;
-  emoji?: string;
+  emoji?: ReactNode;
   href: string;
   name: string;
   tagline: string;
   isLast: boolean;
 };
 
-export type WebProjectAnalytics = {
-  campaign: string;
-  medium: string;
-  source: string;
+const webProjectContainerResponsiveStyle: FlexContainerProps["responsive"] = {
+  alignItems: [
+    { prefix: MediaQueryPrefixValue.MD, value: AlignItemsCSSValue.START },
+  ],
+  flexFlow: [{ prefix: MediaQueryPrefixValue.MD, value: FlexFlowCSSValue.ROW }],
 };
+
+const webProjectDescriptionContainerResponsiveStyle: FlexContainerProps["responsive"] =
+  {
+    alignSelf: { prefix: "md", value: AlignItemsCSSValue.BASELINE },
+  };
 
 export default function WebProject({
   analytics,
   cloudinaryId,
-  imageExtension,
   alt,
-  cursorStyle = "pointer",
+  // cursorStyle = "pointer",
   descriptions,
-  emoji,
+  // emoji,
   href,
   name,
   tagline,
   isLast,
 }: WebProjectProps) {
+  // // TODO: figure out how to apply this to space clones project on hover.
+  // const _cursorStyleProp = useMemo(
+  //   () => ({ cursor: cursorStyle }),
+  //   [cursorStyle],
+  // );
+
   return (
-    <div className="mx-auto mt-12">
+    <FlexContainer flexFlow={FlexFlowCSSValue.COLUMN} gapY={8}>
       <HeadingTwo>{name}</HeadingTwo>
-      <div className="mb-8 flow-root">
-        <div className="sm:clearfix mx-auto mb-2 w-11/12 text-center sm:float-left sm:mb-0 sm:mr-4 sm:w-1/2">
-          <div className="flex justify-center">
-            <a
-              className="focus:shadow-outline-light dark:focus:shadow-outline-dark block rounded-sm focus:outline-none"
-              target="_blank"
-              href={getLinkWithAnalytics(href, analytics)}
-              rel={analytics != null ? "noopener" : "noreferrer"}
-              style={{ cursor: cursorStyle }}
-            >
-              <CloudinaryImage
-                alt={alt}
-                publicId={cloudinaryId}
-                extension={imageExtension}
-                transformations={["q_auto", "w_400"]}
-                width={400}
-                height={400}
-              />
-            </a>
-          </div>
-          <a
-            className="focus:shadow-outline-light dark:focus:shadow-outline-dark mt-1 block cursor-pointer rounded-sm font-semibold text-purple-700 focus:outline-none dark:text-purple-400"
-            target="_blank"
-            rel="noreferrer"
+      <FlexContainer
+        gapX={8}
+        gapY={4}
+        justifyContent={JustifyContentCSSValue.CENTER}
+        flexFlow={FlexFlowCSSValue.COLUMN}
+        alignItems={AlignItemsCSSValue.CENTER}
+        responsive={webProjectContainerResponsiveStyle}
+      >
+        <FlexContainer
+          inline
+          flexFlow={FlexFlowCSSValue.COLUMN}
+          alignItems={AlignItemsCSSValue.CENTER}
+        >
+          <InlineAnchor
+            href={getLinkWithAnalytics(href, analytics)}
+            ariaLabel={`Navigate to ${name}`}
+          >
+            <CloudinaryImage
+              alt={alt}
+              publicId={cloudinaryId}
+              width={400}
+              height={400}
+            />
+          </InlineAnchor>
+          <InlineAnchor
+            isExternal
+            accent
+            ariaLabel={`Navigate to ${name}`}
             href={href}
           >
-            <span className="text-purple-700 md:text-lg dark:text-purple-400">
-              {tagline}
-            </span>
-            {emoji != null && <span>{emoji}</span>}
-          </a>
-        </div>
-        <div>
-          {descriptions.map((description, index) => (
-            <Paragraph key={index}>{description}</Paragraph>
+            <FlexContainer gapX={2}>
+              <Paragraph>{tagline}</Paragraph>
+            </FlexContainer>
+          </InlineAnchor>
+        </FlexContainer>
+        <FlexContainer
+          inline
+          flexFlow={FlexFlowCSSValue.COLUMN}
+          alignSelf={AlignItemsCSSValue.START}
+          responsive={webProjectDescriptionContainerResponsiveStyle}
+          gapY={4}
+        >
+          {descriptions.map((description) => (
+            <Paragraph key={description} width="md:w-[25ch] lg:w-fit">
+              {description}
+            </Paragraph>
           ))}
-        </div>
-      </div>
-      {!isLast && <hr className="line-break" />}
-    </div>
+        </FlexContainer>
+      </FlexContainer>
+      <RenderIf condition={!isLast}>
+        <hr className="line-break" />
+      </RenderIf>
+    </FlexContainer>
   );
 }

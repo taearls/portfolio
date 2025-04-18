@@ -1,4 +1,4 @@
-import { WebProjectProps } from "@/components/WebProject/WebProject";
+import type { WebProjectProps } from "@/components/WebProject/WebProject.tsx";
 
 export const WEB_PROJECTS: Array<Omit<WebProjectProps, "isLast">> = [
   {
@@ -12,29 +12,27 @@ export const WEB_PROJECTS: Array<Omit<WebProjectProps, "isLast">> = [
     cursorStyle: "pointer",
     descriptions: [
       "A website I made for my band, Cuckoo and the Birds, where you can find all our info, social media links, and press.",
-      "If you're interested to listen, please consider supporting our music by streaming us on Spotify or any other streaming platform.",
-      "Built mobile-first with Nuxt, Tailwind, and a (mostly) healthy dose of rock 'n' roll 🤘",
+      "If you're interested to listen, please consider streaming our music on your preferred platform.",
+      "Built mobile-first with React, TypeScript, TailwindCSS, and a (mostly) healthy dose of rock 'n' roll 🤘",
     ],
     emoji: "🎵",
     href: "https://www.cuckooandthebirds.com",
     name: "Cuckoo and the Birds Website",
-    tagline: "Give our music a listen!",
-    imageExtension: "png",
+    tagline: "Visit our website!",
   },
   {
     alt: "Image of Road Ranger Banner",
     analytics: undefined,
     cloudinaryId: "screenshots/v2/roadranger-desktop",
+    cursorStyle: "pointer",
     descriptions: [
       "A navigation header that I built while freelancing for Trekk.",
       "Both the mobile and desktop versions are based on designs their web designers prepared for the client and had me implement. Built with SCSS, JavaScript, and PHP.",
     ],
-    cursorStyle: "pointer",
-    href: "https://www.roadrangerusa.com",
     emoji: "⛽",
+    href: "https://www.roadrangerusa.com",
     name: "Road Ranger",
     tagline: "Check it out!",
-    imageExtension: "jpg",
   },
   {
     alt: "Image of Space Clones Title Screen",
@@ -48,8 +46,7 @@ export const WEB_PROJECTS: Array<Omit<WebProjectProps, "isLast">> = [
     emoji: "😉",
     href: "https://space-clones.netlify.com",
     name: "Space Clones",
-    tagline: "Beat my high score!",
-    imageExtension: "png",
+    tagline: "Beat my high score (if you dare)!",
   },
 ];
 

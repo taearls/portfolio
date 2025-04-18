@@ -3,11 +3,77 @@
 @tailwind utilities;
 
 :root {
+  /* https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/light-dark */
+  color-scheme: light dark;
   --expanded-nav-height: 191px;
   --collapsed-nav-height: 64px;
   --footer-height: 80px;
   --body-padding-y: 16px;
+  --text-light: #1b1212;
+  --text-dark: #faf9f6;
+  --background-light: #faf9f6;
+  --background-dark: #121212;
+  --active-light: rgb(34 211 238 / 1); /* tailwind cyan-400 */
+  --active-dark: rgb(103 232 249 / 1); /* tailwind cyan-300 */
+  --accent-dark: rgb(192 132 252 / 1); /* tailwind purple-400 */
+  --accent-light: rgb(126 34 206 / 1); /* tailwind purple-700 */
+  --active-color: light-dark(var(--active-light), var(--active-dark));
+  --accent-color: light-dark(var(--accent-light), var(--accent-dark));
+  --text-color: light-dark(var(--text-light), var(--text-dark));
+  --font-default: "Ubuntu", sans-serif;
+  /* --font-emphasis:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono,
+    Courier New, monospace; */
+  --font-emphasis: "Limelight", sans-serif;
+  --background-color: light-dark(
+    var(--background-light),
+    var(--background-dark)
+  );
+  --max-width-mobile: calc(100vw - 4rem);
 }
 
-@media (prefers-color-scheme: dark) {
+html {
+  min-height: 100vh;
+  min-width: 100vw;
+  font-family: var(--font-default);
+}
+
+/* 
+Initially, we use the system settings, but
+when these classes are applied to the root html element, 
+it will explicitly set a dark or light theme 
+*/
+html.dark-theme {
+  color-scheme: dark;
+}
+html.light-theme {
+  color-scheme: light;
+}
+
+html,
+html * {
+  background-color: var(--background-color);
+
+  color: var(--text-color);
+
+  :not(#moon-icon *, #sun-icon *) {
+    fill: var(--text-color);
+    stroke: var(--text-color);
+  }
+
+  a:hover,
+  a:hover *:not(#moon-icon *, #sun-icon *),
+  .active,
+  .active *:not(#moon-icon *, #sun-icon *) {
+    color: var(--active-color);
+    fill: var(--active-color);
+    stroke: var(--active-color);
+  }
+
+  .accent,
+  .accent *:not(#moon-icon *, #sun-icon *) {
+    fill: var(--accent-color);
+    stroke: var(--accent-color);
+    color: var(--accent-color);
+  }
 }
