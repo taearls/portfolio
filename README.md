@@ -1,5 +1,3 @@
-[![Netlify Status](https://api.netlify.com/api/v1/badges/da37dd03-ace0-48d7-b79f-4193d97d05be/deploy-status)](https://app.netlify.com/sites/animated-toffee-13f6ad/deploys)
-
 # About Me
 
 I'm a fullstack developer and musician based in Chicago, IL. Outside of tech, I'm also a [musician](https://www.cuckooandthebirds.com) and an avid fan of Star Trek.
