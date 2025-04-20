@@ -1,41 +1,33 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback } from "react";
 
-import RenderIf from "@/components/layout/RenderIf.tsx";
+import ThemeContext from "@/state/contexts/ThemeContext.tsx";
+import { THEME_EVENT, THEME_STATES } from "@/state/machines/themeMachine.ts";
 import MoonIcon from "../icons/MoonIcon.tsx";
 import SunIcon from "../icons/SunIcon.tsx";
 
 export default function DarkModeToggle() {
-  const prefersDarkColorScheme = window.matchMedia(
-    "(prefers-color-scheme: dark)",
-  );
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(
-    prefersDarkColorScheme.matches,
-  );
+  const themeState = ThemeContext.useSelector((state) => state.value);
+  const actorRef = ThemeContext.useActorRef();
 
-  const handleToggle = useCallback(
-    () => setIsDarkMode((prevState) => !prevState),
-    [setIsDarkMode],
+  const updateTheme = useCallback(
+    () => actorRef.send({ type: THEME_EVENT.TOGGLE }),
+    [actorRef],
   );
-
-  useEffect(() => {
-    const rootNode = (
-      document.getRootNode() as Node & { documentElement: HTMLElement }
-    ).documentElement as HTMLElement;
-
-    if (isDarkMode) {
-      rootNode.classList.remove("light-theme");
-      rootNode.classList.add("dark-theme");
-    } else {
-      rootNode.classList.remove("dark-theme");
-      rootNode.classList.add("light-theme");
-    }
-  }, [isDarkMode]);
 
   return (
-    <button onClick={handleToggle}>
-      <RenderIf condition={isDarkMode} fallback={<MoonIcon />}>
+    <button onClick={updateTheme}>
+      <span hidden={themeState === THEME_STATES.DARK}>
+        <MoonIcon />
+      </span>
+      <span hidden={themeState === THEME_STATES.LIGHT}>
         <SunIcon />
-      </RenderIf>
+      </span>
+      {/* <RenderIf
+        condition={state.value === THEME_STATES.DARK}
+        fallback={<MoonIcon />}
+      >
+        <SunIcon />
+      </RenderIf> */}
     </button>
   );
 }

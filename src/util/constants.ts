@@ -8,7 +8,10 @@ export const WEB_PROJECTS: Array<Omit<WebProjectProps, "isLast">> = [
       medium: "web",
       source: "portfolio",
     },
-    cloudinaryId: "screenshots/v2/cuckoo-mobile",
+    cloudinaryId: {
+      dark: "screenshots/cuckoo-screenshot-dark",
+      default: "screenshots/cuckoo-screenshot-light",
+    },
     cursorStyle: "pointer",
     descriptions: [
       "A website I made for my band, Cuckoo and the Birds, where you can find all our info, social media links, and press.",
@@ -23,7 +26,7 @@ export const WEB_PROJECTS: Array<Omit<WebProjectProps, "isLast">> = [
   {
     alt: "Image of Road Ranger Banner",
     analytics: undefined,
-    cloudinaryId: "screenshots/v2/roadranger-desktop",
+    cloudinaryId: { default: "screenshots/v2/roadranger-desktop" },
     cursorStyle: "pointer",
     descriptions: [
       "A navigation header that I built while freelancing for Trekk.",
@@ -37,7 +40,7 @@ export const WEB_PROJECTS: Array<Omit<WebProjectProps, "isLast">> = [
   {
     alt: "Image of Space Clones Title Screen",
     analytics: undefined,
-    cloudinaryId: "screenshots/v2/space-clones-game",
+    cloudinaryId: { default: "screenshots/v2/space-clones-game" },
     cursorStyle: "url(images/space-clones-cursor.png), pointer",
     descriptions: [
       "An original space shooting video game inspired by Space Invaders, the 1978 arcade classic. Defeat the clone army and then their mothership to advance to the next level.",

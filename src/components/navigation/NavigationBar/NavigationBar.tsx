@@ -16,7 +16,7 @@ import {
   NAVIGATION_EVENT,
   NAVIGATION_STATE,
   navigationMachine,
-} from "@/state/navigationMachine.ts";
+} from "@/state/machines/navigationMachine.ts";
 import { FlexFlowCSSValue, MediaQueryPrefixValue } from "@/types/layout.ts";
 import { mergeClasses } from "@/util/styling/styling.utils.ts";
 import styles from "./NavigationBar.module.css";

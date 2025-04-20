@@ -1,9 +1,12 @@
-import { describe, expect, it } from "vitest";
-
 import type {
   GapCSSType,
   MediaQueryPrefix,
-  ResponsiveValue} from "@/types/layout.ts";
+  ResponsiveValue,
+} from "@/types/layout.ts";
+import type { ValueOf } from "@/types/util.ts";
+
+import { describe, expect, it } from "vitest";
+
 import {
   AlignItemsCSSValue,
   FlexFlowCSSValue,
@@ -11,7 +14,6 @@ import {
   MediaQueryPrefixValue,
   TextAlignment,
 } from "@/types/layout.ts";
-import type { ValueOf } from "@/types/util.ts";
 import {
   capitalizeText,
   combineBaseAndResponsiveClasses,
@@ -124,20 +126,23 @@ describe("Styling util testing", () => {
 
       const actual = mergeClasses(...input);
 
-      const expected = "test-class1 test-class2 test-class3";
-
       // we don't know what the class name hash would be.
       // if the expected name is in the actual string, that's fine.
+      const expected = ["test-class1", "test-class2", "test-class3"];
+
+      expect(actual).toMatch(expected[0]);
+      expect(actual).toMatch(expected[1]);
+      expect(actual).toMatch(expected[2]);
 
       // TODO: running the tests this way throws another error.
-      // for (const className of expected.split(" ")) {
+      // for (const className of expected) {
       //   expect(actual).toMatch(className);
       // }
 
-      expected
-        .split(" ")
-        // TODO: open oxc linter issue. this should not throw an error.
-        .forEach((className) => expect(actual).toMatch(className));
+      // TODO: open oxc linter issue. this should not throw an error.
+      // expected
+      //   .split(" ")
+      //   .forEach((className) => expect(actual).toMatch(className));
     });
 
     it("will merge classes together and filter out classes which dont match a condition", () => {

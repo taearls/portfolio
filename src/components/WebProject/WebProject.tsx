@@ -2,11 +2,12 @@ import type { FlexContainerProps } from "@/types/FlexContainer.ts";
 import type { WebProjectAnalytics } from "@/types/WebProject.ts";
 import type { ReactNode } from "react";
 
-import CloudinaryImage from "@/components/CloudinaryImage/CloudinaryImage.tsx";
 import InlineAnchor from "@/components/InlineAnchor/InlineAnchor.tsx";
 import FlexContainer from "@/components/layout/containers/FlexContainer/FlexContainer.tsx";
 import HeadingTwo from "@/components/layout/headings/HeadingTwo.tsx";
 import Paragraph from "@/components/layout/Paragraph/Paragraph.tsx";
+import ThemeContext from "@/state/contexts/ThemeContext.tsx";
+import { THEME_STATES } from "@/state/machines/themeMachine.ts";
 import {
   AlignItemsCSSValue,
   FlexFlowCSSValue,
@@ -14,17 +15,20 @@ import {
   MediaQueryPrefixValue,
 } from "@/types/layout.ts";
 import { getLinkWithAnalytics } from "@/util/utils.ts";
+import WebProjectImage from "../CloudinaryImage/images/WebProjectImage.tsx";
 import RenderIf from "../layout/RenderIf.tsx";
 
 export type WebProjectProps = {
   analytics?: WebProjectAnalytics;
-  cloudinaryId: string;
+  cloudinaryId: { default: string; dark?: string };
   alt: string;
   cursorStyle?: string;
   descriptions: Array<string>;
   emoji?: ReactNode;
   href: string;
   name: string;
+  width?: number;
+  height?: number;
   tagline: string;
   isLast: boolean;
 };
@@ -50,6 +54,8 @@ export default function WebProject({
   // emoji,
   href,
   name,
+  width,
+  height,
   tagline,
   isLast,
 }: WebProjectProps) {
@@ -58,6 +64,9 @@ export default function WebProject({
   //   () => ({ cursor: cursorStyle }),
   //   [cursorStyle],
   // );
+
+  const isLightMode =
+    ThemeContext.useSelector((state) => state.value) === THEME_STATES.LIGHT;
 
   return (
     <FlexContainer flexFlow={FlexFlowCSSValue.COLUMN} gapY={8}>
@@ -74,16 +83,21 @@ export default function WebProject({
           inline
           flexFlow={FlexFlowCSSValue.COLUMN}
           alignItems={AlignItemsCSSValue.CENTER}
+          maxWidth={500}
         >
           <InlineAnchor
             href={getLinkWithAnalytics(href, analytics)}
             ariaLabel={`Navigate to ${name}`}
           >
-            <CloudinaryImage
+            <WebProjectImage
               alt={alt}
-              publicId={cloudinaryId}
-              width={400}
-              height={400}
+              publicId={
+                isLightMode && cloudinaryId.dark
+                  ? cloudinaryId.dark
+                  : cloudinaryId.default
+              }
+              width={width}
+              height={height}
             />
           </InlineAnchor>
           <InlineAnchor
