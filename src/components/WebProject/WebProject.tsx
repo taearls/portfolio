@@ -18,7 +18,7 @@ import RenderIf from "../layout/RenderIf.tsx";
 
 export type WebProjectProps = {
   analytics?: WebProjectAnalytics;
-  cloudinaryId: string;
+  cloudinaryId: { default: string; dark?: string };
   alt: string;
   cursorStyle?: string;
   descriptions: Array<string>;
@@ -86,7 +86,7 @@ export default function WebProject({
           >
             <WebProjectImage
               alt={alt}
-              publicId={cloudinaryId}
+              publicId={cloudinaryId.dark ?? cloudinaryId.default}
               width={width}
               height={height}
             />
