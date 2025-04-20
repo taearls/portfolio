@@ -22,23 +22,19 @@ export const getInitialThemeState = (): THEME_STATE => {
 const onLightToDark = () => {
   const rootNode = (
     document.getRootNode() as Node & { documentElement: HTMLElement }
-  ).documentElement as HTMLElement;
+  ).documentElement as HTMLElement | null;
 
-  console.log("onLightToDark called");
-
-  rootNode.classList.remove("light-theme");
-  rootNode.classList.add("dark-theme");
+  rootNode?.classList.remove("light-theme");
+  rootNode?.classList.add("dark-theme");
 };
 
 const onDarkToLight = () => {
   const rootNode = (
     document.getRootNode() as Node & { documentElement: HTMLElement }
-  ).documentElement as HTMLElement;
+  ).documentElement as HTMLElement | null;
 
-  console.log("onDarkToLight called");
-
-  rootNode.classList.remove("dark-theme");
-  rootNode.classList.add("light-theme");
+  rootNode?.classList.remove("dark-theme");
+  rootNode?.classList.add("light-theme");
 };
 
 export const themeMachine = createMachine({

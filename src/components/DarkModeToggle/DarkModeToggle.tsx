@@ -1,15 +1,7 @@
-import type { THEME_STATE } from "@/state/machines/themeMachine.ts";
-
-import { useMachine } from "@xstate/react";
 import { useCallback } from "react";
 
-import RenderIf from "@/components/layout/RenderIf.tsx";
 import ThemeContext from "@/state/contexts/ThemeContext.tsx";
-import {
-  THEME_EVENT,
-  THEME_STATES,
-  themeMachine,
-} from "@/state/machines/themeMachine.ts";
+import { THEME_EVENT, THEME_STATES } from "@/state/machines/themeMachine.ts";
 import MoonIcon from "../icons/MoonIcon.tsx";
 import SunIcon from "../icons/SunIcon.tsx";
 

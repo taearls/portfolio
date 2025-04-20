@@ -2,7 +2,7 @@ import type { Transformation } from "@cloudinary/url-gen/index";
 import type { CSSProperties } from "react";
 
 import { fill } from "@cloudinary/url-gen/actions/resize";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 
 import { FlexFlowCSSValue } from "@/types/layout.ts";
 import { CLOUDINARY_INSTANCE } from "@/util/constants/constants.ts";
@@ -33,9 +33,6 @@ export default function CloudinaryImage({
   maxWidth,
   showCaption = false,
 }: CloudinaryImageProps) {
-  useEffect(() => {
-    console.log({ publicId });
-  }, [publicId]);
   const img = CLOUDINARY_INSTANCE.image(
     `${directory != null ? directory + "/" : ""}${publicId}`,
   );

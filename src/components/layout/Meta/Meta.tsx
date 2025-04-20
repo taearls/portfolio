@@ -28,10 +28,6 @@ const metadata = {
 
 // TODO: figure out why this component isn't working, remove values from index.html
 export default function Meta() {
-  // console.log({
-  //   metaTags: Object.entries(metadata),
-  // });
-
   return (
     <>
       {Object.entries(metadata).map(([key, value]) => (
