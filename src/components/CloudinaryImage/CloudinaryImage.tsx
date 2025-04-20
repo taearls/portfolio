@@ -1,4 +1,5 @@
 import type { Transformation } from "@cloudinary/url-gen/index";
+import type { CSSProperties } from "react";
 
 import { fill } from "@cloudinary/url-gen/actions/resize";
 import { useMemo } from "react";
@@ -13,8 +14,9 @@ export type CloudinaryImageProps = {
   alt: string;
   publicId: string;
   directory?: string;
-  width?: number;
-  height?: number;
+  width?: CSSProperties["width"];
+  height?: CSSProperties["height"];
+  maxWidth?: CSSProperties["maxWidth"];
   transformation?: Transformation | string;
   showCaption?: boolean;
   fileFormat?: CloudinaryImageFileFormat;
@@ -24,10 +26,11 @@ export default function CloudinaryImage({
   alt,
   publicId,
   directory,
-  width = 500,
-  height = 500,
+  width,
+  height,
   fileFormat = "webp",
   transformation,
+  maxWidth,
   showCaption = false,
 }: CloudinaryImageProps) {
   const img = CLOUDINARY_INSTANCE.image(
@@ -36,14 +39,18 @@ export default function CloudinaryImage({
 
   if (transformation) {
     img.addTransformation(transformation);
-  } else {
+  } else if (width && height) {
     img.resize(fill().width(width).height(height));
   }
 
   img.format(fileFormat);
 
   const style = useMemo(
-    () => ({ height: "auto", maxWidth: "var(--max-width-mobile)", width }),
+    () => ({
+      height: "auto",
+      maxWidth: maxWidth,
+      width: width ?? "inherit",
+    }),
     [width],
   );
 

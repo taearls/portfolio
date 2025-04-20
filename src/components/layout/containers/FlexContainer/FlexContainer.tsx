@@ -1,5 +1,7 @@
 import type { FlexContainerProps } from "@/types/FlexContainer.ts";
 
+import { useMemo } from "react";
+
 import {
   getAlignItemsClass,
   getAlignSelfClass,
@@ -20,6 +22,7 @@ export default function FlexContainer({
   alignItems,
   children,
   inline = false,
+  maxWidth,
   fullWidth = false,
 }: FlexContainerProps) {
   const flexFlowClass = getFlexFlowClass(flexFlow, responsive?.flexFlow);
@@ -35,9 +38,12 @@ export default function FlexContainer({
   const gapXClass = getGapClass("x", gapX, responsive?.gapX);
   const gapYClass = getGapClass("y", gapY, responsive?.gapY);
 
+  const style = useMemo(() => ({ maxWidth }), []);
+
   return (
     <div
       id={id}
+      style={style}
       className={mergeClasses(
         inline ? "inline-flex" : "flex",
         fullWidth && "w-full",

@@ -8,7 +8,7 @@ export const WEB_PROJECTS: Array<Omit<WebProjectProps, "isLast">> = [
       medium: "web",
       source: "portfolio",
     },
-    cloudinaryId: "screenshots/v2/cuckoo-mobile",
+    cloudinaryId: "screenshots/cuckoo-screenshot-dark",
     cursorStyle: "pointer",
     descriptions: [
       "A website I made for my band, Cuckoo and the Birds, where you can find all our info, social media links, and press.",

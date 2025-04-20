@@ -1,4 +1,4 @@
-import type { PropsWithChildren } from "react";
+import type { CSSProperties, PropsWithChildren } from "react";
 import type {
   AlignItemsCSSType,
   FlexFlowCSSType,
@@ -28,5 +28,6 @@ export type FlexContainerProps = PropsWithChildren<{
   justifyContent?: JustifyContentCSSType;
   alignSelf?: AlignItemsCSSType;
   alignItems?: AlignItemsCSSType;
+  maxWidth?: CSSProperties["maxWidth"];
   fullWidth?: boolean;
 }>;
