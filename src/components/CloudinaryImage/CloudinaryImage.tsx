@@ -47,7 +47,15 @@ export default function CloudinaryImage({
     [width],
   );
 
-  const imgElement = <img src={img.toURL()} alt={alt} style={style} />;
+  const imgElement = (
+    <img
+      src={img.toURL()}
+      alt={alt}
+      style={style}
+      width={width}
+      height={height}
+    />
+  );
 
   if (showCaption) {
     return (
