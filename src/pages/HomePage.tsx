@@ -35,7 +35,7 @@ export default function HomePage() {
           height={400}
           alt="Picture of Tyler Earls standing in front of a brick wall and smiling"
           transformation={
-            "ar_1:1,c_thumb,g_xy_center,r_max,w_800,x_730,y_800,f_png"
+            "ar_1:1,c_thumb,g_xy_center,r_max,w_800,x_730,y_800,f_webp"
           }
         />
 
