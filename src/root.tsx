@@ -7,13 +7,12 @@ import "./styles/globals.css";
 import PageContainer from "./components/layout/containers/PageContainer/PageContainer.tsx";
 import Footer from "./components/layout/Footer/Footer.tsx";
 import Header from "./components/layout/Header/Header.tsx";
-import Meta from "./components/layout/Meta/Meta.tsx";
 import routes from "./routes.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
-      <Meta />
+      {/* <Meta /> */}
       <Header />
       <PageContainer>{routes}</PageContainer>
 

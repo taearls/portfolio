@@ -26,7 +26,12 @@ const metadata = {
   viewport: "width=device-width, initial-scale=1.0",
 };
 
+// TODO: figure out why this component isn't working, remove values from index.html
 export default function Meta() {
+  // console.log({
+  //   metaTags: Object.entries(metadata),
+  // });
+
   return (
     <>
       {Object.entries(metadata).map(([key, value]) => (
