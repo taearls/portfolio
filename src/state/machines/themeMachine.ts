@@ -1,29 +1,30 @@
 import { createMachine } from "xstate";
 
-export const THEME_STATE = {
+export const THEME_STATES = {
   DARK: "dark",
   LIGHT: "light",
 } as const satisfies Record<string, string>;
 
+export type THEME_STATE = typeof THEME_STATES.DARK | typeof THEME_STATES.LIGHT;
+
 export const THEME_EVENT = {
-  DARK_TO_LIGHT: "dark-to-light",
-  LIGHT_TO_DARK: "light-to-dark",
+  TOGGLE: "toggle",
 } as const satisfies Record<string, string>;
 
-export const getInitialThemeState = ():
-  | typeof THEME_STATE.DARK
-  | typeof THEME_STATE.LIGHT => {
+export const getInitialThemeState = (): THEME_STATE => {
   if (window.matchMedia("(prefers-color-scheme: dark)")) {
-    return THEME_STATE.DARK;
+    return THEME_STATES.DARK;
   }
 
-  return THEME_STATE.LIGHT;
+  return THEME_STATES.LIGHT;
 };
 
 const onLightToDark = () => {
   const rootNode = (
     document.getRootNode() as Node & { documentElement: HTMLElement }
   ).documentElement as HTMLElement;
+
+  console.log("onLightToDark called");
 
   rootNode.classList.remove("light-theme");
   rootNode.classList.add("dark-theme");
@@ -34,6 +35,8 @@ const onDarkToLight = () => {
     document.getRootNode() as Node & { documentElement: HTMLElement }
   ).documentElement as HTMLElement;
 
+  console.log("onDarkToLight called");
+
   rootNode.classList.remove("dark-theme");
   rootNode.classList.add("light-theme");
 };
@@ -42,19 +45,19 @@ export const themeMachine = createMachine({
   id: "theme",
   initial: getInitialThemeState(),
   states: {
-    [THEME_STATE.DARK]: {
+    [THEME_STATES.DARK]: {
       on: {
-        [THEME_EVENT.DARK_TO_LIGHT]: {
+        [THEME_EVENT.TOGGLE]: {
           actions: onDarkToLight,
-          target: THEME_STATE.LIGHT,
+          target: THEME_STATES.LIGHT,
         },
       },
     },
-    [THEME_STATE.LIGHT]: {
+    [THEME_STATES.LIGHT]: {
       on: {
-        [THEME_EVENT.LIGHT_TO_DARK]: {
+        [THEME_EVENT.TOGGLE]: {
           actions: onLightToDark,
-          target: THEME_STATE.DARK,
+          target: THEME_STATES.DARK,
         },
       },
     },

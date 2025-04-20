@@ -2,10 +2,15 @@ import type { FlexContainerProps } from "@/types/FlexContainer.ts";
 import type { WebProjectAnalytics } from "@/types/WebProject.ts";
 import type { ReactNode } from "react";
 
+import { useMachine } from "@xstate/react";
+import { useEffect } from "react";
+
 import InlineAnchor from "@/components/InlineAnchor/InlineAnchor.tsx";
 import FlexContainer from "@/components/layout/containers/FlexContainer/FlexContainer.tsx";
 import HeadingTwo from "@/components/layout/headings/HeadingTwo.tsx";
 import Paragraph from "@/components/layout/Paragraph/Paragraph.tsx";
+import ThemeContext from "@/state/contexts/ThemeContext.tsx";
+import { THEME_STATES, themeMachine } from "@/state/machines/themeMachine.ts";
 import {
   AlignItemsCSSValue,
   FlexFlowCSSValue,
@@ -63,6 +68,9 @@ export default function WebProject({
   //   [cursorStyle],
   // );
 
+  const isLightMode =
+    ThemeContext.useSelector((state) => state.value) === THEME_STATES.LIGHT;
+
   return (
     <FlexContainer flexFlow={FlexFlowCSSValue.COLUMN} gapY={8}>
       <HeadingTwo>{name}</HeadingTwo>
@@ -86,7 +94,11 @@ export default function WebProject({
           >
             <WebProjectImage
               alt={alt}
-              publicId={cloudinaryId.dark ?? cloudinaryId.default}
+              publicId={
+                isLightMode && cloudinaryId.dark
+                  ? cloudinaryId.dark
+                  : cloudinaryId.default
+              }
               width={width}
               height={height}
             />

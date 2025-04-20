@@ -8,15 +8,18 @@ import PageContainer from "./components/layout/containers/PageContainer/PageCont
 import Footer from "./components/layout/Footer/Footer.tsx";
 import Header from "./components/layout/Header/Header.tsx";
 import routes from "./routes.tsx";
+import ThemeContext from "./state/contexts/ThemeContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <BrowserRouter>
-      {/* <Meta /> */}
-      <Header />
-      <PageContainer>{routes}</PageContainer>
+    <ThemeContext.Provider>
+      <BrowserRouter>
+        {/* <Meta /> */}
+        <Header />
+        <PageContainer>{routes}</PageContainer>
 
-      <Footer />
-    </BrowserRouter>
+        <Footer />
+      </BrowserRouter>
+    </ThemeContext.Provider>
   </StrictMode>,
 );

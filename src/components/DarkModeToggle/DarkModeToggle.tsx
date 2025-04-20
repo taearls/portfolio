@@ -1,34 +1,41 @@
+import type { THEME_STATE } from "@/state/machines/themeMachine.ts";
+
 import { useMachine } from "@xstate/react";
 import { useCallback } from "react";
 
 import RenderIf from "@/components/layout/RenderIf.tsx";
+import ThemeContext from "@/state/contexts/ThemeContext.tsx";
 import {
   THEME_EVENT,
-  THEME_STATE,
+  THEME_STATES,
   themeMachine,
-} from "@/state/themeMachine.ts";
+} from "@/state/machines/themeMachine.ts";
 import MoonIcon from "../icons/MoonIcon.tsx";
 import SunIcon from "../icons/SunIcon.tsx";
 
 export default function DarkModeToggle() {
-  const [state, send] = useMachine(themeMachine);
+  const themeState = ThemeContext.useSelector((state) => state.value);
+  const actorRef = ThemeContext.useActorRef();
 
-  const updateTheme = useCallback(() => {
-    if (state.value === THEME_STATE.DARK) {
-      send({ type: THEME_EVENT.DARK_TO_LIGHT });
-    } else if (state.value === THEME_STATE.LIGHT) {
-      send({ type: THEME_EVENT.LIGHT_TO_DARK });
-    }
-  }, [state]);
+  const updateTheme = useCallback(
+    () => actorRef.send({ type: THEME_EVENT.TOGGLE }),
+    [actorRef],
+  );
 
   return (
     <button onClick={updateTheme}>
-      <RenderIf
-        condition={state.value === THEME_STATE.DARK}
+      <span hidden={themeState === THEME_STATES.DARK}>
+        <MoonIcon />
+      </span>
+      <span hidden={themeState === THEME_STATES.LIGHT}>
+        <SunIcon />
+      </span>
+      {/* <RenderIf
+        condition={state.value === THEME_STATES.DARK}
         fallback={<MoonIcon />}
       >
         <SunIcon />
-      </RenderIf>
+      </RenderIf> */}
     </button>
   );
 }
