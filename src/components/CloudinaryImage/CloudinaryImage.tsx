@@ -48,10 +48,10 @@ export default function CloudinaryImage({
   const style = useMemo(
     () => ({
       height: "auto",
-      maxWidth: maxWidth,
+      maxWidth,
       width: width ?? "inherit",
     }),
-    [width],
+    [width, maxWidth],
   );
 
   const imgElement = (
