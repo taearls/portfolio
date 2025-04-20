@@ -7,6 +7,8 @@ import { FlexFlowCSSValue } from "@/types/layout.ts";
 import { CLOUDINARY_INSTANCE } from "@/util/constants/constants.ts";
 import FlexContainer from "../layout/containers/FlexContainer/FlexContainer.tsx";
 
+export type CloudinaryImageFileFormat = "jpg" | "png" | "webp";
+
 export type CloudinaryImageProps = {
   alt: string;
   publicId: string;
@@ -15,6 +17,7 @@ export type CloudinaryImageProps = {
   height?: number;
   transformation?: Transformation | string;
   showCaption?: boolean;
+  fileFormat?: CloudinaryImageFileFormat;
 };
 
 export default function CloudinaryImage({
@@ -23,6 +26,7 @@ export default function CloudinaryImage({
   directory,
   width = 500,
   height = 500,
+  fileFormat = "webp",
   transformation,
   showCaption = false,
 }: CloudinaryImageProps) {
@@ -35,6 +39,8 @@ export default function CloudinaryImage({
   } else {
     img.resize(fill().width(width).height(height));
   }
+
+  img.format(fileFormat);
 
   const style = useMemo(
     () => ({ height: "auto", maxWidth: "var(--max-width-mobile)", width }),
