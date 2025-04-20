@@ -2,15 +2,12 @@ import type { FlexContainerProps } from "@/types/FlexContainer.ts";
 import type { WebProjectAnalytics } from "@/types/WebProject.ts";
 import type { ReactNode } from "react";
 
-import { useMachine } from "@xstate/react";
-import { useEffect } from "react";
-
 import InlineAnchor from "@/components/InlineAnchor/InlineAnchor.tsx";
 import FlexContainer from "@/components/layout/containers/FlexContainer/FlexContainer.tsx";
 import HeadingTwo from "@/components/layout/headings/HeadingTwo.tsx";
 import Paragraph from "@/components/layout/Paragraph/Paragraph.tsx";
 import ThemeContext from "@/state/contexts/ThemeContext.tsx";
-import { THEME_STATES, themeMachine } from "@/state/machines/themeMachine.ts";
+import { THEME_STATES } from "@/state/machines/themeMachine.ts";
 import {
   AlignItemsCSSValue,
   FlexFlowCSSValue,
