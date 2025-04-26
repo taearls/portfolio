@@ -1,4 +1,5 @@
-import type { DependencyList} from "react";
+import type { DependencyList } from "react";
+
 import { useEffect } from "react";
 
 export default function useWindowResize(
@@ -14,5 +15,5 @@ export default function useWindowResize(
     callback();
 
     return () => window.removeEventListener("resize", eventListener);
-  }, deps);
+  }, [callback, deps]);
 }

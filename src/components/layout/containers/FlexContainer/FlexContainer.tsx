@@ -38,7 +38,7 @@ export default function FlexContainer({
   const gapXClass = getGapClass("x", gapX, responsive?.gapX);
   const gapYClass = getGapClass("y", gapY, responsive?.gapY);
 
-  const style = useMemo(() => ({ maxWidth }), []);
+  const style = useMemo(() => ({ maxWidth }), [maxWidth]);
 
   return (
     <div
