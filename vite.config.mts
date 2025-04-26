@@ -17,6 +17,7 @@ export default (args: ViteConfigInput) => {
   const generateScopedName =
     args.mode === "development" ? "[local]_[hash:base64:4]" : "[hash:base64:4]";
   return defineConfig({
+    assetsInclude: ["**.*.svg"],
     base: "./",
     build: {
       emptyOutDir: true,
@@ -29,6 +30,10 @@ export default (args: ViteConfigInput) => {
         localsConvention: "camelCase",
       },
     },
+    json: {
+      stringify: true,
+    },
+    logLevel: args.mode === "development" ? "warn" : "silent",
     plugins: [
       react(),
       // createSvgIconsPlugin({
