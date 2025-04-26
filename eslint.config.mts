@@ -8,6 +8,7 @@ import eslintJsPlugin from "@eslint/js";
 import eslintConfigPrettier from "eslint-config-prettier";
 import { flatConfigs as eslintPluginImportFlatConfigs } from "eslint-plugin-import";
 import eslintPluginReact from "eslint-plugin-react";
+import eslintPluginReactHooks from "eslint-plugin-react-hooks";
 import eslintPluginReactPerf from "eslint-plugin-react-perf";
 import eslintPluginReactRefresh from "eslint-plugin-react-refresh";
 import globals from "globals";
@@ -42,6 +43,7 @@ const config: Array<Linter.Config> = [
   },
   eslintJsPlugin.configs.recommended,
   ...typescriptEslint.configs.recommended,
+  eslintPluginReactHooks.configs["recommended-latest"],
   eslintPluginReactPerf.configs.flat.recommended,
   eslintPluginReact.configs.flat!.recommended,
   eslintPluginReactRefresh.configs.recommended,
