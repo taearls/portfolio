@@ -1,6 +1,6 @@
 import type { FlexContainerProps } from "@/types/FlexContainer.ts";
 
-import { useMemo } from "react";
+import { memo, useMemo } from "react";
 
 import {
   getAlignItemsClass,
@@ -11,7 +11,7 @@ import {
   mergeClasses,
 } from "@/util/styling/styling.utils.ts";
 
-export default function FlexContainer({
+export default memo(function FlexContainer({
   flexFlow,
   responsive,
   alignSelf,
@@ -58,4 +58,4 @@ export default function FlexContainer({
       {children}
     </div>
   );
-}
+});

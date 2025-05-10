@@ -1,11 +1,16 @@
-import { useCallback } from "react";
+import { memo, useCallback } from "react";
 
 import ThemeContext from "@/state/contexts/ThemeContext.tsx";
 import { THEME_EVENT, THEME_STATES } from "@/state/machines/themeMachine.ts";
+import { mergeClasses } from "@/util/styling/styling.utils.ts";
 import MoonIcon from "../icons/MoonIcon.tsx";
 import SunIcon from "../icons/SunIcon.tsx";
 
-export default function DarkModeToggle() {
+export type DarkModeToggleProps = {
+  visible: boolean;
+};
+
+export default memo(function DarkModeToggle({ visible }: DarkModeToggleProps) {
   const themeState = ThemeContext.useSelector((state) => state.value);
   const actorRef = ThemeContext.useActorRef();
 
@@ -15,7 +20,10 @@ export default function DarkModeToggle() {
   );
 
   return (
-    <button onClick={updateTheme}>
+    <button
+      onClick={updateTheme}
+      className={mergeClasses(!visible && "hidden")}
+    >
       <span hidden={themeState === THEME_STATES.DARK}>
         <MoonIcon />
       </span>
@@ -30,4 +38,4 @@ export default function DarkModeToggle() {
       </RenderIf> */}
     </button>
   );
-}
+});
