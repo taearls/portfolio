@@ -1,14 +1,14 @@
 import { render } from "@testing-library/react";
 
 import DarkModeToggle from "@/components/DarkModeToggle/DarkModeToggle.tsx";
-import { setColorSchemeForTest } from "./utils.ts";
+import { renderWithProviders, setColorSchemeForTest } from "./utils.tsx";
 
 const lightModeStyle = { colorScheme: "light" };
 
 describe("<DarkModeToggle />", () => {
   it("will show a sun icon in dark mode", async () => {
     setColorSchemeForTest("dark");
-    const component = render(<DarkModeToggle />);
+    const component = renderWithProviders(<DarkModeToggle visible />);
 
     const isDarkModeIconRendered =
       (await component.findAllByTestId("sun-icon")).length === 1;
@@ -18,9 +18,9 @@ describe("<DarkModeToggle />", () => {
   it("will show a moon icon in light mode", async () => {
     setColorSchemeForTest("light");
 
-    const component = render(
+    const component = renderWithProviders(
       <div style={lightModeStyle}>
-        <DarkModeToggle />
+        <DarkModeToggle visible />
       </div>,
     );
 

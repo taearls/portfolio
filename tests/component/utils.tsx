@@ -1,3 +1,10 @@
+import type { RenderResult } from "@testing-library/react";
+import type { ReactNode } from "react";
+
+import { render } from "@testing-library/react";
+
+import ThemeContext from "@/state/contexts/ThemeContext.tsx";
+
 export const setColorSchemeForTest = (colorScheme: "light" | "dark") => {
   Object.defineProperty(window, "matchMedia", {
     value: vi.fn().mockImplementation((query) => {
@@ -15,4 +22,8 @@ export const setColorSchemeForTest = (colorScheme: "light" | "dark") => {
     }),
     writable: true,
   });
+};
+
+export const renderWithProviders = (children: ReactNode): RenderResult => {
+  return render(<ThemeContext.Provider>{children}</ThemeContext.Provider>);
 };
