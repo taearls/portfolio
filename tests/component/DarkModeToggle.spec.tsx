@@ -1,5 +1,3 @@
-import { render } from "@testing-library/react";
-
 import DarkModeToggle from "@/components/DarkModeToggle/DarkModeToggle.tsx";
 import { renderWithProviders, setColorSchemeForTest } from "./utils.tsx";
 
