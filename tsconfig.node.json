@@ -4,6 +4,7 @@
     "vite.config.*",
     "vitest.config.*",
     "src/types/globals.d.ts",
+    "wdyr.ts",
     "src/**/*",
     "tests/**/*"
   ],

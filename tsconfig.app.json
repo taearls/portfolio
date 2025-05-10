@@ -1,5 +1,5 @@
 {
-  "include": ["src/**/*", "public", "cypress.d.ts"],
+  "include": ["src/**/*", "public", "cypress.d.ts", "wdyr.ts"],
   "exclude": [],
   "compilerOptions": {
     "composite": true,

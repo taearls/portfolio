@@ -3,13 +3,12 @@ import type { RouteDataItem } from "@/util/constants/data/navigation/navigationD
 import type { NavLinkRenderProps } from "react-router";
 
 import { useMachine } from "@xstate/react";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { NavLink, useLocation } from "react-router";
 
 import DarkModeToggle from "@/components/DarkModeToggle/DarkModeToggle.tsx";
 import { InlineAnchorContent } from "@/components/InlineAnchor/InlineAnchor.tsx";
 import FlexContainer from "@/components/layout/containers/FlexContainer/FlexContainer.tsx";
-import RenderIf from "@/components/layout/RenderIf.tsx";
 import NavigationBarListItem from "@/components/navigation/NavigationBar/NavigationBarListItem.tsx";
 import NavigationToggle from "@/components/navigation/NavigationToggle/NavigationToggle.tsx";
 import {
@@ -49,51 +48,58 @@ export default function NavigationBar({ links }: NavigationBarProps) {
     [],
   );
 
+  const navigationLinks = useMemo(
+    () =>
+      links
+        .filter((link) => !link.hidden)
+        .map((link, index) => {
+          return (
+            <NavigationBarListItem
+              key={link.name}
+              isLast={index === links.filter((link) => !link.hidden).length - 1}
+            >
+              <NavLink
+                to={link.href}
+                aria-label={link.ariaLabel}
+                className={getNavLinkClass}
+              >
+                <InlineAnchorContent
+                  isExternal={Boolean(link.isExternal)}
+                  bold
+                  underline={selectedLink?.href === link.href}
+                >
+                  {link.name}
+                </InlineAnchorContent>
+              </NavLink>
+            </NavigationBarListItem>
+          );
+        }),
+    [getNavLinkClass, links, selectedLink?.href],
+  );
+
   return (
     <nav id="navigation-bar" className={mergeClasses(styles["navigation-bar"])}>
       <ul
         role="menu"
-        className={mergeClasses(styles["navigation-list-container"])}
+        className={mergeClasses(
+          styles["navigation-list-container"],
+          isNavigationOpen.value === NAVIGATION_STATE.CLOSED && "hidden",
+        )}
       >
-        <RenderIf condition={isNavigationOpen.value === NAVIGATION_STATE.OPEN}>
-          <FlexContainer
-            flexFlow={FlexFlowCSSValue.COLUMN}
-            responsive={navigationContainerResponsiveProp}
-          >
-            {links
-              .filter((link) => !link.hidden)
-              .map((link, index) => {
-                return (
-                  <NavigationBarListItem
-                    key={link.name}
-                    isLast={
-                      index === links.filter((link) => !link.hidden).length - 1
-                    }
-                  >
-                    <NavLink
-                      to={link.href}
-                      aria-label={link.ariaLabel}
-                      className={getNavLinkClass}
-                    >
-                      <InlineAnchorContent
-                        isExternal={Boolean(link.isExternal)}
-                        bold
-                        underline={selectedLink?.href === link.href}
-                      >
-                        {link.name}
-                      </InlineAnchorContent>
-                    </NavLink>
-                  </NavigationBarListItem>
-                );
-              })}
-          </FlexContainer>
-        </RenderIf>
+        <FlexContainer
+          flexFlow={FlexFlowCSSValue.COLUMN}
+          responsive={navigationContainerResponsiveProp}
+        >
+          {navigationLinks}
+        </FlexContainer>
       </ul>
 
       <div className={mergeClasses(styles["navigation-toggle-container"])}>
-        <RenderIf condition={isNavigationOpen.value === NAVIGATION_STATE.OPEN}>
-          <DarkModeToggle />
-        </RenderIf>
+        {/* <RenderIf condition={isNavigationOpen.value === NAVIGATION_STATE.OPEN}> */}
+        <DarkModeToggle
+          visible={isNavigationOpen.value === NAVIGATION_STATE.OPEN}
+        />
+        {/* </RenderIf> */}
         <NavigationToggle
           active={isNavigationOpen.value === NAVIGATION_STATE.OPEN}
           onClick={handleToggle}
