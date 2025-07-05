@@ -10,33 +10,40 @@ import {
 
 describe("themeMachine", () => {
   let actor: ReturnType<typeof createActor<typeof themeMachine>>;
+  let mockDocumentElement: HTMLElement;
 
-  beforeEach(() => {
-    // Mock window.matchMedia
+  beforeAll(() => {
+    // Set up common mocks once for all tests
     Object.defineProperty(window, "matchMedia", {
-      writable: true,
       value: vi.fn().mockImplementation((query) => ({
+        addEventListener: vi.fn(),
+        addListener: vi.fn(),
+        dispatchEvent: vi.fn(),
         matches: false,
         media: query,
         onchange: null,
-        addListener: vi.fn(),
-        removeListener: vi.fn(),
-        addEventListener: vi.fn(),
         removeEventListener: vi.fn(),
-        dispatchEvent: vi.fn(),
+        removeListener: vi.fn(),
       })),
-    });
-
-    // Mock document.documentElement
-    Object.defineProperty(document, "documentElement", {
-      value: {
-        classList: {
-          remove: vi.fn(),
-          add: vi.fn(),
-        },
-      },
       writable: true,
     });
+
+    mockDocumentElement = {
+      classList: {
+        add: vi.fn(),
+        remove: vi.fn(),
+      },
+    } as unknown as HTMLElement;
+
+    Object.defineProperty(document, "documentElement", {
+      value: mockDocumentElement,
+      writable: true,
+    });
+  });
+
+  beforeEach(() => {
+    // Restore mocks to their original implementation
+    vi.restoreAllMocks();
   });
 
   describe("getInitialThemeState", () => {
@@ -46,18 +53,19 @@ describe("themeMachine", () => {
     });
 
     it("will return LIGHT when prefers-color-scheme: dark does not match", () => {
+      // Override for this specific test
       Object.defineProperty(window, "matchMedia", {
-        writable: true,
         value: vi.fn().mockImplementation((query) => ({
+          addEventListener: vi.fn(),
+          addListener: vi.fn(),
+          dispatchEvent: vi.fn(),
           matches: false,
           media: query,
           onchange: null,
-          addListener: vi.fn(),
-          removeListener: vi.fn(),
-          addEventListener: vi.fn(),
           removeEventListener: vi.fn(),
-          dispatchEvent: vi.fn(),
+          removeListener: vi.fn(),
         })),
+        writable: true,
       });
 
       const result = getInitialThemeState();
@@ -65,9 +73,10 @@ describe("themeMachine", () => {
     });
 
     it("will return LIGHT when matchMedia is not available", () => {
+      // Override for this specific test
       Object.defineProperty(window, "matchMedia", {
-        writable: true,
         value: undefined,
+        writable: true,
       });
 
       const result = getInitialThemeState();
@@ -111,22 +120,6 @@ describe("themeMachine", () => {
   });
 
   describe("DOM manipulation", () => {
-    let mockDocumentElement: HTMLElement;
-
-    beforeEach(() => {
-      mockDocumentElement = {
-        classList: {
-          remove: vi.fn(),
-          add: vi.fn(),
-        },
-      } as unknown as HTMLElement;
-
-      Object.defineProperty(document, "documentElement", {
-        value: mockDocumentElement,
-        writable: true,
-      });
-    });
-
     it("will remove light-theme and add dark-theme when transitioning to dark", () => {
       actor = createActor(themeMachine);
       actor.start();

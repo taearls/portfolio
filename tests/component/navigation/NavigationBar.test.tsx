@@ -16,40 +16,67 @@ vi.mock("@xstate/react", () => ({
 // Mock the theme context
 vi.mock("@/state/contexts/ThemeContext.tsx", () => ({
   default: {
-    useSelector: vi.fn(() => "light"),
     useActorRef: vi.fn(() => ({
       send: vi.fn(),
     })),
+    useSelector: vi.fn(() => "light"),
   },
 }));
 
 const mockLinks: Array<RouteDataItem> = [
   {
-    name: "Home",
-    href: "/",
     ariaLabel: "Navigate to home page",
     hidden: false,
+    href: "/",
     isExternal: false,
+    name: "Home",
   },
   {
-    name: "Projects",
-    href: "/code",
     ariaLabel: "Navigate to projects page",
     hidden: false,
+    href: "/code",
     isExternal: false,
+    name: "Projects",
   },
   {
-    name: "Contact",
-    href: "/contact",
     ariaLabel: "Navigate to contact page",
     hidden: false,
+    href: "/contact",
     isExternal: false,
+    name: "Contact",
   },
 ];
 
+const linksWithHidden: Array<RouteDataItem> = [
+  ...mockLinks,
+  {
+    ariaLabel: "Hidden link",
+    hidden: true,
+    href: "/hidden",
+    isExternal: false,
+    name: "Hidden",
+  },
+];
+
+const linksWithExternal: Array<RouteDataItem> = [
+  ...mockLinks,
+  {
+    ariaLabel: "External link",
+    hidden: false,
+    href: "https://example.com",
+    isExternal: true,
+    name: "External",
+  },
+];
+
+const defaultInitialEntries = ["/"];
+
 describe("<NavigationBar />", () => {
   const renderWithRouter = (ui: React.ReactElement, { route = "/" } = {}) => {
-    return render(<MemoryRouter initialEntries={[route]}>{ui}</MemoryRouter>);
+    const initialEntries = route === "/" ? defaultInitialEntries : [route];
+    return render(
+      <MemoryRouter initialEntries={initialEntries}>{ui}</MemoryRouter>,
+    );
   };
 
   it("will render navigation links", () => {
@@ -61,34 +88,12 @@ describe("<NavigationBar />", () => {
   });
 
   it("will not render hidden links", () => {
-    const linksWithHidden = [
-      ...mockLinks,
-      {
-        name: "Hidden",
-        href: "/hidden",
-        ariaLabel: "Hidden link",
-        hidden: true,
-        isExternal: false,
-      },
-    ];
-
     renderWithRouter(<NavigationBar links={linksWithHidden} />);
 
     expect(screen.queryByText("Hidden")).not.toBeInTheDocument();
   });
 
   it("will render external links with external indicator", () => {
-    const linksWithExternal = [
-      ...mockLinks,
-      {
-        name: "External",
-        href: "https://example.com",
-        ariaLabel: "External link",
-        hidden: false,
-        isExternal: true,
-      },
-    ];
-
     renderWithRouter(<NavigationBar links={linksWithExternal} />);
 
     expect(screen.getByText("External")).toBeInTheDocument();

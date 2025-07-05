@@ -10,14 +10,16 @@ import {
 describe("navigationMachine", () => {
   let actor: ReturnType<typeof createActor<typeof navigationMachine>>;
 
-  beforeEach(() => {
-    // Mock window.innerWidth for consistent testing
+  beforeAll(() => {
+    // Set up common mocks once
     Object.defineProperty(window, "innerWidth", {
-      writable: true,
       configurable: true,
       value: 1024, // Desktop width
+      writable: true,
     });
+  });
 
+  beforeEach(() => {
     // Mock setTimeout to execute immediately
     vi.useFakeTimers();
   });
@@ -27,12 +29,8 @@ describe("navigationMachine", () => {
   });
 
   describe("initial state", () => {
-    it("will start in OPEN state on desktop", async () => {
+    it("will start in OPEN state on desktop", () => {
       window.innerWidth = 1024;
-      vi.resetModules();
-      const { navigationMachine, NAVIGATION_STATE } = await import(
-        "@/state/machines/navigationMachine.ts"
-      );
       actor = createActor(navigationMachine);
       actor.start();
 

@@ -1,6 +1,11 @@
 /// <reference types="cypress" />
 
 describe("Page Render Smoke Tests", () => {
+  beforeEach(() => {
+    // Set viewport for consistent testing
+    cy.viewport(1280, 720);
+  });
+
   it("renders the Home Page", () => {
     cy.visit("/");
 
@@ -18,7 +23,7 @@ describe("Page Render Smoke Tests", () => {
   });
   it("renders the 404 Page", () => {
     const url = "/some-random-string";
-    cy.visit(url);
+    cy.visit(url, { failOnStatusCode: false });
 
     const baseUrlWithoutProtocol = Cypress.config("baseUrl").split("://")[1];
     const fullUrl = baseUrlWithoutProtocol + url;

@@ -50,9 +50,9 @@ const onDarkToLight = () => {
 };
 
 export const themeMachine = createMachine({
+  entry: setInitialTheme,
   id: "theme",
   initial: getInitialThemeState(),
-  entry: setInitialTheme,
   states: {
     [THEME_STATES.DARK]: {
       on: {

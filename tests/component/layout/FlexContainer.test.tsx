@@ -9,6 +9,10 @@ import {
   JustifyContentCSSValue,
 } from "@/types/layout.ts";
 
+const responsive = {
+  flexFlow: { prefix: "md" as const, value: FlexFlowCSSValue.ROW },
+};
+
 describe("<FlexContainer />", () => {
   it("will render children", () => {
     render(
@@ -69,11 +73,7 @@ describe("<FlexContainer />", () => {
 
   it("will apply responsive classes", () => {
     const { container } = render(
-      <FlexContainer
-        responsive={{
-          flexFlow: { prefix: "md" as const, value: FlexFlowCSSValue.ROW },
-        }}
-      >
+      <FlexContainer responsive={responsive}>
         <div>Test</div>
       </FlexContainer>,
     );
@@ -101,8 +101,7 @@ describe("<FlexContainer />", () => {
     );
 
     const flexContainer = container.firstChild as HTMLElement;
-    const expectedStyle = { maxWidth: "500px" };
-    expect(flexContainer).toHaveStyle(expectedStyle);
+    expect(flexContainer).toHaveStyle("max-width: 500px");
   });
 
   it("will apply full width", () => {

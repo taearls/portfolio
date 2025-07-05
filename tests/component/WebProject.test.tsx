@@ -7,10 +7,10 @@ import WebProject from "@/components/WebProject/WebProject.tsx";
 // Mock the theme context
 vi.mock("@/state/contexts/ThemeContext.tsx", () => ({
   default: {
-    useSelector: vi.fn(() => "light"),
     useActorRef: vi.fn(() => ({
       send: vi.fn(),
     })),
+    useSelector: vi.fn(() => "light"),
   },
 }));
 
@@ -22,26 +22,26 @@ vi.mock("@/components/CloudinaryImage/images/WebProjectImage.tsx", () => ({
 }));
 
 const mockWebProject = {
+  alt: "Test project screenshot",
   analytics: {
     campaign: "portfolio",
     medium: "web",
     source: "github",
   },
   cloudinaryId: {
-    default: "screenshots/project-light",
     dark: "screenshots/project-dark",
+    default: "screenshots/project-light",
   },
-  alt: "Test project screenshot",
   descriptions: [
     "This is a test project description.",
     "It has multiple description lines.",
   ],
-  href: "https://example.com",
-  name: "Test Project",
-  width: 500,
   height: 300,
-  tagline: "Check it out!",
+  href: "https://example.com",
   isLast: false,
+  name: "Test Project",
+  tagline: "Check it out!",
+  width: 500,
 };
 
 describe("<WebProject />", () => {

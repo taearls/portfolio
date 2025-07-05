@@ -22,20 +22,26 @@ describe("<NotFoundPage />", () => {
     // Mock window.location
     Object.defineProperty(window, "location", {
       value: {
+        hash: "",
         host: "localhost:3000",
         pathname: "/nonexistent",
         search: "",
-        hash: "",
       },
       writable: true,
     });
   });
 
+  const defaultInitialEntries = ["/nonexistent"];
+
   const renderWithRouter = (
     ui: React.ReactElement,
     { route = "/nonexistent" } = {},
   ) => {
-    return render(<MemoryRouter initialEntries={[route]}>{ui}</MemoryRouter>);
+    const initialEntries =
+      route === "/nonexistent" ? defaultInitialEntries : [route];
+    return render(
+      <MemoryRouter initialEntries={initialEntries}>{ui}</MemoryRouter>,
+    );
   };
 
   it("will render 404 heading", () => {

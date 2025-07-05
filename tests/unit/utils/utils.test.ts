@@ -125,7 +125,7 @@ describe("utils tests", () => {
 
   describe("getRandomNumberInRange", () => {
     it("will return number within specified range", () => {
-      const result = getRandomNumberInRange({ min: 1, max: 10 });
+      const result = getRandomNumberInRange({ max: 10, min: 1 });
       expect(result).toBeGreaterThanOrEqual(1);
       expect(result).toBeLessThanOrEqual(10);
     });
@@ -137,7 +137,7 @@ describe("utils tests", () => {
     });
 
     it("will handle edge case where min equals max", () => {
-      const result = getRandomNumberInRange({ min: 5, max: 5 });
+      const result = getRandomNumberInRange({ max: 5, min: 5 });
       expect(result).toBe(5);
     });
   });

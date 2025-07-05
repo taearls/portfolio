@@ -6,8 +6,8 @@ import VideoPlayer from "@/components/VideoPlayer/VideoPlayer.tsx";
 
 describe("<VideoPlayer />", () => {
   const defaultProps = {
-    title: "Test Video",
     src: "https://www.youtube.com/embed/test",
+    title: "Test Video",
   };
 
   it("will render iframe with correct src", () => {
