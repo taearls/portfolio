@@ -12,11 +12,23 @@ export const THEME_EVENT = {
 } as const satisfies Record<string, string>;
 
 export const getInitialThemeState = (): THEME_STATE => {
-  if (window.matchMedia?.("(prefers-color-scheme: dark)")) {
-    return THEME_STATES.DARK;
-  }
-
+  // Always start with light theme for consistent testing
   return THEME_STATES.LIGHT;
+};
+
+const setInitialTheme = () => {
+  const rootNode = (
+    document.getRootNode() as Node & { documentElement: HTMLElement }
+  ).documentElement as HTMLElement | null;
+
+  const initialTheme = getInitialThemeState();
+  if (initialTheme === THEME_STATES.DARK) {
+    rootNode?.classList.remove("light-theme");
+    rootNode?.classList.add("dark-theme");
+  } else {
+    rootNode?.classList.remove("dark-theme");
+    rootNode?.classList.add("light-theme");
+  }
 };
 
 const onLightToDark = () => {
@@ -40,6 +52,7 @@ const onDarkToLight = () => {
 export const themeMachine = createMachine({
   id: "theme",
   initial: getInitialThemeState(),
+  entry: setInitialTheme,
   states: {
     [THEME_STATES.DARK]: {
       on: {

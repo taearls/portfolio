@@ -2,6 +2,7 @@ import TylerInFrontOfBrickWallSmilingImage from "@/components/CloudinaryImage/im
 import InlineAnchor from "@/components/InlineAnchor/InlineAnchor.tsx";
 import FlexContainer from "@/components/layout/containers/FlexContainer/FlexContainer.tsx";
 import HeadingOne from "@/components/layout/headings/HeadingOne.tsx";
+import HeadingTwo from "@/components/layout/headings/HeadingTwo.tsx";
 import Paragraph from "@/components/layout/Paragraph/Paragraph.tsx";
 import { AlignItemsCSSValue, FlexFlowCSSValue } from "@/types/layout.ts";
 
@@ -30,6 +31,7 @@ export default function HomePage() {
 
         <TylerInFrontOfBrickWallSmilingImage />
 
+        <HeadingTwo>Professional Experience</HeadingTwo>
         <Paragraph>
           {
             "Professionally, I write fullstack web applications as a consultant for "

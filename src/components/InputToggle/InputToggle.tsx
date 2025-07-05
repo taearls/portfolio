@@ -37,6 +37,7 @@ export default function InputToggle({
       <label
         className="input-toggle-label block h-5 cursor-pointer overflow-hidden rounded-full bg-gray-400"
         htmlFor={id}
+        data-testid={`${id}-label`}
       />
     </div>
   );

@@ -28,7 +28,7 @@ export default function SocialMediaIcon({
         accent && "accent",
       )}
       target="_blank"
-      rel="noreferrer"
+      rel="noopener noreferrer"
     >
       <span className="rounded-sm">{icon}</span>
     </a>

@@ -96,9 +96,7 @@ export default function NavigationBar({ links }: NavigationBarProps) {
 
       <div className={mergeClasses(styles["navigation-toggle-container"])}>
         {/* <RenderIf condition={isNavigationOpen.value === NAVIGATION_STATE.OPEN}> */}
-        <DarkModeToggle
-          visible={isNavigationOpen.value === NAVIGATION_STATE.OPEN}
-        />
+        <DarkModeToggle visible={true} />
         {/* </RenderIf> */}
         <NavigationToggle
           active={isNavigationOpen.value === NAVIGATION_STATE.OPEN}

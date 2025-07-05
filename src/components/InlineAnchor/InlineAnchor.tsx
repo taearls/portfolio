@@ -30,7 +30,7 @@ export default function InlineAnchor({
         href={href}
         aria-label={ariaLabel}
         target={isExternal ? "_blank" : undefined}
-        rel="noreferrer"
+        rel={isExternal ? "noopener noreferrer" : undefined}
       >
         <InlineAnchorContent
           isExternal={isExternal}

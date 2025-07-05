@@ -1,6 +1,7 @@
 import InlineAnchor from "@/components/InlineAnchor/InlineAnchor.tsx";
 import FlexContainer from "@/components/layout/containers/FlexContainer/FlexContainer.tsx";
 import HeadingOne from "@/components/layout/headings/HeadingOne.tsx";
+import HeadingTwo from "@/components/layout/headings/HeadingTwo.tsx";
 import Paragraph from "@/components/layout/Paragraph/Paragraph.tsx";
 import WebProject from "@/components/WebProject/WebProject.tsx";
 import { AlignItemsCSSValue, FlexFlowCSSValue } from "@/types/layout.ts";
@@ -55,6 +56,7 @@ export default function WebProjectsPage() {
           </Paragraph>
         </FlexContainer>
 
+        <HeadingTwo>Featured Projects</HeadingTwo>
         <FlexContainer flexFlow={FlexFlowCSSValue.COLUMN} gapY={8}>
           {WEB_PROJECTS.map((webProject, index) => (
             <WebProject

@@ -24,10 +24,10 @@ export default memo(function DarkModeToggle({ visible }: DarkModeToggleProps) {
       onClick={updateTheme}
       className={mergeClasses(!visible && "hidden")}
     >
-      <span hidden={themeState === THEME_STATES.DARK}>
+      <span hidden={themeState === THEME_STATES.LIGHT}>
         <MoonIcon />
       </span>
-      <span hidden={themeState === THEME_STATES.LIGHT}>
+      <span hidden={themeState === THEME_STATES.DARK}>
         <SunIcon />
       </span>
       {/* <RenderIf

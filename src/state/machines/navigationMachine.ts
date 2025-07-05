@@ -25,7 +25,7 @@ export const NAVIGATION_EVENT = {
 } as const satisfies Record<string, string>;
 
 const getInitialNavState = () => {
-  if (window.innerWidth <= 640) {
+  if (typeof window !== "undefined" && window.innerWidth <= 640) {
     return NAVIGATION_STATE.CLOSED;
   }
 

@@ -1,6 +1,7 @@
 import InlineAnchor from "@/components/InlineAnchor/InlineAnchor.tsx";
 import FlexContainer from "@/components/layout/containers/FlexContainer/FlexContainer.tsx";
 import HeadingOne from "@/components/layout/headings/HeadingOne.tsx";
+import HeadingTwo from "@/components/layout/headings/HeadingTwo.tsx";
 import Paragraph from "@/components/layout/Paragraph/Paragraph.tsx";
 import {
   AlignItemsCSSValue,
@@ -31,6 +32,7 @@ export default function Contact() {
             }
           </Paragraph>
 
+          <HeadingTwo>Get In Touch</HeadingTwo>
           <Paragraph>
             {"The best way to reach me is via email at "}
             <InlineAnchor
