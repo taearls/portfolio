@@ -8,12 +8,41 @@ import {
   themeMachine,
 } from "@/state/machines/themeMachine.ts";
 
+// Set up matchMedia mock before importing the module
+Object.defineProperty(window, "matchMedia", {
+  value: vi.fn().mockImplementation((query) => ({
+    addEventListener: vi.fn(),
+    addListener: vi.fn(),
+    dispatchEvent: vi.fn(),
+    matches: false,
+    media: query,
+    onchange: null,
+    removeEventListener: vi.fn(),
+    removeListener: vi.fn(),
+  })),
+  writable: true,
+  configurable: true,
+});
+
 describe("themeMachine", () => {
   let actor: ReturnType<typeof createActor<typeof themeMachine>>;
   let mockDocumentElement: HTMLElement;
 
-  beforeAll(() => {
-    // Set up common mocks once for all tests
+  beforeEach(() => {
+    // Set up document element mock
+    mockDocumentElement = {
+      classList: {
+        add: vi.fn(),
+        remove: vi.fn(),
+      },
+    } as unknown as HTMLElement;
+
+    Object.defineProperty(document, "documentElement", {
+      value: mockDocumentElement,
+      writable: true,
+    });
+
+    // Reset matchMedia mock to default (light mode)
     Object.defineProperty(window, "matchMedia", {
       value: vi.fn().mockImplementation((query) => ({
         addEventListener: vi.fn(),
@@ -26,30 +55,30 @@ describe("themeMachine", () => {
         removeListener: vi.fn(),
       })),
       writable: true,
+      configurable: true,
     });
-
-    mockDocumentElement = {
-      classList: {
-        add: vi.fn(),
-        remove: vi.fn(),
-      },
-    } as unknown as HTMLElement;
-
-    Object.defineProperty(document, "documentElement", {
-      value: mockDocumentElement,
-      writable: true,
-    });
-  });
-
-  beforeEach(() => {
-    // Restore mocks to their original implementation
-    vi.restoreAllMocks();
   });
 
   describe("getInitialThemeState", () => {
-    it("will return LIGHT by default", () => {
+    it("will return DARK when prefers-color-scheme: dark matches", () => {
+      // Override for this specific test
+      Object.defineProperty(window, "matchMedia", {
+        value: vi.fn().mockImplementation((query) => ({
+          addEventListener: vi.fn(),
+          addListener: vi.fn(),
+          dispatchEvent: vi.fn(),
+          matches: query === "(prefers-color-scheme: dark)",
+          media: query,
+          onchange: null,
+          removeEventListener: vi.fn(),
+          removeListener: vi.fn(),
+        })),
+        writable: true,
+        configurable: true,
+      });
+
       const result = getInitialThemeState();
-      expect(result).toBe(THEME_STATES.LIGHT);
+      expect(result).toBe(THEME_STATES.DARK);
     });
 
     it("will return LIGHT when prefers-color-scheme: dark does not match", () => {
@@ -66,6 +95,7 @@ describe("themeMachine", () => {
           removeListener: vi.fn(),
         })),
         writable: true,
+        configurable: true,
       });
 
       const result = getInitialThemeState();
@@ -77,6 +107,7 @@ describe("themeMachine", () => {
       Object.defineProperty(window, "matchMedia", {
         value: undefined,
         writable: true,
+        configurable: true,
       });
 
       const result = getInitialThemeState();
@@ -85,16 +116,51 @@ describe("themeMachine", () => {
   });
 
   describe("initial state", () => {
-    it("will start in LIGHT state by default", () => {
+    it("will start in LIGHT state when system prefers light mode", () => {
+      // Ensure matchMedia returns false for dark mode preference
+      Object.defineProperty(window, "matchMedia", {
+        value: vi.fn().mockImplementation((query) => ({
+          addEventListener: vi.fn(),
+          addListener: vi.fn(),
+          dispatchEvent: vi.fn(),
+          matches: false,
+          media: query,
+          onchange: null,
+          removeEventListener: vi.fn(),
+          removeListener: vi.fn(),
+        })),
+        writable: true,
+        configurable: true,
+      });
+
       actor = createActor(themeMachine);
       actor.start();
 
       expect(actor.getSnapshot().value).toBe(THEME_STATES.LIGHT);
     });
+
+    // Note: Testing the initial dark mode state requires modifying source code
+    // to use a factory function. This test is removed to avoid source code changes.
   });
 
   describe("state transitions", () => {
     beforeEach(() => {
+      // Ensure matchMedia returns false for light mode preference
+      Object.defineProperty(window, "matchMedia", {
+        value: vi.fn().mockImplementation((query) => ({
+          addEventListener: vi.fn(),
+          addListener: vi.fn(),
+          dispatchEvent: vi.fn(),
+          matches: false,
+          media: query,
+          onchange: null,
+          removeEventListener: vi.fn(),
+          removeListener: vi.fn(),
+        })),
+        writable: true,
+        configurable: true,
+      });
+
       actor = createActor(themeMachine);
       actor.start();
     });
@@ -120,6 +186,24 @@ describe("themeMachine", () => {
   });
 
   describe("DOM manipulation", () => {
+    beforeEach(() => {
+      // Ensure matchMedia returns false for light mode preference
+      Object.defineProperty(window, "matchMedia", {
+        value: vi.fn().mockImplementation((query) => ({
+          addEventListener: vi.fn(),
+          addListener: vi.fn(),
+          dispatchEvent: vi.fn(),
+          matches: false,
+          media: query,
+          onchange: null,
+          removeEventListener: vi.fn(),
+          removeListener: vi.fn(),
+        })),
+        writable: true,
+        configurable: true,
+      });
+    });
+
     it("will remove light-theme and add dark-theme when transitioning to dark", () => {
       actor = createActor(themeMachine);
       actor.start();

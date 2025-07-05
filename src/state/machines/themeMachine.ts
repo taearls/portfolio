@@ -12,7 +12,14 @@ export const THEME_EVENT = {
 } as const satisfies Record<string, string>;
 
 export const getInitialThemeState = (): THEME_STATE => {
-  // Always start with light theme for consistent testing
+  // Check if the user prefers dark mode
+  if (typeof window !== "undefined" && window.matchMedia) {
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    if (mediaQuery && typeof mediaQuery.matches === "boolean") {
+      return mediaQuery.matches ? THEME_STATES.DARK : THEME_STATES.LIGHT;
+    }
+  }
+  // Fallback to light theme if matchMedia is not available
   return THEME_STATES.LIGHT;
 };
 
