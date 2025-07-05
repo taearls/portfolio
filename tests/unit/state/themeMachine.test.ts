@@ -7,22 +7,13 @@ import {
   THEME_STATES,
   themeMachine,
 } from "@/state/machines/themeMachine.ts";
+import {
+  setupDocumentElementMock,
+  setupMatchMediaMock,
+} from "./__mocks__/themeMocks.ts";
 
 // Set up matchMedia mock before importing the module
-Object.defineProperty(window, "matchMedia", {
-  value: vi.fn().mockImplementation((query) => ({
-    addEventListener: vi.fn(),
-    addListener: vi.fn(),
-    dispatchEvent: vi.fn(),
-    matches: false,
-    media: query,
-    onchange: null,
-    removeEventListener: vi.fn(),
-    removeListener: vi.fn(),
-  })),
-  writable: true,
-  configurable: true,
-});
+setupMatchMediaMock(false);
 
 describe("themeMachine", () => {
   let actor: ReturnType<typeof createActor<typeof themeMachine>>;
@@ -30,80 +21,28 @@ describe("themeMachine", () => {
 
   beforeEach(() => {
     // Set up document element mock
-    mockDocumentElement = {
-      classList: {
-        add: vi.fn(),
-        remove: vi.fn(),
-      },
-    } as unknown as HTMLElement;
-
-    Object.defineProperty(document, "documentElement", {
-      value: mockDocumentElement,
-      writable: true,
-    });
+    mockDocumentElement = setupDocumentElementMock();
 
     // Reset matchMedia mock to default (light mode)
-    Object.defineProperty(window, "matchMedia", {
-      value: vi.fn().mockImplementation((query) => ({
-        addEventListener: vi.fn(),
-        addListener: vi.fn(),
-        dispatchEvent: vi.fn(),
-        matches: false,
-        media: query,
-        onchange: null,
-        removeEventListener: vi.fn(),
-        removeListener: vi.fn(),
-      })),
-      writable: true,
-      configurable: true,
-    });
+    setupMatchMediaMock(false);
   });
 
   describe("getInitialThemeState", () => {
     it("will return DARK when prefers-color-scheme: dark matches", () => {
-      // Override for this specific test
-      Object.defineProperty(window, "matchMedia", {
-        value: vi.fn().mockImplementation((query) => ({
-          addEventListener: vi.fn(),
-          addListener: vi.fn(),
-          dispatchEvent: vi.fn(),
-          matches: query === "(prefers-color-scheme: dark)",
-          media: query,
-          onchange: null,
-          removeEventListener: vi.fn(),
-          removeListener: vi.fn(),
-        })),
-        writable: true,
-        configurable: true,
-      });
+      setupMatchMediaMock(true);
 
       const result = getInitialThemeState();
       expect(result).toBe(THEME_STATES.DARK);
     });
 
     it("will return LIGHT when prefers-color-scheme: dark does not match", () => {
-      // Override for this specific test
-      Object.defineProperty(window, "matchMedia", {
-        value: vi.fn().mockImplementation((query) => ({
-          addEventListener: vi.fn(),
-          addListener: vi.fn(),
-          dispatchEvent: vi.fn(),
-          matches: false,
-          media: query,
-          onchange: null,
-          removeEventListener: vi.fn(),
-          removeListener: vi.fn(),
-        })),
-        writable: true,
-        configurable: true,
-      });
+      setupMatchMediaMock(false);
 
       const result = getInitialThemeState();
       expect(result).toBe(THEME_STATES.LIGHT);
     });
 
     it("will return LIGHT when matchMedia is not available", () => {
-      // Override for this specific test
       Object.defineProperty(window, "matchMedia", {
         value: undefined,
         writable: true,
@@ -117,21 +56,7 @@ describe("themeMachine", () => {
 
   describe("initial state", () => {
     it("will start in LIGHT state when system prefers light mode", () => {
-      // Ensure matchMedia returns false for dark mode preference
-      Object.defineProperty(window, "matchMedia", {
-        value: vi.fn().mockImplementation((query) => ({
-          addEventListener: vi.fn(),
-          addListener: vi.fn(),
-          dispatchEvent: vi.fn(),
-          matches: false,
-          media: query,
-          onchange: null,
-          removeEventListener: vi.fn(),
-          removeListener: vi.fn(),
-        })),
-        writable: true,
-        configurable: true,
-      });
+      setupMatchMediaMock(false);
 
       actor = createActor(themeMachine);
       actor.start();
@@ -145,21 +70,7 @@ describe("themeMachine", () => {
 
   describe("state transitions", () => {
     beforeEach(() => {
-      // Ensure matchMedia returns false for light mode preference
-      Object.defineProperty(window, "matchMedia", {
-        value: vi.fn().mockImplementation((query) => ({
-          addEventListener: vi.fn(),
-          addListener: vi.fn(),
-          dispatchEvent: vi.fn(),
-          matches: false,
-          media: query,
-          onchange: null,
-          removeEventListener: vi.fn(),
-          removeListener: vi.fn(),
-        })),
-        writable: true,
-        configurable: true,
-      });
+      setupMatchMediaMock(false);
 
       actor = createActor(themeMachine);
       actor.start();
@@ -187,21 +98,7 @@ describe("themeMachine", () => {
 
   describe("DOM manipulation", () => {
     beforeEach(() => {
-      // Ensure matchMedia returns false for light mode preference
-      Object.defineProperty(window, "matchMedia", {
-        value: vi.fn().mockImplementation((query) => ({
-          addEventListener: vi.fn(),
-          addListener: vi.fn(),
-          dispatchEvent: vi.fn(),
-          matches: false,
-          media: query,
-          onchange: null,
-          removeEventListener: vi.fn(),
-          removeListener: vi.fn(),
-        })),
-        writable: true,
-        configurable: true,
-      });
+      setupMatchMediaMock(false);
     });
 
     it("will remove light-theme and add dark-theme when transitioning to dark", () => {
