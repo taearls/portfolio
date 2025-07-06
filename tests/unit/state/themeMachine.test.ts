@@ -1,4 +1,3 @@
-import { vi } from "vitest";
 import { createActor } from "xstate";
 
 import {
@@ -44,9 +43,9 @@ describe("themeMachine", () => {
 
     it("will return LIGHT when matchMedia is not available", () => {
       Object.defineProperty(window, "matchMedia", {
+        configurable: true,
         value: undefined,
         writable: true,
-        configurable: true,
       });
 
       const result = getInitialThemeState();
