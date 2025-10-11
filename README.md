@@ -6,7 +6,7 @@ I have a passion for learning new technologies, and I'm always looking to learn 
 
 # Portfolio
 
-This repository is the source code for my tech portfolio, built lovingly with [Next](https://nextjs.org), a modern web framework built with React. I also use [TailwindCSS](https://tailwindcss.com) in my components, and [Cloudinary](https://cloudinary.com) to serve images from a cloud-based data store that are optimized for the web.
+This repository is the source code for my tech portfolio, built lovingly with [React](https://react.dev) and [Vite](https://vitejs.dev). I also use [TailwindCSS](https://tailwindcss.com) for styling, [XState](https://xstate.js.org) for state management, and [Cloudinary](https://cloudinary.com) to serve optimized images from a cloud-based data store.
 
 # Previous Iterations
 
