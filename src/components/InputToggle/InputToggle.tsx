@@ -25,7 +25,7 @@ export default function InputToggle({
   }, [setChecked, onToggle]);
 
   return (
-    <div className="duration-800 relative mr-2 inline-block h-auto w-10 select-none align-middle transition ease-in">
+    <div className="relative mr-2 inline-block h-auto w-10 align-middle transition duration-800 ease-in select-none">
       <input
         type="checkbox"
         className="input-toggle focus:outline-none dark:border-purple-400"

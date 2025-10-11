@@ -9,10 +9,12 @@ This is Tyler Earls' portfolio website built with React, Vite, TailwindCSS, and 
 ## Essential Commands
 
 ### Development
+
 - `npm run dev` - Start development server with Vite on port 3000 (auto-opens browser)
 - `npm run build` - Build for production (runs TypeScript compiler first, then Vite)
 
 ### Testing
+
 - `npm run test` - Run unit tests with Vitest
 - `npm run test:watch` - Run unit tests in watch mode
 - `npm run test:vitest:ui` - Open Vitest UI for interactive testing
@@ -21,6 +23,7 @@ This is Tyler Earls' portfolio website built with React, Vite, TailwindCSS, and 
 - `npm run test:all` - Run both unit and integration tests
 
 ### Code Quality
+
 - `npm run lint:check` - Check ESLint issues
 - `npm run lint:fix` - Auto-fix ESLint issues
 - `npm run oxlint:check` - Run OxLint checks (faster alternative linter)
@@ -31,6 +34,7 @@ This is Tyler Earls' portfolio website built with React, Vite, TailwindCSS, and 
 ## Architecture
 
 ### Core Technologies
+
 - **Build Tool**: Vite with React plugin
 - **Framework**: React 19 with React Router 7
 - **Styling**: TailwindCSS with CSS Modules for component-specific styles
@@ -39,6 +43,7 @@ This is Tyler Earls' portfolio website built with React, Vite, TailwindCSS, and 
 - **Testing**: Vitest for unit tests, Cypress for integration tests
 
 ### Project Structure
+
 - `/src/components/` - React components organized by feature
   - Layout components in `/layout/`
   - Navigation components in `/navigation/`
@@ -57,6 +62,7 @@ This is Tyler Earls' portfolio website built with React, Vite, TailwindCSS, and 
   - `/component/` - Component-specific tests
 
 ### Key Patterns
+
 - **Path Aliasing**: `@/` maps to `/src/` directory
 - **CSS Modules**: Component styles use camelCase conversion
 - **State Machines**: XState for complex state logic (theme toggling, navigation)
@@ -64,12 +70,14 @@ This is Tyler Earls' portfolio website built with React, Vite, TailwindCSS, and 
 - **Performance Monitoring**: Why Did You Render development tool integrated
 
 ### Testing Strategy
+
 - Unit tests run in jsdom environment
 - Integration tests use Cypress with a local dev server on port 4173
 - Test files follow `.test.ts` or `.spec.tsx` naming convention
 - Component tests use Testing Library utilities
 
 ### Development Notes
+
 - React Router configured for client-side only (SSR disabled)
 - Vite dev server runs on port 3000
 - CSS modules generate scoped class names (hash-based in production)
