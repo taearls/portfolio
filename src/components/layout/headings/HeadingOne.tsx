@@ -1,4 +1,5 @@
-import type { HeadingProps} from "@/types/layout.ts";
+import type { HeadingProps } from "@/types/layout.ts";
+
 import { TextAlignment } from "@/types/layout.ts";
 import {
   getTextAlignmentClass,

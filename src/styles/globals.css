@@ -1,6 +1,76 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --breakpoint-sm: 40rem;
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 64rem;
+  --breakpoint-xl: 80rem;
+  --breakpoint-2xl: 96rem;
+
+  /* Custom colors */
+  --color-soft-black: #121212;
+  --color-coolgray-50: #f9fafb;
+  --color-coolgray-100: #f3f4f6;
+  --color-coolgray-200: #e5e7eb;
+  --color-coolgray-300: #d1d5db;
+  --color-coolgray-400: #9ca3af;
+  --color-coolgray-500: #6b7280;
+  --color-coolgray-600: #4b5563;
+  --color-coolgray-700: #374151;
+  --color-coolgray-800: #1f2937;
+  --color-coolgray-900: #111827;
+  --color-cyan-50: #ecfeff;
+  --color-cyan-100: #cffafe;
+  --color-cyan-200: #a5f3fc;
+  --color-cyan-300: #67e8f9;
+  --color-cyan-400: #22d3ee;
+  --color-cyan-500: #06b6d4;
+  --color-cyan-600: #0891b2;
+  --color-cyan-700: #0e7490;
+  --color-cyan-800: #155e75;
+  --color-cyan-900: #164e63;
+  --color-emerald-50: #ecfdf5;
+  --color-emerald-100: #d1fae5;
+  --color-emerald-200: #a7f3d0;
+  --color-emerald-300: #6ee7b7;
+  --color-emerald-400: #34d399;
+  --color-emerald-500: #10b981;
+  --color-emerald-600: #059669;
+  --color-emerald-700: #047857;
+  --color-emerald-800: #065f46;
+  --color-emerald-900: #064e3b;
+  --color-gray-50: #fafafa;
+  --color-gray-100: #f4f4f5;
+  --color-gray-200: #e4e4e7;
+  --color-gray-300: #d4d4d8;
+  --color-gray-400: #a1a1aa;
+  --color-gray-500: #71717a;
+  --color-gray-600: #52525b;
+  --color-gray-700: #3f3f46;
+  --color-gray-800: #27272a;
+  --color-gray-900: #18181b;
+
+  /* Custom font families */
+  --font-family-default: Asul, sans-sarif;
+
+  /* Custom spacing */
+  --spacing-21: 84px;
+
+  /* Custom widths/max-widths */
+  --width-65ch: 65ch;
+
+  /* Custom z-index */
+  --z-index-100: 100;
+
+  /* Custom box shadows */
+  --shadow-outline-dark: 0 0 0 3px #67e8f9;
+  --shadow-outline-inset-dark:
+    inset 0 -0.125em 0 0 #111827, inset 0 -0.22em 0 0 #22d3ee;
+  --shadow-outline-inset-dark-fill:
+    inset 0 -0.125em 0 0 #111827, inset 0 -1em 0 0 #22d3ee;
+  --shadow-outline-light: 0 0 0 3px #22d3ee;
+  --shadow-outline-light-blur: 0 0 3pt 2pt rgb(178 245 234);
+}
 
 :root {
   /* https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/light-dark */

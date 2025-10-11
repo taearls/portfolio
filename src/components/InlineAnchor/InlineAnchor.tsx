@@ -59,7 +59,7 @@ export const InlineAnchorContent = memo(function InlineAnchorContent({
       className={mergeClasses(
         boldClass,
         accent && "accent",
-        "group inline-flex items-center gap-x-1 rounded-sm text-lg focus:shadow-outline-light focus:outline-none sm:items-center sm:justify-center dark:focus:shadow-outline-dark",
+        "group focus:shadow-outline-light dark:focus:shadow-outline-dark inline-flex items-center gap-x-1 rounded-sm text-lg focus:outline-none sm:items-center sm:justify-center",
       )}
     >
       <span className={mergeClasses(underline && "underline", "inline-flex")}>

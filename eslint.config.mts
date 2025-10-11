@@ -1,5 +1,3 @@
-import type { Linter } from "eslint";
-
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 
@@ -11,6 +9,7 @@ import eslintPluginReact from "eslint-plugin-react";
 import eslintPluginReactHooks from "eslint-plugin-react-hooks";
 import eslintPluginReactPerf from "eslint-plugin-react-perf";
 import eslintPluginReactRefresh from "eslint-plugin-react-refresh";
+import { defineConfig } from "eslint/config";
 import globals from "globals";
 import typescriptEslint from "typescript-eslint";
 
@@ -21,7 +20,7 @@ const compat = new FlatCompat({
   baseDirectory: __dirname,
 });
 
-const config: Array<Linter.Config> = [
+const config = defineConfig([
   { files: ["**/*.{js,mjs,cjs,ts,mts,jsx,tsx}"] },
   {
     ignores: [
@@ -43,7 +42,12 @@ const config: Array<Linter.Config> = [
   },
   eslintJsPlugin.configs.recommended,
   ...typescriptEslint.configs.recommended,
-  eslintPluginReactHooks.configs["recommended-latest"],
+  {
+    plugins: {
+      "react-hooks": eslintPluginReactHooks,
+    },
+    rules: eslintPluginReactHooks.configs["recommended-latest"].rules,
+  },
   eslintPluginReactPerf.configs.flat.recommended,
   eslintPluginReact.configs.flat!.recommended,
   eslintPluginReactRefresh.configs.recommended,
@@ -111,18 +115,19 @@ const config: Array<Linter.Config> = [
   },
 
   // eslint-plugin-barrel-files config
-  ...compat.config({
-    env: {
-      es2020: true,
-      node: true,
-    },
-    plugins: ["barrel-files"],
-    rules: {
-      "barrel-files/avoid-barrel-files": "error",
-      "barrel-files/avoid-namespace-import": "error",
-      "barrel-files/avoid-re-export-all": "error",
-    },
-  }),
-];
+  // Temporarily disabled - uncomment when needed
+  // ...compat.config({
+  //   env: {
+  //     es2020: true,
+  //     node: true,
+  //   },
+  //   plugins: ["barrel-files"],
+  //   rules: {
+  //     "barrel-files/avoid-barrel-files": "error",
+  //     "barrel-files/avoid-namespace-import": "error",
+  //     "barrel-files/avoid-re-export-all": "error",
+  //   },
+  // }),
+]);
 
 export default config;

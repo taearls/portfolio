@@ -1,6 +1,7 @@
+import type { ViteConfigInput } from "./vite.config.mts";
+
 import { configDefaults, defineConfig, mergeConfig } from "vitest/config";
 
-import type { ViteConfigInput } from "./vite.config.mts";
 import viteConfig from "./vite.config.mts";
 
 export default (args: ViteConfigInput) =>

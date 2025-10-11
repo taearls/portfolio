@@ -18,14 +18,14 @@ export default function Todo({ children, description, className }: TodoProps) {
     <RenderIf condition={import.meta.env.MODE === "development"}>
       <div
         className={mergeClasses(
-          "h-[500px] w-[500px] rounded-md bg-pink-500 text-2xl font-bold text-current dark:bg-pink-400 dark:text-soft-black",
+          "dark:text-soft-black h-[500px] w-[500px] rounded-md bg-pink-500 text-2xl font-bold text-current dark:bg-pink-400",
           className != null && className,
         )}
       >
         <Fragment>
           {/* cursive font?? */} {children}
           <p
-            className="border-inherit bg-inherit italic text-inherit"
+            className="border-inherit bg-inherit text-inherit italic"
             style={descriptionStyle}
           >
             {description}

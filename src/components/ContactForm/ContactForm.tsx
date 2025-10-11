@@ -457,7 +457,7 @@ export default function ContactForm() {
           <input
             id="contactName"
             // onBlur={on_name_change}
-            className="form-input mb-2 w-full text-soft-black placeholder-gray-600 focus:bg-white focus:shadow-outline-light focus:outline-none dark:focus:shadow-outline-dark"
+            className="form-input text-soft-black focus:shadow-outline-light dark:focus:shadow-outline-dark mb-2 w-full placeholder-gray-600 focus:bg-white focus:outline-none"
             type="text"
             name="name"
           />
@@ -476,7 +476,7 @@ export default function ContactForm() {
           </label>
           <input
             id="contactEmail"
-            className="form-input w-full text-soft-black placeholder-gray-600 focus:bg-white focus:shadow-outline-light focus:outline-none dark:focus:shadow-outline-dark"
+            className="form-input text-soft-black focus:shadow-outline-light dark:focus:shadow-outline-dark w-full placeholder-gray-600 focus:bg-white focus:outline-none"
             type="email"
             name="email"
             required
@@ -501,7 +501,7 @@ export default function ContactForm() {
           </label>
           <textarea
             id="contactMessage"
-            className="form-textarea h-32 w-full text-soft-black placeholder-gray-600 focus:bg-white focus:shadow-outline-light focus:outline-none dark:focus:shadow-outline-dark"
+            className="form-textarea text-soft-black focus:shadow-outline-light dark:focus:shadow-outline-dark h-32 w-full placeholder-gray-600 focus:bg-white focus:outline-none"
             name="message"
             required
             // onBlur={on_message_change}
@@ -527,7 +527,7 @@ export default function ContactForm() {
               type="submit"
               value="Send Email"
               disabled={isFormDisabled()}
-              className="transition-padding my-2 inline-block cursor-pointer rounded-lg bg-purple-700 pl-2 pr-10 text-white transition-colors duration-200 ease-in-out focus:shadow-outline-light focus:outline-none disabled:cursor-not-allowed disabled:pr-2 disabled:opacity-50 dark:bg-purple-400 dark:focus:shadow-outline-dark"
+              className="transition-padding focus:shadow-outline-light dark:focus:shadow-outline-dark my-2 inline-block cursor-pointer rounded-lg bg-purple-700 pr-10 pl-2 text-white transition-colors duration-200 ease-in-out focus:outline-none disabled:cursor-not-allowed disabled:pr-2 disabled:opacity-50 dark:bg-purple-400"
             />
           </div>
         </div>
