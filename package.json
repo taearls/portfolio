@@ -34,6 +34,7 @@
     "@eslint/js": "^9.37.0",
     "@ianvs/prettier-plugin-sort-imports": "^4.7.0",
     "@react-router/dev": "^7.9.4",
+    "@tailwindcss/postcss": "^4.1.14",
     "@testing-library/cypress": "^10.1.0",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.0",
