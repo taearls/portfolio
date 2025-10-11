@@ -18,6 +18,7 @@ export default (args: ViteConfigInput) => {
     assetsInclude: ["**.*.svg"],
     base: "./",
     build: {
+      cssMinify: "esbuild",
       emptyOutDir: true,
       outDir: "./dist",
       target: "es2022",

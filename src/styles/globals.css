@@ -1,12 +1,11 @@
 @import "tailwindcss";
 
-@variant sm (width >= 640px);
-@variant md (width >= 768px);
-@variant lg (width >= 1024px);
-@variant xl (width >= 1280px);
-@variant 2xl (width >= 1536px);
-
 @theme {
+  --breakpoint-sm: 40rem;
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 64rem;
+  --breakpoint-xl: 80rem;
+  --breakpoint-2xl: 96rem;
 
   /* Custom colors */
   --color-soft-black: #121212;
