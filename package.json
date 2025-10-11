@@ -17,7 +17,9 @@
     "test": "vitest run",
     "test:watch": "vitest watch",
     "test:integration": "start-server-and-test 'vite dev --port 4173' http://localhost:4173 'cypress run --e2e'",
-    "test:all": "npm run test && npm run test:integration"
+    "test:all": "npm run test && npm run test:integration",
+    "preview": "vite preview",
+    "ci": "npm run lint:check && npm run oxlint:check && npm run format:check && npm run test:all && npm run build"
   },
   "dependencies": {
     "@cloudinary/url-gen": "^1.22.0",
