@@ -89,7 +89,7 @@ _Successfully migrated to TailwindCSS v4 with modern config_
 6. ⬜ Configure Vite build integration (#43)
 7. ⬜ Remove redundant memoization (#44)
 
-**Dependencies**: React 19 (installed), Vite 6.3.5 (installed)
+**Dependencies**: React 19 (installed), Vite 7.1.9 (installed)
 
 **Success Criteria**:
 
