@@ -1,8 +1,6 @@
 import type { SvgIconVariant } from "@/types/svg.ts";
 import type { SVGAttributes } from "react";
 
-import { memo } from "react";
-
 import { mergeClasses } from "@/util/styling/styling.utils.ts";
 import RenderIf from "../layout/RenderIf.tsx";
 
@@ -24,7 +22,7 @@ const defaultColor = window
   .getComputedStyle(document.body)
   .getPropertyValue("--accent-color");
 
-export default memo(function SvgIcon({
+export default function SvgIcon({
   id,
   name,
   "data-testid": testId,
@@ -59,4 +57,4 @@ export default memo(function SvgIcon({
       <use href={symbolId}></use>
     </svg>
   );
-});
+}

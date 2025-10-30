@@ -48,7 +48,8 @@ const config = defineConfig([
     },
     rules: eslintPluginReactHooks.configs["recommended-latest"].rules,
   },
-  eslintPluginReactPerf.configs.flat.recommended,
+  // NOTE: react-perf plugin disabled - React Compiler handles these optimizations automatically
+  // eslintPluginReactPerf.configs.flat.recommended,
   eslintPluginReact.configs.flat!.recommended,
   eslintPluginReactRefresh.configs.recommended,
   eslintConfigPrettier,
