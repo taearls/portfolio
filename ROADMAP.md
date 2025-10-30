@@ -35,7 +35,7 @@ This roadmap outlines the development plan for Tyler Earls' portfolio website, f
   - **#44** - [React Compiler 6/6] Remove redundant memoization code - *~4-6 hours*
 - **#18** - CI - Add Github Actions Pipeline - *~3-5 hours*
 
-#### 🟢 Medium Priority (5 issues) - Effort: ~1-2 weeks
+#### 🟢 Medium Priority (4 issues) - Effort: ~1-2 weeks
 - **#14** - Add Working Email Contact Form - *~1-2 days*
 - **#27** - UI - Lazy Load Routes with React Router - *~3-5 hours*
 - **#28** - UI - Leverage React's built-in Meta Tag - *~1-2 hours*
