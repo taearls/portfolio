@@ -35,7 +35,20 @@ export default (args: ViteConfigInput) => {
     logLevel: args.mode === "development" ? "warn" : "silent",
     plugins: [
       react({
-        jsxImportSource: "@welldone-software/why-did-you-render",
+        babel: {
+          plugins: [
+            [
+              "babel-plugin-react-compiler",
+              {
+                compilationMode: "infer",
+              },
+            ],
+          ],
+        },
+        jsxImportSource:
+          args.mode === "development"
+            ? "@welldone-software/why-did-you-render"
+            : "react",
       }),
     ],
     resolve: {
