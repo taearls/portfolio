@@ -2,7 +2,6 @@ import type { Transformation } from "@cloudinary/url-gen/index";
 import type { CSSProperties } from "react";
 
 import { fill } from "@cloudinary/url-gen/actions/resize";
-import { useMemo } from "react";
 
 import { FlexFlowCSSValue } from "@/types/layout.ts";
 import { CLOUDINARY_INSTANCE } from "@/util/constants/constants.ts";
@@ -45,14 +44,11 @@ export default function CloudinaryImage({
 
   img.format(fileFormat);
 
-  const style = useMemo(
-    () => ({
-      height: "auto",
-      maxWidth,
-      width: width ?? "inherit",
-    }),
-    [width, maxWidth],
-  );
+  const style = {
+    height: "auto",
+    maxWidth,
+    width: width ?? "inherit",
+  };
 
   const imgElement = (
     <img

@@ -1,5 +1,3 @@
-import { memo } from "react";
-
 import { mergeClasses } from "@/util/styling/styling.utils.ts";
 import styles from "./NavigationToggle.module.css";
 
@@ -8,7 +6,7 @@ export type NavigationToggleProps = {
   onClick: () => void;
 };
 
-export default memo(function NavigationToggle({
+export default function NavigationToggle({
   active,
   onClick,
 }: NavigationToggleProps) {
@@ -24,4 +22,4 @@ export default memo(function NavigationToggle({
       <div id={styles["toggler-bottom"]} />
     </button>
   );
-});
+}

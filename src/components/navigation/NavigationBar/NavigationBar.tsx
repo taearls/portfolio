@@ -3,7 +3,7 @@ import type { RouteDataItem } from "@/util/constants/data/navigation/navigationD
 import type { NavLinkRenderProps } from "react-router";
 
 import { useMachine } from "@xstate/react";
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 import { NavLink, useLocation } from "react-router";
 
 import DarkModeToggle from "@/components/DarkModeToggle/DarkModeToggle.tsx";
@@ -38,44 +38,41 @@ export default function NavigationBar({ links }: NavigationBarProps) {
   const location = useLocation();
   const selectedLink = links.find((link) => link.href === location.pathname);
 
-  const handleToggle = useCallback(() => {
+  const handleToggle = () => {
     sendNavigationUpdate({ type: NAVIGATION_EVENT.TOGGLE });
-  }, [sendNavigationUpdate]);
+  };
 
+  // NOTE: useCallback kept for NavLink className prop stability
   const getNavLinkClass = useCallback(
     (props: NavLinkRenderProps) =>
       mergeClasses(props.isActive && "active underline decoration-4"),
     [],
   );
 
-  const navigationLinks = useMemo(
-    () =>
-      links
-        .filter((link) => !link.hidden)
-        .map((link, index) => {
-          return (
-            <NavigationBarListItem
-              key={link.name}
-              isLast={index === links.filter((link) => !link.hidden).length - 1}
+  const navigationLinks = links
+    .filter((link) => !link.hidden)
+    .map((link, index) => {
+      return (
+        <NavigationBarListItem
+          key={link.name}
+          isLast={index === links.filter((link) => !link.hidden).length - 1}
+        >
+          <NavLink
+            to={link.href}
+            aria-label={link.ariaLabel}
+            className={getNavLinkClass}
+          >
+            <InlineAnchorContent
+              isExternal={Boolean(link.isExternal)}
+              bold
+              underline={selectedLink?.href === link.href}
             >
-              <NavLink
-                to={link.href}
-                aria-label={link.ariaLabel}
-                className={getNavLinkClass}
-              >
-                <InlineAnchorContent
-                  isExternal={Boolean(link.isExternal)}
-                  bold
-                  underline={selectedLink?.href === link.href}
-                >
-                  {link.name}
-                </InlineAnchorContent>
-              </NavLink>
-            </NavigationBarListItem>
-          );
-        }),
-    [getNavLinkClass, links, selectedLink?.href],
-  );
+              {link.name}
+            </InlineAnchorContent>
+          </NavLink>
+        </NavigationBarListItem>
+      );
+    });
 
   return (
     <nav id="navigation-bar" className={mergeClasses(styles["navigation-bar"])}>

@@ -1,4 +1,3 @@
-import { useCallback } from "react";
 import { useLocation, useNavigate } from "react-router";
 
 import FlexContainer from "@/components/layout/containers/FlexContainer/FlexContainer.tsx";
@@ -10,7 +9,7 @@ export default function NotFoundPage() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const navigateToPreviousPage = useCallback(() => navigate(-1), [navigate]);
+  const navigateToPreviousPage = () => navigate(-1);
 
   return (
     <main>

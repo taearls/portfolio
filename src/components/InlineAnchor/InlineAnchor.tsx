@@ -1,7 +1,5 @@
 import type { PropsWithChildren } from "react";
 
-import { memo } from "react";
-
 import ExternalLinkIcon from "@/components/icons/ExternalLinkIcon.tsx";
 import { mergeClasses } from "@/util/styling/styling.utils.ts";
 
@@ -45,7 +43,7 @@ export default function InlineAnchor({
   );
 }
 
-export const InlineAnchorContent = memo(function InlineAnchorContent({
+export function InlineAnchorContent({
   children,
   isExternal = false,
   bold = true,
@@ -72,4 +70,4 @@ export const InlineAnchorContent = memo(function InlineAnchorContent({
       )}
     </span>
   );
-});
+}

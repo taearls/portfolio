@@ -1,4 +1,4 @@
-import { memo, useCallback } from "react";
+import { useCallback } from "react";
 
 import ThemeContext from "@/state/contexts/ThemeContext.tsx";
 import { THEME_EVENT, THEME_STATES } from "@/state/machines/themeMachine.ts";
@@ -10,10 +10,11 @@ export type DarkModeToggleProps = {
   visible: boolean;
 };
 
-export default memo(function DarkModeToggle({ visible }: DarkModeToggleProps) {
+export default function DarkModeToggle({ visible }: DarkModeToggleProps) {
   const themeState = ThemeContext.useSelector((state) => state.value);
   const actorRef = ThemeContext.useActorRef();
 
+  // NOTE: useCallback kept for XState actor reference stability
   const updateTheme = useCallback(
     () => actorRef.send({ type: THEME_EVENT.TOGGLE }),
     [actorRef],
@@ -38,4 +39,4 @@ export default memo(function DarkModeToggle({ visible }: DarkModeToggleProps) {
       </RenderIf> */}
     </button>
   );
-});
+}

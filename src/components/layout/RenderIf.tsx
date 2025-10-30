@@ -1,14 +1,12 @@
 import type { ReactNode } from "react";
 
-import { memo } from "react";
-
 export type RenderIfProps = {
   condition: boolean;
   fallback?: ReactNode;
   children: ReactNode;
 };
 
-export default memo(function RenderIf({
+export default function RenderIf({
   condition,
   fallback = null,
   children,
@@ -17,4 +15,4 @@ export default memo(function RenderIf({
     return children;
   }
   return fallback;
-});
+}
