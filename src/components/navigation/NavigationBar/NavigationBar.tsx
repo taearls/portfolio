@@ -32,6 +32,14 @@ const navigationContainerResponsiveProp: FlexContainerProps["responsive"] = {
   gapX: { prefix: MediaQueryPrefixValue.SM, value: 4 },
 };
 
+/**
+ * Tailwind JIT safelist - these classes are generated dynamically by FlexContainer
+ * and need to be explicitly listed for Tailwind to detect them:
+ * flex flex-col flex-row w-full gap-x-1 gap-x-2 gap-x-3 gap-x-4 gap-x-5 gap-x-6 gap-x-7 gap-x-8
+ * gap-y-1 gap-y-2 gap-y-3 gap-y-4 gap-y-5 gap-y-6 gap-y-7 gap-y-8
+ * sm:flex-col sm:flex-row sm:gap-x-1 sm:gap-x-2 sm:gap-x-3 sm:gap-x-4 sm:gap-x-5 sm:gap-x-6 sm:gap-x-7 sm:gap-x-8
+ * md:flex-col md:flex-row lg:flex-col lg:flex-row xl:flex-col xl:flex-row 2xl:flex-col 2xl:flex-row
+ */
 export default function NavigationBar({ links }: NavigationBarProps) {
   const [isNavigationOpen, sendNavigationUpdate] =
     useMachine(navigationMachine);
@@ -80,7 +88,7 @@ export default function NavigationBar({ links }: NavigationBarProps) {
         role="menu"
         className={mergeClasses(
           styles["navigation-list-container"],
-          isNavigationOpen.value === NAVIGATION_STATE.CLOSED && "sm:block hidden",
+          isNavigationOpen.value === NAVIGATION_STATE.CLOSED && "hidden",
         )}
       >
         <FlexContainer
