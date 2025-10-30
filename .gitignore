@@ -39,3 +39,9 @@ yarn-error.log*
 # cypress test artifacts
 tests/integration/screenshots
 tests/integration/videos
+
+# playwright mcp artifacts
+.playwright-mcp/
+
+# backup files
+*.backup
