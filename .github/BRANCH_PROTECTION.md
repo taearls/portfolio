@@ -71,6 +71,7 @@ After enabling branch protection:
 ## CI Workflow Details
 
 The CI workflow runs on:
+
 - **Pull requests** targeting `main` branch
 - **Push events** to `main` branch
 
