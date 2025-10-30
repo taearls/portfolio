@@ -189,6 +189,7 @@ _Successfully migrated to TailwindCSS v4 with modern config_
 ### Sprint Metrics - EPIC COMPLETE! 🎉
 
 **Epic #38 Achievement**:
+
 - Total issues in epic: 6
 - Completed: 6 (all tasks done!)
 - Closed as not needed: 2 (#41, #42)
@@ -198,6 +199,7 @@ _Successfully migrated to TailwindCSS v4 with modern config_
 - **Epic #38: ✅ COMPLETE**
 
 **Next Priorities**:
+
 1. 🔴 **#51** - Fix navigation header bug (HIGH PRIORITY - UX issue)
    - Effort: ~1-2 hours
    - Impact: Fixes primary navigation display
@@ -317,11 +319,11 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 
 ### Effort Distribution (Open Issues Only)
 
-| Effort Level  | Count | Issues                      |
-| ------------- | ----- | --------------------------- |
+| Effort Level  | Count | Issues                       |
+| ------------- | ----- | ---------------------------- |
 | Small (< 2h)  | 5     | #51, #28, #11, #13, #33, #34 |
-| Medium (2-8h) | 4     | #18, #27, #10               |
-| Large (> 8h)  | 2     | #14, #15                    |
+| Medium (2-8h) | 4     | #18, #27, #10                |
+| Large (> 8h)  | 2     | #14, #15                     |
 
 ---
 
