@@ -30,7 +30,7 @@
   flex-direction: column;
   justify-self: center;
   align-self: center;
-  width: 10rem;
+  width: fit-content;
   /* 68 px height = 36px height of toggle container + 32px vertical padding */
   @apply sm:h-[68px] sm:w-full sm:flex-row;
 }

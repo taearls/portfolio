@@ -3,6 +3,7 @@
 
 import { fileURLToPath } from "node:url";
 
+import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 
@@ -34,6 +35,7 @@ export default (args: ViteConfigInput) => {
     },
     logLevel: args.mode === "development" ? "warn" : "silent",
     plugins: [
+      tailwindcss(),
       react({
         babel: {
           plugins: [
