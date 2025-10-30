@@ -328,11 +328,11 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 
 ### Effort Distribution (Open Issues Only)
 
-| Effort Level  | Count | Issues               |
-| ------------- | ----- | -------------------- |
-| Small (< 2h)  | 3     | #28, #13, #33, #34   |
-| Medium (2-8h) | 3     | #27, #10, #14        |
-| Large (> 8h)  | 1     | #15                  |
+| Effort Level  | Count | Issues             |
+| ------------- | ----- | ------------------ |
+| Small (< 2h)  | 3     | #28, #13, #33, #34 |
+| Medium (2-8h) | 3     | #27, #10, #14      |
+| Large (> 8h)  | 1     | #15                |
 
 ---
 
