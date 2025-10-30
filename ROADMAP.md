@@ -25,7 +25,7 @@ This roadmap outlines the development plan for Tyler Earls' portfolio website, f
 #### 🔴 Critical Priority (0 issues)
 *No critical issues at this time*
 
-#### 🟡 High Priority (6 issues) - Effort: ~2-3 weeks
+#### 🟡 High Priority (8 issues) - Effort: ~2-3 weeks
 - **#38** - Integrate React Compiler with Vite build pipeline (Epic) - *~2-3 weeks*
   - **#39** - [React Compiler 1/6] Install React Compiler dependencies - *~1 hour*
   - **#40** - [React Compiler 2/6] Add React Compiler ESLint plugin (warnings only) - *~1 hour*
@@ -41,7 +41,7 @@ This roadmap outlines the development plan for Tyler Earls' portfolio website, f
 - **#28** - UI - Leverage React's built-in Meta Tag - *~1-2 hours*
 - **#11** - Preload Sprite SVG in development and production - *~1-2 hours*
 
-#### 🔵 Low Priority (6 issues) - Effort: ~2-3 weeks
+#### 🔵 Low Priority (5 issues) - Effort: ~2-3 weeks
 - **#10** - Add Resume Page - *~4-6 hours*
 - **#13** - Update Web Projects - Descriptions - *~1-2 hours*
 - **#15** - Update Web Projects - Add User Selectable Tags and Search - Update Layout - *~1-2 days*
@@ -257,16 +257,16 @@ Phase 7: Low Priority (As time permits)
 | Priority | Open | In Progress | Completed | Total |
 |----------|------|-------------|-----------|-------|
 | 🔴 Critical | 0 | 0 | - | 0 |
-| 🟡 High | 6 | 0 | - | 6 |
-| 🟢 Medium | 5 | 0 | - | 5 |
-| 🔵 Low | 6 | 0 | - | 6 |
+| 🟡 High | 8 | 0 | - | 8 |
+| 🟢 Medium | 4 | 0 | - | 4 |
+| 🔵 Low | 5 | 0 | - | 5 |
 | **TOTAL** | **17** | **0** | **-** | **17** |
 
 ### Issues by Category
 
-**React Compiler** (6 issues): #38, #39, #40, #41, #42, #43, #44
+**React Compiler** (7 issues): #38, #39, #40, #41, #42, #43, #44
 **CI/CD** (1 issue): #18
-**UI/UX** (6 issues): #10, #11, #13, #14, #15, #27, #28
+**UI/UX** (7 issues): #10, #11, #13, #14, #15, #27, #28
 **Research** (2 issues): #33, #34
 
 ### Effort Distribution
