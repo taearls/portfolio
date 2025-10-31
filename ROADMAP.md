@@ -2,9 +2,9 @@
 
 ## Executive Summary
 
-This roadmap outlines the development plan for Tyler Earls' portfolio website, focusing on performance optimization, modern React tooling, and enhanced user experience. The project has **completed Phase 5 (React Compiler Integration)** and has **finished the core Phase 6 CI/CD setup** with 9 open issues across features and enhancements.
+This roadmap outlines the development plan for Tyler Earls' portfolio website, focusing on performance optimization, modern React tooling, and enhanced user experience. The project has **completed Phase 5 (React Compiler Integration)** and **Phase 6 (CI/CD setup)**, and is now working through **Phase 7 (UI/UX Enhancements)** with 8 open issues.
 
-**Current Focus**: CI/CD pipeline implemented (#18)! Phase 6 core complete. Ready for Phase 7 UI/UX enhancements.
+**Current Focus**: Phase 6 complete! Starting Phase 7 UI/UX enhancements. First quick win (#58) complete.
 
 ---
 
@@ -21,7 +21,7 @@ This roadmap outlines the development plan for Tyler Earls' portfolio website, f
 
 ## Open Issues Summary
 
-### Priority Breakdown (9 Total)
+### Priority Breakdown (8 Total)
 
 #### 🔴 Critical Priority (0 issues)
 
@@ -31,12 +31,11 @@ _No critical issues at this time_
 
 _All high priority issues completed!_
 
-#### 🟢 Medium Priority (4 issues) - Effort: ~1-2 weeks
+#### 🟢 Medium Priority (3 issues) - Effort: ~1 week
 
 - **#14** - Add Working Email Contact Form - _~1-2 days_
 - **#27** - UI - Lazy Load Routes with React Router - _~3-5 hours_
 - **#28** - UI - Leverage React's built-in Meta Tag - _~1-2 hours_
-- **#11** - Preload Sprite SVG in development and production - _~1-2 hours_
 
 #### 🔵 Low Priority (5 issues) - Effort: ~2-3 weeks
 
@@ -315,25 +314,25 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 | ----------- | ----- | ----------- | -------------------- | ---------- |
 | 🔴 Critical | 0     | 0           | 0                    | 0          |
 | 🟡 High     | 0     | 0           | 7                    | 0          |
-| 🟢 Medium   | 4     | 0           | 0                    | 4          |
+| 🟢 Medium   | 3     | 0           | 1                    | 3          |
 | 🔵 Low      | 5     | 0           | 0                    | 5          |
-| **TOTAL**   | **9** | **0**       | **7**                | **9**      |
+| **TOTAL**   | **8** | **0**       | **8**                | **8**      |
 
 ### Issues by Category
 
 **React Compiler** (0 open, 5 closed): Closed: #38 (epic), #39, #40, #41, #42, #43, #44
 **Bugs** (0 open, 1 closed): Closed: #51 (navigation header overflow)
 **CI/CD** (0 open, 1 closed): Closed: #18 (GitHub Actions pipeline)
-**UI/UX** (7 issues): #10, #11, #13, #14, #15, #27, #28
+**UI/UX** (6 open, 1 closed): Open: #10, #13, #14, #15, #27, #28 | Closed: #58 (left-align home page text)
 **Research** (2 issues): #33, #34
 
 ### Effort Distribution (Open Issues Only)
 
-| Effort Level  | Count | Issues                  |
-| ------------- | ----- | ----------------------- |
-| Small (< 2h)  | 4     | #28, #11, #13, #33, #34 |
-| Medium (2-8h) | 3     | #27, #10, #14           |
-| Large (> 8h)  | 1     | #15                     |
+| Effort Level  | Count | Issues             |
+| ------------- | ----- | ------------------ |
+| Small (< 2h)  | 3     | #28, #13, #33, #34 |
+| Medium (2-8h) | 3     | #27, #10, #14      |
+| Large (> 8h)  | 1     | #15                |
 
 ---
 
@@ -397,6 +396,23 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 ---
 
 ## Changelog
+
+### 2025-10-30 - Issue #58 Implemented: Left-Align Home Page Body Text
+
+- **Completed**: #58 - UI - Left-align home page text instead of centered
+- **Implementation**: Restructured FlexContainer hierarchy for mixed alignment
+- **Changes**:
+  - Wrapped biography paragraphs in dedicated FlexContainer with `alignItems: START`
+  - Kept header and profile image centered in viewport
+  - Removed redundant nested FlexContainer around header
+- **Result**:
+  - Header: Centered (better visual hierarchy)
+  - Profile image: Centered (focal point)
+  - Biography paragraphs: Left-aligned (improved readability)
+  - Follows modern design pattern: centered hero elements, left-aligned body text
+- **Impact**: Improved readability and UX, especially for longer paragraphs
+- **Effort**: ~30 minutes (within estimate)
+- **Next Actions**: Continue Phase 7 UI/UX work (#28 or #27)
 
 ### 2025-10-30 - Issue #18 Implemented: GitHub Actions CI/CD Pipeline
 
