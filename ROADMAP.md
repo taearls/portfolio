@@ -32,10 +32,12 @@ This roadmap outlines the development plan for Tyler Earls' portfolio website, f
 #### 🟡 High Priority (2 issues) - Effort: ~4-8 hours
 
 - **#62** - Increase Touch Target Sizes for Mobile Accessibility - _~2-3 hours_
+  - GitHub label: 🟡 MAJOR
   - Impact: Mobile UX and accessibility compliance
   - Scope: Navigation toggle, social media links, project cards
 
 - **#63** - Fix Cumulative Layout Shift (CLS) on Mobile - _~2-5 hours_
+  - GitHub label: 🟡 MAJOR
   - Impact: Core Web Vitals performance metric
   - Scope: Image loading, navigation transitions, dynamic content
 
@@ -58,8 +60,10 @@ This roadmap outlines the development plan for Tyler Earls' portfolio website, f
 - **#33** - Spike: Integrate PRs with Graphite - _~1-2 hours_
 - **#34** - Spike: Experiment with CodeRabbit - _~1-2 hours_
 - **#64** - Improve Color Contrast for WCAG AAA Compliance - _~2-4 hours_
+  - GitHub label: 🔵 MINOR
   - Note: WCAG AA already met, AAA is enhancement
 - **#65** - Increase Font Size for Desktop/Tablet Readability - _~1-2 hours_
+  - GitHub label: 🔵 MINOR
 
 ---
 
@@ -106,18 +110,18 @@ _Successfully migrated to TailwindCSS v4 with modern config_
 - Performance improvements validated
 - Redundant useMemo/useCallback removed
 
-### Phase 6: CI/CD & Production Readiness 📋 (Planned - Nov-Dec 2025)
+### Phase 6: CI/CD & Production Readiness ✅ (Completed - Oct 2025)
 
 **Goal**: Establish automated testing and deployment pipelines.
 
-**Timeline**: 1-2 weeks
+**Timeline**: 1-2 weeks → **Completed Oct 30, 2025**
 
-**Key Tasks**:
+**Completed Tasks**:
 
-- #18: GitHub Actions CI/CD pipeline
-- Automated testing on PRs
-- Build verification
-- Deployment automation
+- ✅ #18: GitHub Actions CI/CD pipeline
+- ✅ Automated testing on PRs
+- ✅ Build verification
+- ✅ Deployment automation
 
 ### Phase 7: UI/UX Enhancements 📋 (Planned - Dec 2025-Jan 2026)
 
@@ -380,8 +384,10 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 | Effort Level  | Count | Issues                              |
 | ------------- | ----- | ----------------------------------- |
 | Small (< 2h)  | 5     | #61, #11, #13, #33, #34, #65        |
-| Medium (2-8h) | 6     | #62, #63, #64, #27, #10, #14        |
-| Large (> 8h)  | 2     | #14 (1-2 days), #15 (1-2 days)      |
+| Medium (2-8h) | 5     | #62, #63, #64, #27, #10             |
+| Large (> 8h)  | 3     | #14 (1-2 days), #15 (1-2 days)      |
+
+**Note**: Issue #14 categorized as Large based on 1-2 days estimate (~8-16 hours total effort).
 
 ---
 
@@ -449,6 +455,10 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 ### 2025-11-16 - ROADMAP Update: 5 New Accessibility & Performance Issues Added
 
 - **Major Update**: 5 new issues added focused on accessibility and Core Web Vitals
+- **Documentation Improvements** (added after initial PR):
+  - Fixed Phase 6 status inconsistency (marked as Completed Oct 2025)
+  - Added GitHub label references for priority alignment (CRITICAL/MAJOR/MINOR)
+  - Corrected effort distribution for #14 (moved to Large category)
 - **Changes**:
   - Added 1 critical issue: #61 (Navigation link contrast - WCAG AA failure)
   - Added 2 high priority issues: #62 (Touch target sizes), #63 (CLS on mobile)
