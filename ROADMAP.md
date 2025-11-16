@@ -381,11 +381,11 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 
 ### Effort Distribution (Open Issues Only)
 
-| Effort Level  | Count | Issues                              |
-| ------------- | ----- | ----------------------------------- |
-| Small (< 2h)  | 5     | #61, #11, #13, #33, #34, #65        |
-| Medium (2-8h) | 5     | #62, #63, #64, #27, #10             |
-| Large (> 8h)  | 3     | #14 (1-2 days), #15 (1-2 days)      |
+| Effort Level  | Count | Issues                         |
+| ------------- | ----- | ------------------------------ |
+| Small (< 2h)  | 5     | #61, #11, #13, #33, #34, #65   |
+| Medium (2-8h) | 5     | #62, #63, #64, #27, #10        |
+| Large (> 8h)  | 3     | #14 (1-2 days), #15 (1-2 days) |
 
 **Note**: Issue #14 categorized as Large based on 1-2 days estimate (~8-16 hours total effort).
 
