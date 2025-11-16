@@ -2,9 +2,9 @@
 
 ## Executive Summary
 
-This roadmap outlines the development plan for Tyler Earls' portfolio website, focusing on performance optimization, modern React tooling, and enhanced user experience. The project has **completed Phase 5 (React Compiler Integration)** and **Phase 6 (CI/CD setup)**, and is now working through **Phase 7 (UI/UX Enhancements)** with 7 open issues.
+This roadmap outlines the development plan for Tyler Earls' portfolio website, focusing on performance optimization, modern React tooling, and enhanced user experience. The project has **completed Phase 5 (React Compiler Integration)** and **Phase 6 (CI/CD setup)**, and is now working through **Phase 7 (UI/UX Enhancements)** with 13 open issues.
 
-**Current Focus**: Phase 7 in progress! Two quick wins complete (#58, #28). SEO optimized with React 19 Meta tags.
+**Current Focus**: Accessibility & Core Web Vitals! New critical issue (#61) requires immediate attention. 5 new issues focused on WCAG compliance and mobile performance added Nov 16, 2025.
 
 ---
 
@@ -21,28 +21,45 @@ This roadmap outlines the development plan for Tyler Earls' portfolio website, f
 
 ## Open Issues Summary
 
-### Priority Breakdown (7 Total)
+### Priority Breakdown (13 Total)
 
-#### 🔴 Critical Priority (0 issues)
+#### 🔴 Critical Priority (1 issue) - Effort: ~1-2 hours
 
-_No critical issues at this time_
+- **#61** - Fix Active Navigation Link Contrast (WCAG AA Failure) - _~1-2 hours_
+  - Impact: Accessibility violation blocking WCAG AA compliance
+  - Current state: Active navigation links fail contrast ratio requirements
 
-#### 🟡 High Priority (0 issues)
+#### 🟡 High Priority (2 issues) - Effort: ~4-8 hours
 
-_All high priority issues completed!_
+- **#62** - Increase Touch Target Sizes for Mobile Accessibility - _~2-3 hours_
+  - Impact: Mobile UX and accessibility compliance
+  - Scope: Navigation toggle, social media links, project cards
 
-#### 🟢 Medium Priority (2 issues) - Effort: ~4-7 hours
+- **#63** - Fix Cumulative Layout Shift (CLS) on Mobile - _~2-5 hours_
+  - Impact: Core Web Vitals performance metric
+  - Scope: Image loading, navigation transitions, dynamic content
+
+#### 🟢 Medium Priority (3 issues) - Effort: ~8-14 hours
+
+- **#11** - Preload Sprite SVG in development and production - _~1-2 hours_
+  - Impact: Performance - eliminate icon flash on page load
 
 - **#14** - Add Working Email Contact Form - _~1-2 days_
-- **#27** - UI - Lazy Load Routes with React Router - _~3-5 hours_
+  - Impact: User engagement and professional contact method
 
-#### 🔵 Low Priority (5 issues) - Effort: ~2-3 weeks
+- **#27** - UI - Lazy Load Routes with React Router - _~3-5 hours_
+  - Impact: Performance - reduce initial bundle size
+
+#### 🔵 Low Priority (7 issues) - Effort: ~2-3 weeks
 
 - **#10** - Add Resume Page - _~4-6 hours_
 - **#13** - Update Web Projects - Descriptions - _~1-2 hours_
 - **#15** - Update Web Projects - Add User Selectable Tags and Search - Update Layout - _~1-2 days_
 - **#33** - Spike: Integrate PRs with Graphite - _~1-2 hours_
 - **#34** - Spike: Experiment with CodeRabbit - _~1-2 hours_
+- **#64** - Improve Color Contrast for WCAG AAA Compliance - _~2-4 hours_
+  - Note: WCAG AA already met, AAA is enhancement
+- **#65** - Increase Font Size for Desktop/Tablet Readability - _~1-2 hours_
 
 ---
 
@@ -134,13 +151,29 @@ _Successfully migrated to TailwindCSS v4 with modern config_
 
 ## Current Sprint
 
-### Sprint Goals (Oct 30 - Nov 13, 2025)
+### Sprint Goals (Nov 16 - Nov 30, 2025)
 
-**Primary Objective**: ✅ Complete React Compiler integration (Epic #38) - **DONE!**
+**Primary Objective**: 🔴 Fix Critical Accessibility Issues & Improve Core Web Vitals
 
-**New Focus**: Fix navigation bug (#51), then implement CI/CD pipeline (#18)
+**Immediate Actions Required**:
 
-**Completed**:
+1. **#61** - Fix Active Navigation Link Contrast (WCAG AA Failure) - **START IMMEDIATELY**
+   - Priority: 🔴 CRITICAL
+   - Effort: ~1-2 hours
+   - Blocker: WCAG AA compliance failure
+   - Impact: Legal/accessibility compliance
+
+2. **#62** - Increase Touch Target Sizes for Mobile Accessibility
+   - Priority: 🟡 HIGH
+   - Effort: ~2-3 hours
+   - Impact: Mobile UX and accessibility
+
+3. **#63** - Fix Cumulative Layout Shift (CLS) on Mobile
+   - Priority: 🟡 HIGH
+   - Effort: ~2-5 hours
+   - Impact: Core Web Vitals score
+
+**Recent Sprint Completed (Oct 30 - Nov 13, 2025)**:
 
 1. ✅ **#39** - Install React Compiler dependencies
    - Status: Completed Oct 30, 2025
@@ -204,17 +237,23 @@ _Successfully migrated to TailwindCSS v4 with modern config_
    - Features: Parallel execution, artifact upload, branch protection docs
    - Result: Phase 6 core complete - automated quality gates in place
 
-**Next Priority**:
+**Next Up (After Critical Fixes)**:
 
-1. 🎯 **#28** - UI - Leverage React's built-in Meta Tag (quick win)
+1. 🎯 **#11** - Preload Sprite SVG in development and production
    - Effort: ~1-2 hours
-   - Impact: SEO and social media sharing improvements
+   - Impact: Performance - eliminate icon flash
    - Phase: 7 (UI/UX Enhancements)
    - Status: Ready to start
 
 2. 🎯 **#27** - UI - Lazy Load Routes with React Router
    - Effort: ~3-5 hours
    - Impact: Performance - reduced initial bundle size
+   - Phase: 7 (UI/UX Enhancements)
+   - Status: Ready to start
+
+3. 🎯 **#14** - Add Working Email Contact Form
+   - Effort: ~1-2 days
+   - Impact: User engagement
    - Phase: 7 (UI/UX Enhancements)
    - Status: Ready to start
 
@@ -235,11 +274,18 @@ Phase 5: React Compiler Integration ✅ COMPLETE
 
 Phase 6: CI/CD & Production Readiness ✅ COMPLETE
 ├── ✅ #51 Fix navigation bug (15min) - COMPLETED
-└── ✅ #18 GitHub Actions (3h) - COMPLETED
-    └── ENABLED: Automated testing for Phase 7 work
+├── ✅ #18 GitHub Actions (3h) - COMPLETED
+├── ✅ #58 Left-align home text (30min) - COMPLETED
+└── ✅ #28 React 19 Meta tags (1h) - COMPLETED
 
-Phase 7: UI/UX (Parallel track after Phase 5)
-├── #28 React Meta Tag (1-2h) - Quick win
+Phase 7: Accessibility & Core Web Vitals (CURRENT FOCUS)
+├── 🔴 #61 Navigation link contrast (1-2h) - CRITICAL - START NOW
+├── 🟡 #62 Touch target sizes (2-3h) - HIGH PRIORITY
+├── 🟡 #63 Fix CLS on mobile (2-5h) - HIGH PRIORITY
+├── 🔵 #64 WCAG AAA contrast (2-4h) - ENHANCEMENT
+└── 🔵 #65 Font size readability (1-2h) - ENHANCEMENT
+
+Phase 7: Performance & UX (After accessibility fixes)
 ├── #11 SVG Preloading (1-2h) - Performance
 ├── #27 Lazy Routes (3-5h) - Performance
 └── #14 Contact Form (1-2 days) - User engagement
@@ -256,25 +302,28 @@ Phase 7: Low Priority (As time permits)
 
 ### Implementation Strategy
 
-**Week 1-2 (Current Sprint)**:
+**Week 1 (Nov 16-23, 2025) - ACCESSIBILITY CRITICAL**:
 
-- Focus: Complete React Compiler Epic (#38)
-- Expected outcome: Optimized React rendering, cleaner code
+- Focus: Fix accessibility violations and Core Web Vitals
+- Priority order: #61 (CRITICAL) → #62 → #63
+- Expected outcome: WCAG AA compliance, improved mobile UX, better Core Web Vitals
 
-**Week 3**:
+**Week 2-3 (Nov 24 - Dec 7, 2025)**:
 
-- Focus: CI/CD Pipeline (#18)
-- Expected outcome: Automated testing and deployments
+- Focus: Performance optimizations (#11, #27)
+- Expected outcome: Reduced bundle size, faster page loads
+- Optional: #64, #65 if time permits
 
-**Week 4-5**:
+**Week 4-5 (Dec 8-21, 2025)**:
 
-- Focus: High-impact UI improvements (#28, #11, #27, #14)
-- Expected outcome: Better UX and performance
+- Focus: Contact form (#14) and content updates
+- Expected outcome: User engagement feature, updated project info
+- Optional: #10, #13, #15 as time permits
 
 **Ongoing**:
 
 - Low priority features as time permits
-- Research spikes in downtime
+- Research spikes in downtime (#33, #34)
 
 ---
 
@@ -309,29 +358,30 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 
 ## Issue Status Summary
 
-| Priority    | Open  | In Progress | Closed (This Sprint) | Total Open |
-| ----------- | ----- | ----------- | -------------------- | ---------- |
-| 🔴 Critical | 0     | 0           | 0                    | 0          |
-| 🟡 High     | 0     | 0           | 7                    | 0          |
-| 🟢 Medium   | 2     | 0           | 2                    | 2          |
-| 🔵 Low      | 5     | 0           | 0                    | 5          |
-| **TOTAL**   | **7** | **0**       | **9**                | **7**      |
+| Priority    | Open   | In Progress | Closed (This Sprint) | Total Open |
+| ----------- | ------ | ----------- | -------------------- | ---------- |
+| 🔴 Critical | 1      | 0           | 0                    | 1          |
+| 🟡 High     | 2      | 0           | 7                    | 2          |
+| 🟢 Medium   | 3      | 0           | 2                    | 3          |
+| 🔵 Low      | 7      | 0           | 0                    | 7          |
+| **TOTAL**   | **13** | **0**       | **9**                | **13**     |
 
 ### Issues by Category
 
 **React Compiler** (0 open, 5 closed): Closed: #38 (epic), #39, #40, #41, #42, #43, #44
 **Bugs** (0 open, 1 closed): Closed: #51 (navigation header overflow)
 **CI/CD** (0 open, 1 closed): Closed: #18 (GitHub Actions pipeline)
-**UI/UX** (5 open, 2 closed): Open: #10, #13, #14, #15, #27 | Closed: #58 (left-align text), #28 (React 19 Meta)
-**Research** (2 issues): #33, #34
+**Accessibility** (5 open, 0 closed): Open: #61 (CRITICAL), #62, #63, #64, #65
+**UI/UX** (5 open, 2 closed): Open: #10, #11, #13, #14, #15, #27 | Closed: #58 (left-align text), #28 (React 19 Meta)
+**Research** (2 open): #33, #34
 
 ### Effort Distribution (Open Issues Only)
 
-| Effort Level  | Count | Issues             |
-| ------------- | ----- | ------------------ |
-| Small (< 2h)  | 3     | #28, #13, #33, #34 |
-| Medium (2-8h) | 3     | #27, #10, #14      |
-| Large (> 8h)  | 1     | #15                |
+| Effort Level  | Count | Issues                              |
+| ------------- | ----- | ----------------------------------- |
+| Small (< 2h)  | 5     | #61, #11, #13, #33, #34, #65        |
+| Medium (2-8h) | 6     | #62, #63, #64, #27, #10, #14        |
+| Large (> 8h)  | 2     | #14 (1-2 days), #15 (1-2 days)      |
 
 ---
 
@@ -395,6 +445,38 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 ---
 
 ## Changelog
+
+### 2025-11-16 - ROADMAP Update: 5 New Accessibility & Performance Issues Added
+
+- **Major Update**: 5 new issues added focused on accessibility and Core Web Vitals
+- **Changes**:
+  - Added 1 critical issue: #61 (Navigation link contrast - WCAG AA failure)
+  - Added 2 high priority issues: #62 (Touch target sizes), #63 (CLS on mobile)
+  - Added 2 low priority enhancements: #64 (WCAG AAA contrast), #65 (Font size)
+  - Updated issue counts: 13 open (up from 7)
+  - Updated priority breakdown: 1 critical, 2 high, 3 medium, 7 low
+  - Created new "Accessibility" category in issue tracking
+- **Critical Issue Identified**:
+  - #61: Active navigation links failing WCAG AA contrast ratio requirements
+  - Priority: 🔴 CRITICAL (legal/accessibility compliance blocker)
+  - Impact: Must be fixed immediately for WCAG AA compliance
+  - Estimated effort: 1-2 hours
+- **New Focus Areas**:
+  - Accessibility compliance (WCAG AA → AAA)
+  - Core Web Vitals optimization (CLS improvements)
+  - Mobile UX enhancements (touch targets, readability)
+- **Sprint Update**:
+  - New sprint: Nov 16 - Nov 30, 2025
+  - Primary objective: Fix critical accessibility issues and improve Core Web Vitals
+  - Immediate action: Start #61 (navigation contrast fix)
+- **Timeline Impact**:
+  - Critical path updated to prioritize accessibility fixes
+  - Week 1 focus shifted to #61 → #62 → #63
+  - Performance work (#11, #27) pushed to Week 2-3
+  - Contact form (#14) and content updates deferred to Week 4-5
+- **Next Actions**:
+  - START IMMEDIATELY: Fix #61 (navigation link contrast)
+  - Follow with #62 (touch target sizes) and #63 (CLS fixes)
 
 ### 2025-10-30 - Issue #28 Implemented: React 19 Meta Tags
 
@@ -623,6 +705,6 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 
 ---
 
-**Last Updated**: October 30, 2025 (Evening Update - Post #41/#42 Closure)
+**Last Updated**: November 16, 2025 (ROADMAP Refresh - 5 New Accessibility & Performance Issues)
 **Maintained By**: Tyler Earls
 **Generated With**: Claude Code
