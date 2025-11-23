@@ -24,6 +24,7 @@
     "measure:cls:mobile": "npm run build && start-server-and-test 'vite preview --port 4173' http://localhost:4173 'node scripts/measure-cls.mjs --mobile-only'",
     "measure:cls:desktop": "npm run build && start-server-and-test 'vite preview --port 4173' http://localhost:4173 'node scripts/measure-cls.mjs --desktop-only'",
     "measure:cls:dev": "start-server-and-test 'vite dev --port 4173' http://localhost:4173 'node scripts/measure-cls.mjs'",
+    "measure:cls:dev:mobile": "start-server-and-test 'vite dev --port 4173' http://localhost:4173 'node scripts/measure-cls.mjs --mobile-only'",
     "test:cls": "start-server-and-test 'vite dev --port 4173' http://localhost:4173 'cypress run --spec \"tests/integration/specs/cls-measurement.cy.ts\"'"
   },
   "dependencies": {
