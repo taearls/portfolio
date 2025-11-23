@@ -7,7 +7,6 @@ import eslintConfigPrettier from "eslint-config-prettier";
 import { flatConfigs as eslintPluginImportFlatConfigs } from "eslint-plugin-import";
 import eslintPluginReact from "eslint-plugin-react";
 import eslintPluginReactHooks from "eslint-plugin-react-hooks";
-import eslintPluginReactPerf from "eslint-plugin-react-perf";
 import eslintPluginReactRefresh from "eslint-plugin-react-refresh";
 import { defineConfig } from "eslint/config";
 import globals from "globals";
