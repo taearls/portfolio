@@ -40,6 +40,9 @@ yarn-error.log*
 tests/integration/screenshots
 tests/integration/videos
 
+# lighthouse reports
+reports/
+
 # playwright mcp artifacts
 .playwright-mcp/
 
