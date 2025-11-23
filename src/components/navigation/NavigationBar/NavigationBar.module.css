@@ -31,8 +31,17 @@
   justify-self: center;
   align-self: center;
   width: fit-content;
-  /* 68 px height = 36px height of toggle container + 32px vertical padding */
-  @apply sm:h-[68px] sm:w-full sm:flex-row;
+  /* Updated from 68px to 76px to accommodate 44px toggle height + 32px padding */
+  @apply sm:h-[76px] sm:w-full sm:flex-row;
+}
+
+/* WCAG 2.5.5 - Ensure navigation links meet 44×44px minimum touch target */
+.navigation-list-container a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
 }
 
 .navigation-toggle-container {

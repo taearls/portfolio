@@ -29,6 +29,7 @@ export default function InlineAnchor({
         aria-label={ariaLabel}
         target={isExternal ? "_blank" : undefined}
         rel="noreferrer"
+        className="inline-flex min-h-[44px] items-center py-2"
       >
         <InlineAnchorContent
           isExternal={isExternal}

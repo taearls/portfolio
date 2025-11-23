@@ -149,3 +149,13 @@ html * {
     color: var(--accent-color);
   }
 }
+
+/* WCAG 2.5.5 - Ensure all buttons and interactive elements meet 44×44px minimum touch target for mobile accessibility */
+button {
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+}
