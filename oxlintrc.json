@@ -28,13 +28,5 @@
     ],
     "react/react-in-jsx-scope": "off",
     "sort-keys": "warn"
-  },
-  "overrides": [
-    {
-      "files": ["tests/integration/**/*.cy.ts"],
-      "rules": {
-        "jest/no-standalone-expect": "off"
-      }
-    }
-  ]
+  }
 }
