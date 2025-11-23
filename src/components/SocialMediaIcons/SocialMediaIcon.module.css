@@ -1,3 +1,13 @@
+/* WCAG 2.5.5 - Ensure social media icon links meet 44×44px minimum touch target */
+.icon-base {
+  min-width: var(--touch-target-min);
+  min-height: var(--touch-target-min);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+}
+
 .icon-base svg {
   height: 2rem;
   width: 2rem;

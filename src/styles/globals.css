@@ -62,6 +62,9 @@
   /* Custom z-index */
   --z-index-100: 100;
 
+  /* WCAG 2.5.5 - Touch target minimum size */
+  --touch-target-min: 44px;
+
   /* Custom box shadows */
   --shadow-outline-dark: 0 0 0 3px #67e8f9;
   --shadow-outline-inset-dark:
@@ -148,4 +151,18 @@ html * {
     stroke: var(--accent-color);
     color: var(--accent-color);
   }
+}
+
+/* WCAG 2.5.5 - Ensure all buttons and interactive elements meet 44×44px minimum touch target for mobile accessibility
+ * NOTE: This global rule applies to ALL buttons in the project as a baseline accessibility standard.
+ * If future components need different sizing, use .btn-compact or similar exceptions.
+ */
+button {
+  min-width: var(--touch-target-min);
+  min-height: var(--touch-target-min);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  cursor: pointer;
 }

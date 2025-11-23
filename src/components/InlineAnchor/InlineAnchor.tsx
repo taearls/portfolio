@@ -2,6 +2,7 @@ import type { PropsWithChildren } from "react";
 
 import ExternalLinkIcon from "@/components/icons/ExternalLinkIcon.tsx";
 import { mergeClasses } from "@/util/styling/styling.utils.ts";
+import styles from "./InlineAnchor.module.css";
 
 export type InlineAnchorProps = PropsWithChildren<{
   ariaLabel: string;
@@ -29,6 +30,7 @@ export default function InlineAnchor({
         aria-label={ariaLabel}
         target={isExternal ? "_blank" : undefined}
         rel="noreferrer"
+        className={styles["inline-anchor-link"]}
       >
         <InlineAnchorContent
           isExternal={isExternal}
