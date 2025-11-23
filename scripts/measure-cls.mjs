@@ -77,7 +77,8 @@ async function runLighthouse(url, viewport, pageName) {
       "--only-categories=performance",
       "--output=json",
       "--quiet",
-      "--chrome-flags=--headless",
+      // Note: --chrome-flags=--headless causes false positive CLS in Chrome headless mode
+      // Lighthouse runs in headless mode by default, explicit flag triggers rendering bug
       `--form-factor=${formFactor}`,
       `--screenEmulation.width=${viewport.width}`,
       `--screenEmulation.height=${viewport.height}`,
