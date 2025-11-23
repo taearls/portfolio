@@ -9,6 +9,14 @@
     "perf": "warn"
   },
   "settings": {},
+  "overrides": [
+    {
+      "files": ["tests/integration/**/*.cy.ts"],
+      "rules": {
+        "no-unused-expressions": "off"
+      }
+    }
+  ],
   "rules": {
     "eqeqeq": ["warn", "smart"],
     "import/no-cycle": "error",
