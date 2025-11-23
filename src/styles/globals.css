@@ -83,7 +83,9 @@
   --text-dark: #faf9f6;
   --background-light: #faf9f6;
   --background-dark: #121212;
-  --active-light: rgb(0 150 175 / 1); /* darker cyan for WCAG AA compliance (3:1+ contrast) */
+  --active-light: rgb(
+    0 150 175 / 1
+  ); /* darker cyan for WCAG AA compliance (3:1+ contrast) */
   --active-dark: rgb(103 232 249 / 1); /* tailwind cyan-300 */
   --accent-dark: rgb(192 132 252 / 1); /* tailwind purple-400 */
   --accent-light: rgb(126 34 206 / 1); /* tailwind purple-700 */
