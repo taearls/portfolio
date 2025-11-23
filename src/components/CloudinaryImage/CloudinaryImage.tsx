@@ -45,11 +45,11 @@ export default function CloudinaryImage({
   img.format(fileFormat);
 
   const style: CSSProperties = {
+    // Prevent CLS by preserving aspect ratio
+    aspectRatio: width && height ? `${width} / ${height}` : undefined,
     height: "auto",
     maxWidth,
     width: width ?? "inherit",
-    // Prevent CLS by preserving aspect ratio
-    aspectRatio: width && height ? `${width} / ${height}` : undefined,
   };
 
   const imgElement = (
