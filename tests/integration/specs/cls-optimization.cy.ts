@@ -1,11 +1,17 @@
 /// <reference types="cypress" />
 
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+
 /**
  * CLS Optimization Tests
  *
  * These tests verify that Cumulative Layout Shift (CLS) prevention measures
  * are properly implemented. They focus on structural attributes rather than
  * specific content to avoid brittleness.
+ *
+ * Note: Chai expects in Cypress callbacks use expression syntax,
+ * which triggers @typescript-eslint/no-unused-expressions warnings.
+ * This is disabled at file level as it's standard Cypress/Chai pattern.
  */
 
 describe("CLS Optimization - Image Attributes", () => {

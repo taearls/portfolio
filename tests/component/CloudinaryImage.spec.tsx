@@ -23,11 +23,7 @@ describe("<CloudinaryImage /> - CLS Optimization", () => {
 
     it("should not apply aspect-ratio when width is missing", () => {
       render(
-        <CloudinaryImage
-          alt="Test image"
-          publicId="test-image"
-          height={630}
-        />,
+        <CloudinaryImage alt="Test image" publicId="test-image" height={630} />,
       );
 
       const img = screen.getByAltText("Test image") as HTMLImageElement;
@@ -38,11 +34,7 @@ describe("<CloudinaryImage /> - CLS Optimization", () => {
 
     it("should not apply aspect-ratio when height is missing", () => {
       render(
-        <CloudinaryImage
-          alt="Test image"
-          publicId="test-image"
-          width={1200}
-        />,
+        <CloudinaryImage alt="Test image" publicId="test-image" width={1200} />,
       );
 
       const img = screen.getByAltText("Test image") as HTMLImageElement;
