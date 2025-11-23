@@ -1,0 +1,8 @@
+/* WCAG 2.5.5 - Ensure inline anchor links meet minimum touch target */
+.inline-anchor-link {
+  display: inline-flex;
+  min-height: var(--touch-target-min);
+  align-items: center;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
