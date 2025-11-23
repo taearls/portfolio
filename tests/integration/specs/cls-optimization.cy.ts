@@ -9,11 +9,38 @@
  */
 
 describe("CLS Optimization - Image Attributes", () => {
-  beforeEach(() => {
-    cy.visit("/code");
+  describe("Home Page LCP Image", () => {
+    beforeEach(() => {
+      cy.visit("/");
+    });
+
+    it("should eagerly load the LCP profile image", () => {
+      // LCP image should NOT be lazy loaded
+      cy.get('img[alt*="Tyler Earls"]').should(($img) => {
+        expect($img.attr("loading")).to.equal("eager");
+      });
+    });
+
+    it("should prioritize the LCP image with fetchpriority=high", () => {
+      cy.get('img[alt*="Tyler Earls"]').should(($img) => {
+        expect($img.attr("fetchpriority")).to.equal("high");
+      });
+    });
+
+    it("should preload the LCP image in the HTML head", () => {
+      cy.get('link[rel="preload"][as="image"]')
+        .should("exist")
+        .and("have.attr", "fetchpriority", "high")
+        .and("have.attr", "href")
+        .and("include", "front_of_brick_wall_smiling");
+    });
   });
 
   describe("Web Project Images", () => {
+    beforeEach(() => {
+      cy.visit("/code");
+    });
+
     it("should have lazy loading attribute on all project images", () => {
       // Test all images on the page, regardless of specific alt text
       cy.get('img[src*="cloudinary"]').each(($img) => {
@@ -39,6 +66,10 @@ describe("CLS Optimization - Image Attributes", () => {
   });
 
   describe("CSS Containment", () => {
+    beforeEach(() => {
+      cy.visit("/code");
+    });
+
     it("should have layout containment on all images", () => {
       cy.get('img[src*="cloudinary"]').each(($img) => {
         const contain = $img.css("contain");
@@ -62,25 +93,20 @@ describe("CLS Optimization - Image Attributes", () => {
 });
 
 describe("CLS Optimization - Font Loading", () => {
-  it("should use display=optional for Google Fonts", () => {
+  it("should preload self-hosted fonts for CLS optimization", () => {
     cy.visit("/");
 
-    // Check that the font link has display=optional parameter
-    cy.get('link[href*="googleapis"]').should(($links) => {
-      let foundOptionalDisplay = false;
+    // Check that critical fonts are preloaded
+    cy.get('link[rel="preload"][as="font"]').should("have.length.at.least", 2);
 
-      $links.each((_, link) => {
-        const href = Cypress.$(link).attr("href");
-        if (href && href.includes("display=optional")) {
-          foundOptionalDisplay = true;
-        }
-      });
+    // Verify Ubuntu fonts are preloaded
+    cy.get('link[rel="preload"][href*="ubuntu"]').should(
+      "have.length.at.least",
+      2,
+    );
 
-      expect(
-        foundOptionalDisplay,
-        "Expected to find Google Fonts link with display=optional",
-      ).to.be.true;
-    });
+    // Verify Limelight font is preloaded
+    cy.get('link[rel="preload"][href*="limelight"]').should("exist");
   });
 
   it("should render text content without blocking", () => {

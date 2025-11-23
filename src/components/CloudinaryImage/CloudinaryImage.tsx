@@ -19,6 +19,19 @@ export type CloudinaryImageProps = {
   transformation?: Transformation | string;
   showCaption?: boolean;
   fileFormat?: CloudinaryImageFileFormat;
+  /**
+   * Loading strategy for the image.
+   * - "lazy": Defers loading until image is near viewport (default, good for below-fold images)
+   * - "eager": Loads immediately (use for above-fold/LCP images)
+   */
+  loading?: "lazy" | "eager";
+  /**
+   * Fetch priority hint for the browser.
+   * - "high": Prioritize this resource (use for LCP images)
+   * - "low": Deprioritize this resource
+   * - "auto": Let browser decide (default)
+   */
+  fetchPriority?: "high" | "low" | "auto";
 };
 
 export default function CloudinaryImage({
@@ -31,6 +44,8 @@ export default function CloudinaryImage({
   transformation,
   maxWidth,
   showCaption = false,
+  loading = "lazy",
+  fetchPriority = "auto",
 }: CloudinaryImageProps) {
   const img = CLOUDINARY_INSTANCE.image(
     `${directory != null ? directory + "/" : ""}${publicId}`,
@@ -59,7 +74,8 @@ export default function CloudinaryImage({
       style={style}
       width={width}
       height={height}
-      loading="lazy"
+      loading={loading}
+      fetchPriority={fetchPriority}
       decoding="async"
     />
   );
