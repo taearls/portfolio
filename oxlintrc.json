@@ -19,7 +19,7 @@
     ],
     // https://vite.dev/guide/performance#reduce-resolve-operations
     // this rule is not supported by oxc yet.
-    "import/extensions": ["warn", "ignorePackages"],
+    // "import/extensions": ["warn", "ignorePackages"],
     // this rule is not supported by oxc yet.
     "import/no-extraneous-dependencies": "error",
     "no-unused-vars": [
