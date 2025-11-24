@@ -1,0 +1,26 @@
+{
+  "name": "portfolio-feature-flags-worker",
+  "version": "1.0.0",
+  "description": "Cloudflare Worker for runtime-configurable feature flags",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "deploy:staging": "wrangler deploy --env staging",
+    "deploy:production": "wrangler deploy --env production",
+    "build": "tsc",
+    "tail": "wrangler tail",
+    "kv:create": "wrangler kv:namespace create FEATURE_FLAGS_KV",
+    "kv:create:preview": "wrangler kv:namespace create FEATURE_FLAGS_KV --preview",
+    "kv:list": "wrangler kv:key list --binding FEATURE_FLAGS_KV",
+    "kv:get": "wrangler kv:key get feature_flags --binding FEATURE_FLAGS_KV",
+    "kv:put": "wrangler kv:key put feature_flags --binding FEATURE_FLAGS_KV",
+    "secret:put": "wrangler secret put ADMIN_API_KEY"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20241127.0",
+    "typescript": "^5.7.2",
+    "wrangler": "^3.86.0"
+  }
+}

@@ -1,0 +1,34 @@
+# Cloudflare Workers configuration for Feature Flags API
+# See: https://developers.cloudflare.com/workers/wrangler/configuration/
+
+name = "portfolio-feature-flags"
+main = "src/index.ts"
+compatibility_date = "2024-11-01"
+
+# KV Namespace bindings
+kv_namespaces = [
+  { binding = "FEATURE_FLAGS_KV", id = "YOUR_KV_NAMESPACE_ID", preview_id = "YOUR_PREVIEW_KV_NAMESPACE_ID" }
+]
+
+# Environment variables (set via dashboard or wrangler secret)
+# ADMIN_API_KEY - set via: wrangler secret put ADMIN_API_KEY
+# ALLOWED_ORIGINS - comma-separated list of allowed origins
+
+[env.production]
+name = "portfolio-feature-flags"
+vars = { ALLOWED_ORIGINS = "https://tylerearls.com" }
+
+[env.staging]
+name = "portfolio-feature-flags-staging"
+vars = { ALLOWED_ORIGINS = "https://staging.tylerearls.com,http://localhost:3000,http://localhost:4173" }
+
+# Build configuration
+[build]
+command = "npm install && npm run build"
+
+[build.upload]
+format = "modules"
+
+# Local development configuration
+[dev]
+port = 8787
