@@ -81,7 +81,13 @@
       id="fonts"
       as="style"
     /> -->
-    <!-- <link rel="preload" href="icons/sprite.svg" id="sprite" as="image" /> -->
+    <!-- Preload SVG sprite to prevent icon flash on page load -->
+    <link
+      rel="preload"
+      href="/icons/sprite.svg"
+      as="image"
+      type="image/svg+xml"
+    />
     <!-- <link
       rel="preload"
       href="src/styles/globals.css"
