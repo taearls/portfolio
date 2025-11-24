@@ -2,9 +2,9 @@
 
 ## Executive Summary
 
-This roadmap outlines the development plan for Tyler Earls' portfolio website, focusing on performance optimization, modern React tooling, and enhanced user experience. The project has **completed Phase 5 (React Compiler Integration)** and **Phase 6 (CI/CD setup)**, and is now working through **Phase 7 (UI/UX Enhancements)** with 9 open issues.
+This roadmap outlines the development plan for Tyler Earls' portfolio website, focusing on performance optimization, modern React tooling, and enhanced user experience. The project has **completed Phase 5 (React Compiler Integration)** and **Phase 6 (CI/CD setup)**, and is now working through **Phase 7 (UI/UX Enhancements)** with 8 open issues.
 
-**Current Focus**: Accessibility & Core Web Vitals complete! Issues #61 (WCAG AA contrast), #62 (touch target sizes), and #63 (CLS on mobile) completed! SVG sprite preloading (#11) implemented! Moving to route lazy loading (#27).
+**Current Focus**: Performance optimization sprint complete! Issues #61 (WCAG AA contrast), #62 (touch target sizes), #63 (CLS on mobile), #11 (SVG sprite preloading), and #27 (lazy route loading) completed! Moving to contact form (#14).
 
 ---
 
@@ -21,7 +21,7 @@ This roadmap outlines the development plan for Tyler Earls' portfolio website, f
 
 ## Open Issues Summary
 
-### Priority Breakdown (9 Total - 4 Completed)
+### Priority Breakdown (8 Total - 5 Completed)
 
 #### 🔴 Critical Priority (0 issues)
 
@@ -33,15 +33,14 @@ This roadmap outlines the development plan for Tyler Earls' portfolio website, f
 
 ✅ **#63** - Fix Cumulative Layout Shift (CLS) on Mobile - **COMPLETED Nov 23, 2025**
 
-#### 🟢 Medium Priority (2 issues) - Effort: ~11-13 hours
+#### 🟢 Medium Priority (1 issue) - Effort: ~8-16 hours
 
 ✅ **#11** - Preload Sprite SVG in development and production - **COMPLETED Nov 24, 2025**
 
+✅ **#27** - UI - Lazy Load Routes with React Router - **COMPLETED Nov 24, 2025**
+
 - **#14** - Add Working Email Contact Form - _~1-2 days_
   - Impact: User engagement and professional contact method
-
-- **#27** - UI - Lazy Load Routes with React Router - _~3-5 hours_
-  - Impact: Performance - reduce initial bundle size
 
 #### 🔵 Low Priority (7 issues) - Effort: ~2-3 weeks
 
@@ -180,12 +179,19 @@ _Successfully migrated to TailwindCSS v4 with modern config_
    - Changes: Added preload link tag with proper SVG MIME type to index.html
    - Result: SVG sprite now preloaded, eliminating icon flash on page load
 
+5. ✅ **#27** - UI - Lazy Load Routes with React Router - **COMPLETED**
+   - Priority: 🟢 MEDIUM
+   - Status: Completed Nov 24, 2025
+   - Effort: ~2 hours (actual, within 3-5 hour estimate)
+   - Changes: Implemented React.lazy() and Suspense for all route components
+   - Result: Code splitting active - separate bundles for each route, reducing initial bundle size
+
 **Next Up**:
 
-5. **#27** - UI - Lazy Load Routes with React Router - **START NEXT**
+6. **#14** - Add Working Email Contact Form - **START NEXT**
    - Priority: 🟢 MEDIUM
-   - Effort: ~3-5 hours
-   - Impact: Performance - reduce initial bundle size through code splitting
+   - Effort: ~1-2 days
+   - Impact: User engagement - professional contact method
 
 **Recent Sprint Completed (Oct 30 - Nov 13, 2025)**:
 
@@ -295,8 +301,8 @@ Phase 7: Accessibility & Core Web Vitals ✅ COMPLETE
 
 Phase 7: Performance & UX (CURRENT FOCUS)
 ├── ✅ #11 SVG Preloading (30min) - COMPLETED
-├── #27 Lazy Routes (3-5h) - Performance - NEXT
-└── #14 Contact Form (1-2 days) - User engagement
+├── ✅ #27 Lazy Routes (2h) - COMPLETED
+└── #14 Contact Form (1-2 days) - User engagement - NEXT
 
 Phase 8: Research (Anytime)
 ├── #33 Graphite spike (1-2h)
@@ -370,9 +376,9 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 | ----------- | ----- | ----------- | -------------------- | ---------- |
 | 🔴 Critical | 0     | 0           | 1                    | 0          |
 | 🟡 High     | 0     | 0           | 9                    | 0          |
-| 🟢 Medium   | 2     | 0           | 3                    | 2          |
+| 🟢 Medium   | 1     | 0           | 4                    | 1          |
 | 🔵 Low      | 7     | 0           | 0                    | 7          |
-| **TOTAL**   | **9** | **0**       | **13**               | **9**      |
+| **TOTAL**   | **8** | **0**       | **14**               | **8**      |
 
 ### Issues by Category
 
@@ -380,7 +386,7 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 **Bugs** (0 open, 1 closed): Closed: #51 (navigation header overflow)
 **CI/CD** (0 open, 1 closed): Closed: #18 (GitHub Actions pipeline)
 **Accessibility** (2 open, 3 closed): Open: #64, #65 | Closed: #61 (navigation contrast), #62 (touch targets), #63 (CLS mobile)
-**UI/UX** (5 open, 3 closed): Open: #10, #13, #14, #15, #27 | Closed: #58 (left-align text), #28 (React 19 Meta), #11 (SVG preload)
+**UI/UX** (4 open, 4 closed): Open: #10, #13, #14, #15 | Closed: #58 (left-align text), #28 (React 19 Meta), #11 (SVG preload), #27 (lazy routes)
 **Research** (2 open): #33, #34
 
 ### Effort Distribution (Open Issues Only)
@@ -455,6 +461,72 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 ---
 
 ## Changelog
+
+### 2025-11-24 - Issue #27 Completed: Lazy Load Routes with React Router
+
+- **Completed**: #27 - UI - Lazy Load Routes with React Router
+- **Priority**: 🟢 MEDIUM (GitHub labels: `type: performance`, `area: routing`, `priority: medium`)
+- **Status**: Completed Nov 24, 2025
+- **Effort**: ~2 hours (within 3-5 hour estimate)
+- **Impact**: Performance optimization - reduced initial bundle size through code splitting
+
+**Implementation Details**:
+
+1. **Updated Navigation Data** (`src/util/constants/data/navigation/navigationData.tsx`)
+   - Converted direct component imports to `React.lazy()` dynamic imports
+   - Changed type from `component: JSX.Element` to `Component: ComponentType`
+   - Updated route definitions to use lazy-loaded components:
+     - `HomePage`: lazy(() => import("@/pages/HomePage.tsx"))
+     - `ContactPage`: lazy(() => import("@/pages/ContactPage.tsx"))
+     - `NotFoundPage`: lazy(() => import("@/pages/NotFoundPage.tsx"))
+     - `WebProjectsPage`: lazy(() => import("@/pages/WebProjectsPage.tsx"))
+
+2. **Added Suspense Wrapper** (`src/routes.tsx`)
+   - Wrapped `<Routes>` with `<Suspense fallback={<Loading />}>`
+   - Updated route rendering to instantiate Component types: `<route.Component />`
+   - Imported existing Loading component for fallback UI
+
+**Changes**:
+
+```typescript
+// Before: Direct imports, immediate loading
+import HomePage from "@/pages/HomePage.tsx";
+const routes = [{ component: <HomePage />, ... }];
+
+// After: Lazy imports, on-demand loading
+const HomePage = lazy(() => import("@/pages/HomePage.tsx"));
+const routes = [{ Component: HomePage, ... }];
+```
+
+**Files Modified**:
+
+- `src/util/constants/data/navigation/navigationData.tsx` - Lazy component imports
+- `src/routes.tsx` - Suspense wrapper and dynamic rendering
+
+**Testing**:
+
+- ✅ All 141 unit tests passing
+- ✅ Production build successful
+- ✅ Code splitting verified - separate JS chunks generated:
+  - `HomePage-*.js` (2.2K)
+  - `ContactPage-*.js` (1.1K)
+  - `WebProjectsPage-*.js` (4.6K)
+  - `NotFoundPage-*.js` (845B)
+- ✅ Main bundle size reduced (routes loaded on-demand)
+
+**Performance Impact**:
+
+- **Before**: All route components included in main bundle, loaded upfront
+- **After**: Each route is a separate chunk, loaded only when navigated to
+- **Result**: Reduced initial JavaScript payload, faster Time to Interactive (TTI)
+- **Bundle Strategy**: Main bundle + 4 route chunks for on-demand loading
+
+**Technical Context**:
+React Router 7 works seamlessly with React.lazy() for route-based code splitting. Vite automatically generates separate chunks for each lazy-loaded component. The Suspense boundary with Loading component provides smooth UX during chunk loading, though modern networks make this rarely visible.
+
+**Next Actions**: Proceed with #14 (Add Working Email Contact Form)
+
+---
 
 ### 2025-11-24 - Issue #11 Completed: SVG Sprite Preloading
 
