@@ -1,13 +1,16 @@
-import type { JSX } from "react";
+import type { ComponentType } from "react";
 
-import ContactPage from "@/pages/ContactPage.tsx";
-import HomePage from "@/pages/HomePage.tsx";
-import NotFoundPage from "@/pages/NotFoundPage.tsx";
-import WebProjects from "@/pages/WebProjectsPage.tsx";
+import { lazy } from "react";
+
+// Lazy load page components for code splitting
+const HomePage = lazy(() => import("@/pages/HomePage.tsx"));
+const ContactPage = lazy(() => import("@/pages/ContactPage.tsx"));
+const NotFoundPage = lazy(() => import("@/pages/NotFoundPage.tsx"));
+const WebProjectsPage = lazy(() => import("@/pages/WebProjectsPage.tsx"));
 
 export type RouteDataChildItem = {
   href: string;
-  component: JSX.Element;
+  Component: ComponentType;
   index?: boolean;
 };
 
@@ -16,15 +19,15 @@ export type RouteDataItem = {
   name: string;
   ariaLabel: string;
   isExternal?: boolean;
-  component?: JSX.Element;
+  Component?: ComponentType;
   hidden?: boolean;
   childLinks?: Array<RouteDataChildItem>;
 };
 
 const routes: Array<RouteDataItem> = [
   {
+    Component: HomePage,
     ariaLabel: "Visit Home Page",
-    component: <HomePage />,
     href: "/",
     name: "Home",
   },
@@ -32,7 +35,7 @@ const routes: Array<RouteDataItem> = [
     ariaLabel: "Visit Web Projects Page",
     childLinks: [
       {
-        component: <WebProjects />,
+        Component: WebProjectsPage,
         href: "",
         index: true,
       },
@@ -41,14 +44,14 @@ const routes: Array<RouteDataItem> = [
     name: "Code",
   },
   {
+    Component: ContactPage,
     ariaLabel: "Visit Contact Page",
-    component: <ContactPage />,
     href: "/contact",
     name: "Contact",
   },
   {
+    Component: NotFoundPage,
     ariaLabel: "Navigate To 404 Page",
-    component: <NotFoundPage />,
     hidden: true,
     href: "*",
     name: "404",
