@@ -67,13 +67,19 @@ export default function CloudinaryImage({
     width: width ?? "inherit",
   };
 
+  // HTML width/height attributes must be numbers (pixels) for proper CLS prevention
+  // If width/height are provided as numbers, use them directly
+  // Otherwise, they should not be set as HTML attributes
+  const htmlWidth = typeof width === "number" ? width : undefined;
+  const htmlHeight = typeof height === "number" ? height : undefined;
+
   const imgElement = (
     <img
       src={img.toURL()}
       alt={alt}
       style={style}
-      width={width}
-      height={height}
+      width={htmlWidth}
+      height={htmlHeight}
       loading={loading}
       fetchPriority={fetchPriority}
       decoding="async"

@@ -16,6 +16,7 @@ export default function WebProjectImage({
       publicId={publicId}
       width={width}
       height={height}
+      loading="lazy"
     />
   );
 }

@@ -7,12 +7,17 @@
     <!-- Critical CSS: Inline font-face declarations to prevent FOUT/CLS -->
     <style>
       /* Self-hosted fonts - MUST be inline to prevent CLS */
+      /* Ubuntu metrics adjusted to match Arial fallback to prevent layout shift */
       @font-face {
         font-family: "Ubuntu";
         src: url("/fonts/ubuntu-regular.woff2") format("woff2");
         font-weight: 400;
         font-style: normal;
-        font-display: optional;
+        font-display: swap;
+        ascent-override: 100%;
+        descent-override: 25%;
+        line-gap-override: 0%;
+        size-adjust: 95%;
       }
 
       @font-face {
@@ -20,15 +25,24 @@
         src: url("/fonts/ubuntu-bold.woff2") format("woff2");
         font-weight: 700;
         font-style: normal;
-        font-display: optional;
+        font-display: swap;
+        ascent-override: 100%;
+        descent-override: 25%;
+        line-gap-override: 0%;
+        size-adjust: 95%;
       }
 
+      /* Limelight metrics adjusted to match serif fallback */
       @font-face {
         font-family: "Limelight";
         src: url("/fonts/limelight-regular.woff2") format("woff2");
         font-weight: 400;
         font-style: normal;
-        font-display: optional;
+        font-display: swap;
+        ascent-override: 110%;
+        descent-override: 25%;
+        line-gap-override: 0%;
+        size-adjust: 90%;
       }
     </style>
 
