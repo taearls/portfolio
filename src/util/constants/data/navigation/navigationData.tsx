@@ -1,4 +1,6 @@
-import { lazy, type ComponentType } from "react";
+import type { ComponentType } from "react";
+
+import { lazy } from "react";
 
 // Lazy load page components for code splitting
 const HomePage = lazy(() => import("@/pages/HomePage.tsx"));
@@ -24,8 +26,8 @@ export type RouteDataItem = {
 
 const routes: Array<RouteDataItem> = [
   {
-    ariaLabel: "Visit Home Page",
     Component: HomePage,
+    ariaLabel: "Visit Home Page",
     href: "/",
     name: "Home",
   },
@@ -42,14 +44,14 @@ const routes: Array<RouteDataItem> = [
     name: "Code",
   },
   {
-    ariaLabel: "Visit Contact Page",
     Component: ContactPage,
+    ariaLabel: "Visit Contact Page",
     href: "/contact",
     name: "Contact",
   },
   {
-    ariaLabel: "Navigate To 404 Page",
     Component: NotFoundPage,
+    ariaLabel: "Navigate To 404 Page",
     hidden: true,
     href: "*",
     name: "404",
