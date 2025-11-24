@@ -166,3 +166,12 @@ button {
   padding: 6px;
   cursor: pointer;
 }
+
+/* CLS Optimization - Prevent layout shifts from image loading */
+img {
+  /* Ensure images maintain aspect ratio and don't cause layout shifts */
+  max-width: 100%;
+  height: auto;
+  /* Use containment to isolate layout calculations */
+  contain: layout;
+}

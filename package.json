@@ -18,7 +18,7 @@
     "test:watch": "vitest watch",
     "test:integration": "start-server-and-test 'vite dev --port 4173' http://localhost:4173 'cypress run --e2e'",
     "test:all": "npm run test && npm run test:integration",
-    "preview": "vite preview",
+    "preview": "vite preview --open",
     "ci": "npm run lint:check && npm run oxlint:check && npm run format:check && npm run test:all && npm run build"
   },
   "dependencies": {
@@ -65,7 +65,7 @@
     "globals": "^16.4.0",
     "jiti": "^2.6.1",
     "jsdom": "^27.0.0",
-    "oxlint": "^1.22.0",
+    "oxlint": "^1.29.0",
     "postcss": "^8.5.6",
     "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.6.14",

@@ -4,11 +4,76 @@
     <meta charset="UTF-8" />
     <link rel="icon" href="/images/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Critical CSS: Inline font-face declarations to prevent FOUT/CLS -->
+    <style>
+      /* Self-hosted fonts - MUST be inline to prevent CLS */
+      /* Ubuntu metrics adjusted to match Arial fallback to prevent layout shift */
+      @font-face {
+        font-family: "Ubuntu";
+        src: url("/fonts/ubuntu-regular.woff2") format("woff2");
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+        ascent-override: 100%;
+        descent-override: 25%;
+        line-gap-override: 0%;
+        size-adjust: 95%;
+      }
+
+      @font-face {
+        font-family: "Ubuntu";
+        src: url("/fonts/ubuntu-bold.woff2") format("woff2");
+        font-weight: 700;
+        font-style: normal;
+        font-display: swap;
+        ascent-override: 100%;
+        descent-override: 25%;
+        line-gap-override: 0%;
+        size-adjust: 95%;
+      }
+
+      /* Limelight metrics adjusted to match serif fallback */
+      @font-face {
+        font-family: "Limelight";
+        src: url("/fonts/limelight-regular.woff2") format("woff2");
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+        ascent-override: 110%;
+        descent-override: 25%;
+        line-gap-override: 0%;
+        size-adjust: 90%;
+      }
+    </style>
+
+    <!-- Preload font files (now @font-face rules are already defined above) -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Limelight&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
-      rel="stylesheet"
+      rel="preload"
+      href="/fonts/ubuntu-regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/ubuntu-bold.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/limelight-regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <!-- Preload LCP image for optimal loading performance -->
+    <link
+      rel="preload"
+      as="image"
+      href="https://res.cloudinary.com/taearls/image/upload/ar_1:1,c_thumb,g_xy_center,r_max,w_800,x_730,y_800/profile/front_of_brick_wall_smiling.webp"
+      fetchpriority="high"
     />
     <!-- <link
       href="https://fonts.googleapis.com/css2?family=Limelight&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"

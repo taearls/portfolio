@@ -19,9 +19,11 @@ export const WEB_PROJECTS: Array<Omit<WebProjectProps, "isLast">> = [
       "Built mobile-first with React, TypeScript, TailwindCSS, and a (mostly) healthy dose of rock 'n' roll 🤘",
     ],
     emoji: "🎵",
+    height: 630,
     href: "https://www.cuckooandthebirds.com",
     name: "Cuckoo and the Birds Website",
     tagline: "Visit our website!",
+    width: 1200,
   },
   {
     alt: "Image of Road Ranger Banner",
@@ -33,9 +35,11 @@ export const WEB_PROJECTS: Array<Omit<WebProjectProps, "isLast">> = [
       "Both the mobile and desktop versions are based on designs their web designers prepared for the client and had me implement. Built with SCSS, JavaScript, and PHP.",
     ],
     emoji: "⛽",
+    height: 630,
     href: "https://www.roadrangerusa.com",
     name: "Road Ranger",
     tagline: "Check it out!",
+    width: 1200,
   },
   {
     alt: "Image of Space Clones Title Screen",
@@ -47,9 +51,11 @@ export const WEB_PROJECTS: Array<Omit<WebProjectProps, "isLast">> = [
       "If you get a high enough score, you can earn extra lives. Play solo, or take turns with a friend. The galaxy is yours to save from the invading clone army! Created using HTML5, CSS3, JavaScript, and jQuery.",
     ],
     emoji: "😉",
+    height: 630,
     href: "https://space-clones.netlify.com",
     name: "Space Clones",
     tagline: "Beat my high score (if you dare)!",
+    width: 1200,
   },
 ];
 

@@ -128,6 +128,16 @@ const config = defineConfig([
   //     "barrel-files/avoid-re-export-all": "error",
   //   },
   // }),
+
+  // Cypress test file overrides
+  {
+    files: ["tests/integration/**/*.cy.ts"],
+    rules: {
+      // Chai expect statements use expression syntax (e.g., expect().to.be.true)
+      // This is standard Cypress/Chai pattern, not an error
+      "@typescript-eslint/no-unused-expressions": "off",
+    },
+  },
 ]);
 
 export default config;
