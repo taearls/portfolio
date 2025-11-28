@@ -4,8 +4,14 @@
  * Tests the Cloudflare Worker implementation using Vitest with Workers pool
  */
 
-import { env, createExecutionContext, waitOnExecutionContext, SELF } from "cloudflare:test";
-import { describe, it, expect, beforeEach } from "vitest";
+import {
+  createExecutionContext,
+  env,
+  SELF,
+  waitOnExecutionContext,
+} from "cloudflare:test";
+import { beforeEach, describe, expect, it } from "vitest";
+
 import worker from "../src/index";
 
 // Mock KV namespace for testing
@@ -50,7 +56,7 @@ describe("Feature Flags Worker", () => {
       const response = await worker.fetch(
         request,
         { ...env, FEATURE_FLAGS_KV: emptyKV as any },
-        ctx
+        ctx,
       );
       await waitOnExecutionContext(ctx);
 
@@ -77,7 +83,7 @@ describe("Feature Flags Worker", () => {
       const response = await worker.fetch(
         request,
         { ...env, FEATURE_FLAGS_KV: mockKVNamespace as any },
-        ctx
+        ctx,
       );
       await waitOnExecutionContext(ctx);
 
@@ -94,7 +100,7 @@ describe("Feature Flags Worker", () => {
       const response = await worker.fetch(
         request,
         { ...env, FEATURE_FLAGS_KV: mockKVNamespace as any },
-        ctx
+        ctx,
       );
       await waitOnExecutionContext(ctx);
 
@@ -117,12 +123,12 @@ describe("Feature Flags Worker", () => {
           FEATURE_FLAGS_KV: mockKVNamespace as any,
           ALLOWED_ORIGINS: "https://tylerearls.com,http://localhost:3000",
         },
-        ctx
+        ctx,
       );
       await waitOnExecutionContext(ctx);
 
       expect(response.headers.get("Access-Control-Allow-Origin")).toBe(
-        "https://tylerearls.com"
+        "https://tylerearls.com",
       );
       expect(response.headers.get("Vary")).toBe("Origin");
     });
@@ -143,13 +149,17 @@ describe("Feature Flags Worker", () => {
           FEATURE_FLAGS_KV: mockKVNamespace as any,
           ALLOWED_ORIGINS: "https://tylerearls.com",
         },
-        ctx
+        ctx,
       );
       await waitOnExecutionContext(ctx);
 
       expect(response.status).toBe(204);
-      expect(response.headers.get("Access-Control-Allow-Methods")).toContain("GET");
-      expect(response.headers.get("Access-Control-Allow-Methods")).toContain("PUT");
+      expect(response.headers.get("Access-Control-Allow-Methods")).toContain(
+        "GET",
+      );
+      expect(response.headers.get("Access-Control-Allow-Methods")).toContain(
+        "PUT",
+      );
     });
   });
 
@@ -169,7 +179,7 @@ describe("Feature Flags Worker", () => {
       const response = await worker.fetch(
         request,
         { ...env, FEATURE_FLAGS_KV: mockKVNamespace as any },
-        ctx
+        ctx,
       );
       await waitOnExecutionContext(ctx);
 
@@ -197,7 +207,7 @@ describe("Feature Flags Worker", () => {
           FEATURE_FLAGS_KV: mockKVNamespace as any,
           ADMIN_API_KEY: "correct-key",
         },
-        ctx
+        ctx,
       );
       await waitOnExecutionContext(ctx);
 
@@ -241,7 +251,7 @@ describe("Feature Flags Worker", () => {
           FEATURE_FLAGS_KV: putMock as any,
           ADMIN_API_KEY: "test-api-key",
         },
-        ctx
+        ctx,
       );
       await waitOnExecutionContext(ctx);
 
@@ -271,7 +281,7 @@ describe("Feature Flags Worker", () => {
           FEATURE_FLAGS_KV: mockKVNamespace as any,
           ADMIN_API_KEY: "test-api-key",
         },
-        ctx
+        ctx,
       );
       await waitOnExecutionContext(ctx);
 
@@ -296,7 +306,7 @@ describe("Feature Flags Worker", () => {
           FEATURE_FLAGS_KV: mockKVNamespace as any,
           ADMIN_API_KEY: "test-api-key",
         },
-        ctx
+        ctx,
       );
       await waitOnExecutionContext(ctx);
 
@@ -323,7 +333,7 @@ describe("Feature Flags Worker", () => {
       const response = await worker.fetch(
         request,
         { ...env, FEATURE_FLAGS_KV: rateLimitKV as any },
-        ctx
+        ctx,
       );
       await waitOnExecutionContext(ctx);
 
@@ -351,7 +361,7 @@ describe("Feature Flags Worker", () => {
       const response = await worker.fetch(
         request,
         { ...env, FEATURE_FLAGS_KV: errorKV as any },
-        ctx
+        ctx,
       );
       await waitOnExecutionContext(ctx);
 
@@ -366,7 +376,7 @@ describe("Feature Flags Worker", () => {
       const response = await worker.fetch(
         request,
         { ...env, FEATURE_FLAGS_KV: mockKVNamespace as any },
-        ctx
+        ctx,
       );
       await waitOnExecutionContext(ctx);
 
@@ -375,7 +385,7 @@ describe("Feature Flags Worker", () => {
   });
 
   describe("Type Validation", () => {
-    it("should validate "email-contact-form".enabled is boolean", async () => {
+    it('should validate "email-contact-form".enabled is boolean', async () => {
       const invalidKV = {
         ...mockKVNamespace,
         get: async () =>
@@ -389,7 +399,7 @@ describe("Feature Flags Worker", () => {
       const response = await worker.fetch(
         request,
         { ...env, FEATURE_FLAGS_KV: invalidKV as any },
-        ctx
+        ctx,
       );
       await waitOnExecutionContext(ctx);
 
@@ -405,7 +415,7 @@ describe("Feature Flags Worker", () => {
       const response = await worker.fetch(
         request,
         { ...env, FEATURE_FLAGS_KV: mockKVNamespace as any },
-        ctx
+        ctx,
       );
       await waitOnExecutionContext(ctx);
 

@@ -75,7 +75,7 @@ describe("Feature Flags Integration", () => {
         expect(cached).to.exist;
 
         const parsed = JSON.parse(cached!);
-        expect(parsed.flags."email-contact-form".enabled).to.equal(true);
+        expect(parsed.flags["email-contact-form"].enabled).to.equal(true);
       });
     });
 
@@ -136,7 +136,7 @@ describe("Feature Flags Integration", () => {
       cy.window().then((win) => {
         const cached = win.localStorage.getItem("portfolio:feature-flags");
         const parsed = JSON.parse(cached!);
-        expect(parsed.flags."email-contact-form".enabled).to.equal(true);
+        expect(parsed.flags["email-contact-form"].enabled).to.equal(true);
       });
     });
 
@@ -160,8 +160,8 @@ describe("Feature Flags Integration", () => {
       cy.window().then((win) => {
         const cached = win.localStorage.getItem("portfolio:feature-flags");
         const parsed = JSON.parse(cached!);
-        expect(parsed.flags."email-contact-form".enabled).to.equal(false);
-        expect(parsed.flags."email-contact-form".message).to.equal(
+        expect(parsed.flags["email-contact-form"].enabled).to.equal(false);
+        expect(parsed.flags["email-contact-form"].message).to.equal(
           "Contact form is temporarily unavailable",
         );
       });
@@ -205,7 +205,7 @@ describe("Feature Flags Integration", () => {
       cy.window().then((win) => {
         const cached = win.localStorage.getItem("portfolio:feature-flags");
         const parsed = JSON.parse(cached!);
-        expect(parsed.flags."email-contact-form".enabled).to.equal(false);
+        expect(parsed.flags["email-contact-form"].enabled).to.equal(false);
       });
     });
   });

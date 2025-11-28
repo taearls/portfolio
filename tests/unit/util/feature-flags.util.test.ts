@@ -2,13 +2,15 @@
  * Unit tests for feature-flags utility functions
  */
 
-import { describe, it, expect, beforeEach, vi, afterEach } from "vitest";
+import type { FeatureFlags } from "@/types/featureFlags";
+
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+
 import {
+  fetchFlags,
   getCachedFlags,
   setCachedFlags,
-  fetchFlags,
 } from "@/util/feature-flags/feature-flags.util";
-import type { FeatureFlags } from "@/types/featureFlags";
 
 describe("feature-flags utilities", () => {
   beforeEach(() => {
@@ -87,7 +89,7 @@ describe("feature-flags utilities", () => {
     it("should handle missing timestamp field", () => {
       localStorage.setItem(
         "portfolio:feature-flags",
-        JSON.stringify({ flags: { "email-contact-form": { enabled: true } } })
+        JSON.stringify({ flags: { "email-contact-form": { enabled: true } } }),
       );
 
       const result = getCachedFlags();

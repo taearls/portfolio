@@ -3,11 +3,14 @@
  */
 
 import "@testing-library/jest-dom/vitest";
-import { describe, it, expect, vi } from "vitest";
+
+import type { FeatureFlags } from "@/types/featureFlags";
+
 import { render, screen } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
+
 import FeatureFlagWrapper from "@/components/FeatureFlagWrapper/FeatureFlagWrapper";
 import * as useFeatureFlagsHook from "@/hooks/useFeatureFlags";
-import type { FeatureFlags } from "@/types/featureFlags";
 
 describe("FeatureFlagWrapper", () => {
   const mockUseFeatureFlags = vi.spyOn(useFeatureFlagsHook, "useFeatureFlags");
@@ -34,7 +37,7 @@ describe("FeatureFlagWrapper", () => {
           flagKey="email-contact-form"
           whenEnabled={<div>Feature is enabled</div>}
           whenDisabled={<div>Feature is disabled</div>}
-        />
+        />,
       );
 
       expect(screen.getByText("Feature is enabled")).toBeInTheDocument();
@@ -54,7 +57,7 @@ describe("FeatureFlagWrapper", () => {
           flagKey="email-contact-form"
           whenEnabled={<div>Enabled</div>}
           whenDisabled={<div>Disabled</div>}
-        />
+        />,
       );
 
       expect(screen.queryByText("Disabled")).not.toBeInTheDocument();
@@ -75,7 +78,7 @@ describe("FeatureFlagWrapper", () => {
           flagKey="email-contact-form"
           whenEnabled={<div>Feature is enabled</div>}
           whenDisabled={<div>Feature is disabled</div>}
-        />
+        />,
       );
 
       expect(screen.getByText("Feature is disabled")).toBeInTheDocument();
@@ -94,7 +97,7 @@ describe("FeatureFlagWrapper", () => {
         <FeatureFlagWrapper
           flagKey="email-contact-form"
           whenEnabled={<div>Enabled</div>}
-        />
+        />,
       );
 
       expect(container.textContent).toBe("");
@@ -116,7 +119,7 @@ describe("FeatureFlagWrapper", () => {
           whenEnabled={<div>Enabled</div>}
           whenDisabled={<div>Disabled</div>}
           whenLoading={<div>Loading...</div>}
-        />
+        />,
       );
 
       expect(screen.getByText("Loading...")).toBeInTheDocument();
@@ -137,7 +140,7 @@ describe("FeatureFlagWrapper", () => {
           flagKey="email-contact-form"
           whenEnabled={<div>Enabled</div>}
           whenDisabled={<div>Disabled</div>}
-        />
+        />,
       );
 
       // Should show enabled content even while loading if whenLoading is not provided
@@ -159,7 +162,7 @@ describe("FeatureFlagWrapper", () => {
           flagKey="email-contact-form"
           whenEnabled={<div>Enabled</div>}
           whenDisabled={<div>Disabled</div>}
-        />
+        />,
       );
 
       // Should show disabled content (default) when error occurs
@@ -185,7 +188,7 @@ describe("FeatureFlagWrapper", () => {
               <p>Send us a message</p>
             </div>
           }
-        />
+        />,
       );
 
       expect(screen.getByText("Contact Form")).toBeInTheDocument();
@@ -210,11 +213,13 @@ describe("FeatureFlagWrapper", () => {
               <p>This feature is not available yet</p>
             </div>
           }
-        />
+        />,
       );
 
       expect(screen.getByText("Coming Soon")).toBeInTheDocument();
-      expect(screen.getByText("This feature is not available yet")).toBeInTheDocument();
+      expect(
+        screen.getByText("This feature is not available yet"),
+      ).toBeInTheDocument();
     });
   });
 
@@ -231,7 +236,7 @@ describe("FeatureFlagWrapper", () => {
         <FeatureFlagWrapper
           flagKey="email-contact-form"
           whenEnabled={<div>Contact form enabled</div>}
-        />
+        />,
       );
 
       expect(screen.getByText("Contact form enabled")).toBeInTheDocument();
@@ -245,7 +250,7 @@ describe("FeatureFlagWrapper", () => {
           flagKey="email-contact-form"
           whenEnabled={<div>Enabled</div>}
           whenDisabled={<div>Disabled</div>}
-        />
+        />,
       );
 
       // Initially disabled
@@ -261,7 +266,7 @@ describe("FeatureFlagWrapper", () => {
           flagKey="email-contact-form"
           whenEnabled={<div>Enabled</div>}
           whenDisabled={<div>Disabled</div>}
-        />
+        />,
       );
 
       expect(screen.getByText("Disabled")).toBeInTheDocument();
@@ -279,7 +284,7 @@ describe("FeatureFlagWrapper", () => {
           flagKey="email-contact-form"
           whenEnabled={<div>Enabled</div>}
           whenDisabled={<div>Disabled</div>}
-        />
+        />,
       );
 
       expect(screen.getByText("Enabled")).toBeInTheDocument();

@@ -337,11 +337,17 @@ function isValidFeatureFlags(data: unknown): data is FeatureFlags {
   const flags = data as Record<string, unknown>;
 
   // Check email-contact-form structure
-  if (typeof flags["email-contact-form"] !== "object" || flags["email-contact-form"] === null) {
+  if (
+    typeof flags["email-contact-form"] !== "object" ||
+    flags["email-contact-form"] === null
+  ) {
     return false;
   }
 
-  const emailContactForm = flags["email-contact-form"] as Record<string, unknown>;
+  const emailContactForm = flags["email-contact-form"] as Record<
+    string,
+    unknown
+  >;
 
   if (typeof emailContactForm.enabled !== "boolean") {
     return false;
