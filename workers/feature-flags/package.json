@@ -18,7 +18,16 @@
     "kv:list": "wrangler kv:key list --binding FEATURE_FLAGS_KV",
     "kv:get": "wrangler kv:key get feature_flags --binding FEATURE_FLAGS_KV",
     "kv:put": "wrangler kv:key put feature_flags --binding FEATURE_FLAGS_KV",
-    "secret:put": "wrangler secret put ADMIN_API_KEY"
+    "secret:put": "wrangler secret put ADMIN_API_KEY",
+    "flags:get:dev": "wrangler kv key get --remote --namespace-id=790d0a984ac748aaae24cba1038901cb feature_flags",
+    "flags:get:staging": "wrangler kv key get --remote --namespace-id=61745c6979e34b23bd2d6812f81d5707 feature_flags",
+    "flags:get:prod": "wrangler kv key get --remote --namespace-id=55a586e168e54566bcfb0a1e6dd11f88 feature_flags",
+    "flags:enable:dev": "wrangler kv key put --remote --namespace-id=790d0a984ac748aaae24cba1038901cb feature_flags '{\"email-contact-form\":{\"enabled\":true}}'",
+    "flags:enable:staging": "wrangler kv key put --remote --namespace-id=61745c6979e34b23bd2d6812f81d5707 feature_flags '{\"email-contact-form\":{\"enabled\":true}}'",
+    "flags:enable:prod": "wrangler kv key put --remote --namespace-id=55a586e168e54566bcfb0a1e6dd11f88 feature_flags '{\"email-contact-form\":{\"enabled\":true}}'",
+    "flags:disable:dev": "wrangler kv key put --remote --namespace-id=790d0a984ac748aaae24cba1038901cb feature_flags '{\"email-contact-form\":{\"enabled\":false}}'",
+    "flags:disable:staging": "wrangler kv key put --remote --namespace-id=61745c6979e34b23bd2d6812f81d5707 feature_flags '{\"email-contact-form\":{\"enabled\":false}}'",
+    "flags:disable:prod": "wrangler kv key put --remote --namespace-id=55a586e168e54566bcfb0a1e6dd11f88 feature_flags '{\"email-contact-form\":{\"enabled\":false}}'"
   },
   "devDependencies": {
     "@cloudflare/vitest-pool-workers": "^0.5.31",

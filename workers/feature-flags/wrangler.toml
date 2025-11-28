@@ -14,20 +14,15 @@ enabled = true
 # ADMIN_API_KEY - set via: wrangler secret put ADMIN_API_KEY
 # ALLOWED_ORIGINS - comma-separated list of allowed origins
 
-# Default environment (dev/local)
+# Default environment (production - used for `wrangler deploy`)
 [[kv_namespaces]]
 binding = "FEATURE_FLAGS_KV"
-id = "51b831676b7e435f95f2c314ed3eaab5"
+id = "55a586e168e54566bcfb0a1e6dd11f88"  # Production namespace
+preview_id = "790d0a984ac748aaae24cba1038901cb"  # Development namespace (for wrangler dev)
+remote = true  # Use remote KV in development instead of local storage
 
 [vars]
 ALLOWED_ORIGINS = "https://tylerearls.com,http://localhost:3000,http://localhost:4173"
-
-[env.production]
-name = "feature-flags"
-kv_namespaces = [
-  { binding = "FEATURE_FLAGS_KV", id = "55a586e168e54566bcfb0a1e6dd11f88" }
-]
-vars = { ALLOWED_ORIGINS = "https://tylerearls.com" }
 
 [env.staging]
 name = "feature-flags-staging"
