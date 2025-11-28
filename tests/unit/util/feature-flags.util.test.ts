@@ -137,19 +137,8 @@ describe("feature-flags utilities", () => {
     });
   });
 
-  describe("fetchFlags", () => {
-    beforeEach(() => {
-      // Note: fetchFlags tests require VITE_FEATURE_FLAGS_API_URL to be set
-      // These are integration-level tests that are better covered by Cypress
-      // Unit tests for fetchFlags are limited because it depends on import.meta.env
-      // which is evaluated at module load time and can't be easily mocked
-    });
-
-    // Skipping fetchFlags tests as they require environment variable mocking
-    // that's not straightforward with Vite's import.meta.env
-    // These scenarios are covered by integration tests in Cypress
-    it.skip("fetch flags tests covered by integration tests", () => {
-      // See tests/integration/feature-flags.cy.ts for comprehensive coverage
-    });
-  });
+  // Note: fetchFlags is not unit tested here because it depends on import.meta.env
+  // which is evaluated at module load time and can't be easily mocked.
+  // fetchFlags functionality is comprehensively covered by integration tests in:
+  // tests/integration/feature-flags.cy.ts
 });
