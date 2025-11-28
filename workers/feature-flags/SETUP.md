@@ -22,15 +22,15 @@ Add the following environment variable in **Cloudflare Dashboard** → **Pages**
 
 #### Production Environment
 - **Name**: `VITE_FEATURE_FLAGS_API_URL`
-- **Value**: `https://feature-flags.<your-subdomain>.workers.dev/api/flags`
+- **Value**: `https://api.tylerearls.com/flags`
 - **Environment**: Production
 
 #### Preview Environment (Staging)
 - **Name**: `VITE_FEATURE_FLAGS_API_URL`
-- **Value**: `https://feature-flags-staging.<your-subdomain>.workers.dev/api/flags`
+- **Value**: `https://feature-flags-staging.<account-id>.workers.dev/api/flags`
 - **Environment**: Preview
 
-> **Note**: Replace `<your-subdomain>` with your actual Cloudflare Workers subdomain.
+> **Note**: Production uses a custom domain. Staging uses the default workers.dev subdomain.
 
 ### Finding Your Worker URLs
 
