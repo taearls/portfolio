@@ -48,7 +48,7 @@ export default function Contact() {
       </FlexContainer>
 
       <FeatureFlagWrapper
-        flagKey="contactForm"
+        flagKey="email-contact-form"
         whenEnabled={<ContactEmailForm />}
       />
     </main>

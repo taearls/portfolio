@@ -15,7 +15,7 @@ describe("Feature Flags Integration", () => {
   describe("Feature flag loading", () => {
     it("should fetch and display feature flags on app load", () => {
       const mockFlags: FeatureFlags = {
-        contactForm: {
+        "email-contact-form": {
           enabled: true,
           message: "Contact form is now available!",
         },
@@ -42,7 +42,7 @@ describe("Feature Flags Integration", () => {
 
     it("should use cached flags when available", () => {
       const cachedFlags: FeatureFlags = {
-        contactForm: {
+        "email-contact-form": {
           enabled: true,
           message: "Cached message",
         },
@@ -61,7 +61,7 @@ describe("Feature Flags Integration", () => {
       cy.intercept("GET", FEATURE_FLAGS_API_URL, {
         statusCode: 200,
         body: {
-          contactForm: {
+          "email-contact-form": {
             enabled: false,
           },
         },
@@ -75,7 +75,7 @@ describe("Feature Flags Integration", () => {
         expect(cached).to.exist;
 
         const parsed = JSON.parse(cached!);
-        expect(parsed.flags.contactForm.enabled).to.equal(true);
+        expect(parsed.flags."email-contact-form".enabled).to.equal(true);
       });
     });
 
@@ -100,7 +100,7 @@ describe("Feature Flags Integration", () => {
           delay: 10000, // 10 second delay (exceeds 5s timeout)
           statusCode: 200,
           body: {
-            contactForm: {
+            "email-contact-form": {
               enabled: true,
             },
           },
@@ -118,7 +118,7 @@ describe("Feature Flags Integration", () => {
   describe("Contact form flag behavior", () => {
     it("should respect contact form enabled flag", () => {
       const mockFlags: FeatureFlags = {
-        contactForm: {
+        "email-contact-form": {
           enabled: true,
         },
       };
@@ -136,13 +136,13 @@ describe("Feature Flags Integration", () => {
       cy.window().then((win) => {
         const cached = win.localStorage.getItem("portfolio:feature-flags");
         const parsed = JSON.parse(cached!);
-        expect(parsed.flags.contactForm.enabled).to.equal(true);
+        expect(parsed.flags."email-contact-form".enabled).to.equal(true);
       });
     });
 
     it("should respect contact form disabled flag", () => {
       const mockFlags: FeatureFlags = {
-        contactForm: {
+        "email-contact-form": {
           enabled: false,
           message: "Contact form is temporarily unavailable",
         },
@@ -160,8 +160,8 @@ describe("Feature Flags Integration", () => {
       cy.window().then((win) => {
         const cached = win.localStorage.getItem("portfolio:feature-flags");
         const parsed = JSON.parse(cached!);
-        expect(parsed.flags.contactForm.enabled).to.equal(false);
-        expect(parsed.flags.contactForm.message).to.equal(
+        expect(parsed.flags."email-contact-form".enabled).to.equal(false);
+        expect(parsed.flags."email-contact-form".message).to.equal(
           "Contact form is temporarily unavailable",
         );
       });
@@ -172,7 +172,7 @@ describe("Feature Flags Integration", () => {
     it("should expire cache after TTL", () => {
       const oldTimestamp = Date.now() - 120000; // 2 minutes ago (expired)
       const cachedFlags: FeatureFlags = {
-        contactForm: {
+        "email-contact-form": {
           enabled: true,
         },
       };
@@ -188,7 +188,7 @@ describe("Feature Flags Integration", () => {
       });
 
       const newFlags: FeatureFlags = {
-        contactForm: {
+        "email-contact-form": {
           enabled: false,
         },
       };
@@ -205,7 +205,7 @@ describe("Feature Flags Integration", () => {
       cy.window().then((win) => {
         const cached = win.localStorage.getItem("portfolio:feature-flags");
         const parsed = JSON.parse(cached!);
-        expect(parsed.flags.contactForm.enabled).to.equal(false);
+        expect(parsed.flags."email-contact-form".enabled).to.equal(false);
       });
     });
   });
@@ -217,7 +217,7 @@ describe("Feature Flags Integration", () => {
         req.reply({
           statusCode: 200,
           body: {
-            contactForm: {
+            "email-contact-form": {
               enabled: true,
             },
           },

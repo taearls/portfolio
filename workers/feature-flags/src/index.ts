@@ -6,7 +6,7 @@
  */
 
 interface FeatureFlags {
-  contactForm: {
+  "email-contact-form": {
     enabled: boolean;
     message?: string;
   };
@@ -19,7 +19,7 @@ interface Env {
 }
 
 const DEFAULT_FLAGS: FeatureFlags = {
-  contactForm: {
+  "email-contact-form": {
     enabled: false, // Safe default - disabled until explicitly enabled
   },
 };
@@ -201,7 +201,7 @@ async function handlePutFlags(
           error: "Bad Request",
           message: "Invalid feature flags structure",
           expected: {
-            contactForm: {
+            "email-contact-form": {
               enabled: "boolean",
               message: "string (optional)",
             },
@@ -336,20 +336,20 @@ function isValidFeatureFlags(data: unknown): data is FeatureFlags {
 
   const flags = data as Record<string, unknown>;
 
-  // Check contactForm structure
-  if (typeof flags.contactForm !== "object" || flags.contactForm === null) {
+  // Check email-contact-form structure
+  if (typeof flags["email-contact-form"] !== "object" || flags["email-contact-form"] === null) {
     return false;
   }
 
-  const contactForm = flags.contactForm as Record<string, unknown>;
+  const emailContactForm = flags["email-contact-form"] as Record<string, unknown>;
 
-  if (typeof contactForm.enabled !== "boolean") {
+  if (typeof emailContactForm.enabled !== "boolean") {
     return false;
   }
 
   if (
-    contactForm.message !== undefined &&
-    typeof contactForm.message !== "string"
+    emailContactForm.message !== undefined &&
+    typeof emailContactForm.message !== "string"
   ) {
     return false;
   }

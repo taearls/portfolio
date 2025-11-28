@@ -4,17 +4,17 @@
  * Shared types between the React application and Cloudflare Worker
  */
 
-export interface ContactFormFlags {
+export interface EmailContactFormFlags {
   enabled: boolean;
   message?: string;
 }
 
 export interface FeatureFlags {
-  contactForm: ContactFormFlags;
+  "email-contact-form": EmailContactFormFlags;
 }
 
 export const DEFAULT_FLAGS: FeatureFlags = {
-  contactForm: {
+  "email-contact-form": {
     enabled: false, // Safe default - disabled until explicitly enabled via Worker
   },
 };

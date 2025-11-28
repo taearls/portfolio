@@ -29,7 +29,7 @@ describe("feature-flags utilities", () => {
 
     it("should return cached flags when cache is valid", () => {
       const flags: FeatureFlags = {
-        contactForm: { enabled: true, message: "Test" },
+        "email-contact-form": { enabled: true, message: "Test" },
       };
 
       const cached = {
@@ -45,7 +45,7 @@ describe("feature-flags utilities", () => {
 
     it("should return null when cache is expired", () => {
       const flags: FeatureFlags = {
-        contactForm: { enabled: true },
+        "email-contact-form": { enabled: true },
       };
 
       const cached = {
@@ -61,7 +61,7 @@ describe("feature-flags utilities", () => {
 
     it("should remove expired cache from localStorage", () => {
       const flags: FeatureFlags = {
-        contactForm: { enabled: true },
+        "email-contact-form": { enabled: true },
       };
 
       const cached = {
@@ -87,21 +87,21 @@ describe("feature-flags utilities", () => {
     it("should handle missing timestamp field", () => {
       localStorage.setItem(
         "portfolio:feature-flags",
-        JSON.stringify({ flags: { contactForm: { enabled: true } } })
+        JSON.stringify({ flags: { "email-contact-form": { enabled: true } } })
       );
 
       const result = getCachedFlags();
       // Should return null when timestamp is missing (NaN - timestamp > CACHE_TTL is true)
       // However, the current implementation doesn't check for NaN, so it returns the flags
       // This test documents current behavior - could be improved to check for valid timestamp
-      expect(result).toEqual({ contactForm: { enabled: true } });
+      expect(result).toEqual({ "email-contact-form": { enabled: true } });
     });
   });
 
   describe("setCachedFlags", () => {
     it("should cache flags with timestamp", () => {
       const flags: FeatureFlags = {
-        contactForm: { enabled: true, message: "Test" },
+        "email-contact-form": { enabled: true, message: "Test" },
       };
 
       const beforeTime = Date.now();
@@ -125,7 +125,7 @@ describe("feature-flags utilities", () => {
       });
 
       const flags: FeatureFlags = {
-        contactForm: { enabled: true },
+        "email-contact-form": { enabled: true },
       };
 
       // Should not throw

@@ -13,7 +13,7 @@ describe("FeatureFlagWrapper", () => {
   const mockUseFeatureFlags = vi.spyOn(useFeatureFlagsHook, "useFeatureFlags");
 
   const defaultFlags: FeatureFlags = {
-    contactForm: { enabled: false },
+    "email-contact-form": { enabled: false },
   };
 
   afterEach(() => {
@@ -23,7 +23,7 @@ describe("FeatureFlagWrapper", () => {
   describe("when feature is enabled", () => {
     it("should render whenEnabled content", () => {
       mockUseFeatureFlags.mockReturnValue({
-        flags: { contactForm: { enabled: true } },
+        flags: { "email-contact-form": { enabled: true } },
         isLoading: false,
         error: null,
         refetch: vi.fn(),
@@ -31,7 +31,7 @@ describe("FeatureFlagWrapper", () => {
 
       render(
         <FeatureFlagWrapper
-          flagKey="contactForm"
+          flagKey="email-contact-form"
           whenEnabled={<div>Feature is enabled</div>}
           whenDisabled={<div>Feature is disabled</div>}
         />
@@ -43,7 +43,7 @@ describe("FeatureFlagWrapper", () => {
 
     it("should not render whenDisabled content", () => {
       mockUseFeatureFlags.mockReturnValue({
-        flags: { contactForm: { enabled: true } },
+        flags: { "email-contact-form": { enabled: true } },
         isLoading: false,
         error: null,
         refetch: vi.fn(),
@@ -51,7 +51,7 @@ describe("FeatureFlagWrapper", () => {
 
       render(
         <FeatureFlagWrapper
-          flagKey="contactForm"
+          flagKey="email-contact-form"
           whenEnabled={<div>Enabled</div>}
           whenDisabled={<div>Disabled</div>}
         />
@@ -72,7 +72,7 @@ describe("FeatureFlagWrapper", () => {
 
       render(
         <FeatureFlagWrapper
-          flagKey="contactForm"
+          flagKey="email-contact-form"
           whenEnabled={<div>Feature is enabled</div>}
           whenDisabled={<div>Feature is disabled</div>}
         />
@@ -92,7 +92,7 @@ describe("FeatureFlagWrapper", () => {
 
       const { container } = render(
         <FeatureFlagWrapper
-          flagKey="contactForm"
+          flagKey="email-contact-form"
           whenEnabled={<div>Enabled</div>}
         />
       );
@@ -112,7 +112,7 @@ describe("FeatureFlagWrapper", () => {
 
       render(
         <FeatureFlagWrapper
-          flagKey="contactForm"
+          flagKey="email-contact-form"
           whenEnabled={<div>Enabled</div>}
           whenDisabled={<div>Disabled</div>}
           whenLoading={<div>Loading...</div>}
@@ -126,7 +126,7 @@ describe("FeatureFlagWrapper", () => {
 
     it("should render based on flag state when loading and no whenLoading provided", () => {
       mockUseFeatureFlags.mockReturnValue({
-        flags: { contactForm: { enabled: true } },
+        flags: { "email-contact-form": { enabled: true } },
         isLoading: true,
         error: null,
         refetch: vi.fn(),
@@ -134,7 +134,7 @@ describe("FeatureFlagWrapper", () => {
 
       render(
         <FeatureFlagWrapper
-          flagKey="contactForm"
+          flagKey="email-contact-form"
           whenEnabled={<div>Enabled</div>}
           whenDisabled={<div>Disabled</div>}
         />
@@ -156,7 +156,7 @@ describe("FeatureFlagWrapper", () => {
 
       render(
         <FeatureFlagWrapper
-          flagKey="contactForm"
+          flagKey="email-contact-form"
           whenEnabled={<div>Enabled</div>}
           whenDisabled={<div>Disabled</div>}
         />
@@ -170,7 +170,7 @@ describe("FeatureFlagWrapper", () => {
   describe("complex content", () => {
     it("should render complex React elements when enabled", () => {
       mockUseFeatureFlags.mockReturnValue({
-        flags: { contactForm: { enabled: true } },
+        flags: { "email-contact-form": { enabled: true } },
         isLoading: false,
         error: null,
         refetch: vi.fn(),
@@ -178,7 +178,7 @@ describe("FeatureFlagWrapper", () => {
 
       render(
         <FeatureFlagWrapper
-          flagKey="contactForm"
+          flagKey="email-contact-form"
           whenEnabled={
             <div>
               <h1>Contact Form</h1>
@@ -202,7 +202,7 @@ describe("FeatureFlagWrapper", () => {
 
       render(
         <FeatureFlagWrapper
-          flagKey="contactForm"
+          flagKey="email-contact-form"
           whenEnabled={<div>Form</div>}
           whenDisabled={
             <div>
@@ -219,9 +219,9 @@ describe("FeatureFlagWrapper", () => {
   });
 
   describe("flag key types", () => {
-    it("should work with contactForm flag", () => {
+    it("should work with email-contact-form flag", () => {
       mockUseFeatureFlags.mockReturnValue({
-        flags: { contactForm: { enabled: true } },
+        flags: { "email-contact-form": { enabled: true } },
         isLoading: false,
         error: null,
         refetch: vi.fn(),
@@ -229,7 +229,7 @@ describe("FeatureFlagWrapper", () => {
 
       render(
         <FeatureFlagWrapper
-          flagKey="contactForm"
+          flagKey="email-contact-form"
           whenEnabled={<div>Contact form enabled</div>}
         />
       );
@@ -242,7 +242,7 @@ describe("FeatureFlagWrapper", () => {
     it("should handle rapid flag changes", () => {
       const { rerender } = render(
         <FeatureFlagWrapper
-          flagKey="contactForm"
+          flagKey="email-contact-form"
           whenEnabled={<div>Enabled</div>}
           whenDisabled={<div>Disabled</div>}
         />
@@ -258,7 +258,7 @@ describe("FeatureFlagWrapper", () => {
 
       rerender(
         <FeatureFlagWrapper
-          flagKey="contactForm"
+          flagKey="email-contact-form"
           whenEnabled={<div>Enabled</div>}
           whenDisabled={<div>Disabled</div>}
         />
@@ -268,7 +268,7 @@ describe("FeatureFlagWrapper", () => {
 
       // Then enabled
       mockUseFeatureFlags.mockReturnValue({
-        flags: { contactForm: { enabled: true } },
+        flags: { "email-contact-form": { enabled: true } },
         isLoading: false,
         error: null,
         refetch: vi.fn(),
@@ -276,7 +276,7 @@ describe("FeatureFlagWrapper", () => {
 
       rerender(
         <FeatureFlagWrapper
-          flagKey="contactForm"
+          flagKey="email-contact-form"
           whenEnabled={<div>Enabled</div>}
           whenDisabled={<div>Disabled</div>}
         />

@@ -13,7 +13,7 @@ const mockKVNamespace = {
   get: async (key: string) => {
     if (key === "feature_flags") {
       return JSON.stringify({
-        contactForm: {
+        "email-contact-form": {
           enabled: true,
           message: "Test message",
         },
@@ -59,7 +59,7 @@ describe("Feature Flags Worker", () => {
 
       const flags = await response.json();
       expect(flags).toEqual({
-        contactForm: {
+        "email-contact-form": {
           enabled: false, // Safe default
         },
       });
@@ -84,8 +84,8 @@ describe("Feature Flags Worker", () => {
       expect(response.status).toBe(200);
 
       const flags = await response.json();
-      expect(flags.contactForm.enabled).toBe(true);
-      expect(flags.contactForm.message).toBe("Test message");
+      expect(flags["email-contact-form"].enabled).toBe(true);
+      expect(flags["email-contact-form"].message).toBe("Test message");
     });
 
     it("should include proper cache headers", async () => {
@@ -161,7 +161,7 @@ describe("Feature Flags Worker", () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          contactForm: { enabled: true },
+          "email-contact-form": { enabled: true },
         }),
       });
 
@@ -185,7 +185,7 @@ describe("Feature Flags Worker", () => {
           "X-API-Key": "wrong-key",
         },
         body: JSON.stringify({
-          contactForm: { enabled: true },
+          "email-contact-form": { enabled: true },
         }),
       });
 
@@ -217,7 +217,7 @@ describe("Feature Flags Worker", () => {
           if (key === "feature_flags") {
             featureFlagsPutCalled = true;
             const parsed = JSON.parse(value);
-            expect(parsed.contactForm.enabled).toBe(false);
+            expect(parsed["email-contact-form"].enabled).toBe(false);
           }
         },
       };
@@ -229,7 +229,7 @@ describe("Feature Flags Worker", () => {
           "X-API-Key": "test-api-key",
         },
         body: JSON.stringify({
-          contactForm: { enabled: false },
+          "email-contact-form": { enabled: false },
         }),
       });
 
@@ -259,7 +259,7 @@ describe("Feature Flags Worker", () => {
           "X-API-Key": "test-api-key",
         },
         body: JSON.stringify({
-          contactForm: { enabled: "not-a-boolean" }, // Invalid
+          "email-contact-form": { enabled: "not-a-boolean" }, // Invalid
         }),
       });
 
@@ -357,7 +357,7 @@ describe("Feature Flags Worker", () => {
 
       expect(response.status).toBe(200);
       const flags = await response.json();
-      expect(flags.contactForm.enabled).toBe(false); // Safe default
+      expect(flags["email-contact-form"].enabled).toBe(false); // Safe default
     });
 
     it("should return 404 for unknown routes", async () => {
@@ -375,12 +375,12 @@ describe("Feature Flags Worker", () => {
   });
 
   describe("Type Validation", () => {
-    it("should validate contactForm.enabled is boolean", async () => {
+    it("should validate "email-contact-form".enabled is boolean", async () => {
       const invalidKV = {
         ...mockKVNamespace,
         get: async () =>
           JSON.stringify({
-            contactForm: { enabled: "true" }, // String instead of boolean
+            "email-contact-form": { enabled: "true" }, // String instead of boolean
           }),
       };
 
@@ -396,7 +396,7 @@ describe("Feature Flags Worker", () => {
       expect(response.status).toBe(200);
       const flags = await response.json();
       // Should return safe defaults on validation failure
-      expect(flags.contactForm.enabled).toBe(false);
+      expect(flags["email-contact-form"].enabled).toBe(false);
     });
 
     it("should allow optional message field", async () => {
@@ -410,7 +410,7 @@ describe("Feature Flags Worker", () => {
       await waitOnExecutionContext(ctx);
 
       const flags = await response.json();
-      expect(flags.contactForm.message).toBe("Test message");
+      expect(flags["email-contact-form"].message).toBe("Test message");
     });
   });
 });

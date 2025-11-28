@@ -31,7 +31,7 @@ interface FeatureFlagWrapperProps {
  * @example
  * ```tsx
  * <FeatureFlagWrapper
- *   flagKey="contactForm"
+ *   flagKey="email-contact-form"
  *   whenEnabled={<ContactForm />}
  *   whenDisabled={<ComingSoonMessage />}
  *   whenLoading={<LoadingSpinner />}
