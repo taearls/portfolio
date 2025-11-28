@@ -14,6 +14,14 @@ enabled = true
 # ADMIN_API_KEY - set via: wrangler secret put ADMIN_API_KEY
 # ALLOWED_ORIGINS - comma-separated list of allowed origins
 
+# Default environment (dev/local)
+[[kv_namespaces]]
+binding = "FEATURE_FLAGS_KV"
+id = "55a586e168e54566bcfb0a1e6dd11f88"
+
+[vars]
+ALLOWED_ORIGINS = "https://tylerearls.com,http://localhost:3000,http://localhost:4173"
+
 [env.production]
 name = "feature-flags"
 kv_namespaces = [
@@ -27,10 +35,6 @@ kv_namespaces = [
   { binding = "FEATURE_FLAGS_KV", id = "55a586e168e54566bcfb0a1e6dd11f88", preview_id = "YOUR_PREVIEW_KV_NAMESPACE_ID" }
 ]
 vars = { ALLOWED_ORIGINS = "https://staging.tylerearls.com,http://localhost:3000,http://localhost:4173" }
-
-# Build configuration
-[build]
-command = "npm install && npm run build"
 
 # Local development configuration
 [dev]
