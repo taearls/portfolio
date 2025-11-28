@@ -1,0 +1,43 @@
+# Cloudflare Workers configuration for Feature Flags API
+# See: https://developers.cloudflare.com/workers/wrangler/configuration/
+name="feature-flags"
+
+main = "src/index.ts"
+compatibility_date = "2025-02-04"
+compatibility_flags = ["nodejs_compat"]
+
+# Custom domain routes for production
+routes = [
+  { pattern = "api.tylerearls.com", custom_domain = true }
+]
+
+# Observability configuration
+[observability]
+enabled = true
+
+# Environment variables (set via dashboard or wrangler secret)
+# ADMIN_API_KEY - set via: wrangler secret put ADMIN_API_KEY
+# ALLOWED_ORIGINS - comma-separated list of allowed origins
+
+# Default environment (production - used for `wrangler deploy`)
+
+[[kv_namespaces]]
+binding = "FEATURE_FLAGS_KV"
+id = "55a586e168e54566bcfb0a1e6dd11f88"  # Production namespace
+preview_id = "790d0a984ac748aaae24cba1038901cb"  # Development namespace (for wrangler dev)
+remote = true  # Use remote KV in development instead of local storage
+
+[vars]
+ALLOWED_ORIGINS = "https://tylerearls.com,http://localhost:3000,http://localhost:4173"
+
+[env.staging]
+name = "feature-flags-staging"
+kv_namespaces = [
+  { binding = "FEATURE_FLAGS_KV", id = "61745c6979e34b23bd2d6812f81d5707" }
+]
+vars = { ALLOWED_ORIGINS = "https://staging.tylerearls.com,http://localhost:3000,http://localhost:4173" }
+
+# Local development configuration
+[dev]
+port = 8787
+

@@ -1,3 +1,5 @@
+import ContactEmailForm from "@/components/ContactEmailForm.tsx";
+import FeatureFlagWrapper from "@/components/FeatureFlagWrapper/FeatureFlagWrapper.tsx";
 import InlineAnchor from "@/components/InlineAnchor/InlineAnchor.tsx";
 import FlexContainer from "@/components/layout/containers/FlexContainer/FlexContainer.tsx";
 import HeadingOne from "@/components/layout/headings/HeadingOne.tsx";
@@ -45,7 +47,10 @@ export default function Contact() {
         </FlexContainer>
       </FlexContainer>
 
-      {/* <ContactForm /> */}
+      <FeatureFlagWrapper
+        flagKey="email-contact-form"
+        whenEnabled={<ContactEmailForm />}
+      />
     </main>
   );
 }

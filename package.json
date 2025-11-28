@@ -2,6 +2,9 @@
   "name": "portfolio",
   "version": "0.1.0",
   "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "sideEffects": false,
   "scripts": {
     "dev": "vite --open",
@@ -16,10 +19,14 @@
     "test:vitest:ui": "vitest --ui",
     "test": "vitest run",
     "test:watch": "vitest watch",
+    "test:worker": "npm run test --prefix workers/feature-flags",
     "test:integration": "start-server-and-test 'vite dev --port 4173' http://localhost:4173 'cypress run --e2e'",
-    "test:all": "npm run test && npm run test:integration",
+    "test:all": "npm run test && npm run test:worker && npm run test:integration",
     "preview": "vite preview --open",
-    "ci": "npm run lint:check && npm run oxlint:check && npm run format:check && npm run test:all && npm run build"
+    "ci": "npm run lint:check && npm run oxlint:check && npm run format:check && npm run test:all && npm run build",
+    "dev:flags": "npm run dev -w @portfolio/feature-flags",
+    "dev:all": "concurrently \"npm run dev\" \"npm run dev:flags\"",
+    "deploy:flags": "npm run deploy -w @portfolio/feature-flags"
   },
   "dependencies": {
     "@cloudinary/url-gen": "^1.22.0",
@@ -50,6 +57,7 @@
     "@welldone-software/why-did-you-render": "^10.0.1",
     "autoprefixer": "^10.4.21",
     "babel-plugin-react-compiler": "1.0.0",
+    "concurrently": "^9.1.2",
     "cypress": "^15.4.0",
     "eslint": "^9.37.0",
     "eslint-config-prettier": "^10.1.8",

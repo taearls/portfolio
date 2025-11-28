@@ -1,0 +1,93 @@
+name: Toggle Feature Flag
+
+on:
+  workflow_dispatch:
+    inputs:
+      feature:
+        description: "Feature flag to toggle"
+        required: true
+        type: choice
+        options:
+          - email-contact-form
+      enabled:
+        description: "Enable or disable the feature"
+        required: true
+        type: boolean
+        default: false
+      message:
+        description: "Optional message to display (for disabled features)"
+        required: false
+        type: string
+
+jobs:
+  toggle-flag:
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - name: Validate inputs
+        run: |
+          echo "Feature: ${{ github.event.inputs.feature }}"
+          echo "Enabled: ${{ github.event.inputs.enabled }}"
+          echo "Message: ${{ github.event.inputs.message }}"
+
+      - name: Build JSON payload
+        id: build-json
+        run: |
+          # Build the feature flag JSON
+          if [ "${{ github.event.inputs.message }}" != "" ]; then
+            JSON=$(cat <<EOF
+          {
+            "${{ github.event.inputs.feature }}": {
+              "enabled": ${{ github.event.inputs.enabled }},
+              "message": "${{ github.event.inputs.message }}"
+            }
+          }
+          EOF
+          )
+          else
+            JSON=$(cat <<EOF
+          {
+            "${{ github.event.inputs.feature }}": {
+              "enabled": ${{ github.event.inputs.enabled }}
+            }
+          }
+          EOF
+          )
+          fi
+
+          # Remove newlines and extra spaces
+          JSON_COMPACT=$(echo "$JSON" | tr -d '\n' | tr -s ' ')
+
+          echo "json=$JSON_COMPACT" >> $GITHUB_OUTPUT
+          echo "Payload: $JSON_COMPACT"
+
+      - name: Update feature flag via API
+        run: |
+          RESPONSE=$(curl -X PUT "${{ secrets.FEATURE_FLAGS_API_URL }}" \
+            -H "X-API-Key: ${{ secrets.FEATURE_FLAGS_ADMIN_API_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d '${{ steps.build-json.outputs.json }}' \
+            -w "\n%{http_code}" \
+            -s)
+
+          HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+          BODY=$(echo "$RESPONSE" | head -n-1)
+
+          echo "HTTP Status: $HTTP_CODE"
+          echo "Response Body: $BODY"
+
+          if [ "$HTTP_CODE" != "200" ]; then
+            echo "::error::Failed to update feature flag. HTTP $HTTP_CODE"
+            echo "$BODY"
+            exit 1
+          fi
+
+          echo "::notice::Feature flag updated successfully!"
+          echo "$BODY"
+
+      - name: Create deployment notification
+        if: success()
+        run: |
+          STATUS="${{ github.event.inputs.enabled }}" == "true" && "enabled" || "disabled"
+          echo "::notice::Feature '${{ github.event.inputs.feature }}' has been $STATUS"

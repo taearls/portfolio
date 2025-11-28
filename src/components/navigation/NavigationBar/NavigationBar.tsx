@@ -1,5 +1,5 @@
+import type { RouteDataItem } from "@/constants/navigationData.tsx";
 import type { FlexContainerProps } from "@/types/FlexContainer.ts";
-import type { RouteDataItem } from "@/util/constants/data/navigation/navigationData.tsx";
 import type { NavLinkRenderProps } from "react-router";
 
 import { useMachine } from "@xstate/react";

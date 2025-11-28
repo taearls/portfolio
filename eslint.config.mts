@@ -1,7 +1,5 @@
-import { dirname } from "path";
 import { fileURLToPath } from "url";
 
-import { FlatCompat } from "@eslint/eslintrc";
 import eslintJsPlugin from "@eslint/js";
 import eslintConfigPrettier from "eslint-config-prettier";
 import { flatConfigs as eslintPluginImportFlatConfigs } from "eslint-plugin-import";
@@ -12,13 +10,6 @@ import { defineConfig } from "eslint/config";
 import globals from "globals";
 import typescriptEslint from "typescript-eslint";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
-
 const config = defineConfig([
   { files: ["**/*.{js,mjs,cjs,ts,mts,jsx,tsx}"] },
   {
@@ -27,6 +18,8 @@ const config = defineConfig([
       ".react-router/*",
       "node_modules",
       "prettier.config.mjs",
+      "**/.wrangler/**",
+      "packages/feature-flags/.wrangler/**",
     ],
   },
   {
@@ -45,7 +38,7 @@ const config = defineConfig([
     plugins: {
       "react-hooks": eslintPluginReactHooks,
     },
-    rules: eslintPluginReactHooks.configs["recommended-latest"].rules,
+    rules: eslintPluginReactHooks.configs.recommended.rules,
   },
   // NOTE: react-perf plugin disabled - React Compiler handles these optimizations automatically
   // eslintPluginReactPerf.configs.flat.recommended,
@@ -110,7 +103,8 @@ const config = defineConfig([
       "react/no-array-index-key": "error",
       "react/prop-types": "off",
       "react/react-in-jsx-scope": "off",
-      "sort-keys": "warn",
+      // Disabled: Object key ordering is a style preference that doesn't affect functionality
+      // "sort-keys": "warn",
     },
   },
 
@@ -136,6 +130,23 @@ const config = defineConfig([
       // Chai expect statements use expression syntax (e.g., expect().to.be.true)
       // This is standard Cypress/Chai pattern, not an error
       "@typescript-eslint/no-unused-expressions": "off",
+    },
+  },
+
+  // Cloudflare Worker test overrides
+  {
+    files: [
+      "workers/feature-flags/test/**/*.test.ts",
+      "workers/feature-flags/vitest.config.ts",
+    ],
+    rules: {
+      // Test mocks need flexibility with types
+      "@typescript-eslint/no-explicit-any": "off",
+      // cloudflare:test and @cloudflare/vitest-pool-workers modules provided by package
+      "import/no-unresolved": [
+        "error",
+        { ignore: ["^cloudflare:", "^@cloudflare/vitest-pool-workers"] },
+      ],
     },
   },
 ]);
