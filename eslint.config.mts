@@ -134,14 +134,14 @@ const config = defineConfig([
 
   // Cloudflare Worker test overrides
   {
-    files: ["workers/feature-flags/test/**/*.test.ts"],
+    files: ["workers/feature-flags/test/**/*.test.ts", "workers/feature-flags/vitest.config.ts"],
     rules: {
       // Test mocks need flexibility with types
       "@typescript-eslint/no-explicit-any": "off",
-      // cloudflare:test module is provided by @cloudflare/vitest-pool-workers
+      // cloudflare:test and @cloudflare/vitest-pool-workers modules provided by package
       "import/no-unresolved": [
         "error",
-        { ignore: ["^cloudflare:"] },
+        { ignore: ["^cloudflare:", "^@cloudflare/vitest-pool-workers"] },
       ],
     },
   },
