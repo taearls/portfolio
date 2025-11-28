@@ -103,7 +103,8 @@ const config = defineConfig([
       "react/no-array-index-key": "error",
       "react/prop-types": "off",
       "react/react-in-jsx-scope": "off",
-      "sort-keys": "warn",
+      // Disabled: Object key ordering is a style preference that doesn't affect functionality
+      // "sort-keys": "warn",
     },
   },
 

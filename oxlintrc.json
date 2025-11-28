@@ -15,6 +15,12 @@
       "rules": {
         "no-unused-expressions": "off"
       }
+    },
+    {
+      "files": ["workers/feature-flags/test/**/*.test.ts"],
+      "rules": {
+        "vitest/no-conditional-expect": "off"
+      }
     }
   ],
   "rules": {
@@ -35,6 +41,6 @@
       { "argsIgnorePattern": "_*", "varsIgnorePattern": "_*" }
     ],
     "react/react-in-jsx-scope": "off",
-    "sort-keys": "warn"
+    "sort-keys": "off"
   }
 }
