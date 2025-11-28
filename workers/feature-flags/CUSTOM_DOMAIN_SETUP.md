@@ -16,6 +16,7 @@ This guide walks you through setting up `https://api.tylerearls.com/flags` for y
 ## Step 2: Deploy Worker with Custom Domain
 
 The Worker is already configured in `wrangler.toml` with:
+
 ```toml
 routes = [
   { pattern = "api.tylerearls.com", custom_domain = true }
@@ -25,12 +26,14 @@ routes = [
 **Note**: Custom domains in Cloudflare Workers don't support paths, so the domain covers all paths. Your Worker will be accessible at `https://api.tylerearls.com/api/flags` (the `/api/flags` path is handled by your Worker code).
 
 Deploy to production:
+
 ```bash
 cd workers/feature-flags
 npx wrangler deploy
 ```
 
 When you deploy with `custom_domain = true`, Cloudflare will:
+
 1. **Automatically create the DNS record** for `api.tylerearls.com`
 2. **Provision an SSL certificate** for the subdomain
 3. **Route traffic** to your Worker
@@ -43,6 +46,7 @@ After deployment, check that the DNS record was created:
 2. Look for an `AAAA` record for `api` pointing to `100::` (Cloudflare's Worker indicator)
 
 Or check via CLI:
+
 ```bash
 dig api.tylerearls.com
 ```
@@ -56,6 +60,7 @@ curl https://api.tylerearls.com/api/flags
 ```
 
 Expected response:
+
 ```json
 {
   "email-contact-form": {
@@ -79,7 +84,9 @@ Now that the custom domain is live, update your Cloudflare Pages configuration:
 ## Troubleshooting
 
 ### DNS Record Not Created
+
 If the DNS record wasn't automatically created, you can create it manually:
+
 1. Go to **DNS** → **Records**
 2. Click **Add record**
 3. Type: `AAAA`
@@ -89,16 +96,21 @@ If the DNS record wasn't automatically created, you can create it manually:
 7. Click **Save**
 
 ### SSL Certificate Issues
+
 Cloudflare automatically provisions SSL certificates for custom domains. If you see SSL errors:
+
 - Wait a few minutes for certificate provisioning
 - Ensure the domain is proxied (orange cloud) in DNS settings
 
 ### CORS Errors
+
 The Worker is already configured to allow `https://tylerearls.com`. If you encounter CORS issues:
+
 - Verify the origin is in the `ALLOWED_ORIGINS` list in `wrangler.toml`
 - Check browser console for the exact error message
 
 ### Worker Not Responding
+
 1. Check Worker logs:
    ```bash
    npx wrangler tail feature-flags
