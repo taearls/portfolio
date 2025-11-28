@@ -10,6 +10,8 @@
     "deploy:staging": "wrangler deploy --env staging",
     "deploy:production": "wrangler deploy --env production",
     "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "tail": "wrangler tail",
     "kv:create": "wrangler kv:namespace create FEATURE_FLAGS_KV",
     "kv:create:preview": "wrangler kv:namespace create FEATURE_FLAGS_KV --preview",
@@ -19,8 +21,10 @@
     "secret:put": "wrangler secret put ADMIN_API_KEY"
   },
   "devDependencies": {
+    "@cloudflare/vitest-pool-workers": "^0.5.31",
     "@cloudflare/workers-types": "^4.20241127.0",
     "typescript": "^5.7.2",
+    "vitest": "^2.1.8",
     "wrangler": "^4.51.0"
   }
 }

@@ -11,7 +11,6 @@ import { PORTFOLIO_EMAIL } from "@/util/constants.ts";
  * Currently displays a basic form structure.
  */
 const ContactEmailForm = () => {
-  console.log("Rendering ContactEmailForm component");
   const [formData, setFormData] = useState({
     email: "",
     message: "",

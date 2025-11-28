@@ -122,6 +122,7 @@ The feature flags system uses a **Cloudflare Worker + KV** architecture:
 ### Managing Feature Flags
 
 **Update a flag value:**
+
 ```bash
 npx wrangler kv key put --binding=FEATURE_FLAGS --preview false "flags" \
   '{"contactForm":{"enabled":true}}' \
@@ -129,11 +130,13 @@ npx wrangler kv key put --binding=FEATURE_FLAGS --preview false "flags" \
 ```
 
 **Deploy Worker changes:**
+
 ```bash
 npm run deploy:flags
 ```
 
 **Environment variables:**
+
 - Development: `.env.development` → `VITE_FEATURE_FLAGS_API_URL=http://localhost:8787/api/flags`
 - Production: `.env.production` → `VITE_FEATURE_FLAGS_API_URL=https://portfolio-feature-flags.tyler-a-earls.workers.dev/api/flags`
 
@@ -147,10 +150,11 @@ import FeatureFlagWrapper from "@/components/FeatureFlagWrapper/FeatureFlagWrapp
   whenEnabled={<ContactEmailForm />}
   whenDisabled={<ComingSoonMessage />}
   whenLoading={<LoadingSpinner />}
-/>
+/>;
 ```
 
 **Available flags:**
+
 - `contactForm` - Controls contact form visibility ({ enabled: boolean, message?: string })
 
 ## XState Integration

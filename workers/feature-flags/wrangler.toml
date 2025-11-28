@@ -4,6 +4,7 @@ name="feature-flags"
 
 main = "src/index.ts"
 compatibility_date = "2025-02-04"
+compatibility_flags = ["nodejs_compat"]
 
 # Observability configuration
 [observability]

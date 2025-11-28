@@ -45,9 +45,8 @@ const FeatureFlagWrapper = ({
   whenLoading = null,
 }: FeatureFlagWrapperProps) => {
   const { flags, isLoading } = useFeatureFlags();
-  const enabled = flags[flagKey];
-
-  console.log({ enabled });
+  const flagConfig = flags[flagKey];
+  const enabled = flagConfig?.enabled ?? false;
 
   if (isLoading && whenLoading != null) {
     return <>{whenLoading}</>;
