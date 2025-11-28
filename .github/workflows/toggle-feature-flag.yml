@@ -4,18 +4,18 @@ on:
   workflow_dispatch:
     inputs:
       feature:
-        description: 'Feature flag to toggle'
+        description: "Feature flag to toggle"
         required: true
         type: choice
         options:
           - contactForm
       enabled:
-        description: 'Enable or disable the feature'
+        description: "Enable or disable the feature"
         required: true
         type: boolean
         default: false
       message:
-        description: 'Optional message to display (for disabled features)'
+        description: "Optional message to display (for disabled features)"
         required: false
         type: string
 

@@ -10,8 +10,8 @@ import PageContainer from "./components/layout/containers/PageContainer/PageCont
 import Footer from "./components/layout/Footer/Footer.tsx";
 import Header from "./components/layout/Header/Header.tsx";
 import Meta from "./components/layout/Meta/Meta.tsx";
+import FeatureFlagProvider from "./providers/FeatureFlagProvider.tsx";
 import routes from "./routes.tsx";
-import { FeatureFlagProvider } from "./state/contexts/FeatureFlagContext.tsx";
 import ThemeContext from "./state/contexts/ThemeContext.tsx";
 
 createRoot(document.getElementById("root")!).render(

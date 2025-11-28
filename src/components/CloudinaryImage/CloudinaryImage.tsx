@@ -3,8 +3,8 @@ import type { CSSProperties } from "react";
 
 import { fill } from "@cloudinary/url-gen/actions/resize";
 
+import { CLOUDINARY_INSTANCE } from "@/constants/constants.ts";
 import { FlexFlowCSSValue } from "@/types/layout.ts";
-import { CLOUDINARY_INSTANCE } from "@/util/constants/constants.ts";
 import FlexContainer from "../layout/containers/FlexContainer/FlexContainer.tsx";
 
 export type CloudinaryImageFileFormat = "jpg" | "png" | "webp";

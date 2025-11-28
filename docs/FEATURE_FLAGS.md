@@ -41,10 +41,12 @@ React App ← HTTP → Cloudflare Worker ← KV → Cloudflare Dashboard/Wrangle
 Controls the contact form feature.
 
 **Fields:**
+
 - `enabled` (boolean, required) - Whether the contact form is enabled
 - `message` (string, optional) - Custom message to display when disabled
 
 **Example:**
+
 ```json
 {
   "contactForm": {
@@ -59,6 +61,7 @@ Controls the contact form feature.
 ### Prerequisites
 
 1. Install Wrangler CLI:
+
    ```bash
    npm install -g wrangler
    ```
@@ -113,6 +116,7 @@ npm run deploy:production
 ```
 
 The deployment will output your Worker URL, e.g.:
+
 ```
 https://portfolio-feature-flags.YOUR_SUBDOMAIN.workers.dev
 ```
@@ -215,10 +219,10 @@ To toggle a flag via GitHub:
 ### Basic Usage
 
 ```tsx
-import { useFeatureFlag } from '@/state/contexts/FeatureFlagContext';
+import { useFeatureFlag } from "@/state/contexts/FeatureFlagContext";
 
 function ContactPage() {
-  const isContactFormEnabled = useFeatureFlag('contactForm');
+  const isContactFormEnabled = useFeatureFlag("contactForm");
 
   return (
     <div>
@@ -235,7 +239,7 @@ function ContactPage() {
 ### With Custom Message
 
 ```tsx
-import { useContactFormFlag } from '@/state/contexts/FeatureFlagContext';
+import { useContactFormFlag } from "@/state/contexts/FeatureFlagContext";
 
 function ContactPage() {
   const { enabled, message } = useContactFormFlag();
@@ -245,7 +249,7 @@ function ContactPage() {
       {enabled ? (
         <ContactForm />
       ) : (
-        <p>{message || 'Contact form is currently unavailable'}</p>
+        <p>{message || "Contact form is currently unavailable"}</p>
       )}
     </div>
   );
@@ -255,7 +259,7 @@ function ContactPage() {
 ### Access Full Flag State
 
 ```tsx
-import { useFeatureFlags } from '@/state/contexts/FeatureFlagContext';
+import { useFeatureFlags } from "@/state/contexts/FeatureFlagContext";
 
 function FeatureFlagDebugPanel() {
   const { flags, isLoading, error, refetch } = useFeatureFlags();
@@ -277,17 +281,20 @@ function FeatureFlagDebugPanel() {
 The feature flag system uses a multi-layer caching strategy:
 
 ### Layer 1: Browser Cache (1 minute TTL)
+
 - Stored in `localStorage`
 - Key: `portfolio:feature-flags`
 - Instant flag access on page load
 - Expires after 1 minute
 
 ### Layer 2: Cloudflare CDN Cache (1 minute TTL)
+
 - Configured via `Cache-Control` headers
 - Global edge caching
 - Stale-while-revalidate (30s)
 
 ### Layer 3: Cloudflare KV (Source of Truth)
+
 - Eventually consistent (~60s propagation)
 - Infinite TTL (manual updates only)
 
@@ -307,16 +314,19 @@ The feature flag system uses a multi-layer caching strategy:
 ## Security
 
 ### Rate Limiting
+
 - 100 requests/minute per IP address
 - Uses KV for distributed rate limit tracking
 - Returns 429 status on limit exceeded
 
 ### Authentication
+
 - Admin API key required for PUT operations
 - Stored as Worker secret (not in code)
 - No authentication needed for GET operations (public)
 
 ### CORS
+
 - Configurable allowed origins
 - Default: `https://tylerearls.com`, `http://localhost:3000`, `http://localhost:4173`
 - Rejects requests from unauthorized origins
@@ -335,6 +345,7 @@ npm run tail
 ### Metrics
 
 Monitor in Cloudflare Dashboard:
+
 1. Navigate to **Workers & Pages** → **your-worker**
 2. Click **Metrics** tab
 3. View request rate, errors, and latency
@@ -342,6 +353,7 @@ Monitor in Cloudflare Dashboard:
 ### Alerts
 
 Set up alerts in Cloudflare Dashboard:
+
 1. **Workers & Pages** → **your-worker** → **Settings**
 2. Configure alerts for:
    - Error rate > 5%
@@ -353,11 +365,13 @@ Set up alerts in Cloudflare Dashboard:
 ### Flags Not Updating
 
 1. **Check cache:** Clear browser localStorage
+
    ```js
-   localStorage.removeItem('portfolio:feature-flags')
+   localStorage.removeItem("portfolio:feature-flags");
    ```
 
 2. **Check KV:** Verify flags are set correctly
+
    ```bash
    npm run kv:get
    ```
@@ -388,16 +402,19 @@ Set up alerts in Cloudflare Dashboard:
 ## Cost Estimates
 
 ### Cloudflare Workers
+
 - **Free tier:** 100,000 requests/day
 - **Paid plan:** $5/month for 10M requests
 - **Estimated cost:** $0/month (well within free tier)
 
 ### KV Storage
+
 - **Free tier:** 1GB storage, 100,000 reads/day
 - **Paid reads:** $0.50 per million reads
 - **Estimated cost:** $0/month (minimal storage, low read volume)
 
 ### Total Estimated Cost
+
 **$0/month** (free tier sufficient)
 
 ## Adding New Flags
@@ -426,7 +443,7 @@ Edit `workers/feature-flags/src/index.ts` in `isValidFeatureFlags()`:
 
 ```typescript
 // Add validation for new flag
-if (typeof flags.newFeature !== 'object' || flags.newFeature === null) {
+if (typeof flags.newFeature !== "object" || flags.newFeature === null) {
   return false;
 }
 // ... validate properties
@@ -435,6 +452,7 @@ if (typeof flags.newFeature !== 'object' || flags.newFeature === null) {
 ### 3. Update Default Flags
 
 Update `DEFAULT_FLAGS` in both:
+
 - `src/types/featureFlags.ts`
 - `workers/feature-flags/src/index.ts`
 

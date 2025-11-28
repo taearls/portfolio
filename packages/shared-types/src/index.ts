@@ -1,0 +1,14 @@
+export interface ContactFormFlags {
+  enabled: boolean;
+  message?: string;
+}
+
+export interface FeatureFlags {
+  contactForm: ContactFormFlags;
+}
+
+export const DEFAULT_FLAGS: FeatureFlags = {
+  contactForm: {
+    enabled: false, // Safe default - disabled until explicitly enabled via Worker
+  },
+};

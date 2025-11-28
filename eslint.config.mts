@@ -1,7 +1,5 @@
-import { dirname } from "path";
 import { fileURLToPath } from "url";
 
-import { FlatCompat } from "@eslint/eslintrc";
 import eslintJsPlugin from "@eslint/js";
 import eslintConfigPrettier from "eslint-config-prettier";
 import { flatConfigs as eslintPluginImportFlatConfigs } from "eslint-plugin-import";
@@ -12,13 +10,6 @@ import { defineConfig } from "eslint/config";
 import globals from "globals";
 import typescriptEslint from "typescript-eslint";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
-
 const config = defineConfig([
   { files: ["**/*.{js,mjs,cjs,ts,mts,jsx,tsx}"] },
   {
@@ -27,6 +18,8 @@ const config = defineConfig([
       ".react-router/*",
       "node_modules",
       "prettier.config.mjs",
+      "**/.wrangler/**",
+      "packages/feature-flags/.wrangler/**",
     ],
   },
   {
@@ -45,7 +38,7 @@ const config = defineConfig([
     plugins: {
       "react-hooks": eslintPluginReactHooks,
     },
-    rules: eslintPluginReactHooks.configs["recommended-latest"].rules,
+    rules: eslintPluginReactHooks.configs.recommended.rules,
   },
   // NOTE: react-perf plugin disabled - React Compiler handles these optimizations automatically
   // eslintPluginReactPerf.configs.flat.recommended,

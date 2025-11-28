@@ -62,6 +62,18 @@ export const WEB_PROJECTS: Array<Omit<WebProjectProps, "isLast">> = [
 export const PORTFOLIO_EMAIL = "tyler.a.earls@gmail.com";
 
 export const EMAIL_REGEX = new RegExp(
-  "^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$",
+  "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$",
   "gi",
 );
+
+export const BASE_URLS = {
+  development: "http://localhost:8787",
+  production: "",
+  staging: "",
+} as const;
+
+export const API_URIS = {
+  FLAGS:
+    import.meta.env.VITE_FEATURE_FLAGS_API_URL ??
+    "http://localhost:8787/api/flags",
+} as const;

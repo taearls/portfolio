@@ -1,8 +1,8 @@
 import { Suspense } from "react";
 import { Route, Routes } from "react-router";
 
+import routes from "./constants/navigationData.tsx";
 import Loading from "./pages/loading.tsx";
-import routes from "./util/constants/data/navigation/navigationData.tsx";
 
 export default (
   <Suspense fallback={<Loading />}>

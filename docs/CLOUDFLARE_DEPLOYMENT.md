@@ -89,6 +89,7 @@ openssl rand -base64 32
 ```
 
 Example output:
+
 ```
 J8k3mP9qR2sT5vY7wZ0aB4cD6eF8gH1iK3lM5nO7pQ==
 ```
@@ -109,6 +110,7 @@ npm run deploy:production
 ```
 
 Expected output:
+
 ```
  ⛅️ wrangler 3.86.0
 -------------------
@@ -146,6 +148,7 @@ curl https://portfolio-feature-flags.YOUR_SUBDOMAIN.workers.dev/api/flags
 ```
 
 Expected response:
+
 ```json
 {
   "contactForm": {
@@ -215,6 +218,7 @@ curl -X PUT http://localhost:8787/api/flags \
 ### Local Development with React App
 
 1. Start the Worker dev server:
+
    ```bash
    cd workers/feature-flags
    npm run dev
@@ -278,6 +282,7 @@ This streams live logs from your Worker.
 **Problem:** KV namespace binding is incorrect
 
 **Solution:**
+
 1. Verify KV namespace exists: `wrangler kv:namespace list`
 2. Check IDs match in `wrangler.toml`
 3. Redeploy: `npm run deploy:production`
@@ -287,6 +292,7 @@ This streams live logs from your Worker.
 **Problem:** API key not set or incorrect
 
 **Solution:**
+
 1. List secrets: `wrangler secret list`
 2. Verify `ADMIN_API_KEY` exists
 3. If missing: `wrangler secret put ADMIN_API_KEY`
@@ -296,6 +302,7 @@ This streams live logs from your Worker.
 **Problem:** Origin not in allowed list
 
 **Solution:**
+
 1. Check `ALLOWED_ORIGINS` in `wrangler.toml`
 2. Add your domain to the list
 3. Redeploy: `npm run deploy:production`
@@ -305,6 +312,7 @@ This streams live logs from your Worker.
 **Problem:** Cache not cleared or KV propagation delay
 
 **Solution:**
+
 1. Wait 60 seconds for KV global propagation
 2. Clear browser cache: `localStorage.removeItem('portfolio:feature-flags')`
 3. Verify flag value in KV: `npm run kv:get`
@@ -314,6 +322,7 @@ This streams live logs from your Worker.
 **Problem:** Worker code error or deployment issue
 
 **Solution:**
+
 1. Check logs: `npm run tail`
 2. Verify deployment: `wrangler deployments list`
 3. Check Worker status in Dashboard
@@ -324,6 +333,7 @@ This streams live logs from your Worker.
 ### Free Tier Limits
 
 Cloudflare Workers Free Tier includes:
+
 - 100,000 requests/day
 - 10ms CPU time per request
 - First 1GB KV storage free
@@ -332,6 +342,7 @@ Cloudflare Workers Free Tier includes:
 ### Estimated Usage
 
 For a portfolio website:
+
 - **Daily requests:** ~1,000-5,000
 - **KV storage:** <1MB
 - **KV reads:** ~1,000-5,000/day
@@ -350,6 +361,7 @@ To avoid unexpected charges:
 ## Security Best Practices
 
 1. **Rotate API Keys Regularly**
+
    ```bash
    # Generate new key
    openssl rand -base64 32
