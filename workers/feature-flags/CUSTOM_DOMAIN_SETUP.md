@@ -18,9 +18,11 @@ This guide walks you through setting up `https://api.tylerearls.com/flags` for y
 The Worker is already configured in `wrangler.toml` with:
 ```toml
 routes = [
-  { pattern = "api.tylerearls.com/flags", custom_domain = true }
+  { pattern = "api.tylerearls.com", custom_domain = true }
 ]
 ```
+
+**Note**: Custom domains in Cloudflare Workers don't support paths, so the domain covers all paths. Your Worker will be accessible at `https://api.tylerearls.com/api/flags` (the `/api/flags` path is handled by your Worker code).
 
 Deploy to production:
 ```bash
@@ -50,7 +52,7 @@ dig api.tylerearls.com
 After deployment (and DNS propagation, usually instant with Cloudflare), test:
 
 ```bash
-curl https://api.tylerearls.com/flags
+curl https://api.tylerearls.com/api/flags
 ```
 
 Expected response:
@@ -70,7 +72,7 @@ Now that the custom domain is live, update your Cloudflare Pages configuration:
 2. Navigate to **Settings** → **Environment Variables**
 3. Add/Update for **Production**:
    - **Name**: `VITE_FEATURE_FLAGS_API_URL`
-   - **Value**: `https://api.tylerearls.com/flags`
+   - **Value**: `https://api.tylerearls.com/api/flags`
    - **Environment**: Production
 4. **Redeploy** your Pages site to pick up the new environment variable
 
@@ -108,20 +110,18 @@ The Worker is already configured to allow `https://tylerearls.com`. If you encou
 
 ## What You Get
 
-✅ **Production URL**: `https://api.tylerearls.com/flags`
+✅ **Production URL**: `https://api.tylerearls.com/api/flags`
 ✅ **Automatic SSL/TLS**
 ✅ **Global CDN** (Cloudflare's edge network)
 ✅ **Custom domain** (cleaner than workers.dev)
 ✅ **Automatic DNS management**
 
-## Alternative: Wildcard Path
+## Future Expansion
 
-If you want to use `https://api.tylerearls.com/*` for multiple API endpoints in the future:
+The custom domain `api.tylerearls.com` now routes all traffic to your Worker. You can add more API endpoints by updating your Worker code to handle different paths:
 
-```toml
-routes = [
-  { pattern = "api.tylerearls.com/*", custom_domain = true }
-]
-```
+- `https://api.tylerearls.com/api/flags` - Current feature flags endpoint
+- `https://api.tylerearls.com/api/auth` - Future auth endpoint
+- `https://api.tylerearls.com/api/data` - Future data endpoint
 
-Then your flags would be at `https://api.tylerearls.com/flags` and you could add other endpoints like `https://api.tylerearls.com/auth`, etc.
+All paths under `api.tylerearls.com` will be handled by this Worker.

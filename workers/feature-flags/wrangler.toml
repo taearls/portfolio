@@ -6,6 +6,11 @@ main = "src/index.ts"
 compatibility_date = "2025-02-04"
 compatibility_flags = ["nodejs_compat"]
 
+# Custom domain routes for production
+routes = [
+  { pattern = "api.tylerearls.com", custom_domain = true }
+]
+
 # Observability configuration
 [observability]
 enabled = true
@@ -15,16 +20,12 @@ enabled = true
 # ALLOWED_ORIGINS - comma-separated list of allowed origins
 
 # Default environment (production - used for `wrangler deploy`)
+
 [[kv_namespaces]]
 binding = "FEATURE_FLAGS_KV"
 id = "55a586e168e54566bcfb0a1e6dd11f88"  # Production namespace
 preview_id = "790d0a984ac748aaae24cba1038901cb"  # Development namespace (for wrangler dev)
 remote = true  # Use remote KV in development instead of local storage
-
-# Custom domain routes for production
-routes = [
-  { pattern = "api.tylerearls.com/flags", custom_domain = true }
-]
 
 [vars]
 ALLOWED_ORIGINS = "https://tylerearls.com,http://localhost:3000,http://localhost:4173"

@@ -22,7 +22,7 @@ Add the following environment variable in **Cloudflare Dashboard** → **Pages**
 
 #### Production Environment
 - **Name**: `VITE_FEATURE_FLAGS_API_URL`
-- **Value**: `https://api.tylerearls.com/flags`
+- **Value**: `https://api.tylerearls.com/api/flags`
 - **Environment**: Production
 
 #### Preview Environment (Staging)
