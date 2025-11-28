@@ -17,7 +17,7 @@ enabled = true
 # Default environment (dev/local)
 [[kv_namespaces]]
 binding = "FEATURE_FLAGS_KV"
-id = "55a586e168e54566bcfb0a1e6dd11f88"
+id = "51b831676b7e435f95f2c314ed3eaab5"
 
 [vars]
 ALLOWED_ORIGINS = "https://tylerearls.com,http://localhost:3000,http://localhost:4173"
@@ -32,7 +32,7 @@ vars = { ALLOWED_ORIGINS = "https://tylerearls.com" }
 [env.staging]
 name = "feature-flags-staging"
 kv_namespaces = [
-  { binding = "FEATURE_FLAGS_KV", id = "55a586e168e54566bcfb0a1e6dd11f88", preview_id = "YOUR_PREVIEW_KV_NAMESPACE_ID" }
+  { binding = "FEATURE_FLAGS_KV", id = "61745c6979e34b23bd2d6812f81d5707" }
 ]
 vars = { ALLOWED_ORIGINS = "https://staging.tylerearls.com,http://localhost:3000,http://localhost:4173" }
 
