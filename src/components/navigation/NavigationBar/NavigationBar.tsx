@@ -1,4 +1,4 @@
-import type { RouteDataItem } from "@/constants/navigationData";
+import type { RouteDataItem } from "@/constants/navigationData.tsx";
 import type { FlexContainerProps } from "@/types/FlexContainer.ts";
 import type { NavLinkRenderProps } from "react-router";
 

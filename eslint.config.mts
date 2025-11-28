@@ -131,6 +131,20 @@ const config = defineConfig([
       "@typescript-eslint/no-unused-expressions": "off",
     },
   },
+
+  // Cloudflare Worker test overrides
+  {
+    files: ["workers/feature-flags/test/**/*.test.ts"],
+    rules: {
+      // Test mocks need flexibility with types
+      "@typescript-eslint/no-explicit-any": "off",
+      // cloudflare:test module is provided by @cloudflare/vitest-pool-workers
+      "import/no-unresolved": [
+        "error",
+        { ignore: ["^cloudflare:"] },
+      ],
+    },
+  },
 ]);
 
 export default config;

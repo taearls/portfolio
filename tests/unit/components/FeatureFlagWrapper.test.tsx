@@ -4,13 +4,13 @@
 
 import "@testing-library/jest-dom/vitest";
 
-import type { FeatureFlags } from "@/types/featureFlags";
+import type { FeatureFlags } from "@/types/featureFlags.ts";
 
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import FeatureFlagWrapper from "@/components/FeatureFlagWrapper/FeatureFlagWrapper";
-import * as useFeatureFlagsHook from "@/hooks/useFeatureFlags";
+import FeatureFlagWrapper from "@/components/FeatureFlagWrapper/FeatureFlagWrapper.tsx";
+import * as useFeatureFlagsHook from "@/hooks/useFeatureFlags.ts";
 
 describe("FeatureFlagWrapper", () => {
   const mockUseFeatureFlags = vi.spyOn(useFeatureFlagsHook, "useFeatureFlags");

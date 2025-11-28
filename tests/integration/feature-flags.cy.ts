@@ -2,7 +2,7 @@
  * Integration tests for Feature Flags functionality
  */
 
-import type { FeatureFlags } from "../../src/types/featureFlags";
+import type { FeatureFlags } from "../../src/types/featureFlags.ts";
 
 describe("Feature Flags Integration", () => {
   const FEATURE_FLAGS_API_URL = "http://localhost:8787/api/flags";

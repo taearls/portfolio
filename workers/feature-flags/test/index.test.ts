@@ -12,7 +12,7 @@ import {
 } from "cloudflare:test";
 import { beforeEach, describe, expect, it } from "vitest";
 
-import worker from "../src/index";
+import worker from "../src/index.ts";
 
 // Mock KV namespace for testing
 const mockKVNamespace = {

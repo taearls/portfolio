@@ -2,7 +2,7 @@
  * Unit tests for feature-flags utility functions
  */
 
-import type { FeatureFlags } from "@/types/featureFlags";
+import type { FeatureFlags } from "@/types/featureFlags.ts";
 
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -10,7 +10,7 @@ import {
   fetchFlags,
   getCachedFlags,
   setCachedFlags,
-} from "@/util/feature-flags/feature-flags.util";
+} from "@/util/feature-flags/feature-flags.util.ts";
 
 describe("feature-flags utilities", () => {
   beforeEach(() => {
