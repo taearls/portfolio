@@ -124,11 +124,19 @@ async function handleGetFlags(
 
     if (response) {
       // Add CORS headers to cached response
+      const cachedHeaders = new Headers(response.headers);
+      // Remove any existing CORS headers to avoid duplicates
+      cachedHeaders.delete("Access-Control-Allow-Origin");
+      cachedHeaders.delete("Access-Control-Allow-Methods");
+      cachedHeaders.delete("Access-Control-Allow-Headers");
+      cachedHeaders.delete("Access-Control-Max-Age");
+      cachedHeaders.delete("Vary");
+
       response = new Response(response.body, {
         status: response.status,
         statusText: response.statusText,
         headers: {
-          ...Object.fromEntries(response.headers),
+          ...Object.fromEntries(cachedHeaders),
           ...corsHeaders,
         },
       });
