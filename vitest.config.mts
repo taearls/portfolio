@@ -10,7 +10,11 @@ export default (args: ViteConfigInput) =>
     defineConfig({
       test: {
         environment: "jsdom",
-        exclude: [...configDefaults.exclude, "tests/integration/**"],
+        exclude: [
+          ...configDefaults.exclude,
+          "tests/integration/**",
+          "workers/**",
+        ],
         globals: true,
         // NOTE: this option could be useful for unit test performance tuning
         // logHeapUsage: true,
