@@ -25,11 +25,14 @@
     "preview": "vite preview --open",
     "ci": "npm run lint:check && npm run oxlint:check && npm run format:check && npm run test:all && npm run build",
     "dev:flags": "npm run dev -w @portfolio/feature-flags",
-    "dev:all": "concurrently \"npm run dev\" \"npm run dev:flags\"",
-    "deploy:flags": "npm run deploy -w @portfolio/feature-flags"
+    "dev:contact": "npm run dev -w @portfolio/contact-form",
+    "dev:all": "concurrently \"npm run dev\" \"npm run dev:flags\" \"npm run dev:contact\"",
+    "deploy:flags": "npm run deploy -w @portfolio/feature-flags",
+    "deploy:contact": "npm run deploy -w @portfolio/contact-form"
   },
   "dependencies": {
     "@cloudinary/url-gen": "^1.22.0",
+    "@marsidev/react-turnstile": "^1.3.1",
     "@xstate/react": "^6.0.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
@@ -46,6 +49,7 @@
     "@testing-library/cypress": "^10.1.0",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
     "@tsconfig/node22": "^22.0.2",
     "@types/mocha": "^10.0.10",
     "@types/node": "^22.10.4",

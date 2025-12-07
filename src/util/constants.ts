@@ -76,4 +76,9 @@ export const API_URIS = {
   FLAGS:
     import.meta.env.VITE_FEATURE_FLAGS_API_URL ??
     "http://localhost:8787/api/flags",
+  CONTACT:
+    import.meta.env.VITE_CONTACT_FORM_API_URL ??
+    "http://localhost:8788/api/contact",
 } as const;
+
+export const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY ?? "";
