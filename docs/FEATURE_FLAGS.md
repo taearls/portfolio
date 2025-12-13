@@ -35,11 +35,13 @@ flipt.yaml ──▶ Vite Plugin ──▶ import.meta.env.FEATURE_* ──▶ D
 ```
 
 **Use for:**
+
 - Features that are definitively on/off per environment
 - Large feature modules you want to exclude from bundles
 - Environment-specific functionality
 
 **Benefits:**
+
 - Disabled code is completely removed from production bundle
 - No runtime overhead
 - Changes tracked in Git history
@@ -54,6 +56,7 @@ React App ← HTTP → Cloudflare Worker ← KV → Cloudflare Dashboard/Wrangle
 ```
 
 **Use for:**
+
 - Emergency kill switches
 - A/B testing and gradual rollouts
 - Features that need instant toggling without rebuild
@@ -116,7 +119,7 @@ environments:
    - Rate limiting: 100 requests/minute per IP
    - Multi-layer caching (CDN + KV)
 
-2. **React Context** (`src/state/contexts/FeatureFlagContext.tsx`)
+4. **React Context** (`src/state/contexts/FeatureFlagContext.tsx`)
    - `FeatureFlagProvider` - Wraps app to provide flag state
    - `useFeatureFlags()` - Access full flag state and metadata
    - `useFeatureFlag(feature)` - Check if specific feature is enabled
@@ -124,7 +127,7 @@ environments:
    - localStorage caching (1 minute TTL)
    - Automatic refetch every 1 minute
 
-3. **TypeScript Types** (`src/types/featureFlags.ts`)
+5. **TypeScript Types** (`src/types/featureFlags.ts`)
    - Shared types between Worker and React app
    - Type-safe flag definitions
 
@@ -330,6 +333,7 @@ const showDarkModeToggle: boolean = import.meta.env.FEATURE_DARK_MODE_TOGGLE;
 ```
 
 **Important:** Build-time flags are resolved during `npm run build`. To see changes:
+
 1. Update `flipt.yaml`
 2. Run `npm run build` (or restart dev server)
 

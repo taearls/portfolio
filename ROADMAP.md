@@ -547,7 +547,7 @@ Delivered a complete GitOps-style feature flag system with build-time tree shaki
 - `vite.config.mts` - Added feature flags plugin
 - `tsconfig.node.json` - Added scripts directory
 - `package.json` - Added CLI scripts and tsx dependency
-- `src/vite-env.d.ts` - Added FEATURE_* type definitions
+- `src/vite-env.d.ts` - Added FEATURE\_\* type definitions
 - `docs/FEATURE_FLAGS.md` - Updated with GitOps documentation
 
 **Technical Highlights**:
