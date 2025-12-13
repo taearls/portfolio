@@ -72,7 +72,7 @@ build_time_flags:
     enabled: true
     description: "Email contact form with Postmark integration"
 
-  dark_mode:
+  dark_mode_toggle:
     enabled: true
     description: "Dark mode toggle in navigation"
 
@@ -326,7 +326,7 @@ const ContactForm = import.meta.env.FEATURE_EMAIL_CONTACT_FORM
   : () => null;
 
 // Type-safe access (defined in src/vite-env.d.ts)
-const showDarkMode: boolean = import.meta.env.FEATURE_DARK_MODE;
+const showDarkModeToggle: boolean = import.meta.env.FEATURE_DARK_MODE_TOGGLE;
 ```
 
 **Important:** Build-time flags are resolved during `npm run build`. To see changes:

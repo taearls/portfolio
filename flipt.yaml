@@ -28,8 +28,8 @@ build_time_flags:
     description: "Email contact form with Postmark integration"
     # When disabled, ContactEmailForm component is not bundled
 
-  # Dark mode feature - always enabled
-  dark_mode:
+  # Dark mode toggle feature - always enabled
+  dark_mode_toggle:
     enabled: true
     description: "Dark mode toggle in navigation"
 
@@ -50,7 +50,7 @@ environments:
     build_time_flags:
       email_contact_form:
         enabled: true
-      dark_mode:
+      dark_mode_toggle:
         enabled: true
     runtime_flags:
       email_contact_form:
@@ -60,7 +60,7 @@ environments:
     build_time_flags:
       email_contact_form:
         enabled: true
-      dark_mode:
+      dark_mode_toggle:
         enabled: true
     runtime_flags:
       email_contact_form:
