@@ -1,5 +1,9 @@
 /**
  * Integration tests for Feature Flags functionality
+ *
+ * This test suite covers both:
+ * - Runtime flags: Fetched from Cloudflare Worker API, cached in localStorage
+ * - Build-time flags: Resolved from flipt.yaml at build time, injected as import.meta.env.FEATURE_*
  */
 
 import type { FeatureFlags } from "../../src/types/featureFlags.ts";
@@ -12,7 +16,78 @@ describe("Feature Flags Integration", () => {
     cy.clearLocalStorage();
   });
 
-  describe("Feature flag loading", () => {
+  describe("Build-time flags (GitOps)", () => {
+    /**
+     * Build-time flags are resolved during `npm run build` from flipt.yaml.
+     * They're injected as import.meta.env.FEATURE_* constants.
+     * Since these tests run against a built app, we verify the flags are working.
+     */
+
+    it("should have build-time feature flags enabled (from flipt.yaml)", () => {
+      // Visit any page to load the app
+      cy.visit("/");
+
+      // Verify the app loaded successfully - this confirms build-time flags
+      // didn't break the build process
+      cy.get("header").should("be.visible");
+
+      // The dark mode toggle should be visible since FEATURE_DARK_MODE_TOGGLE is true
+      cy.get('button[aria-label*="mode"]').should("exist");
+    });
+
+    it("should include contact form code when build-time flag is enabled", () => {
+      // When FEATURE_EMAIL_CONTACT_FORM is true at build time,
+      // the ContactEmailForm component is included in the bundle
+      cy.visit("/contact");
+
+      // The contact section should exist (code was included in bundle)
+      cy.get("main").should("exist");
+
+      // Mock runtime flag to ensure form shows
+      cy.intercept("GET", FEATURE_FLAGS_API_URL, {
+        statusCode: 200,
+        body: {
+          "email-contact-form": { enabled: true },
+        } as FeatureFlags,
+      }).as("getFlags");
+
+      // Reload to apply mock
+      cy.visit("/contact");
+      cy.wait("@getFlags");
+
+      // Contact form should be present (build-time flag included the code,
+      // runtime flag enabled it)
+      cy.get("#contact-email-form").should("exist");
+    });
+
+    it("should allow runtime flag to disable a build-time enabled feature", () => {
+      // This tests the "emergency kill switch" pattern:
+      // - Build-time flag FEATURE_EMAIL_CONTACT_FORM is true (code is in bundle)
+      // - Runtime flag can still disable it without a rebuild
+
+      // Mock runtime flag as disabled
+      cy.intercept("GET", FEATURE_FLAGS_API_URL, {
+        statusCode: 200,
+        body: {
+          "email-contact-form": {
+            enabled: false,
+            message: "Contact form temporarily disabled",
+          },
+        } as FeatureFlags,
+      }).as("getFlags");
+
+      cy.visit("/contact");
+      cy.wait("@getFlags");
+
+      // Contact form should NOT be visible (runtime flag disabled it)
+      cy.get("#contact-email-form").should("not.exist");
+
+      // Disabled message should be shown
+      cy.contains("Contact form temporarily disabled").should("exist");
+    });
+  });
+
+  describe("Runtime flags - Loading (Cloudflare Worker)", () => {
     // TODO: Fix CI environment variable handling - this test passes locally but fails in CI
     // The test requires VITE_FEATURE_FLAGS_API_URL to be set at build time, not runtime
     it.skip("should fetch and display feature flags on app load", () => {
@@ -117,7 +192,7 @@ describe("Feature Flags Integration", () => {
     });
   });
 
-  describe("Contact form flag behavior", () => {
+  describe("Runtime flags - Contact form behavior", () => {
     it("should respect contact form enabled flag", () => {
       const mockFlags: FeatureFlags = {
         "email-contact-form": {
@@ -170,7 +245,7 @@ describe("Feature Flags Integration", () => {
     });
   });
 
-  describe("Cache behavior", () => {
+  describe("Runtime flags - Cache behavior", () => {
     it("should expire cache after TTL", () => {
       const oldTimestamp = Date.now() - 120000; // 2 minutes ago (expired)
       const cachedFlags: FeatureFlags = {
@@ -212,7 +287,7 @@ describe("Feature Flags Integration", () => {
     });
   });
 
-  describe("CORS and security", () => {
+  describe("Runtime flags - CORS and security", () => {
     it("should send correct headers when fetching flags", () => {
       cy.intercept("GET", FEATURE_FLAGS_API_URL, (req) => {
         expect(req.headers["accept"]).to.equal("application/json");
