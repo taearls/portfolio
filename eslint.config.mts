@@ -6,11 +6,10 @@ import { flatConfigs as eslintPluginImportFlatConfigs } from "eslint-plugin-impo
 import eslintPluginReact from "eslint-plugin-react";
 import eslintPluginReactHooks from "eslint-plugin-react-hooks";
 import eslintPluginReactRefresh from "eslint-plugin-react-refresh";
-import { defineConfig } from "eslint/config";
 import globals from "globals";
 import typescriptEslint from "typescript-eslint";
 
-const config = defineConfig([
+const config = typescriptEslint.config(
   { files: ["**/*.{js,mjs,cjs,ts,mts,jsx,tsx}"] },
   {
     ignores: [
@@ -19,7 +18,6 @@ const config = defineConfig([
       "node_modules",
       "prettier.config.mjs",
       "**/.wrangler/**",
-      "packages/feature-flags/.wrangler/**",
     ],
   },
   {
@@ -149,6 +147,6 @@ const config = defineConfig([
       ],
     },
   },
-]);
+);
 
 export default config;
