@@ -55,6 +55,8 @@ jobs:
         run: npm run test:integration
         env:
           VITE_FEATURE_FLAGS_API_URL: http://localhost:8787/api/flags
+          VITE_CONTACT_FORM_API_URL: http://localhost:8788/api/contact
+          VITE_TURNSTILE_SITE_KEY: 1x00000000000000000000AA
 
   build:
     name: Build

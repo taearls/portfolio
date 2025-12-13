@@ -2,11 +2,6 @@ import { Cloudinary } from "@cloudinary/url-gen";
 
 export const WEBSITE_EMAIL = "tyler.a.earls@gmail.com";
 
-export const EMAIL_REGEX = new RegExp(
-  "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$",
-  "gi",
-);
-
 export const IMAGE_GROUPS = {
   harmonica: 2,
   joy: 5,

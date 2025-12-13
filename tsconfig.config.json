@@ -1,0 +1,7 @@
+{
+  "extends": "@tsconfig/node22/tsconfig.json",
+  "include": ["eslint.config.mts", "prettier.config.mjs"],
+  "compilerOptions": {
+    "noEmit": true
+  }
+}
