@@ -123,13 +123,6 @@ describe("Contact Form Integration", () => {
         body: mockFlags,
       }).as("getFlags");
 
-      // Mock Turnstile - in a real test this would be handled differently
-      // For now, we'll stub the endpoint
-      cy.intercept("POST", "https://challenges.cloudflare.com/**", {
-        statusCode: 200,
-        body: { success: true },
-      }).as("turnstileVerify");
-
       cy.visit("/contact");
       cy.wait("@getFlags");
     });
@@ -140,15 +133,27 @@ describe("Contact Form Integration", () => {
         body: { success: true, message: "Message sent successfully" },
       }).as("submitForm");
 
-      cy.get("#contactName").type("John Doe");
-      cy.get("#contactEmail").type("john@example.com");
-      cy.get("#contactMessage").type("Hello, this is a test message!");
+      // Fill out the form
+      cy.fillContactForm({
+        name: "John Doe",
+        email: "john@example.com",
+        message: "Hello, this is a test message!",
+      });
 
-      // Note: In real tests, Turnstile widget would need to be handled
-      // This test documents the expected behavior
+      // Wait for Turnstile to complete (uses test key that auto-passes)
+      cy.waitForFormReady();
 
-      // The form will be disabled until Turnstile passes
-      // For CI, we would need to use Turnstile's testing keys
+      // Submit the form
+      cy.get('button[type="submit"]').click();
+
+      // Wait for API call and verify success
+      cy.wait("@submitForm");
+      cy.contains("Message sent successfully").should("be.visible");
+
+      // Form should be reset after successful submission
+      cy.get("#contactName").should("have.value", "");
+      cy.get("#contactEmail").should("have.value", "");
+      cy.get("#contactMessage").should("have.value", "");
     });
 
     it("shows error on server failure", () => {
@@ -157,13 +162,20 @@ describe("Contact Form Integration", () => {
         body: { success: false, error: "Failed to send message" },
       }).as("submitForm");
 
-      // Fill out form (Turnstile would need to pass first in real scenario)
-      cy.get("#contactName").type("John Doe");
-      cy.get("#contactEmail").type("john@example.com");
-      cy.get("#contactMessage").type("Hello!");
+      // Fill out the form
+      cy.fillContactForm({
+        name: "John Doe",
+        email: "john@example.com",
+        message: "Hello!",
+      });
 
-      // Note: Cannot complete submission without Turnstile token
-      // This documents the expected error handling behavior
+      // Wait for Turnstile and submit
+      cy.waitForFormReady();
+      cy.get('button[type="submit"]').click();
+
+      // Wait for API call and verify error is shown
+      cy.wait("@submitForm");
+      cy.contains("Failed to send message").should("be.visible");
     });
 
     it("shows rate limit error", () => {
@@ -172,8 +184,44 @@ describe("Contact Form Integration", () => {
         body: { success: false, error: "Rate limited", retryAfter: 3600 },
       }).as("submitForm");
 
-      // Note: Rate limit error would be shown after form submission
-      // This documents the expected behavior
+      // Fill out the form
+      cy.fillContactForm({
+        name: "Jane Doe",
+        email: "jane@example.com",
+        message: "Please respond!",
+      });
+
+      // Wait for Turnstile and submit
+      cy.waitForFormReady();
+      cy.get('button[type="submit"]').click();
+
+      // Wait for API call and verify rate limit error
+      cy.wait("@submitForm");
+      cy.contains("Rate limited").should("be.visible");
+    });
+
+    it("shows loading state while submitting", () => {
+      // Delay the response to observe loading state
+      cy.intercept("POST", CONTACT_API_URL, {
+        delay: 500,
+        statusCode: 200,
+        body: { success: true, message: "Message sent successfully" },
+      }).as("submitForm");
+
+      cy.fillContactForm({
+        name: "Test User",
+        email: "test@example.com",
+        message: "Testing loading state",
+      });
+
+      cy.waitForFormReady();
+      cy.get('button[type="submit"]').click();
+
+      // Button should show loading state
+      cy.get('button[type="submit"]').should("be.disabled");
+      cy.contains("Sending").should("be.visible");
+
+      cy.wait("@submitForm");
     });
   });
 
@@ -219,6 +267,157 @@ describe("Contact Form Integration", () => {
     });
   });
 
+  describe("Turnstile Widget", () => {
+    beforeEach(() => {
+      const mockFlags: FeatureFlags = {
+        "email-contact-form": {
+          enabled: true,
+        },
+      };
+
+      cy.intercept("GET", FEATURE_FLAGS_API_URL, {
+        statusCode: 200,
+        body: mockFlags,
+      }).as("getFlags");
+
+      cy.visit("/contact");
+      cy.wait("@getFlags");
+    });
+
+    it("renders Turnstile widget", () => {
+      // Turnstile widget should be rendered as an iframe
+      cy.get('iframe[src*="turnstile"]', { timeout: 10000 }).should("exist");
+    });
+
+    it("disables submit button until Turnstile passes", () => {
+      // Initially, submit button should be disabled (no Turnstile token yet)
+      cy.get('button[type="submit"]').should("be.disabled");
+
+      // After Turnstile auto-passes with test key, button should enable
+      cy.waitForTurnstile();
+      cy.get('button[type="submit"]').should("not.be.disabled");
+    });
+
+    it("resets Turnstile after successful submission", () => {
+      cy.intercept("POST", CONTACT_API_URL, {
+        statusCode: 200,
+        body: { success: true, message: "Message sent successfully" },
+      }).as("submitForm");
+
+      // Fill form and submit
+      cy.fillContactForm({
+        name: "Test User",
+        email: "test@example.com",
+        message: "Testing Turnstile reset",
+      });
+      cy.waitForFormReady();
+      cy.get('button[type="submit"]').click();
+
+      cy.wait("@submitForm");
+
+      // After success, form resets and Turnstile should re-render
+      cy.get('iframe[src*="turnstile"]', { timeout: 10000 }).should("exist");
+    });
+  });
+
+  describe("Error Handling", () => {
+    beforeEach(() => {
+      const mockFlags: FeatureFlags = {
+        "email-contact-form": {
+          enabled: true,
+        },
+      };
+
+      cy.intercept("GET", FEATURE_FLAGS_API_URL, {
+        statusCode: 200,
+        body: mockFlags,
+      }).as("getFlags");
+
+      cy.visit("/contact");
+      cy.wait("@getFlags");
+    });
+
+    it("handles network error gracefully", () => {
+      cy.intercept("POST", CONTACT_API_URL, {
+        forceNetworkError: true,
+      }).as("submitForm");
+
+      cy.fillContactForm({
+        name: "Test User",
+        email: "test@example.com",
+        message: "Testing network error",
+      });
+      cy.waitForFormReady();
+      cy.get('button[type="submit"]').click();
+
+      // Should show a user-friendly error message
+      cy.contains(/error|failed|try again/i, { timeout: 5000 }).should(
+        "be.visible",
+      );
+    });
+
+    it("handles validation errors from server", () => {
+      cy.intercept("POST", CONTACT_API_URL, {
+        statusCode: 400,
+        body: {
+          success: false,
+          error: "Validation failed",
+          details: ["Email is invalid"],
+        },
+      }).as("submitForm");
+
+      cy.fillContactForm({
+        name: "Test User",
+        email: "test@example.com",
+        message: "Testing validation error",
+      });
+      cy.waitForFormReady();
+      cy.get('button[type="submit"]').click();
+
+      cy.wait("@submitForm");
+      cy.contains(/validation failed|invalid/i).should("be.visible");
+    });
+
+    it("clears error message on retry", () => {
+      // First submission fails
+      cy.intercept("POST", CONTACT_API_URL, {
+        statusCode: 500,
+        body: { success: false, error: "Server error" },
+      }).as("submitFormFail");
+
+      cy.fillContactForm({
+        name: "Test User",
+        email: "test@example.com",
+        message: "First attempt",
+      });
+      cy.waitForFormReady();
+      cy.get('button[type="submit"]').click();
+
+      cy.wait("@submitFormFail");
+      cy.contains("Server error").should("be.visible");
+
+      // Second submission succeeds
+      cy.intercept("POST", CONTACT_API_URL, {
+        statusCode: 200,
+        body: { success: true, message: "Message sent successfully" },
+      }).as("submitFormSuccess");
+
+      // Re-fill form (it may have been partially reset)
+      cy.fillContactForm({
+        name: "Test User",
+        email: "test@example.com",
+        message: "Second attempt",
+      });
+      cy.waitForFormReady();
+      cy.get('button[type="submit"]').click();
+
+      cy.wait("@submitFormSuccess");
+      // Error should be cleared and success shown
+      cy.contains("Server error").should("not.exist");
+      cy.contains("Message sent successfully").should("be.visible");
+    });
+  });
+
   describe("Dark Mode Support", () => {
     beforeEach(() => {
       const mockFlags: FeatureFlags = {
@@ -236,12 +435,36 @@ describe("Contact Form Integration", () => {
       cy.wait("@getFlags");
     });
 
-    it("form is visible in both light and dark modes", () => {
-      // Light mode (default)
+    it("form is visible in light mode", () => {
       cy.get("#contact-email-form").should("be.visible");
+      cy.get("#contactName").should("be.visible");
+      cy.get("#contactEmail").should("be.visible");
+      cy.get("#contactMessage").should("be.visible");
+    });
 
-      // Toggle to dark mode (assuming there's a theme toggle)
-      // This test documents that the form should be visible in both modes
+    it("form is visible in dark mode", () => {
+      // Click the theme toggle to switch to dark mode
+      cy.get('[aria-label="Toggle theme"]').click();
+
+      // Verify dark mode is active (body or html should have dark class)
+      cy.get("html").should("have.class", "dark");
+
+      // Form should still be visible
+      cy.get("#contact-email-form").should("be.visible");
+      cy.get("#contactName").should("be.visible");
+      cy.get("#contactEmail").should("be.visible");
+      cy.get("#contactMessage").should("be.visible");
+    });
+
+    it("maintains functionality in dark mode", () => {
+      // Switch to dark mode
+      cy.get('[aria-label="Toggle theme"]').click();
+      cy.get("html").should("have.class", "dark");
+
+      // Test form validation still works
+      cy.get("#contactEmail").type("invalid-email");
+      cy.get("#contactEmail").blur();
+      cy.contains("Please enter a valid email").should("be.visible");
     });
   });
 

@@ -8,6 +8,8 @@
  * - Postmark email delivery
  */
 
+import { EMAIL_REGEX } from "@portfolio/shared-types";
+
 interface Env {
   RATE_LIMIT?: KVNamespace;
   ALLOWED_ORIGINS: string;
@@ -45,10 +47,6 @@ interface TurnstileVerifyResponse {
   challenge_ts?: string;
   hostname?: string;
 }
-
-// Email validation regex
-const EMAIL_REGEX =
-  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
 /**
  * Validate contact request body

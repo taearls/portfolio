@@ -1,5 +1,8 @@
 import type { WebProjectProps } from "@/components/WebProject/WebProject.tsx";
 
+// Re-export EMAIL_REGEX from shared-types for convenience
+export { EMAIL_REGEX } from "@portfolio/shared-types";
+
 export const WEB_PROJECTS: Array<Omit<WebProjectProps, "isLast">> = [
   {
     alt: "Image of Cuckoo and the Birds Website",
@@ -60,11 +63,6 @@ export const WEB_PROJECTS: Array<Omit<WebProjectProps, "isLast">> = [
 ];
 
 export const PORTFOLIO_EMAIL = "tyler.a.earls@gmail.com";
-
-export const EMAIL_REGEX = new RegExp(
-  "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$",
-  "gi",
-);
 
 export const BASE_URLS = {
   development: "http://localhost:8787",
