@@ -28,7 +28,12 @@
     "dev:contact": "npm run dev -w @portfolio/contact-form",
     "dev:all": "concurrently \"npm run dev\" \"npm run dev:flags\" \"npm run dev:contact\"",
     "deploy:flags": "npm run deploy -w @portfolio/feature-flags",
-    "deploy:contact": "npm run deploy -w @portfolio/contact-form"
+    "deploy:contact": "npm run deploy -w @portfolio/contact-form",
+    "flags:list": "npx tsx scripts/flags-cli.ts list",
+    "flags:enable": "npx tsx scripts/flags-cli.ts enable",
+    "flags:disable": "npx tsx scripts/flags-cli.ts disable",
+    "flags:sync": "npx tsx scripts/flags-cli.ts sync",
+    "flags:status": "npx tsx scripts/flags-cli.ts status"
   },
   "dependencies": {
     "@cloudinary/url-gen": "^1.22.0",
@@ -83,9 +88,11 @@
     "prettier-plugin-tailwindcss": "^0.6.14",
     "start-server-and-test": "^2.1.2",
     "tailwindcss": "^4.1.14",
+    "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.46.0",
     "vite": "^7.1.9",
-    "vitest": "^3.2.4"
+    "vitest": "^3.2.4",
+    "yaml": "^2.8.2"
   }
 }

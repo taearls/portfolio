@@ -1,10 +1,50 @@
 # Feature Flags Documentation
 
-This document describes the feature flag infrastructure for the portfolio website, powered by Cloudflare Workers + KV.
+This document describes the feature flag infrastructure for the portfolio website, featuring:
+
+- **GitOps workflow** - Flags managed via `flipt.yaml` in Git
+- **Build-time tree shaking** - Disabled features excluded from production bundles
+- **Runtime toggling** - Dynamic feature control via Cloudflare Workers + KV
+- **CLI management** - Simple commands to enable/disable flags
+
+## Quick Start
+
+```bash
+# List all flags
+npm run flags:list
+
+# Enable a flag
+npm run flags:enable contact_form
+
+# Disable a flag
+npm run flags:disable contact_form
+
+# Check status
+npm run flags:status
+```
 
 ## Architecture Overview
 
-The feature flag system uses a hybrid architecture:
+The feature flag system uses a hybrid architecture with two types of flags:
+
+### Build-time Flags (Tree-shakeable)
+
+```
+flipt.yaml ──▶ Vite Plugin ──▶ import.meta.env.FEATURE_* ──▶ Dead code elimination
+(Git-tracked)   (build time)    (static replacement)         (bundle optimization)
+```
+
+**Use for:**
+- Features that are definitively on/off per environment
+- Large feature modules you want to exclude from bundles
+- Environment-specific functionality
+
+**Benefits:**
+- Disabled code is completely removed from production bundle
+- No runtime overhead
+- Changes tracked in Git history
+
+### Runtime Flags (Dynamic)
 
 ```
 React App ← HTTP → Cloudflare Worker ← KV → Cloudflare Dashboard/Wrangler
@@ -13,9 +53,63 @@ React App ← HTTP → Cloudflare Worker ← KV → Cloudflare Dashboard/Wrangle
       (1min TTL)
 ```
 
+**Use for:**
+- Emergency kill switches
+- A/B testing and gradual rollouts
+- Features that need instant toggling without rebuild
+
+### Configuration File (`flipt.yaml`)
+
+The `flipt.yaml` file at the project root defines all feature flags:
+
+```yaml
+version: "1.0"
+namespace: portfolio
+
+# Build-time flags - resolved at build, tree-shakeable
+build_time_flags:
+  contact_form:
+    enabled: true
+    description: "Email contact form with Postmark integration"
+
+  dark_mode:
+    enabled: true
+    description: "Dark mode toggle in navigation"
+
+# Runtime flags - evaluated at runtime via Worker API
+runtime_flags:
+  email_contact_form:
+    enabled: true
+    description: "Runtime toggle for contact form (emergency kill switch)"
+    message: null
+
+# Environment-specific overrides
+environments:
+  development:
+    build_time_flags:
+      contact_form:
+        enabled: true
+  production:
+    build_time_flags:
+      contact_form:
+        enabled: true
+```
+
 ### Components
 
-1. **Cloudflare Worker** (`workers/feature-flags/`)
+1. **Vite Plugin** (`scripts/vite-plugin-feature-flags.ts`)
+   - Reads `flipt.yaml` at build time
+   - Injects flags as `import.meta.env.FEATURE_*` constants
+   - Enables Rollup to tree-shake disabled feature code
+
+2. **CLI Scripts** (`scripts/flags-cli.ts`)
+   - `npm run flags:list` - List all flags
+   - `npm run flags:enable <flag>` - Enable a flag
+   - `npm run flags:disable <flag>` - Disable a flag
+   - `npm run flags:sync` - Show Worker sync commands
+   - `npm run flags:status` - Show flag summary
+
+3. **Cloudflare Worker** (`packages/feature-flags/`)
    - REST API for feature flags
    - GET `/api/flags` - Public endpoint to fetch flags
    - PUT `/api/flags` - Admin endpoint to update flags (requires API key)
@@ -216,7 +310,34 @@ To toggle a flag via GitHub:
 
 ## Usage in React Components
 
-### Basic Usage
+### Build-time Flags (Tree-shakeable)
+
+Use `import.meta.env.FEATURE_*` for code that should be eliminated when disabled:
+
+```tsx
+// Conditional rendering - entire block removed if flag is false
+if (import.meta.env.FEATURE_CONTACT_FORM) {
+  return <ContactEmailForm />;
+}
+
+// Conditional lazy loading - import not included if flag is false
+const ContactForm = import.meta.env.FEATURE_CONTACT_FORM
+  ? lazy(() => import("@/components/ContactEmailForm.tsx"))
+  : () => null;
+
+// Type-safe access (defined in src/vite-env.d.ts)
+const showDarkMode: boolean = import.meta.env.FEATURE_DARK_MODE;
+```
+
+**Important:** Build-time flags are resolved during `npm run build`. To see changes:
+1. Update `flipt.yaml`
+2. Run `npm run build` (or restart dev server)
+
+### Runtime Flags (Dynamic)
+
+Use runtime flags for features that need instant toggling without rebuild:
+
+#### Basic Usage
 
 ```tsx
 import { useFeatureFlag } from "@/state/contexts/FeatureFlagContext";

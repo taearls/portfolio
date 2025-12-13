@@ -2,9 +2,9 @@
 
 ## Executive Summary
 
-This roadmap outlines the development plan for Tyler Earls' portfolio website, focusing on performance optimization, modern React tooling, and enhanced user experience. The project has **completed Phase 5 (React Compiler Integration)** and **Phase 6 (CI/CD setup)**, and is now working through **Phase 7 (UI/UX Enhancements)** with 7 open issues.
+This roadmap outlines the development plan for Tyler Earls' portfolio website, focusing on performance optimization, modern React tooling, and enhanced user experience. The project has **completed Phase 5 (React Compiler Integration)**, **Phase 6 (CI/CD setup)**, and **Phase 8 (GitOps Feature Flags)**, with 7 open low-priority issues remaining.
 
-**Current Focus**: Contact form (#14) complete! Feature flag infrastructure (#72) and performance optimization sprint done with #61, #62, #63, #11, and #27. Phase 7 core features complete!
+**Current Focus**: GitOps feature flags (#80) complete! Build-time tree shaking now eliminates disabled feature code from bundles. CLI management via `npm run flags:*` commands.
 
 ---
 
@@ -21,7 +21,7 @@ This roadmap outlines the development plan for Tyler Earls' portfolio website, f
 
 ## Open Issues Summary
 
-### Priority Breakdown (7 Total - 7 Completed)
+### Priority Breakdown (7 Open Issues)
 
 #### 🔴 Critical Priority (0 issues)
 
@@ -30,6 +30,8 @@ This roadmap outlines the development plan for Tyler Earls' portfolio website, f
 #### 🟡 High Priority (0 issues)
 
 **Previously Completed:**
+
+✅ **#80** - Integrate Flipt for GitOps Feature Flags with Build-time Tree Shaking - **COMPLETED Dec 13, 2025**
 
 ✅ **#72** - Implement Feature Flag Infrastructure with Cloudflare Workers + KV - **COMPLETED Nov 24, 2025**
 
@@ -135,7 +137,28 @@ _Successfully migrated to TailwindCSS v4 with modern config_
 - #15: Enhanced project filtering/search
 - #13: Updated project descriptions
 
-### Phase 8: Research & Experimentation 🔬 (Ongoing)
+### Phase 8: GitOps Feature Flags ✅ (Completed - Dec 13, 2025)
+
+**Goal**: Implement GitOps-style feature flag management with build-time tree shaking.
+
+**Timeline**: Completed Dec 13, 2025
+
+**Key Achievements**:
+
+1. ✅ Created `flipt.yaml` configuration file (Git-tracked flags)
+2. ✅ Built Vite plugin for build-time flag resolution
+3. ✅ Implemented `import.meta.env.FEATURE_*` pattern for tree-shaking
+4. ✅ Added CLI scripts (`npm run flags:*`)
+5. ✅ Updated documentation with GitOps workflow
+
+**Benefits Delivered**:
+
+- GitOps workflow - flags managed via Git commits
+- Build-time tree shaking - disabled features excluded from bundles
+- CLI management - `npm run flags:list`, `flags:enable`, `flags:disable`
+- Type-safe flags - `import.meta.env.FEATURE_*` with TypeScript support
+
+### Phase 9: Research & Experimentation 🔬 (Ongoing)
 
 **Goal**: Evaluate new tools and workflows.
 
@@ -477,6 +500,85 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 ---
 
 ## Changelog
+
+### 2025-12-13 - Issue #80 Completed: GitOps Feature Flags with Build-time Tree Shaking
+
+- **Completed**: #80 - Integrate Flipt for GitOps Feature Flags with Build-time Tree Shaking
+- **Priority**: 🟡 HIGH
+- **Status**: Completed Dec 13, 2025
+- **Effort**: ~4 hours (actual)
+- **Impact**: GitOps workflow, CLI flag management, bundle size optimization
+
+**Implementation Summary**:
+
+Delivered a complete GitOps-style feature flag system with build-time tree shaking:
+
+1. **Flipt Configuration** (`flipt.yaml`)
+   - Git-tracked feature flag configuration
+   - Build-time flags for tree-shakeable code
+   - Runtime flags for dynamic toggling
+   - Environment-specific overrides
+
+2. **Vite Plugin** (`scripts/vite-plugin-feature-flags.ts`)
+   - Reads `flipt.yaml` at build time
+   - Injects flags as `import.meta.env.FEATURE_*` constants
+   - Enables Rollup dead-code elimination
+   - Environment-aware flag resolution
+
+3. **CLI Scripts** (`scripts/flags-cli.ts`)
+   - `npm run flags:list` - List all flags with status
+   - `npm run flags:enable <flag>` - Enable a flag
+   - `npm run flags:disable <flag>` - Disable a flag
+   - `npm run flags:sync` - Show Worker sync commands
+   - `npm run flags:status` - Show flag summary
+
+4. **TypeScript Support** (`src/vite-env.d.ts`)
+   - Type-safe `import.meta.env.FEATURE_*` access
+   - Build-time flag definitions
+
+**Files Created**:
+
+- `flipt.yaml` - Feature flag configuration
+- `scripts/vite-plugin-feature-flags.ts` - Vite plugin
+- `scripts/flags-cli.ts` - CLI management script
+
+**Files Modified**:
+
+- `vite.config.mts` - Added feature flags plugin
+- `tsconfig.node.json` - Added scripts directory
+- `package.json` - Added CLI scripts and tsx dependency
+- `src/vite-env.d.ts` - Added FEATURE_* type definitions
+- `docs/FEATURE_FLAGS.md` - Updated with GitOps documentation
+
+**Technical Highlights**:
+
+- **Build-time tree shaking**: Disabled features are completely removed from production bundle
+- **GitOps workflow**: Flag changes tracked in Git history, reviewed via PRs
+- **CLI-native**: Simple commands without Cloudflare Dashboard
+- **Type-safe**: Full TypeScript support for build-time flags
+- **Backward compatible**: Existing runtime flags and FeatureFlagWrapper unchanged
+
+**Usage**:
+
+```bash
+# List all flags
+npm run flags:list
+
+# Enable contact form
+npm run flags:enable contact_form
+
+# Build with flags (tree-shakes disabled features)
+npm run build
+```
+
+**Bundle Impact**:
+
+- Build-time flags: Zero runtime overhead, disabled code eliminated
+- Runtime flags: Unchanged (~5KB)
+
+**Phase 8 Complete**: GitOps Feature Flags infrastructure delivered
+
+---
 
 ### 2025-12-13 - Issue #77 Completed: Update React to Latest Version (19.2.3)
 
@@ -1266,6 +1368,6 @@ All high-priority accessibility issues (#61, #62, #63) have been resolved. Mediu
 
 ---
 
-**Last Updated**: December 13, 2025 (Issue #14 Complete - Contact Form with Postmark + Turnstile)
+**Last Updated**: December 13, 2025 (Issue #80 Complete - GitOps Feature Flags with Build-time Tree Shaking)
 **Maintained By**: Tyler Earls
 **Generated With**: Claude Code
