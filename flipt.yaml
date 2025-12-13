@@ -1,0 +1,67 @@
+# Flipt Feature Flag Configuration
+# GitOps - Flag changes are tracked in Git history
+#
+# This file defines feature flags for the portfolio website.
+# Flags can be:
+#   - Build-time: Resolved at build time for tree-shaking (eliminates disabled code)
+#   - Runtime: Evaluated at runtime for dynamic toggling
+#
+# Usage:
+#   Build-time: import.meta.env.FEATURE_<FLAG_KEY>
+#   Runtime: useFeatureFlags() hook
+#
+# CLI Commands:
+#   npm run flags:list      - List all flags and their states
+#   npm run flags:enable    - Enable a flag
+#   npm run flags:disable   - Disable a flag
+#   npm run flags:sync      - Sync flags to Cloudflare Worker
+
+version: "1.0"
+namespace: portfolio
+
+# Build-time flags - These are resolved at build time
+# Disabled features are completely eliminated from the bundle
+build_time_flags:
+  # Email contact form feature - controls whether contact form code is included
+  email_contact_form:
+    enabled: true
+    description: "Email contact form with Postmark integration"
+    # When disabled, ContactEmailForm component is not bundled
+
+  # Dark mode toggle feature - always enabled
+  dark_mode_toggle:
+    enabled: true
+    description: "Dark mode toggle in navigation"
+
+# Runtime flags - These are evaluated at runtime via Worker API
+# Used for features that need dynamic toggling without rebuild
+runtime_flags:
+  # Email contact form runtime toggle
+  # Even if build-time flag includes the code, this can disable at runtime
+  email_contact_form:
+    enabled: true
+    description: "Runtime toggle for contact form (emergency kill switch)"
+    message: null
+
+# Environment overrides
+# These override flag values per environment
+environments:
+  development:
+    build_time_flags:
+      email_contact_form:
+        enabled: true
+      dark_mode_toggle:
+        enabled: true
+    runtime_flags:
+      email_contact_form:
+        enabled: true
+
+  production:
+    build_time_flags:
+      email_contact_form:
+        enabled: true
+      dark_mode_toggle:
+        enabled: true
+    runtime_flags:
+      email_contact_form:
+        enabled: true

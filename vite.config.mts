@@ -7,6 +7,8 @@ import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 
+import { featureFlagsPlugin } from "./scripts/vite-plugin-feature-flags.ts";
+
 export type ViteConfigInput = {
   mode: "development" | "production";
 };
@@ -35,6 +37,12 @@ export default (args: ViteConfigInput) => {
     },
     logLevel: args.mode === "development" ? "warn" : "silent",
     plugins: [
+      // Feature flags plugin - injects build-time flags for tree-shaking
+      featureFlagsPlugin({
+        configPath: "./flipt.yaml",
+        prefix: "FEATURE_",
+        verbose: args.mode === "development",
+      }),
       tailwindcss(),
       react({
         babel: {
