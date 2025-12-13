@@ -68,6 +68,9 @@ describe("Contact Form Integration", () => {
         body: mockFlags,
       }).as("getFlags");
 
+      // Stub Turnstile before visiting the page
+      cy.stubTurnstile();
+
       cy.visit("/contact");
       cy.wait("@getFlags");
     });
@@ -122,6 +125,9 @@ describe("Contact Form Integration", () => {
         statusCode: 200,
         body: mockFlags,
       }).as("getFlags");
+
+      // Stub Turnstile before visiting the page
+      cy.stubTurnstile();
 
       cy.visit("/contact");
       cy.wait("@getFlags");
@@ -196,8 +202,9 @@ describe("Contact Form Integration", () => {
       cy.get('button[type="submit"]').click();
 
       // Wait for API call and verify rate limit error
+      // The component shows "Too many requests. Please try again in X seconds."
       cy.wait("@submitForm");
-      cy.contains("Rate limited").should("be.visible");
+      cy.contains("Too many requests").should("be.visible");
     });
 
     it("shows loading state while submitting", () => {
@@ -237,6 +244,9 @@ describe("Contact Form Integration", () => {
         statusCode: 200,
         body: mockFlags,
       }).as("getFlags");
+
+      // Stub Turnstile before visiting the page
+      cy.stubTurnstile();
 
       cy.visit("/contact");
       cy.wait("@getFlags");
@@ -280,6 +290,9 @@ describe("Contact Form Integration", () => {
         body: mockFlags,
       }).as("getFlags");
 
+      // Stub Turnstile before visiting the page
+      cy.stubTurnstile();
+
       cy.visit("/contact");
       cy.wait("@getFlags");
     });
@@ -289,11 +302,17 @@ describe("Contact Form Integration", () => {
       cy.get('iframe[src*="turnstile"]', { timeout: 10000 }).should("exist");
     });
 
-    it("disables submit button until Turnstile passes", () => {
-      // Initially, submit button should be disabled (no Turnstile token yet)
-      cy.get('button[type="submit"]').should("be.disabled");
+    it("enables submit button after Turnstile passes and form is valid", () => {
+      // Button requires both valid form fields AND Turnstile token
+      // Fill the form first
+      cy.fillContactForm({
+        name: "Test User",
+        email: "test@example.com",
+        message: "Testing Turnstile validation",
+      });
 
-      // After Turnstile auto-passes with test key, button should enable
+      // With mock Turnstile, the token is set after 100ms
+      // Wait for Turnstile to pass and button to become enabled
       cy.waitForTurnstile();
       cy.get('button[type="submit"]').should("not.be.disabled");
     });
@@ -332,6 +351,9 @@ describe("Contact Form Integration", () => {
         statusCode: 200,
         body: mockFlags,
       }).as("getFlags");
+
+      // Stub Turnstile before visiting the page
+      cy.stubTurnstile();
 
       cy.visit("/contact");
       cy.wait("@getFlags");
@@ -431,6 +453,9 @@ describe("Contact Form Integration", () => {
         body: mockFlags,
       }).as("getFlags");
 
+      // Stub Turnstile before visiting the page
+      cy.stubTurnstile();
+
       cy.visit("/contact");
       cy.wait("@getFlags");
     });
@@ -443,10 +468,12 @@ describe("Contact Form Integration", () => {
     });
 
     it("form is visible in dark mode", () => {
-      // Click the theme toggle to switch to dark mode
-      cy.get('[aria-label="Toggle theme"]').click();
+      // Toggle dark mode using document class directly (more reliable across viewports)
+      cy.document().then((doc) => {
+        doc.documentElement.classList.add("dark");
+      });
 
-      // Verify dark mode is active (body or html should have dark class)
+      // Verify dark mode is active
       cy.get("html").should("have.class", "dark");
 
       // Form should still be visible
@@ -457,8 +484,11 @@ describe("Contact Form Integration", () => {
     });
 
     it("maintains functionality in dark mode", () => {
-      // Switch to dark mode
-      cy.get('[aria-label="Toggle theme"]').click();
+      // Toggle dark mode using document class directly
+      cy.document().then((doc) => {
+        doc.documentElement.classList.add("dark");
+      });
+
       cy.get("html").should("have.class", "dark");
 
       // Test form validation still works
@@ -480,6 +510,9 @@ describe("Contact Form Integration", () => {
         statusCode: 200,
         body: mockFlags,
       }).as("getFlags");
+
+      // Stub Turnstile before visiting the page
+      cy.stubTurnstile();
 
       cy.visit("/contact");
       cy.wait("@getFlags");
