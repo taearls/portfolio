@@ -14,10 +14,10 @@ This document describes the feature flag infrastructure for the portfolio websit
 npm run flags:list
 
 # Enable a flag
-npm run flags:enable contact_form
+npm run flags:enable email_contact_form
 
 # Disable a flag
-npm run flags:disable contact_form
+npm run flags:disable email_contact_form
 
 # Check status
 npm run flags:status
@@ -68,7 +68,7 @@ namespace: portfolio
 
 # Build-time flags - resolved at build, tree-shakeable
 build_time_flags:
-  contact_form:
+  email_contact_form:
     enabled: true
     description: "Email contact form with Postmark integration"
 
@@ -87,11 +87,11 @@ runtime_flags:
 environments:
   development:
     build_time_flags:
-      contact_form:
+      email_contact_form:
         enabled: true
   production:
     build_time_flags:
-      contact_form:
+      email_contact_form:
         enabled: true
 ```
 
@@ -316,12 +316,12 @@ Use `import.meta.env.FEATURE_*` for code that should be eliminated when disabled
 
 ```tsx
 // Conditional rendering - entire block removed if flag is false
-if (import.meta.env.FEATURE_CONTACT_FORM) {
+if (import.meta.env.FEATURE_EMAIL_CONTACT_FORM) {
   return <ContactEmailForm />;
 }
 
 // Conditional lazy loading - import not included if flag is false
-const ContactForm = import.meta.env.FEATURE_CONTACT_FORM
+const ContactForm = import.meta.env.FEATURE_EMAIL_CONTACT_FORM
   ? lazy(() => import("@/components/ContactEmailForm.tsx"))
   : () => null;
 

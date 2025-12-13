@@ -564,8 +564,8 @@ Delivered a complete GitOps-style feature flag system with build-time tree shaki
 # List all flags
 npm run flags:list
 
-# Enable contact form
-npm run flags:enable contact_form
+# Enable email contact form
+npm run flags:enable email_contact_form
 
 # Build with flags (tree-shakes disabled features)
 npm run build

@@ -22,8 +22,8 @@ namespace: portfolio
 # Build-time flags - These are resolved at build time
 # Disabled features are completely eliminated from the bundle
 build_time_flags:
-  # Contact form feature - controls whether contact form code is included
-  contact_form:
+  # Email contact form feature - controls whether contact form code is included
+  email_contact_form:
     enabled: true
     description: "Email contact form with Postmark integration"
     # When disabled, ContactEmailForm component is not bundled
@@ -48,7 +48,7 @@ runtime_flags:
 environments:
   development:
     build_time_flags:
-      contact_form:
+      email_contact_form:
         enabled: true
       dark_mode:
         enabled: true
@@ -58,7 +58,7 @@ environments:
 
   production:
     build_time_flags:
-      contact_form:
+      email_contact_form:
         enabled: true
       dark_mode:
         enabled: true
