@@ -119,7 +119,6 @@ Cypress.Commands.overwrite(
         ...options,
         onBeforeLoad: (win) => {
           // Store callback for reset functionality
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           let lastCallback: ((token: string) => void) | undefined;
 
           // Inject the Turnstile mock before page scripts run

@@ -1,5 +1,5 @@
 name = "portfolio-feature-flags"
-main = "src/index.ts"
+main = "packages/feature-flags/src/index.ts"
 compatibility_date = "2024-11-28"
 
 [[kv_namespaces]]
