@@ -31,8 +31,11 @@ describe("Feature Flags Integration", () => {
       // didn't break the build process
       cy.get("header").should("be.visible");
 
-      // The dark mode toggle should be visible since FEATURE_DARK_MODE_TOGGLE is true
-      cy.get('button[aria-label*="mode"]').should("exist");
+      // The dark mode toggle icons should be visible since FEATURE_DARK_MODE_TOGGLE is true
+      // Check for either sun or moon icon (depending on current theme)
+      cy.get('[data-testid="sun-icon"], [data-testid="moon-icon"]').should(
+        "exist",
+      );
     });
 
     it("should include contact form code when build-time flag is enabled", () => {
