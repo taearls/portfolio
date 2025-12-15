@@ -148,12 +148,14 @@ _Successfully migrated to TailwindCSS v4 with modern config_
 **Timeline**: 2-3 weeks
 
 **Key Benefits**:
+
 - GitOps workflow - flags managed via Git commits and CLI
 - Build-time tree shaking - disabled features excluded from bundles
 - Reduced bundle size for disabled features
 - CLI-native flag management without Cloudflare Dashboard
 
 **Tasks**:
+
 - #80: Integrate Flipt for GitOps feature flags with build-time tree shaking
 
 ### Phase 9: Research & Experimentation 🔬 (Ongoing)
@@ -442,10 +444,10 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 
 ### Effort Distribution (Open Issues Only)
 
-| Effort Level  | Count | Issues                    |
-| ------------- | ----- | ------------------------- |
-| Small (< 2h)  | 4     | #13, #33, #34, #65        |
-| Medium (2-8h) | 2     | #64, #10                  |
+| Effort Level  | Count | Issues                          |
+| ------------- | ----- | ------------------------------- |
+| Small (< 2h)  | 4     | #13, #33, #34, #65              |
+| Medium (2-8h) | 2     | #64, #10                        |
 | Large (> 8h)  | 2     | #15 (1-2 days), #80 (2-3 weeks) |
 
 **Note**: New high-priority issue #80 (Flipt GitOps integration) added. Low priority and accessibility enhancements remain from Phase 7.
@@ -524,6 +526,7 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 **Why This Issue Matters**:
 
 The current Cloudflare Worker + KV feature flag system works well for runtime toggling, but has limitations:
+
 - Flag management requires Cloudflare Dashboard or manual wrangler CLI commands
 - No GitOps workflow (flags not tracked in Git)
 - Runtime-only evaluation means disabled feature code is still bundled
