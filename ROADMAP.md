@@ -27,7 +27,13 @@ This roadmap outlines the development plan for Tyler Earls' portfolio website, f
 
 ✅ **#61** - Fix Active Navigation Link Contrast (WCAG AA Failure) - **COMPLETED Nov 16, 2025**
 
-#### 🟡 High Priority (0 issues)
+#### 🟡 High Priority (1 issue)
+
+- **#80** - Integrate Flipt for GitOps feature flags with build-time tree shaking - _~2-3 weeks_
+  - **NEW** - Created Dec 13, 2025
+  - Enables CLI-based flag management without Cloudflare Dashboard
+  - Build-time tree shaking eliminates disabled feature code from bundles
+  - GitOps workflow with flag configuration tracked in Git
 
 **Previously Completed:**
 
@@ -294,19 +300,24 @@ _Successfully migrated to TailwindCSS v4 with modern config_
 
 **Next Up**:
 
-1. 🎯 **#72** - Implement Feature Flag Infrastructure with Cloudflare Workers + KV
-   - Effort: ~8-12 hours
-   - Impact: Runtime feature toggling without redeployment
-   - Phase: 7 (UI/UX Enhancements)
+1. 🎯 **#80** - Integrate Flipt for GitOps Feature Flags with Build-time Tree Shaking
+   - Effort: ~2-3 weeks
+   - Impact: GitOps workflow, CLI flag management, bundle size reduction
+   - Phase: 8 (Advanced Feature Flag Architecture)
    - Status: Ready to start
-   - Blocks: #14
+   - **NEW** - Created Dec 13, 2025
+   - Key features:
+     - Flipt server setup (self-hosted or cloud)
+     - Vite plugin for build-time flag resolution
+     - Tree shaking of disabled feature code
+     - Migration from current Cloudflare Worker approach
 
-2. 🎯 **#14** - Add Working Email Contact Form
-   - Effort: ~1-2 days
-   - Impact: User engagement
-   - Phase: 7 (UI/UX Enhancements)
-   - Status: Blocked by #72
-   - Requires: Feature flag infrastructure
+2. 🔵 **Low Priority Features** (As time permits)
+   - #10: Add Resume Page (~4-6 hours)
+   - #13: Update Web Projects - Descriptions (~1-2 hours)
+   - #15: Update Web Projects - Tags and Search (~1-2 days)
+   - #64: WCAG AAA Contrast Enhancement (~2-4 hours)
+   - #65: Font Size Readability (~1-2 hours)
 
 ---
 
@@ -342,14 +353,23 @@ Phase 7: Performance & UX ✅ CORE COMPLETE
 ├── ✅ #72 Feature Flags (8-12h) - COMPLETED - Runtime toggling infrastructure
 └── ✅ #14 Contact Form (1-2 days) - COMPLETED - Postmark + Turnstile + spam protection
 
-Phase 8: Research (Anytime)
+Phase 8: Advanced Feature Flag Architecture 🎯 NEXT
+└── #80 Flipt GitOps Integration (2-3 weeks)
+    ├── Phase 1: Flipt setup (2-3h)
+    ├── Phase 2: Build-time integration (2-3h)
+    ├── Phase 3: Runtime integration (2-3h)
+    └── Phase 4: Migration from Cloudflare Worker (1-2h)
+
+Phase 9: Research (Anytime)
 ├── #33 Graphite spike (1-2h)
 └── #34 CodeRabbit spike (1-2h)
 
 Phase 7: Low Priority (As time permits)
 ├── #10 Resume page (4-6h)
 ├── #13 Project descriptions (1-2h)
-└── #15 Project filtering (1-2 days)
+├── #15 Project filtering (1-2 days)
+├── #64 WCAG AAA contrast (2-4h)
+└── #65 Font size readability (1-2h)
 ```
 
 ### Implementation Strategy
@@ -413,16 +433,16 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 | Priority    | Open  | In Progress | Closed (This Sprint) | Total Open |
 | ----------- | ----- | ----------- | -------------------- | ---------- |
 | 🔴 Critical | 0     | 0           | 1                    | 0          |
-| 🟡 High     | 0     | 0           | 10                   | 0          |
+| 🟡 High     | 1     | 0           | 10                   | 1          |
 | 🟢 Medium   | 0     | 0           | 5                    | 0          |
 | 🔵 Low      | 7     | 0           | 0                    | 7          |
-| **TOTAL**   | **7** | **0**       | **16**               | **7**      |
+| **TOTAL**   | **8** | **0**       | **16**               | **8**      |
 
 ### Issues by Category
 
 **React Compiler** (0 open, 5 closed): Closed: #38 (epic), #39, #40, #41, #42, #43, #44
 **Bugs** (0 open, 1 closed): Closed: #51 (navigation header overflow)
-**Infrastructure** (0 open, 1 closed): Closed: #72 (feature flags)
+**Infrastructure** (1 open, 1 closed): Open: #80 (Flipt GitOps feature flags) | Closed: #72 (Cloudflare feature flags)
 **CI/CD** (0 open, 2 closed): Closed: #18 (GitHub Actions pipeline), #72 (feature flags)
 **Accessibility** (2 open, 3 closed): Open: #64, #65 | Closed: #61 (navigation contrast), #62 (touch targets), #63 (CLS mobile)
 **UI/UX** (3 open, 6 closed): Open: #10, #13, #15 | Closed: #58 (left-align text), #28 (React 19 Meta), #11 (SVG preload), #27 (lazy routes), #72 (feature flags), #14 (contact form)
@@ -430,13 +450,13 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 
 ### Effort Distribution (Open Issues Only)
 
-| Effort Level  | Count | Issues             |
-| ------------- | ----- | ------------------ |
-| Small (< 2h)  | 4     | #13, #33, #34, #65 |
-| Medium (2-8h) | 2     | #64, #10           |
-| Large (> 8h)  | 1     | #15 (1-2 days)     |
+| Effort Level  | Count | Issues                          |
+| ------------- | ----- | ------------------------------- |
+| Small (< 2h)  | 4     | #13, #33, #34, #65              |
+| Medium (2-8h) | 2     | #64, #10                        |
+| Large (> 8h)  | 2     | #15 (1-2 days), #80 (2-3 weeks) |
 
-**Note**: All medium and high priority issues complete. Only low priority and enhancements remain.
+**Note**: New high-priority issue #80 (Flipt GitOps integration) added. Low priority and accessibility enhancements remain from Phase 7.
 
 ---
 
