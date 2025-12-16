@@ -4,12 +4,34 @@ import InlineAnchor from "@/components/InlineAnchor/InlineAnchor.tsx";
 import FlexContainer from "@/components/layout/containers/FlexContainer/FlexContainer.tsx";
 import HeadingOne from "@/components/layout/headings/HeadingOne.tsx";
 import Paragraph from "@/components/layout/Paragraph/Paragraph.tsx";
+import { useFeatureFlags } from "@/hooks/useFeatureFlags.ts";
 import {
   AlignItemsCSSValue,
   FlexFlowCSSValue,
   JustifyContentCSSValue,
 } from "@/types/layout.ts";
 import { PORTFOLIO_EMAIL } from "@/util/constants.ts";
+
+/**
+ * Component to display when the contact form feature is disabled via runtime flag.
+ * This enables the "emergency kill switch" pattern - build-time flag includes the code,
+ * but runtime flag can still disable it without a rebuild.
+ */
+function ContactFormDisabledMessage() {
+  const { flags } = useFeatureFlags();
+  const flagConfig = flags["email-contact-form"];
+  const message = flagConfig?.message;
+
+  if (!message) {
+    return null;
+  }
+
+  return (
+    <FlexContainer justifyContent={JustifyContentCSSValue.CENTER}>
+      <Paragraph>{message}</Paragraph>
+    </FlexContainer>
+  );
+}
 
 export default function Contact() {
   return (
@@ -50,6 +72,7 @@ export default function Contact() {
       <FeatureFlagWrapper
         flagKey="email-contact-form"
         whenEnabled={<ContactEmailForm />}
+        whenDisabled={<ContactFormDisabledMessage />}
       />
     </main>
   );
