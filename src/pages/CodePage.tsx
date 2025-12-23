@@ -96,7 +96,6 @@ function ProjectsTab() {
             name={project.name}
             descriptions={project.descriptions}
             githubUrl={project.githubUrl}
-            language={project.language}
             tags={project.tags}
             isLast={isLast}
           />
@@ -122,7 +121,6 @@ function OpenSourceTab() {
           projectUrl={contribution.projectUrl}
           description={contribution.description}
           prCount={contribution.prCount}
-          language={contribution.language}
           highlights={contribution.highlights}
           tags={contribution.tags}
           isLast={isLast}

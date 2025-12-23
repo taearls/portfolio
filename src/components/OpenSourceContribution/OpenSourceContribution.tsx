@@ -16,7 +16,6 @@ export default function OpenSourceContribution({
   projectUrl,
   description,
   prCount,
-  language,
   highlights,
   tags,
   isLast,
@@ -40,9 +39,6 @@ export default function OpenSourceContribution({
       {/* Metadata lines */}
       <p className="text-secondary-text m-0 text-sm">
         {prCount} {prCount === 1 ? "PR" : "PRs"} merged
-      </p>
-      <p className="text-secondary-text m-0 text-sm">
-        Primary language: {language}
       </p>
       <p className="text-secondary-text m-0 text-sm">
         Tags: {tags.join(" · ")}

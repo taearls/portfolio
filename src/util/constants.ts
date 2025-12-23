@@ -83,7 +83,6 @@ export const OPEN_SOURCE_PROJECTS: Array<
       "Designed for high performance and type safety in production environments.",
     ],
     githubUrl: "https://github.com/taearls/email-service-rs",
-    language: "Rust",
     tags: ["Rust", "Postmark", "API"],
     lastModified: "2025-10-10",
   },
@@ -94,7 +93,6 @@ export const OPEN_SOURCE_PROJECTS: Array<
       "Built with Rust and deployed on Cloudflare's edge network for low-latency security enhancements.",
     ],
     githubUrl: "https://github.com/taearls/website-security-header-proxy",
-    language: "Rust",
     tags: ["Rust", "Cloudflare", "Security"],
     lastModified: "2025-04-26",
   },
@@ -105,7 +103,6 @@ export const OPEN_SOURCE_PROJECTS: Array<
       "Combines my passion for music with systems programming, providing a foundation for building music applications.",
     ],
     githubUrl: "https://github.com/taearls/audiate",
-    language: "Rust",
     tags: ["Rust", "Music Theory", "Library"],
     lastModified: "2022-11-24",
   },
@@ -123,7 +120,6 @@ export type OpenSourceContributionProps = {
   projectUrl: string;
   description: string;
   prCount: number;
-  language: string;
   highlights: Array<string>;
   tags: Array<string>;
   /** ISO date string of last merged PR (YYYY-MM-DD) */
@@ -137,7 +133,6 @@ export const OPEN_SOURCE_CONTRIBUTIONS: Array<OpenSourceContributionProps> = [
     description:
       "A high-performance JavaScript/TypeScript toolchain written in Rust, featuring a linter, parser, formatter, and more.",
     prCount: 16,
-    language: "Rust",
     highlights: [
       "Implemented multiple vitest linter rules (prefer-to-be, valid-title, no-standalone-expect, prefer-lowercase-title)",
       "Added import/extensions rule with comprehensive edge case handling",
@@ -153,7 +148,6 @@ export const OPEN_SOURCE_CONTRIBUTIONS: Array<OpenSourceContributionProps> = [
     description:
       "A fast Rust-based JavaScript bundler designed as a drop-in replacement for Rollup, built to power the next generation of Vite.",
     prCount: 1,
-    language: "Rust",
     highlights: ["Contributed to Rollup compatibility layer"],
     tags: ["Rust", "Bundler", "Vite"],
     lastModified: "2025-12-15",
@@ -164,7 +158,6 @@ export const OPEN_SOURCE_CONTRIBUTIONS: Array<OpenSourceContributionProps> = [
     description:
       "A full-stack Rust web framework for building fast, reactive web applications with fine-grained reactivity and SSR support.",
     prCount: 1,
-    language: "Rust",
     highlights: ["Fixed SSR/CSR rendering consistency"],
     tags: ["Rust", "Web Framework", "SSR"],
     lastModified: "2025-11-22",
@@ -175,7 +168,6 @@ export const OPEN_SOURCE_CONTRIBUTIONS: Array<OpenSourceContributionProps> = [
     description:
       "A modern shell that treats data as structured tables, combining the power of traditional shells with modern programming concepts.",
     prCount: 1,
-    language: "Rust",
     highlights: ["Enhanced developer experience and error messaging"],
     tags: ["Rust", "Shell", "CLI"],
     lastModified: "2025-11-18",
@@ -186,7 +178,6 @@ export const OPEN_SOURCE_CONTRIBUTIONS: Array<OpenSourceContributionProps> = [
     description:
       "The Internet Archive's digital lending library, providing free access to millions of books. A large-scale Python/JavaScript application serving millions of users.",
     prCount: 1,
-    language: "Python",
     highlights: ["Improved frontend interactivity and user experience"],
     tags: ["Python", "JavaScript", "Frontend"],
     lastModified: "2025-11-04",

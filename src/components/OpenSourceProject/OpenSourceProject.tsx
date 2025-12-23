@@ -9,7 +9,6 @@ export type OpenSourceProjectProps = {
   name: string;
   descriptions: Array<string>;
   githubUrl: string;
-  language: string;
   tags: Array<string>;
   isLast: boolean;
   /** ISO date string for sorting (YYYY-MM-DD) */
@@ -20,7 +19,6 @@ export default function OpenSourceProject({
   name,
   descriptions,
   githubUrl,
-  language,
   tags,
   isLast,
 }: OpenSourceProjectProps) {
@@ -40,10 +38,7 @@ export default function OpenSourceProject({
         </a>
       </FlexContainer>
 
-      {/* Metadata lines */}
-      <p className="text-secondary-text m-0 text-sm">
-        Primary language: {language}
-      </p>
+      {/* Metadata line */}
       <p className="text-secondary-text m-0 text-sm">
         Tags: {tags.join(" · ")}
       </p>
