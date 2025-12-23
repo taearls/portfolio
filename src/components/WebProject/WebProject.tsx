@@ -6,6 +6,7 @@ import InlineAnchor from "@/components/InlineAnchor/InlineAnchor.tsx";
 import FlexContainer from "@/components/layout/containers/FlexContainer/FlexContainer.tsx";
 import HeadingTwo from "@/components/layout/headings/HeadingTwo.tsx";
 import Paragraph from "@/components/layout/Paragraph/Paragraph.tsx";
+import Tag from "@/components/Tag/Tag.tsx";
 import ThemeContext from "@/state/contexts/ThemeContext.tsx";
 import { THEME_STATES } from "@/state/machines/themeMachine.ts";
 import {
@@ -127,12 +128,7 @@ export default function WebProject({
           ))}
           <FlexContainer wrap gapX={2} gapY={2}>
             {tags.map((tag) => (
-              <span
-                key={tag}
-                className="inline-flex items-center rounded-xl border border-current px-2 py-1 text-xs font-medium"
-              >
-                {tag}
-              </span>
+              <Tag key={tag} label={tag} />
             ))}
           </FlexContainer>
         </FlexContainer>

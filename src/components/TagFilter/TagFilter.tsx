@@ -1,6 +1,6 @@
 import FlexContainer from "@/components/layout/containers/FlexContainer/FlexContainer.tsx";
+import Tag from "@/components/Tag/Tag.tsx";
 import { FlexFlowCSSValue } from "@/types/layout.ts";
-import { mergeClasses } from "@/util/styling/styling.utils.ts";
 import styles from "./TagFilter.module.css";
 
 export type TagFilterProps = {
@@ -38,24 +38,14 @@ export default function TagFilter({
         role="group"
         aria-label="Technology filters"
       >
-        {tags.map((tag) => {
-          const isSelected = selectedTags.includes(tag);
-          return (
-            <button
-              key={tag}
-              type="button"
-              onClick={() => onTagToggle(tag)}
-              className={mergeClasses(
-                styles.tag,
-                isSelected && styles["tag-selected"],
-              )}
-              aria-pressed={isSelected}
-              aria-label={`Filter by ${tag}`}
-            >
-              {tag}
-            </button>
-          );
-        })}
+        {tags.map((tag) => (
+          <Tag
+            key={tag}
+            label={tag}
+            isSelected={selectedTags.includes(tag)}
+            onClick={() => onTagToggle(tag)}
+          />
+        ))}
       </div>
     </FlexContainer>
   );
