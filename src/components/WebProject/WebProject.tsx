@@ -6,6 +6,7 @@ import InlineAnchor from "@/components/InlineAnchor/InlineAnchor.tsx";
 import FlexContainer from "@/components/layout/containers/FlexContainer/FlexContainer.tsx";
 import HeadingTwo from "@/components/layout/headings/HeadingTwo.tsx";
 import Paragraph from "@/components/layout/Paragraph/Paragraph.tsx";
+import Tag from "@/components/Tag/Tag.tsx";
 import ThemeContext from "@/state/contexts/ThemeContext.tsx";
 import { THEME_STATES } from "@/state/machines/themeMachine.ts";
 import {
@@ -30,6 +31,7 @@ export type WebProjectProps = {
   width?: number;
   height?: number;
   tagline: string;
+  tags: Array<string>;
   isLast: boolean;
 };
 
@@ -57,6 +59,7 @@ export default function WebProject({
   width,
   height,
   tagline,
+  tags,
   isLast,
 }: WebProjectProps) {
   // // TODO: figure out how to apply this to space clones project on hover.
@@ -123,6 +126,16 @@ export default function WebProject({
               {description}
             </Paragraph>
           ))}
+          <ul
+            className="m-0 flex list-none flex-wrap gap-2 p-0"
+            aria-label="Technologies used"
+          >
+            {tags.map((tag) => (
+              <li key={tag}>
+                <Tag label={tag} />
+              </li>
+            ))}
+          </ul>
         </FlexContainer>
       </FlexContainer>
       <RenderIf condition={!isLast}>

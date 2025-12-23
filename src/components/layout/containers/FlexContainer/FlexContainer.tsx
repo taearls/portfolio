@@ -20,6 +20,7 @@ export default function FlexContainer({
   alignItems,
   children,
   inline = false,
+  wrap = false,
   maxWidth,
   fullWidth = false,
 }: FlexContainerProps) {
@@ -44,6 +45,7 @@ export default function FlexContainer({
       style={style}
       className={mergeClasses(
         inline ? "inline-flex" : "flex",
+        wrap && "flex-wrap",
         fullWidth && "w-full",
         flexFlowClass,
         alignSelfClass != null && alignSelfClass.toString(),

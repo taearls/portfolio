@@ -1,12 +1,69 @@
+import type { WebProjectProps } from "@/components/WebProject/WebProject.tsx";
+
+import { useMemo, useState } from "react";
+
 import InlineAnchor from "@/components/InlineAnchor/InlineAnchor.tsx";
 import FlexContainer from "@/components/layout/containers/FlexContainer/FlexContainer.tsx";
 import HeadingOne from "@/components/layout/headings/HeadingOne.tsx";
 import Paragraph from "@/components/layout/Paragraph/Paragraph.tsx";
+import RenderIf from "@/components/layout/RenderIf.tsx";
+import SearchInput from "@/components/SearchInput/SearchInput.tsx";
+import TagFilter from "@/components/TagFilter/TagFilter.tsx";
 import WebProject from "@/components/WebProject/WebProject.tsx";
 import { AlignItemsCSSValue, FlexFlowCSSValue } from "@/types/layout.ts";
-import { WEB_PROJECTS } from "@/util/constants.ts";
+import { ALL_PROJECT_TAGS, WEB_PROJECTS } from "@/util/constants.ts";
+
+/**
+ * Filters projects based on search term and selected tags.
+ * Search matches against project name and descriptions.
+ * Tags use OR logic - project must have at least one selected tag.
+ */
+function filterProjects(
+  projects: Array<Omit<WebProjectProps, "isLast">>,
+  searchTerm: string,
+  selectedTags: Array<string>,
+): Array<Omit<WebProjectProps, "isLast">> {
+  return projects.filter((project) => {
+    // Search filter: match name or any description
+    const searchLower = searchTerm.toLowerCase().trim();
+    const matchesSearch =
+      searchLower === "" ||
+      project.name.toLowerCase().includes(searchLower) ||
+      project.descriptions.some((desc) =>
+        desc.toLowerCase().includes(searchLower),
+      );
+
+    // Tag filter: project must have at least one of the selected tags (OR logic)
+    const matchesTags =
+      selectedTags.length === 0 ||
+      selectedTags.some((tag) => project.tags.includes(tag));
+
+    return matchesSearch && matchesTags;
+  });
+}
 
 export default function WebProjectsPage() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedTags, setSelectedTags] = useState<Array<string>>([]);
+
+  const filteredProjects = useMemo(
+    () => filterProjects(WEB_PROJECTS, searchTerm, selectedTags),
+    [searchTerm, selectedTags],
+  );
+
+  const handleTagToggle = (tag: string) => {
+    setSelectedTags((prev) =>
+      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag],
+    );
+  };
+
+  const handleClearAllTags = () => {
+    setSelectedTags([]);
+  };
+
+  const hasActiveFilters = searchTerm !== "" || selectedTags.length > 0;
+  const noResultsFound = filteredProjects.length === 0 && hasActiveFilters;
+
   return (
     <main>
       <FlexContainer flexFlow={FlexFlowCSSValue.COLUMN} gapY={8}>
@@ -55,23 +112,61 @@ export default function WebProjectsPage() {
           </Paragraph>
         </FlexContainer>
 
-        <FlexContainer flexFlow={FlexFlowCSSValue.COLUMN} gapY={8}>
-          {WEB_PROJECTS.map((webProject, index) => (
-            <WebProject
-              key={webProject.name}
-              analytics={webProject.analytics}
-              cloudinaryId={webProject.cloudinaryId}
-              alt={webProject.alt}
-              cursorStyle={webProject.cursorStyle}
-              descriptions={webProject.descriptions}
-              emoji={webProject.emoji}
-              href={webProject.href}
-              name={webProject.name}
-              tagline={webProject.tagline}
-              isLast={index === WEB_PROJECTS.length - 1}
-            />
-          ))}
+        <FlexContainer flexFlow={FlexFlowCSSValue.COLUMN} gapY={4}>
+          <SearchInput
+            value={searchTerm}
+            onChange={setSearchTerm}
+            placeholder="Search by name or description..."
+          />
+          <TagFilter
+            tags={ALL_PROJECT_TAGS}
+            selectedTags={selectedTags}
+            onTagToggle={handleTagToggle}
+            onClearAll={handleClearAllTags}
+          />
+          {/* Live region for screen reader announcements */}
+          <div aria-live="polite" aria-atomic="true" className="sr-only">
+            {hasActiveFilters &&
+              (noResultsFound
+                ? "No projects found matching your criteria."
+                : `Showing ${filteredProjects.length} ${filteredProjects.length === 1 ? "project" : "projects"}.`)}
+          </div>
         </FlexContainer>
+
+        <RenderIf condition={noResultsFound}>
+          <FlexContainer
+            flexFlow={FlexFlowCSSValue.COLUMN}
+            alignItems={AlignItemsCSSValue.CENTER}
+            gapY={4}
+          >
+            <Paragraph>
+              {
+                "No projects found matching your criteria. Try adjusting your search or filters."
+              }
+            </Paragraph>
+          </FlexContainer>
+        </RenderIf>
+
+        <RenderIf condition={!noResultsFound}>
+          <FlexContainer flexFlow={FlexFlowCSSValue.COLUMN} gapY={8}>
+            {filteredProjects.map((webProject, index) => (
+              <WebProject
+                key={webProject.name}
+                analytics={webProject.analytics}
+                cloudinaryId={webProject.cloudinaryId}
+                alt={webProject.alt}
+                cursorStyle={webProject.cursorStyle}
+                descriptions={webProject.descriptions}
+                emoji={webProject.emoji}
+                href={webProject.href}
+                name={webProject.name}
+                tagline={webProject.tagline}
+                tags={webProject.tags}
+                isLast={index === filteredProjects.length - 1}
+              />
+            ))}
+          </FlexContainer>
+        </RenderIf>
       </FlexContainer>
     </main>
   );
