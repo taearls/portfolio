@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+.tag-filter-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.tag-filter-label {
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.clear-button {
+  font-size: 14px;
+  color: var(--accent-color);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: opacity 0.2s ease;
+}
+
+.clear-button:hover {
+  color: var(--accent-hover-color);
+}
+
+.clear-button:focus-visible {
+  outline: 2px solid var(--accent-focus);
+  outline-offset: 2px;
+}
+
+.tag-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.375rem 0.75rem;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 9999px;
+  border: 1px solid var(--text-color);
+  background-color: transparent;
+  color: var(--text-color);
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+  /* WCAG 2.5.5 - Minimum touch target */
+  min-height: var(--touch-target-min);
+}
+
+.tag:hover {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+}
+
+.tag:focus-visible {
+  outline: 2px solid var(--accent-focus);
+  outline-offset: 2px;
+}
+
+.tag-selected {
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
+  color: var(--background-color);
+}
+
+.tag-selected:hover {
+  background-color: var(--accent-hover-color);
+  border-color: var(--accent-hover-color);
+}

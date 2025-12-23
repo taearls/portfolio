@@ -14,6 +14,7 @@ type ResponsiveFlexContainerProp<T> =
 export type FlexContainerProps = PropsWithChildren<{
   inline?: boolean;
   flexFlow?: FlexFlowCSSType;
+  wrap?: boolean;
   responsive?: {
     flexFlow?: ResponsiveFlexContainerProp<FlexFlowCSSType>;
     gapX?: ResponsiveFlexContainerProp<GapCSSType["value"]>;

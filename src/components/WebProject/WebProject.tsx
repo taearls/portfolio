@@ -30,6 +30,7 @@ export type WebProjectProps = {
   width?: number;
   height?: number;
   tagline: string;
+  tags: Array<string>;
   isLast: boolean;
 };
 
@@ -57,6 +58,7 @@ export default function WebProject({
   width,
   height,
   tagline,
+  tags,
   isLast,
 }: WebProjectProps) {
   // // TODO: figure out how to apply this to space clones project on hover.
@@ -123,6 +125,16 @@ export default function WebProject({
               {description}
             </Paragraph>
           ))}
+          <FlexContainer wrap gapX={2} gapY={2}>
+            {tags.map((tag) => (
+              <span
+                key={tag}
+                className="inline-flex items-center rounded-full border border-current px-2 py-1 text-xs font-medium"
+              >
+                {tag}
+              </span>
+            ))}
+          </FlexContainer>
         </FlexContainer>
       </FlexContainer>
       <RenderIf condition={!isLast}>

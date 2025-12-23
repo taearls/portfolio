@@ -2,7 +2,7 @@
 
 ## Executive Summary
 
-This roadmap outlines the development plan for Tyler Earls' portfolio website, focusing on performance optimization, modern React tooling, and enhanced user experience. The project has **completed Phase 5 (React Compiler Integration)**, **Phase 6 (CI/CD setup)**, **Phase 7 (Accessibility & Core Web Vitals)**, and **Phase 8 (GitOps Feature Flags)**, with **6 open low-priority issues** remaining.
+This roadmap outlines the development plan for Tyler Earls' portfolio website, focusing on performance optimization, modern React tooling, and enhanced user experience. The project has **completed Phase 5 (React Compiler Integration)**, **Phase 6 (CI/CD setup)**, **Phase 7 (Accessibility & Core Web Vitals)**, and **Phase 8 (GitOps Feature Flags)**, with **5 open low-priority issues** remaining.
 
 **Current Focus**: All critical, high, and medium priority work complete! Only low-priority enhancements and research spikes remain. The portfolio is production-ready with comprehensive accessibility compliance, feature flag infrastructure, and CI/CD automation.
 
@@ -21,7 +21,7 @@ This roadmap outlines the development plan for Tyler Earls' portfolio website, f
 
 ## Open Issues Summary
 
-### Priority Breakdown (6 Open Issues)
+### Priority Breakdown (5 Open Issues)
 
 #### 🔴 Critical Priority (0 issues)
 
@@ -53,14 +53,12 @@ _All medium-priority issues resolved!_
 
 ✅ **#14** - Add Working Email Contact Form - **COMPLETED Dec 7, 2025**
 
-#### 🔵 Low Priority (6 issues) - Effort: ~2-3 weeks total
+#### 🔵 Low Priority (5 issues) - Effort: ~2-3 weeks total
 
 - **#10** - Add Resume Page - _~4-6 hours_
   - Labels: `type: feature`, `area: ui`, `area: routing`, `priority: low`, `effort: medium`
 - **#13** - Update Web Projects - Descriptions - _~1-2 hours_
   - Labels: `type: enhancement`, `area: ui`, `priority: low`, `effort: small`
-- **#15** - Update Web Projects - Add User Selectable Tags and Search - Update Layout - _~1-2 days_
-  - Labels: `type: feature`, `area: ui`, `priority: low`, `effort: large`
 - **#33** - Spike: Integrate PRs with Graphite - _~1-2 hours_
   - Labels: `type: spike`, `area: ci/cd`, `priority: low`, `effort: small`
 - **#34** - Spike: Experiment with CodeRabbit - _~1-2 hours_
@@ -68,6 +66,8 @@ _All medium-priority issues resolved!_
 - **#64** - Improve Color Contrast for WCAG AAA Compliance - _~2-4 hours_
   - Title: 🔵 MINOR
   - Note: WCAG AA already met, AAA is enhancement
+
+✅ **#15** - Update Web Projects - Add User Selectable Tags and Search - Update Layout - **COMPLETED Dec 23, 2025**
 
 ✅ **#65** - Increase Font Size for Desktop/Tablet Readability - **COMPLETED Dec 23, 2025**
 
@@ -518,6 +518,70 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 ---
 
 ## Changelog
+
+### 2025-12-23 - Issue #15 Completed: Web Projects Tags, Search, and Layout Update
+
+- **Completed**: #15 - Update Web Projects - Add User Selectable Tags and Search - Update Layout
+- **Priority**: 🔵 LOW (Feature enhancement)
+- **Status**: Completed Dec 23, 2025
+- **Effort**: ~3 hours
+- **Impact**: Enhanced Web Projects page with filtering capabilities
+
+**Implementation Details**:
+
+1. **Added tags to WebProject type and data** (`WebProject.tsx`, `constants.ts`)
+   - Added `tags: Array<string>` property to WebProjectProps
+   - Tagged all existing projects with relevant technologies (React, TypeScript, JavaScript, etc.)
+   - Created `ALL_PROJECT_TAGS` constant to extract unique tags
+
+2. **Created TagFilter component** (`src/components/TagFilter/`)
+   - Pill-style buttons for each technology tag
+   - Visual feedback for selected tags (accent color fill)
+   - "Clear all" button when filters are active
+   - Accessible with `aria-pressed` and `aria-label` attributes
+   - WCAG 2.5.5 compliant touch targets (44px minimum)
+
+3. **Created SearchInput component** (`src/components/SearchInput/`)
+   - Real-time search filtering by project name and descriptions
+   - Clear button to reset search
+   - Accessible with proper labeling
+
+4. **Updated WebProjectsPage with filtering logic** (`WebProjectsPage.tsx`)
+   - `filterProjects()` function with search and tag filtering
+   - Tags use OR logic (show projects with ANY selected tag)
+   - Search matches against name and all descriptions
+   - "No results" message when filters return empty
+
+5. **Added wrap prop to FlexContainer** (`FlexContainer.tsx`, `FlexContainer.ts`)
+   - New `wrap?: boolean` prop that adds `flex-wrap` class
+   - Enables flexible tag layouts
+
+6. **Display tags on each project** (`WebProject.tsx`)
+   - Tags displayed as small pills below project descriptions
+
+**Files Created**:
+
+- `src/components/TagFilter/TagFilter.tsx`
+- `src/components/TagFilter/TagFilter.module.css`
+- `src/components/SearchInput/SearchInput.tsx`
+- `src/components/SearchInput/SearchInput.module.css`
+- `tests/component/FlexContainer.spec.tsx` (20 tests)
+
+**Files Modified**:
+
+- `src/types/FlexContainer.ts` - Added wrap prop
+- `src/components/layout/containers/FlexContainer/FlexContainer.tsx` - Implemented wrap prop
+- `src/components/WebProject/WebProject.tsx` - Added tags display and prop
+- `src/pages/WebProjectsPage.tsx` - Added filtering UI and logic
+- `src/util/constants.ts` - Added tags to projects, ALL_PROJECT_TAGS constant
+
+**Testing**:
+
+- ✅ All 211 unit tests passing (20 new FlexContainer tests)
+- ✅ Production build successful
+- ✅ Lint, format, and OxLint checks passing
+
+---
 
 ### 2025-12-23 - Issue #97 Completed: NavigationToggle Visibility Fix
 

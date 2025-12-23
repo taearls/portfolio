@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+.search-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 400px;
+}
+
+.search-label {
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.search-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.625rem 2.5rem 0.625rem 0.75rem;
+  font-size: 16px;
+  border: 1px solid var(--text-color);
+  border-radius: 8px;
+  background-color: transparent;
+  color: var(--text-color);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+  /* WCAG 2.5.5 - Minimum touch target */
+  min-height: var(--touch-target-min);
+}
+
+.search-input::placeholder {
+  color: var(--text-color);
+  opacity: 0.6;
+}
+
+.search-input:hover {
+  border-color: var(--accent-color);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px var(--accent-focus);
+}
+
+.clear-button {
+  position: absolute;
+  right: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+  font-size: 1.25rem;
+  line-height: 1;
+  color: var(--text-color);
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.clear-button:hover {
+  background-color: var(--accent-color);
+  color: var(--background-color);
+}
+
+.clear-button:focus-visible {
+  outline: 2px solid var(--accent-focus);
+  outline-offset: 2px;
+}

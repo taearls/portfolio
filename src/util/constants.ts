@@ -26,6 +26,7 @@ export const WEB_PROJECTS: Array<Omit<WebProjectProps, "isLast">> = [
     href: "https://www.cuckooandthebirds.com",
     name: "Cuckoo and the Birds Website",
     tagline: "Visit our website!",
+    tags: ["React", "TypeScript", "TailwindCSS"],
     width: 1200,
   },
   {
@@ -42,6 +43,7 @@ export const WEB_PROJECTS: Array<Omit<WebProjectProps, "isLast">> = [
     href: "https://www.roadrangerusa.com",
     name: "Road Ranger",
     tagline: "Check it out!",
+    tags: ["JavaScript", "SCSS", "PHP", "Freelance"],
     width: 1200,
   },
   {
@@ -58,9 +60,17 @@ export const WEB_PROJECTS: Array<Omit<WebProjectProps, "isLast">> = [
     href: "https://space-clones.netlify.com",
     name: "Space Clones",
     tagline: "Beat my high score (if you dare)!",
+    tags: ["JavaScript", "jQuery", "HTML5", "CSS3", "Game"],
     width: 1200,
   },
 ];
+
+/**
+ * Extract all unique tags from web projects
+ */
+export const ALL_PROJECT_TAGS: Array<string> = Array.from(
+  new Set(WEB_PROJECTS.flatMap((project) => project.tags)),
+).sort();
 
 export const PORTFOLIO_EMAIL = "tyler.a.earls@gmail.com";
 
