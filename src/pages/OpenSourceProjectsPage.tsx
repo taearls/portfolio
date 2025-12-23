@@ -5,14 +5,17 @@ import { useMemo, useState } from "react";
 import InlineAnchor from "@/components/InlineAnchor/InlineAnchor.tsx";
 import FlexContainer from "@/components/layout/containers/FlexContainer/FlexContainer.tsx";
 import HeadingOne from "@/components/layout/headings/HeadingOne.tsx";
+import HeadingTwo from "@/components/layout/headings/HeadingTwo.tsx";
 import Paragraph from "@/components/layout/Paragraph/Paragraph.tsx";
 import RenderIf from "@/components/layout/RenderIf.tsx";
+import OpenSourceContribution from "@/components/OpenSourceContribution/OpenSourceContribution.tsx";
 import OpenSourceProject from "@/components/OpenSourceProject/OpenSourceProject.tsx";
 import SearchInput from "@/components/SearchInput/SearchInput.tsx";
 import TagFilter from "@/components/TagFilter/TagFilter.tsx";
 import { AlignItemsCSSValue, FlexFlowCSSValue } from "@/types/layout.ts";
 import {
   ALL_OPEN_SOURCE_TAGS,
+  OPEN_SOURCE_CONTRIBUTIONS,
   OPEN_SOURCE_PROJECTS,
 } from "@/util/constants.ts";
 
@@ -147,6 +150,38 @@ export default function OpenSourceProjectsPage() {
             ))}
           </FlexContainer>
         </RenderIf>
+
+        {/* Contributions Section */}
+        <FlexContainer flexFlow={FlexFlowCSSValue.COLUMN} gapY={8}>
+          <hr className="line-break" />
+          <FlexContainer
+            flexFlow={FlexFlowCSSValue.COLUMN}
+            alignItems={AlignItemsCSSValue.CENTER}
+            gapY={4}
+          >
+            <HeadingTwo>{"Contributions"}</HeadingTwo>
+            <Paragraph>
+              {
+                "I'm an active contributor to open source projects, particularly in the Rust ecosystem. Here are some of my contributions to projects I admire."
+              }
+            </Paragraph>
+          </FlexContainer>
+
+          <FlexContainer flexFlow={FlexFlowCSSValue.COLUMN} gapY={6}>
+            {OPEN_SOURCE_CONTRIBUTIONS.map((contribution, index) => (
+              <OpenSourceContribution
+                key={contribution.projectName}
+                projectName={contribution.projectName}
+                projectUrl={contribution.projectUrl}
+                description={contribution.description}
+                prCount={contribution.prCount}
+                language={contribution.language}
+                highlights={contribution.highlights}
+                isLast={index === OPEN_SOURCE_CONTRIBUTIONS.length - 1}
+              />
+            ))}
+          </FlexContainer>
+        </FlexContainer>
       </FlexContainer>
     </main>
   );

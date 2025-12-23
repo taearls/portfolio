@@ -125,6 +125,68 @@ export const ALL_OPEN_SOURCE_TAGS: Array<string> = Array.from(
   new Set(OPEN_SOURCE_PROJECTS.flatMap((project) => project.tags)),
 ).sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
 
+export type OpenSourceContributionProps = {
+  projectName: string;
+  projectUrl: string;
+  description: string;
+  prCount: number;
+  language: string;
+  highlights: Array<string>;
+};
+
+export const OPEN_SOURCE_CONTRIBUTIONS: Array<OpenSourceContributionProps> = [
+  {
+    projectName: "oxc",
+    projectUrl: "https://github.com/oxc-project/oxc",
+    description:
+      "A high-performance JavaScript/TypeScript toolchain written in Rust. I've contributed linter rules, AST improvements, and test infrastructure.",
+    prCount: 16,
+    language: "Rust",
+    highlights: [
+      "Implemented multiple vitest linter rules (prefer-to-be, valid-title, no-standalone-expect, prefer-lowercase-title)",
+      "Added import/extensions rule with comprehensive edge case handling",
+      "Contributed jsx-a11y/no-noninteractive-tabindex accessibility rule",
+      "Refactored AST node representations for cleaner architecture",
+    ],
+  },
+  {
+    projectName: "openlibrary",
+    projectUrl: "https://github.com/internetarchive/openlibrary",
+    description:
+      "The Internet Archive's open library project. I made follow buttons asynchronous for better user experience.",
+    prCount: 1,
+    language: "Python",
+    highlights: ["Made follow buttons asynchronous for improved UX"],
+  },
+  {
+    projectName: "rolldown",
+    projectUrl: "https://github.com/rolldown/rolldown",
+    description:
+      "A Rust-based JavaScript bundler designed for Vite. I ported the getLogFilter helper from Rollup.",
+    prCount: 1,
+    language: "Rust",
+    highlights: ["Ported getLogFilter helper from Rollup"],
+  },
+  {
+    projectName: "leptos",
+    projectUrl: "https://github.com/leptos-rs/leptos",
+    description:
+      "A full-stack Rust web framework. I fixed class attribute consistency between SSR and CSR.",
+    prCount: 1,
+    language: "Rust",
+    highlights: ["Fixed class attribute SSR/CSR consistency"],
+  },
+  {
+    projectName: "nushell",
+    projectUrl: "https://github.com/nushell/nushell",
+    description:
+      "A modern shell written in Rust. I improved error messaging for the plugin add command.",
+    prCount: 1,
+    language: "Rust",
+    highlights: ["Improved plugin add command error messaging"],
+  },
+];
+
 export const PORTFOLIO_EMAIL = "tyler.a.earls@gmail.com";
 
 export const BASE_URLS = {
