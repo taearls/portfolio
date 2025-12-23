@@ -519,6 +519,80 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 
 ## Changelog
 
+### 2025-12-23 - Issue #97 Completed: NavigationToggle Visibility Fix
+
+- **Completed**: #97 - NavigationToggle does not show/hide navigation bar
+- **Priority**: 🔴 BUG (Navigation toggle button animated but navigation never hid)
+- **Status**: Completed Dec 23, 2025
+- **Effort**: ~1 hour (including comprehensive test suite)
+- **Impact**: Fixed critical navigation UX bug on mobile viewports
+
+**Root Cause Analysis**:
+
+CSS specificity conflict in `NavigationBar.tsx`. The CSS Module class `navigation-list-container` defined `display: inline-flex` with higher specificity than Tailwind's `hidden` utility (`display: none`). The navigation remained visible even when state was `CLOSED`.
+
+**Implementation Details**:
+
+1. **Added CSS Module `.closed` class** (`NavigationBar.module.css:39-41`)
+   - Created `.navigation-list-container.closed` rule with `display: none`
+   - Uses CSS Module specificity to properly override `inline-flex`
+   - Added comment documenting the specificity requirement
+
+2. **Updated NavigationBar component** (`NavigationBar.tsx:89-92`)
+   - Changed from Tailwind's `"hidden"` to CSS Module's `styles.closed`
+   - Maintains consistent specificity within CSS Module scope
+
+3. **Added comprehensive test suite** (`tests/component/NavigationBar.spec.tsx`)
+   - 8 test cases covering toggle functionality
+   - Tests CSS Module class application (`_closed_` pattern matching)
+   - Verifies aria-label accessibility updates
+   - State-agnostic tests that work regardless of initial viewport state
+
+**Changes**:
+
+```css
+/* NavigationBar.module.css - Added */
+.navigation-list-container.closed {
+  display: none;
+}
+```
+
+```tsx
+// NavigationBar.tsx - Before
+className={mergeClasses(
+  styles["navigation-list-container"],
+  isNavigationOpen.value === NAVIGATION_STATE.CLOSED && "hidden",
+)}
+
+// NavigationBar.tsx - After
+className={mergeClasses(
+  styles["navigation-list-container"],
+  isNavigationOpen.value === NAVIGATION_STATE.CLOSED && styles.closed,
+)}
+```
+
+**Files Modified**:
+
+- `src/components/navigation/NavigationBar/NavigationBar.module.css` - Added `.closed` class
+- `src/components/navigation/NavigationBar/NavigationBar.tsx` - Use CSS Module class
+
+**Files Created**:
+
+- `tests/component/NavigationBar.spec.tsx` - Comprehensive test suite (8 tests)
+
+**Testing**:
+
+- ✅ All 190 unit tests passing (8 new NavigationBar tests)
+- ✅ Production build successful
+- ✅ Navigation toggle now properly shows/hides navigation list
+- ✅ CSS Module class verified with pattern matching
+
+**Technical Lesson**:
+
+When using CSS Modules with Tailwind, be aware of specificity conflicts. CSS Module classes have higher specificity than Tailwind utilities. Use CSS Module classes for state-based visibility changes when the base styles are defined in CSS Modules.
+
+---
+
 ### 2025-12-23 - Issue #65 Completed: Font Size Readability Enhancement
 
 - **Completed**: #65 - Increase Font Size for Desktop/Tablet Readability

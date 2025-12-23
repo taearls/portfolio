@@ -35,6 +35,11 @@
   @apply sm:h-[76px] sm:w-full sm:flex-row;
 }
 
+/* Hide navigation when closed on mobile - uses CSS Module specificity to override inline-flex */
+.navigation-list-container.closed {
+  display: none;
+}
+
 /* WCAG 2.5.5 - Ensure navigation links meet 44×44px minimum touch target */
 .navigation-list-container a {
   min-height: var(--touch-target-min);
