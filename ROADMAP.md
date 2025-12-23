@@ -2,7 +2,7 @@
 
 ## Executive Summary
 
-This roadmap outlines the development plan for Tyler Earls' portfolio website, focusing on performance optimization, modern React tooling, and enhanced user experience. The project has **completed Phase 5 (React Compiler Integration)**, **Phase 6 (CI/CD setup)**, **Phase 7 (Accessibility & Core Web Vitals)**, and **Phase 8 (GitOps Feature Flags)**, with **7 open low-priority issues** remaining.
+This roadmap outlines the development plan for Tyler Earls' portfolio website, focusing on performance optimization, modern React tooling, and enhanced user experience. The project has **completed Phase 5 (React Compiler Integration)**, **Phase 6 (CI/CD setup)**, **Phase 7 (Accessibility & Core Web Vitals)**, and **Phase 8 (GitOps Feature Flags)**, with **6 open low-priority issues** remaining.
 
 **Current Focus**: All critical, high, and medium priority work complete! Only low-priority enhancements and research spikes remain. The portfolio is production-ready with comprehensive accessibility compliance, feature flag infrastructure, and CI/CD automation.
 
@@ -21,7 +21,7 @@ This roadmap outlines the development plan for Tyler Earls' portfolio website, f
 
 ## Open Issues Summary
 
-### Priority Breakdown (7 Open Issues)
+### Priority Breakdown (6 Open Issues)
 
 #### 🔴 Critical Priority (0 issues)
 
@@ -53,7 +53,7 @@ _All medium-priority issues resolved!_
 
 ✅ **#14** - Add Working Email Contact Form - **COMPLETED Dec 7, 2025**
 
-#### 🔵 Low Priority (7 issues) - Effort: ~2-3 weeks total
+#### 🔵 Low Priority (6 issues) - Effort: ~2-3 weeks total
 
 - **#10** - Add Resume Page - _~4-6 hours_
   - Labels: `type: feature`, `area: ui`, `area: routing`, `priority: low`, `effort: medium`
@@ -68,8 +68,8 @@ _All medium-priority issues resolved!_
 - **#64** - Improve Color Contrast for WCAG AAA Compliance - _~2-4 hours_
   - Title: 🔵 MINOR
   - Note: WCAG AA already met, AAA is enhancement
-- **#65** - Increase Font Size for Desktop/Tablet Readability - _~1-2 hours_
-  - Title: 🔵 MINOR
+
+✅ **#65** - Increase Font Size for Desktop/Tablet Readability - **COMPLETED Dec 23, 2025**
 
 ---
 
@@ -316,7 +316,7 @@ All critical, high, and medium priority work is complete! The following low-prio
 
 2. 🔵 **Accessibility Enhancements** (Beyond WCAG AA)
    - #64: WCAG AAA Contrast Enhancement (~2-4 hours)
-   - #65: Font Size Readability (~1-2 hours)
+   - ✅ #65: Font Size Readability - **COMPLETED**
 
 3. 🔵 **Research Spikes**
    - #33: Graphite PR Workflow (~1-2 hours)
@@ -348,7 +348,7 @@ Phase 7: Accessibility & Core Web Vitals ✅ COMPLETE
 ├── ✅ #62 Touch target sizes (2h) - COMPLETED
 ├── ✅ #63 Fix CLS on mobile (2h) - COMPLETED
 ├── 🔵 #64 WCAG AAA contrast (2-4h) - ENHANCEMENT
-└── 🔵 #65 Font size readability (1-2h) - ENHANCEMENT
+└── ✅ #65 Font size readability (30min) - COMPLETED Dec 23, 2025
 
 Phase 7: Performance & UX ✅ CORE COMPLETE
 ├── ✅ #11 SVG Preloading (30min) - COMPLETED
@@ -367,8 +367,7 @@ Remaining Low Priority (As time permits)
 ├── #10 Resume page (4-6h)
 ├── #13 Project descriptions (1-2h)
 ├── #15 Project filtering (1-2 days)
-├── #64 WCAG AAA contrast (2-4h)
-└── #65 Font size readability (1-2h)
+└── #64 WCAG AAA contrast (2-4h)
 ```
 
 ### Implementation Strategy
@@ -434,8 +433,8 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 | 🔴 Critical | 0     | 0           | 1                 | 0          |
 | 🟡 High     | 0     | 0           | 11                | 0          |
 | 🟢 Medium   | 0     | 0           | 5                 | 0          |
-| 🔵 Low      | 7     | 0           | 0                 | 7          |
-| **TOTAL**   | **7** | **0**       | **17**            | **7**      |
+| 🔵 Low      | 6     | 0           | 1                 | 6          |
+| **TOTAL**   | **6** | **0**       | **18**            | **6**      |
 
 ### Issues by Category
 
@@ -443,19 +442,19 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 **Bugs** (0 open, 1 closed): Closed: #51 (navigation header overflow)
 **Infrastructure** (0 open, 2 closed): Closed: #80 (GitOps feature flags), #72 (Cloudflare feature flags)
 **CI/CD** (0 open, 2 closed): Closed: #18 (GitHub Actions pipeline), #72 (feature flags)
-**Accessibility** (2 open, 3 closed): Open: #64, #65 | Closed: #61 (navigation contrast), #62 (touch targets), #63 (CLS mobile)
+**Accessibility** (1 open, 4 closed): Open: #64 | Closed: #61 (navigation contrast), #62 (touch targets), #63 (CLS mobile), #65 (font size readability)
 **UI/UX** (3 open, 6 closed): Open: #10, #13, #15 | Closed: #58 (left-align text), #28 (React 19 Meta), #11 (SVG preload), #27 (lazy routes), #72 (feature flags), #14 (contact form)
 **Research** (2 open): #33, #34
 
 ### Effort Distribution (Open Issues Only)
 
-| Effort Level  | Count | Issues             |
-| ------------- | ----- | ------------------ |
-| Small (< 2h)  | 4     | #13, #33, #34, #65 |
-| Medium (2-8h) | 2     | #64, #10           |
-| Large (> 8h)  | 1     | #15 (1-2 days)     |
+| Effort Level  | Count | Issues         |
+| ------------- | ----- | -------------- |
+| Small (< 2h)  | 3     | #13, #33, #34  |
+| Medium (2-8h) | 2     | #64, #10       |
+| Large (> 8h)  | 1     | #15 (1-2 days) |
 
-**Note**: All critical, high, and medium priority issues have been resolved. Only 7 low-priority enhancement and research issues remain.
+**Note**: All critical, high, and medium priority issues have been resolved. Only 6 low-priority enhancement and research issues remain.
 
 ---
 
@@ -519,6 +518,58 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 ---
 
 ## Changelog
+
+### 2025-12-23 - Issue #65 Completed: Font Size Readability Enhancement
+
+- **Completed**: #65 - Increase Font Size for Desktop/Tablet Readability
+- **Priority**: 🔵 LOW (MINOR enhancement)
+- **Status**: Completed Dec 23, 2025
+- **Effort**: ~30 minutes (within 1-2 hour estimate)
+- **Impact**: Typography accessibility improvement - all text now meets 14px minimum for comfortable reading
+
+**Implementation Details**:
+
+1. **Updated Font Sizes** - Changed `text-xs` (12px) to `text-sm` (14px) in:
+   - `src/components/ContactEmailForm.tsx:316` - Character count helper text
+   - `src/components/layout/Footer/Footer.tsx:8` - Copyright footer text
+
+**Changes**:
+
+```tsx
+// Before: 12px (too small for comfortable reading)
+<p className="text-xs ...">
+
+// After: 14px (meets recommended minimum)
+<p className="text-sm ...">
+```
+
+**Files Modified**:
+
+- `src/components/ContactEmailForm.tsx` - Character counter text
+- `src/components/layout/Footer/Footer.tsx` - Copyright text
+
+**Testing**:
+
+- ✅ ESLint passes
+- ✅ Production build successful
+- ✅ No instances of `text-xs` remaining in source files
+- ✅ Visual hierarchy maintained
+
+**Typography Best Practices Applied**:
+
+- Body text: 16px minimum (unchanged, already compliant)
+- Secondary text: 14px minimum (updated from 12px)
+- Using Tailwind's `text-sm` class (0.875rem = 14px)
+
+**Accessibility Impact**:
+
+- Improved readability on tablet and desktop viewports
+- All text now meets minimum size recommendations for comfortable reading
+- Maintains visual hierarchy (character count and footer are still secondary text)
+
+**Remaining Accessibility Issues**: 1 open (#64 - WCAG AAA contrast)
+
+---
 
 ### 2025-12-16 - ROADMAP Update: All Priority Work Complete
 
@@ -1404,6 +1455,6 @@ All high-priority accessibility issues (#61, #62, #63) have been resolved. Mediu
 
 ---
 
-**Last Updated**: December 16, 2025 (All Priority Work Complete - 7 Low-Priority Issues Remaining)
+**Last Updated**: December 23, 2025 (All Priority Work Complete - 6 Low-Priority Issues Remaining)
 **Maintained By**: Tyler Earls
 **Generated With**: Claude Code
