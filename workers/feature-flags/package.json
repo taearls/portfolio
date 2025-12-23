@@ -30,7 +30,7 @@
     "flags:disable:prod": "wrangler kv key put --remote --namespace-id=55a586e168e54566bcfb0a1e6dd11f88 feature_flags '{\"email-contact-form\":{\"enabled\":false}}'"
   },
   "devDependencies": {
-    "@cloudflare/vitest-pool-workers": "^0.5.31",
+    "@cloudflare/vitest-pool-workers": "^0.11.1",
     "@cloudflare/workers-types": "^4.20241127.0",
     "typescript": "^5.7.2",
     "vitest": "^2.1.8",
