@@ -41,7 +41,7 @@ export default function OpenSourceContribution({
         {prCount} {prCount === 1 ? "PR" : "PRs"} merged
       </p>
       <p className="text-secondary-text m-0 text-sm">
-        Tags: {tags.join(" · ")}
+        <span className="text-accent-color">Tags:</span> {tags.join(" · ")}
       </p>
 
       {/* Description */}

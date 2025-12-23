@@ -62,7 +62,7 @@ export default function WebProject({
 
       {/* Metadata line */}
       <p className="text-secondary-text m-0 text-sm">
-        Tags: {tags.join(" · ")}
+        <span className="text-accent-color">Tags:</span> {tags.join(" · ")}
       </p>
 
       {/* Project image */}

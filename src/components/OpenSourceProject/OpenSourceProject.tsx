@@ -40,7 +40,7 @@ export default function OpenSourceProject({
 
       {/* Metadata line */}
       <p className="text-secondary-text m-0 text-sm">
-        Tags: {tags.join(" · ")}
+        <span className="text-accent-color">Tags:</span> {tags.join(" · ")}
       </p>
 
       {/* Descriptions */}
