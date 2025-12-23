@@ -77,26 +77,6 @@ export const OPEN_SOURCE_PROJECTS: Array<
   Omit<OpenSourceProjectProps, "isLast">
 > = [
   {
-    name: "audiate",
-    descriptions: [
-      "A Rust crate that applies music theory to generate chords and scales from given notes.",
-      "Combines my passion for music with systems programming, providing a foundation for building music applications.",
-    ],
-    githubUrl: "https://github.com/taearls/audiate",
-    language: "Rust",
-    tags: ["Rust", "Music Theory", "Library"],
-  },
-  {
-    name: "oxc-devtools",
-    descriptions: [
-      "A focused set of utility crates that assist with debugging the oxc JavaScript/TypeScript toolchain.",
-      "Contributes to the broader Rust ecosystem for web development tooling.",
-    ],
-    githubUrl: "https://github.com/taearls/oxc-devtools",
-    language: "Rust",
-    tags: ["Rust", "Developer Tools", "Open Source"],
-  },
-  {
     name: "email-service-rs",
     descriptions: [
       "A flexible emailing service built with Rust, integrating with the Postmark API for reliable email delivery.",
@@ -105,6 +85,7 @@ export const OPEN_SOURCE_PROJECTS: Array<
     githubUrl: "https://github.com/taearls/email-service-rs",
     language: "Rust",
     tags: ["Rust", "Postmark", "API"],
+    lastModified: "2025-10-10",
   },
   {
     name: "website-security-header-proxy",
@@ -115,6 +96,18 @@ export const OPEN_SOURCE_PROJECTS: Array<
     githubUrl: "https://github.com/taearls/website-security-header-proxy",
     language: "Rust",
     tags: ["Rust", "Cloudflare", "Security"],
+    lastModified: "2025-04-26",
+  },
+  {
+    name: "audiate",
+    descriptions: [
+      "A Rust crate that applies music theory to generate chords and scales from given notes.",
+      "Combines my passion for music with systems programming, providing a foundation for building music applications.",
+    ],
+    githubUrl: "https://github.com/taearls/audiate",
+    language: "Rust",
+    tags: ["Rust", "Music Theory", "Library"],
+    lastModified: "2022-11-24",
   },
 ];
 
@@ -133,6 +126,8 @@ export type OpenSourceContributionProps = {
   language: string;
   highlights: Array<string>;
   tags: Array<string>;
+  /** ISO date string of last merged PR (YYYY-MM-DD) */
+  lastModified?: string;
 };
 
 export const OPEN_SOURCE_CONTRIBUTIONS: Array<OpenSourceContributionProps> = [
@@ -150,16 +145,7 @@ export const OPEN_SOURCE_CONTRIBUTIONS: Array<OpenSourceContributionProps> = [
       "Refactored AST node representations for cleaner architecture",
     ],
     tags: ["Rust", "Linter", "AST", "Accessibility"],
-  },
-  {
-    projectName: "openlibrary",
-    projectUrl: "https://github.com/internetarchive/openlibrary",
-    description:
-      "The Internet Archive's digital lending library, providing free access to millions of books. A large-scale Python/JavaScript application serving millions of users.",
-    prCount: 1,
-    language: "Python",
-    highlights: ["Improved frontend interactivity and user experience"],
-    tags: ["Python", "JavaScript", "Frontend"],
+    lastModified: "2025-12-19",
   },
   {
     projectName: "rolldown",
@@ -170,6 +156,7 @@ export const OPEN_SOURCE_CONTRIBUTIONS: Array<OpenSourceContributionProps> = [
     language: "Rust",
     highlights: ["Contributed to Rollup compatibility layer"],
     tags: ["Rust", "Bundler", "Vite"],
+    lastModified: "2025-12-15",
   },
   {
     projectName: "leptos",
@@ -180,6 +167,7 @@ export const OPEN_SOURCE_CONTRIBUTIONS: Array<OpenSourceContributionProps> = [
     language: "Rust",
     highlights: ["Fixed SSR/CSR rendering consistency"],
     tags: ["Rust", "Web Framework", "SSR"],
+    lastModified: "2025-11-22",
   },
   {
     projectName: "nushell",
@@ -190,6 +178,18 @@ export const OPEN_SOURCE_CONTRIBUTIONS: Array<OpenSourceContributionProps> = [
     language: "Rust",
     highlights: ["Enhanced developer experience and error messaging"],
     tags: ["Rust", "Shell", "CLI"],
+    lastModified: "2025-11-18",
+  },
+  {
+    projectName: "openlibrary",
+    projectUrl: "https://github.com/internetarchive/openlibrary",
+    description:
+      "The Internet Archive's digital lending library, providing free access to millions of books. A large-scale Python/JavaScript application serving millions of users.",
+    prCount: 1,
+    language: "Python",
+    highlights: ["Improved frontend interactivity and user experience"],
+    tags: ["Python", "JavaScript", "Frontend"],
+    lastModified: "2025-11-04",
   },
 ];
 

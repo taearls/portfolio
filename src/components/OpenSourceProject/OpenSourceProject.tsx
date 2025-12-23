@@ -1,17 +1,9 @@
-import type { FlexContainerProps } from "@/types/FlexContainer.ts";
-
-import InlineAnchor from "@/components/InlineAnchor/InlineAnchor.tsx";
 import FlexContainer from "@/components/layout/containers/FlexContainer/FlexContainer.tsx";
 import HeadingTwo from "@/components/layout/headings/HeadingTwo.tsx";
 import Paragraph from "@/components/layout/Paragraph/Paragraph.tsx";
 import RenderIf from "@/components/layout/RenderIf.tsx";
 import SvgIcon from "@/components/SvgIcon/SvgIcon.tsx";
-import Tag from "@/components/Tag/Tag.tsx";
-import {
-  AlignItemsCSSValue,
-  FlexFlowCSSValue,
-  MediaQueryPrefixValue,
-} from "@/types/layout.ts";
+import { AlignItemsCSSValue, FlexFlowCSSValue } from "@/types/layout.ts";
 
 export type OpenSourceProjectProps = {
   name: string;
@@ -20,13 +12,8 @@ export type OpenSourceProjectProps = {
   language: string;
   tags: Array<string>;
   isLast: boolean;
-};
-
-const projectContainerResponsiveStyle: FlexContainerProps["responsive"] = {
-  alignItems: [
-    { prefix: MediaQueryPrefixValue.MD, value: AlignItemsCSSValue.START },
-  ],
-  flexFlow: [{ prefix: MediaQueryPrefixValue.MD, value: FlexFlowCSSValue.ROW }],
+  /** ISO date string for sorting (YYYY-MM-DD) */
+  lastModified?: string;
 };
 
 export default function OpenSourceProject({
@@ -38,63 +25,33 @@ export default function OpenSourceProject({
   isLast,
 }: OpenSourceProjectProps) {
   return (
-    <FlexContainer flexFlow={FlexFlowCSSValue.COLUMN} gapY={8}>
-      <HeadingTwo>{name}</HeadingTwo>
-      <FlexContainer
-        gapX={8}
-        gapY={4}
-        flexFlow={FlexFlowCSSValue.COLUMN}
-        alignItems={AlignItemsCSSValue.START}
-        responsive={projectContainerResponsiveStyle}
-      >
-        <FlexContainer
-          inline
-          flexFlow={FlexFlowCSSValue.COLUMN}
-          alignItems={AlignItemsCSSValue.START}
-          gapY={4}
+    <FlexContainer flexFlow={FlexFlowCSSValue.COLUMN} gapY={2}>
+      {/* Project name with GitHub link */}
+      <FlexContainer inline gapX={2} alignItems={AlignItemsCSSValue.BASELINE}>
+        <HeadingTwo>{name}</HeadingTwo>
+        <a
+          href={githubUrl}
+          target="_blank"
+          rel="noreferrer"
+          aria-label={`View ${name} on GitHub`}
+          className="text-primary-text hover:text-accent-color transition-colors"
         >
-          <InlineAnchor
-            isExternal
-            accent
-            ariaLabel={`View ${name} on GitHub`}
-            href={githubUrl}
-          >
-            <FlexContainer
-              inline
-              gapX={2}
-              alignItems={AlignItemsCSSValue.CENTER}
-            >
-              <SvgIcon name="GithubIcon" width="20" height="20" />
-              <Paragraph>View on GitHub</Paragraph>
-            </FlexContainer>
-          </InlineAnchor>
-          <Tag label={language} />
-        </FlexContainer>
-        <FlexContainer
-          inline
-          flexFlow={FlexFlowCSSValue.COLUMN}
-          alignSelf={AlignItemsCSSValue.START}
-          gapY={4}
-        >
-          {descriptions.map((description) => (
-            <Paragraph key={description} width="md:w-[35ch] lg:w-fit">
-              {description}
-            </Paragraph>
-          ))}
-          <ul
-            className="m-0 flex list-none flex-wrap gap-2 p-0"
-            aria-label="Technologies used"
-          >
-            {tags.map((tag) => (
-              <li key={tag}>
-                <Tag label={tag} />
-              </li>
-            ))}
-          </ul>
-        </FlexContainer>
+          <SvgIcon name="GithubIcon" width="18" height="18" />
+        </a>
       </FlexContainer>
+
+      {/* Metadata line */}
+      <p className="text-secondary-text m-0 text-sm">
+        {language} · {tags.join(" · ")}
+      </p>
+
+      {/* Descriptions */}
+      {descriptions.map((description) => (
+        <Paragraph key={description}>{description}</Paragraph>
+      ))}
+
       <RenderIf condition={!isLast}>
-        <hr className="line-break" />
+        <hr className="line-break mt-3" />
       </RenderIf>
     </FlexContainer>
   );

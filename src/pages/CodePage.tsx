@@ -21,6 +21,34 @@ import {
   WEB_PROJECTS,
 } from "@/util/constants.ts";
 
+// Union type for combined projects
+type CombinedProject =
+  | (Omit<WebProjectProps, "isLast"> & { projectType: "web" })
+  | (Omit<OpenSourceProjectProps, "isLast"> & { projectType: "openSource" });
+
+// Combine web projects and open source projects, sorted by lastModified (descending)
+// Projects without lastModified date are sorted last
+const ALL_PROJECTS: Array<CombinedProject> = [
+  ...WEB_PROJECTS.map((p) => ({ ...p, projectType: "web" as const })),
+  ...OPEN_SOURCE_PROJECTS.map((p) => ({ ...p, projectType: "openSource" as const })),
+].sort((a, b) => {
+  const aDate = "lastModified" in a ? a.lastModified : undefined;
+  const bDate = "lastModified" in b ? b.lastModified : undefined;
+
+  // Items without dates go last
+  if (!aDate && !bDate) return 0;
+  if (!aDate) return 1;
+  if (!bDate) return -1;
+
+  // Sort descending (most recent first)
+  return bDate.localeCompare(aDate);
+});
+
+// Combine all tags from both project types
+const ALL_COMBINED_TAGS: Array<string> = Array.from(
+  new Set([...ALL_PROJECT_TAGS, ...ALL_OPEN_SOURCE_TAGS]),
+).sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+
 // Extend contribution props to match FilterableItem interface
 type FilterableContribution = OpenSourceContributionProps & {
   name: string;
@@ -36,60 +64,52 @@ const FILTERABLE_CONTRIBUTIONS: Array<FilterableContribution> =
   }));
 
 /**
- * Web Projects tab content with search and filtering.
+ * Projects tab content with search and filtering (combines web and open source projects).
  */
-function WebProjectsTab() {
+function ProjectsTab() {
   return (
-    <FilterableProjectList<Omit<WebProjectProps, "isLast">>
-      items={WEB_PROJECTS}
-      allTags={ALL_PROJECT_TAGS}
-      renderItem={(project, _index, isLast) => (
-        <WebProject
-          key={project.name}
-          analytics={project.analytics}
-          cloudinaryId={project.cloudinaryId}
-          alt={project.alt}
-          cursorStyle={project.cursorStyle}
-          descriptions={project.descriptions}
-          emoji={project.emoji}
-          href={project.href}
-          name={project.name}
-          tagline={project.tagline}
-          tags={project.tags}
-          isLast={isLast}
-        />
-      )}
+    <FilterableProjectList<CombinedProject>
+      items={ALL_PROJECTS}
+      allTags={ALL_COMBINED_TAGS}
+      renderItem={(project, _index, isLast) => {
+        if (project.projectType === "web") {
+          return (
+            <WebProject
+              key={project.name}
+              analytics={project.analytics}
+              cloudinaryId={project.cloudinaryId}
+              alt={project.alt}
+              cursorStyle={project.cursorStyle}
+              descriptions={project.descriptions}
+              emoji={project.emoji}
+              href={project.href}
+              name={project.name}
+              tagline={project.tagline}
+              tags={project.tags}
+              isLast={isLast}
+            />
+          );
+        }
+        return (
+          <OpenSourceProject
+            key={project.name}
+            name={project.name}
+            descriptions={project.descriptions}
+            githubUrl={project.githubUrl}
+            language={project.language}
+            tags={project.tags}
+            isLast={isLast}
+          />
+        );
+      }}
     />
   );
 }
 
 /**
- * Open Source Projects tab content with search and filtering.
+ * Open Source tab content showing external project contributions with search and filtering.
  */
 function OpenSourceTab() {
-  return (
-    <FilterableProjectList<Omit<OpenSourceProjectProps, "isLast">>
-      items={OPEN_SOURCE_PROJECTS}
-      allTags={ALL_OPEN_SOURCE_TAGS}
-      renderItem={(project, _index, isLast) => (
-        <OpenSourceProject
-          key={project.name}
-          name={project.name}
-          descriptions={project.descriptions}
-          githubUrl={project.githubUrl}
-          language={project.language}
-          tags={project.tags}
-          isLast={isLast}
-        />
-      )}
-    />
-  );
-}
-
-/**
- * Contributions tab content showing external project contributions with search and filtering.
- */
-function ContributionsTab() {
   return (
     <FilterableProjectList<FilterableContribution>
       items={FILTERABLE_CONTRIBUTIONS}
@@ -115,19 +135,14 @@ function ContributionsTab() {
 export default function CodePage() {
   const tabs = [
     {
-      id: "web-projects",
-      label: "Web Projects",
-      children: <WebProjectsTab />,
+      id: "projects",
+      label: "Projects",
+      children: <ProjectsTab />,
     },
     {
       id: "open-source",
       label: "Open Source",
       children: <OpenSourceTab />,
-    },
-    {
-      id: "contributions",
-      label: "Contributions",
-      children: <ContributionsTab />,
     },
   ];
 
@@ -161,7 +176,7 @@ export default function CodePage() {
 
         <Tabs
           tabs={tabs}
-          defaultTabId="web-projects"
+          defaultTabId="projects"
           ariaLabel="Project categories"
           queryParam="tab"
         />
