@@ -313,7 +313,7 @@ const ContactEmailForm = () => {
             aria-required="true"
             maxLength={5000}
           />
-          <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
             {formData.message.length}/5000 characters
           </p>
         </div>

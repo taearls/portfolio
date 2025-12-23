@@ -5,7 +5,7 @@ export default function Footer() {
   return (
     <footer>
       <SocialMediaIcons />
-      <p className="text-soft-black py-2 text-center text-xs font-normal tracking-wide dark:text-white">
+      <p className="text-soft-black py-2 text-center text-sm font-normal tracking-wide dark:text-white">
         {`\u{00A9} 1993-${getCurrentYear()} \u{2022} Tyler Earls`}
       </p>
     </footer>
