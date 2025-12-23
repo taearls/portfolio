@@ -1,44 +1,70 @@
 import type { ChangeEvent } from "react";
 
+import { useId, useRef, useState } from "react";
+
 import styles from "./SearchInput.module.css";
 
 export type SearchInputProps = {
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
-  ariaLabel?: string;
+  debounceMs?: number;
 };
 
 export default function SearchInput({
   value,
   onChange,
   placeholder = "Search projects...",
-  ariaLabel = "Search projects",
+  debounceMs = 150,
 }: SearchInputProps) {
+  const inputId = useId();
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [localValue, setLocalValue] = useState(value);
+
+  // Sync local state when parent value changes (e.g., external clear)
+  if (value !== localValue && value === "") {
+    setLocalValue(value);
+  }
+
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    onChange(event.target.value);
+    const newValue = event.target.value;
+    setLocalValue(newValue);
+
+    // Clear any pending timeout
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    // Schedule debounced onChange
+    timeoutRef.current = setTimeout(() => {
+      onChange(newValue);
+    }, debounceMs);
   };
 
   const handleClear = () => {
+    // Clear any pending timeout
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    setLocalValue("");
     onChange("");
   };
 
   return (
     <div className={styles["search-container"]}>
-      <label htmlFor="project-search" className={styles["search-label"]}>
+      <label htmlFor={inputId} className={styles["search-label"]}>
         Search:
       </label>
       <div className={styles["search-input-wrapper"]}>
         <input
           type="text"
-          id="project-search"
-          value={value}
+          id={inputId}
+          value={localValue}
           onChange={handleChange}
           placeholder={placeholder}
-          aria-label={ariaLabel}
           className={styles["search-input"]}
         />
-        {value && (
+        {localValue && (
           <button
             type="button"
             onClick={handleClear}
