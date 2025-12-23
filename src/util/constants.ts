@@ -43,7 +43,7 @@ export const WEB_PROJECTS: Array<Omit<WebProjectProps, "isLast">> = [
     href: "https://www.roadrangerusa.com",
     name: "Road Ranger",
     tagline: "Check it out!",
-    tags: ["JavaScript", "SCSS", "PHP", "Freelance"],
+    tags: ["JavaScript", "SCSS", "PHP"],
     width: 1200,
   },
   {
@@ -60,7 +60,7 @@ export const WEB_PROJECTS: Array<Omit<WebProjectProps, "isLast">> = [
     href: "https://space-clones.netlify.com",
     name: "Space Clones",
     tagline: "Beat my high score (if you dare)!",
-    tags: ["JavaScript", "jQuery", "HTML5", "CSS3", "Game"],
+    tags: ["JavaScript", "jQuery", "HTML5", "CSS3"],
     width: 1200,
   },
 ];
