@@ -24,7 +24,7 @@ export const WEB_PROJECTS: Array<Omit<WebProjectProps, "isLast">> = [
     emoji: "🎵",
     height: 630,
     href: "https://www.cuckooandthebirds.com",
-    name: "Cuckoo and the Birds",
+    name: "Cuckoo and the Birds Website",
     tagline: "Visit our website!",
     tags: ["React", "TailwindCSS", "TypeScript"],
     width: 1200,
