@@ -79,11 +79,18 @@ describe("<Tabs />", () => {
       expect(secondTab).toHaveAttribute("aria-selected", "true");
     });
 
-    it("should render the active tab panel content", () => {
+    it("should render the active tab panel content and hide inactive panels", () => {
       renderWithRouter(<Tabs tabs={defaultTabs} />);
 
+      // Active tab content is visible
       expect(screen.getByText("First tab content")).toBeInTheDocument();
-      expect(screen.queryByText("Second tab content")).not.toBeInTheDocument();
+      const firstPanel = screen.getByText("First tab content").closest('[role="tabpanel"]');
+      expect(firstPanel).not.toHaveAttribute("hidden");
+
+      // Inactive tab content is in DOM but hidden (for state preservation)
+      expect(screen.getByText("Second tab content")).toBeInTheDocument();
+      const secondPanel = screen.getByText("Second tab content").closest('[role="tabpanel"]');
+      expect(secondPanel).toHaveAttribute("hidden");
     });
   });
 
@@ -148,8 +155,14 @@ describe("<Tabs />", () => {
         "aria-selected",
         "true",
       );
-      expect(screen.getByText("Second tab content")).toBeInTheDocument();
-      expect(screen.queryByText("First tab content")).not.toBeInTheDocument();
+
+      // Second tab panel is now visible
+      const secondPanel = screen.getByText("Second tab content").closest('[role="tabpanel"]');
+      expect(secondPanel).not.toHaveAttribute("hidden");
+
+      // First tab panel is now hidden (but still in DOM for state preservation)
+      const firstPanel = screen.getByText("First tab content").closest('[role="tabpanel"]');
+      expect(firstPanel).toHaveAttribute("hidden");
     });
 
     it("should update tabindex when switching tabs", async () => {

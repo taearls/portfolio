@@ -59,8 +59,9 @@
 
   /* Fallback positioning using calc and CSS custom properties */
   /* This works in all browsers, anchor positioning enhances it */
-  left: calc(var(--active-index, 0) * (100% / 3));
-  width: calc(100% / 3);
+  /* Uses --tab-count for dynamic width calculation */
+  left: calc(var(--active-index, 0) * (100% / var(--tab-count, 3)));
+  width: calc(100% / var(--tab-count, 3));
 }
 
 /* CSS Anchor Positioning enhancement (Chrome 125+) */
@@ -140,7 +141,7 @@
     bottom: auto;
     top: 0;
     width: 2px;
-    height: calc(100% / 3);
+    height: calc(100% / var(--tab-count, 3));
     transform: translateY(calc(var(--active-index, 0) * 100%));
   }
 

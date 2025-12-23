@@ -106,7 +106,10 @@ export default function Tabs({
   const activeTab = tabs.find((tab) => tab.id === activeTabId);
 
   return (
-    <div className={styles.tabsContainer}>
+    <div
+      className={styles.tabsContainer}
+      style={{ "--tab-count": tabs.length } as React.CSSProperties}
+    >
       <div role="tablist" aria-label={ariaLabel} className={styles.tabList}>
         {tabs.map((tab, index) => {
           const isActive = tab.id === activeTabId;
@@ -144,7 +147,7 @@ export default function Tabs({
         />
       </div>
 
-      {/* Tab panels */}
+      {/* Tab panels - all rendered but inactive ones hidden to preserve state */}
       {tabs.map((tab) => {
         const isActive = tab.id === activeTabId;
         return (
@@ -153,11 +156,11 @@ export default function Tabs({
             id={getPanelId(tab.id)}
             role="tabpanel"
             aria-labelledby={getTabId(tab.id)}
-            tabIndex={0}
+            tabIndex={isActive ? 0 : -1}
             className={styles.tabPanel}
             hidden={!isActive}
           >
-            {isActive && tab.children}
+            {tab.children}
           </div>
         );
       })}

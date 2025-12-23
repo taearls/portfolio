@@ -132,6 +132,7 @@ export type OpenSourceContributionProps = {
   prCount: number;
   language: string;
   highlights: Array<string>;
+  tags: Array<string>;
 };
 
 export const OPEN_SOURCE_CONTRIBUTIONS: Array<OpenSourceContributionProps> = [
@@ -148,6 +149,7 @@ export const OPEN_SOURCE_CONTRIBUTIONS: Array<OpenSourceContributionProps> = [
       "Contributed jsx-a11y/no-noninteractive-tabindex accessibility rule",
       "Refactored AST node representations for cleaner architecture",
     ],
+    tags: ["Rust", "Linter", "AST", "Accessibility"],
   },
   {
     projectName: "openlibrary",
@@ -157,6 +159,7 @@ export const OPEN_SOURCE_CONTRIBUTIONS: Array<OpenSourceContributionProps> = [
     prCount: 1,
     language: "Python",
     highlights: ["Improved frontend interactivity and user experience"],
+    tags: ["Python", "JavaScript", "Frontend"],
   },
   {
     projectName: "rolldown",
@@ -166,6 +169,7 @@ export const OPEN_SOURCE_CONTRIBUTIONS: Array<OpenSourceContributionProps> = [
     prCount: 1,
     language: "Rust",
     highlights: ["Contributed to Rollup compatibility layer"],
+    tags: ["Rust", "Bundler", "Vite"],
   },
   {
     projectName: "leptos",
@@ -175,6 +179,7 @@ export const OPEN_SOURCE_CONTRIBUTIONS: Array<OpenSourceContributionProps> = [
     prCount: 1,
     language: "Rust",
     highlights: ["Fixed SSR/CSR rendering consistency"],
+    tags: ["Rust", "Web Framework", "SSR"],
   },
   {
     projectName: "nushell",
@@ -184,8 +189,18 @@ export const OPEN_SOURCE_CONTRIBUTIONS: Array<OpenSourceContributionProps> = [
     prCount: 1,
     language: "Rust",
     highlights: ["Enhanced developer experience and error messaging"],
+    tags: ["Rust", "Shell", "CLI"],
   },
 ];
+
+/**
+ * Extract all unique tags from open source contributions
+ */
+export const ALL_CONTRIBUTION_TAGS: Array<string> = Array.from(
+  new Set(
+    OPEN_SOURCE_CONTRIBUTIONS.flatMap((contribution) => contribution.tags),
+  ),
+).sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
 
 export const PORTFOLIO_EMAIL = "tyler.a.earls@gmail.com";
 
