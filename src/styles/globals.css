@@ -49,6 +49,13 @@
   --color-gray-700: #3f3f46;
   --color-gray-800: #27272a;
   --color-gray-900: #18181b;
+  /* Purple colors - custom for WCAG AAA compliance (7:1+ contrast) */
+  --color-purple-300: #d8b4fe; /* lighter purple for dark mode hover */
+  --color-purple-400: #c084fc; /* dark mode primary (unchanged) */
+  --color-purple-500: #a855f7; /* focus ring color (unchanged) */
+  --color-purple-600: #9333ea; /* standard purple for hover */
+  --color-purple-700: #7e22ce; /* original light mode primary */
+  --color-purple-800: #6b21a8; /* WCAG AAA compliant light mode primary */
 
   /* Custom font families */
   --font-family-default: Asul, sans-sarif;
@@ -91,9 +98,22 @@
   ); /* darker cyan for WCAG AA compliance (3:1+ contrast) */
   --active-dark: rgb(103 232 249 / 1); /* tailwind cyan-300 */
   --accent-dark: rgb(192 132 252 / 1); /* tailwind purple-400 */
-  --accent-light: rgb(126 34 206 / 1); /* tailwind purple-700 */
+  --accent-light: rgb(
+    107 33 168 / 1
+  ); /* tailwind purple-800 - WCAG AAA compliant (7:1+) */
+  --accent-hover-light: rgb(
+    126 34 206 / 1
+  ); /* tailwind purple-700 - lighter for hover */
+  --accent-hover-dark: rgb(
+    216 180 254 / 1
+  ); /* tailwind purple-300 - lighter for hover */
+  --accent-focus: rgb(168 85 247 / 1); /* tailwind purple-500 - focus rings */
   --active-color: light-dark(var(--active-light), var(--active-dark));
   --accent-color: light-dark(var(--accent-light), var(--accent-dark));
+  --accent-hover-color: light-dark(
+    var(--accent-hover-light),
+    var(--accent-hover-dark)
+  );
   --text-color: light-dark(var(--text-light), var(--text-dark));
   --font-default: "Ubuntu", sans-serif;
   /* --font-emphasis:
@@ -174,4 +194,67 @@ img {
   height: auto;
   /* Use containment to isolate layout calculations */
   contain: layout;
+}
+
+/* =============================================================================
+   Accent Color Utility Classes
+   Uses light-dark() for automatic theme switching - WCAG AAA compliant (7:1+)
+   Update CSS variables above to change colors globally across all components.
+   ============================================================================= */
+
+/* Text color */
+.text-accent {
+  color: var(--accent-color);
+}
+
+/* Background colors */
+.bg-accent {
+  background-color: var(--accent-color);
+}
+
+.bg-accent-hover:hover {
+  background-color: var(--accent-hover-color);
+}
+
+/* Border colors */
+.border-accent {
+  border-color: var(--accent-color);
+}
+
+.border-accent-focus:focus {
+  border-color: var(--accent-focus);
+}
+
+/* Focus ring utilities - integrates with Tailwind's ring system */
+.ring-accent-focus:focus {
+  --tw-ring-color: var(--accent-focus);
+}
+
+/* Combined button utility for common accent button pattern */
+.btn-accent {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+.btn-accent:hover {
+  background-color: var(--accent-hover-color);
+}
+
+.btn-accent:focus {
+  --tw-ring-color: var(--accent-focus);
+}
+
+/* Dark mode button text override (purple-400 needs dark text for contrast) */
+@media (prefers-color-scheme: dark) {
+  .btn-accent {
+    color: #111827; /* gray-900 for contrast on light purple */
+  }
+}
+
+html.dark-theme .btn-accent {
+  color: #111827;
+}
+
+html.light-theme .btn-accent {
+  color: white;
 }
