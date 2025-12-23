@@ -88,7 +88,7 @@ export default function NavigationBar({ links }: NavigationBarProps) {
         role="menu"
         className={mergeClasses(
           styles["navigation-list-container"],
-          isNavigationOpen.value === NAVIGATION_STATE.CLOSED && "hidden",
+          isNavigationOpen.value === NAVIGATION_STATE.CLOSED && styles.closed,
         )}
       >
         <FlexContainer
