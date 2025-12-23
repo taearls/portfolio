@@ -70,7 +70,7 @@ export const WEB_PROJECTS: Array<Omit<WebProjectProps, "isLast">> = [
  */
 export const ALL_PROJECT_TAGS: Array<string> = Array.from(
   new Set(WEB_PROJECTS.flatMap((project) => project.tags)),
-).sort();
+).sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
 
 export const PORTFOLIO_EMAIL = "tyler.a.earls@gmail.com";
 
