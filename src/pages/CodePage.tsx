@@ -288,6 +288,7 @@ export default function CodePage() {
           tabs={tabs}
           defaultTabId="web-projects"
           ariaLabel="Project categories"
+          queryParam="tab"
         />
       </FlexContainer>
     </main>

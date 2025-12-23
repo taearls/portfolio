@@ -1,6 +1,7 @@
 import type { KeyboardEvent, ReactNode } from "react";
 
 import { useCallback, useId, useState } from "react";
+import { useSearchParams } from "react-router";
 
 import styles from "./Tabs.module.css";
 
@@ -14,16 +15,48 @@ type TabsProps = {
   tabs: Array<Tab>;
   defaultTabId?: string;
   ariaLabel?: string;
+  /** Query parameter name for URL sync. If provided, tab state syncs with URL. */
+  queryParam?: string;
 };
 
 export default function Tabs({
   tabs,
   defaultTabId,
   ariaLabel = "Content tabs",
+  queryParam,
 }: TabsProps) {
   const uniqueId = useId();
-  const [activeTabId, setActiveTabId] = useState(
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [localActiveTabId, setLocalActiveTabId] = useState(
     defaultTabId ?? tabs[0]?.id ?? "",
+  );
+
+  // Determine active tab from URL (if queryParam provided) or local state
+  const validTabIds = tabs.map((t) => t.id);
+  const tabFromUrl = queryParam ? searchParams.get(queryParam) : null;
+
+  const activeTabId = queryParam
+    ? tabFromUrl && validTabIds.includes(tabFromUrl)
+      ? tabFromUrl
+      : (defaultTabId ?? tabs[0]?.id ?? "")
+    : localActiveTabId;
+
+  const setActiveTabId = useCallback(
+    (tabId: string) => {
+      if (queryParam) {
+        setSearchParams(
+          (prev) => {
+            const newParams = new URLSearchParams(prev);
+            newParams.set(queryParam, tabId);
+            return newParams;
+          },
+          { replace: true },
+        );
+      } else {
+        setLocalActiveTabId(tabId);
+      }
+    },
+    [queryParam, setSearchParams],
   );
 
   const getTabId = useCallback(
@@ -67,7 +100,7 @@ export default function Tabs({
         tabButton?.focus();
       }
     },
-    [tabs, activeTabId, getTabId],
+    [tabs, activeTabId, getTabId, setActiveTabId],
   );
 
   const activeTab = tabs.find((tab) => tab.id === activeTabId);
