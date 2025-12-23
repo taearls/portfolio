@@ -19,6 +19,8 @@ on:
         required: false
         type: string
 
+permissions: {}
+
 jobs:
   toggle-flag:
     runs-on: ubuntu-latest
