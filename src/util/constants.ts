@@ -135,7 +135,7 @@ export const OPEN_SOURCE_CONTRIBUTIONS: Array<OpenSourceContributionProps> = [
     projectName: "oxc",
     projectUrl: "https://github.com/oxc-project/oxc",
     description:
-      "A high-performance JavaScript/TypeScript toolchain written in Rust. I've contributed linter rules, AST improvements, and test infrastructure.",
+      "A high-performance JavaScript/TypeScript toolchain written in Rust, featuring a linter, parser, formatter, and more.",
     prCount: 16,
     language: "Rust",
     highlights: [
