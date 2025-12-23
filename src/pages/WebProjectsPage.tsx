@@ -124,6 +124,13 @@ export default function WebProjectsPage() {
             onTagToggle={handleTagToggle}
             onClearAll={handleClearAllTags}
           />
+          {/* Live region for screen reader announcements */}
+          <div aria-live="polite" aria-atomic="true" className="sr-only">
+            {hasActiveFilters &&
+              (noResultsFound
+                ? "No projects found matching your criteria."
+                : `Showing ${filteredProjects.length} ${filteredProjects.length === 1 ? "project" : "projects"}.`)}
+          </div>
         </FlexContainer>
 
         <RenderIf condition={noResultsFound}>

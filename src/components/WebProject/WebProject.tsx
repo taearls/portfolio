@@ -126,11 +126,16 @@ export default function WebProject({
               {description}
             </Paragraph>
           ))}
-          <FlexContainer wrap gapX={2} gapY={2}>
+          <ul
+            className="flex flex-wrap gap-2 list-none p-0 m-0"
+            aria-label="Technologies used"
+          >
             {tags.map((tag) => (
-              <Tag key={tag} label={tag} />
+              <li key={tag}>
+                <Tag label={tag} />
+              </li>
             ))}
-          </FlexContainer>
+          </ul>
         </FlexContainer>
       </FlexContainer>
       <RenderIf condition={!isLast}>
