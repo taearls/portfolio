@@ -5,7 +5,7 @@ export { EMAIL_REGEX } from "@portfolio/shared-types";
 
 export const WEB_PROJECTS: Array<Omit<WebProjectProps, "isLast">> = [
   {
-    alt: "Image of Cuckoo and the Birds Website",
+    alt: "Screenshot of the Cuckoo and the Birds band website homepage",
     analytics: {
       campaign: "portfolio",
       medium: "web",
@@ -17,26 +17,27 @@ export const WEB_PROJECTS: Array<Omit<WebProjectProps, "isLast">> = [
     },
     cursorStyle: "pointer",
     descriptions: [
-      "A website I made for my band, Cuckoo and the Birds, where you can find all our info, social media links, and press.",
-      "If you're interested to listen, please consider streaming our music on your preferred platform.",
-      "Built mobile-first with React, TypeScript, TailwindCSS, and a (mostly) healthy dose of rock 'n' roll 🤘",
+      "The official website for my band, Cuckoo and the Birds. Features our latest releases, upcoming shows, press materials, and links to streaming platforms.",
+      "Designed and developed from scratch with a mobile-first approach. Includes dark mode support, optimized image loading via Cloudinary, and smooth page transitions.",
+      "Built with React 18, TypeScript, TailwindCSS, and Vite for fast performance and an excellent developer experience.",
     ],
     emoji: "🎵",
     height: 630,
     href: "https://www.cuckooandthebirds.com",
-    name: "Cuckoo and the Birds Website",
+    name: "Cuckoo and the Birds",
     tagline: "Visit our website!",
     tags: ["React", "TailwindCSS", "TypeScript"],
     width: 1200,
   },
   {
-    alt: "Image of Road Ranger Banner",
+    alt: "Screenshot of the Road Ranger website navigation header",
     analytics: undefined,
     cloudinaryId: { default: "screenshots/v2/roadranger-desktop" },
     cursorStyle: "pointer",
     descriptions: [
-      "A navigation header that I built while freelancing for Trekk.",
-      "Both the mobile and desktop versions are based on designs their web designers prepared for the client and had me implement. Built with SCSS, JavaScript, and PHP.",
+      "A responsive navigation system I developed as a freelance contractor for Trekk, a digital marketing agency.",
+      "Implemented pixel-perfect designs for both mobile and desktop breakpoints. Features smooth dropdown animations, accessible keyboard navigation, and cross-browser compatibility.",
+      "Built with vanilla JavaScript, SCSS for modular styling, and PHP for server-side integration with the existing WordPress architecture.",
     ],
     emoji: "⛽",
     height: 630,
@@ -47,13 +48,14 @@ export const WEB_PROJECTS: Array<Omit<WebProjectProps, "isLast">> = [
     width: 1200,
   },
   {
-    alt: "Image of Space Clones Title Screen",
+    alt: "Screenshot of the Space Clones game title screen",
     analytics: undefined,
     cloudinaryId: { default: "screenshots/v2/space-clones-game" },
     cursorStyle: "url(images/space-clones-cursor.png), pointer",
     descriptions: [
-      "An original space shooting video game inspired by Space Invaders, the 1978 arcade classic. Defeat the clone army and then their mothership to advance to the next level.",
-      "If you get a high enough score, you can earn extra lives. Play solo, or take turns with a friend. The galaxy is yours to save from the invading clone army! Created using HTML5, CSS3, JavaScript, and jQuery.",
+      "A retro-inspired space shooter game paying homage to the 1978 arcade classic Space Invaders. Battle waves of clone enemies and defeat the mothership boss to advance through increasingly challenging levels.",
+      "Features a scoring system with bonus lives, two-player turn-based mode, and progressive difficulty scaling. Includes custom pixel art sprites and sound effects.",
+      "Built with HTML5 Canvas for rendering, CSS for UI styling, and JavaScript with jQuery for game logic and DOM manipulation.",
     ],
     emoji: "😉",
     height: 630,
