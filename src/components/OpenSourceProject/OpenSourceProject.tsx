@@ -40,9 +40,12 @@ export default function OpenSourceProject({
         </a>
       </FlexContainer>
 
-      {/* Metadata line */}
+      {/* Metadata lines */}
       <p className="text-secondary-text m-0 text-sm">
-        {language} · {tags.join(" · ")}
+        Primary language: {language}
+      </p>
+      <p className="text-secondary-text m-0 text-sm">
+        Tags: {tags.join(" · ")}
       </p>
 
       {/* Descriptions */}

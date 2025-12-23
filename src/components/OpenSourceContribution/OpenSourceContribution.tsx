@@ -18,6 +18,7 @@ export default function OpenSourceContribution({
   prCount,
   language,
   highlights,
+  tags,
   isLast,
 }: OpenSourceContributionComponentProps) {
   return (
@@ -36,9 +37,13 @@ export default function OpenSourceContribution({
         </a>
       </FlexContainer>
 
-      {/* Metadata line - subtle and unified */}
+      {/* Metadata lines */}
       <p className="text-secondary-text m-0 text-sm">
-        {language} · {prCount} {prCount === 1 ? "PR" : "PRs"} merged
+        Primary language: {language} · {prCount} {prCount === 1 ? "PR" : "PRs"}{" "}
+        merged
+      </p>
+      <p className="text-secondary-text m-0 text-sm">
+        Tags: {tags.join(" · ")}
       </p>
 
       {/* Description */}

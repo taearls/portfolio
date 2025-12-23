@@ -61,7 +61,9 @@ export default function WebProject({
       </FlexContainer>
 
       {/* Metadata line */}
-      <p className="text-secondary-text m-0 text-sm">{tags.join(" · ")}</p>
+      <p className="text-secondary-text m-0 text-sm">
+        Tags: {tags.join(" · ")}
+      </p>
 
       {/* Project image */}
       <div className="my-2 max-w-md">
