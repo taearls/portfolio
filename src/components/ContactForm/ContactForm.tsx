@@ -468,7 +468,7 @@ export default function ContactForm() {
 
         <div className="flex flex-col">
           <label
-            className="mb-1 block pr-4 font-bold text-purple-700 md:mb-0 dark:text-purple-400"
+            className="text-accent mb-1 block pr-4 font-bold md:mb-0"
             htmlFor="contactEmail"
           >
             {"Email"}
@@ -527,7 +527,7 @@ export default function ContactForm() {
               type="submit"
               value="Send Email"
               disabled={isFormDisabled()}
-              className="transition-padding focus:shadow-outline-light dark:focus:shadow-outline-dark my-2 inline-block cursor-pointer rounded-lg bg-purple-700 pr-10 pl-2 text-white transition-colors duration-200 ease-in-out focus:outline-none disabled:cursor-not-allowed disabled:pr-2 disabled:opacity-50 dark:bg-purple-400"
+              className="btn-accent bg-accent-hover transition-padding focus:shadow-outline-light dark:focus:shadow-outline-dark my-2 inline-block cursor-pointer rounded-lg pr-10 pl-2 transition-colors duration-200 ease-in-out focus:outline-none disabled:cursor-not-allowed disabled:pr-2 disabled:opacity-50"
             />
           </div>
         </div>
