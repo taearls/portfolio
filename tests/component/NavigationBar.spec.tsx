@@ -1,11 +1,12 @@
 import "@testing-library/jest-dom/vitest";
 
-import { render, screen, fireEvent } from "@testing-library/react";
+import type { RouteDataItem } from "@/constants/navigationData.tsx";
+
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router";
 
 import NavigationBar from "@/components/navigation/NavigationBar/NavigationBar.tsx";
 import ThemeContext from "@/state/contexts/ThemeContext.tsx";
-import type { RouteDataItem } from "@/constants/navigationData.tsx";
 
 // Mock navigation links for testing
 const mockLinks: Array<RouteDataItem> = [
@@ -36,68 +37,100 @@ const renderNavigationBar = () => {
   );
 };
 
+/**
+ * Helper to get the current toggle button (works regardless of current state)
+ */
+const getToggleButton = () => {
+  return (
+    screen.queryByRole("button", { name: /Open Navigation/i }) ||
+    screen.queryByRole("button", { name: /Close Navigation/i })
+  );
+};
+
+/**
+ * Helper to ensure navigation is in closed state.
+ * Clicks the close button if navigation is currently open.
+ */
+const ensureNavigationClosed = () => {
+  const closeButton = screen.queryByRole("button", {
+    name: /Close Navigation/i,
+  });
+  // Only click if navigation is currently open (close button visible)
+  if (closeButton) {
+    act(() => {
+      fireEvent.click(closeButton);
+    });
+  }
+};
+
+/**
+ * Helper to ensure navigation is in open state.
+ * Clicks the open button if navigation is currently closed.
+ */
+const ensureNavigationOpen = () => {
+  const openButton = screen.queryByRole("button", {
+    name: /Open Navigation/i,
+  });
+  // Only click if navigation is currently closed (open button visible)
+  if (openButton) {
+    act(() => {
+      fireEvent.click(openButton);
+    });
+  }
+};
+
 describe("<NavigationBar />", () => {
   describe("Navigation Toggle Functionality", () => {
-    it("should toggle navigation visibility when toggle button is clicked", () => {
+    it("should toggle navigation from open to closed when close button is clicked", () => {
       renderNavigationBar();
 
       const navigationList = screen.getByRole("menu");
 
-      // Get the initial state of the toggle button
-      // The button aria-label tells us the current action (Open = nav is closed, Close = nav is open)
-      const initialButton =
-        screen.queryByRole("button", { name: /Open Navigation/i }) ||
-        screen.queryByRole("button", { name: /Close Navigation/i });
+      // Ensure navigation starts in open state
+      ensureNavigationOpen();
 
-      expect(initialButton).toBeInTheDocument();
+      // Verify navigation is open (no closed class)
+      expect(navigationList.className).not.toMatch(/closed/);
 
-      const isInitiallyOpen = initialButton?.getAttribute("aria-label") === "Close Navigation";
+      // Click to close
+      const closeButton = screen.getByRole("button", {
+        name: /Close Navigation/i,
+      });
+      fireEvent.click(closeButton);
 
-      if (isInitiallyOpen) {
-        // Navigation starts open - verify no closed class
-        expect(navigationList.className).not.toMatch(/closed/);
+      // Verify navigation is now closed
+      expect(navigationList.className).toMatch(/closed/);
 
-        // Click to close
-        fireEvent.click(initialButton!);
+      // Button should now say "Open Navigation"
+      expect(
+        screen.getByRole("button", { name: /Open Navigation/i }),
+      ).toBeInTheDocument();
+    });
 
-        // Should now have closed class
-        expect(navigationList.className).toMatch(/closed/);
+    it("should toggle navigation from closed to open when open button is clicked", () => {
+      renderNavigationBar();
 
-        // Button should now say "Open Navigation"
-        expect(
-          screen.getByRole("button", { name: /Open Navigation/i }),
-        ).toBeInTheDocument();
+      const navigationList = screen.getByRole("menu");
 
-        // Click to open again
-        fireEvent.click(
-          screen.getByRole("button", { name: /Open Navigation/i }),
-        );
+      // Ensure navigation starts in closed state
+      ensureNavigationClosed();
 
-        // Should no longer have closed class
-        expect(navigationList.className).not.toMatch(/closed/);
-      } else {
-        // Navigation starts closed - verify has closed class
-        expect(navigationList.className).toMatch(/closed/);
+      // Verify navigation is closed
+      expect(navigationList.className).toMatch(/closed/);
 
-        // Click to open
-        fireEvent.click(initialButton!);
+      // Click to open
+      const openButton = screen.getByRole("button", {
+        name: /Open Navigation/i,
+      });
+      fireEvent.click(openButton);
 
-        // Should no longer have closed class
-        expect(navigationList.className).not.toMatch(/closed/);
+      // Verify navigation is now open (no closed class)
+      expect(navigationList.className).not.toMatch(/closed/);
 
-        // Button should now say "Close Navigation"
-        expect(
-          screen.getByRole("button", { name: /Close Navigation/i }),
-        ).toBeInTheDocument();
-
-        // Click to close again
-        fireEvent.click(
-          screen.getByRole("button", { name: /Close Navigation/i }),
-        );
-
-        // Should have closed class again
-        expect(navigationList.className).toMatch(/closed/);
-      }
+      // Button should now say "Close Navigation"
+      expect(
+        screen.getByRole("button", { name: /Close Navigation/i }),
+      ).toBeInTheDocument();
     });
 
     it("should apply closed CSS class when navigation is closed", () => {
@@ -105,17 +138,9 @@ describe("<NavigationBar />", () => {
 
       const navigationList = screen.getByRole("menu");
 
-      // Find the toggle button and get current state
-      const closeButton = screen.queryByRole("button", {
-        name: /Close Navigation/i,
-      });
+      // Ensure navigation is closed
+      ensureNavigationClosed();
 
-      if (closeButton) {
-        // If we have a close button, navigation is open - click to close
-        fireEvent.click(closeButton);
-      }
-
-      // Now navigation should be closed
       // The closed class from CSS Module should be applied
       // CSS Module mangles the class name, so we check for pattern containing "closed"
       expect(navigationList.className).toMatch(/closed/);
@@ -127,13 +152,7 @@ describe("<NavigationBar />", () => {
       const navigationList = screen.getByRole("menu");
 
       // First ensure navigation is closed
-      const closeButton = screen.queryByRole("button", {
-        name: /Close Navigation/i,
-      });
-
-      if (closeButton) {
-        fireEvent.click(closeButton);
-      }
+      ensureNavigationClosed();
 
       // Verify it's closed
       expect(navigationList.className).toMatch(/closed/);
@@ -148,31 +167,30 @@ describe("<NavigationBar />", () => {
       expect(navigationList.className).not.toMatch(/closed/);
     });
 
-    it("should toggle between open and closed states on multiple clicks", () => {
+    it("should complete a full open-close-open cycle correctly", () => {
       renderNavigationBar();
 
       const navigationList = screen.getByRole("menu");
 
-      // Perform multiple toggles and verify state changes correctly each time
-      for (let i = 0; i < 4; i++) {
-        const currentButton =
-          screen.queryByRole("button", { name: /Open Navigation/i }) ||
-          screen.queryByRole("button", { name: /Close Navigation/i });
+      // Start from known open state
+      ensureNavigationOpen();
+      expect(navigationList.className).not.toMatch(/closed/);
 
-        expect(currentButton).toBeInTheDocument();
+      // Close it
+      fireEvent.click(
+        screen.getByRole("button", { name: /Close Navigation/i }),
+      );
+      expect(navigationList.className).toMatch(/closed/);
 
-        const wasOpen =
-          currentButton?.getAttribute("aria-label") === "Close Navigation";
+      // Open it again
+      fireEvent.click(screen.getByRole("button", { name: /Open Navigation/i }));
+      expect(navigationList.className).not.toMatch(/closed/);
 
-        fireEvent.click(currentButton!);
-
-        // State should have toggled
-        if (wasOpen) {
-          expect(navigationList.className).toMatch(/closed/);
-        } else {
-          expect(navigationList.className).not.toMatch(/closed/);
-        }
-      }
+      // Close it again
+      fireEvent.click(
+        screen.getByRole("button", { name: /Close Navigation/i }),
+      );
+      expect(navigationList.className).toMatch(/closed/);
     });
 
     it("should render all visible navigation links", () => {
@@ -188,9 +206,7 @@ describe("<NavigationBar />", () => {
       renderNavigationBar();
 
       // Should have a toggle button with appropriate aria-label
-      const toggleButton =
-        screen.queryByRole("button", { name: /Open Navigation/i }) ||
-        screen.queryByRole("button", { name: /Close Navigation/i });
+      const toggleButton = getToggleButton();
 
       expect(toggleButton).toBeInTheDocument();
       expect(toggleButton).toHaveAttribute("aria-label");
@@ -199,25 +215,23 @@ describe("<NavigationBar />", () => {
     it("should update aria-label when toggle state changes", () => {
       renderNavigationBar();
 
-      // Get initial button
-      const initialButton =
-        screen.queryByRole("button", { name: /Open Navigation/i }) ||
-        screen.queryByRole("button", { name: /Close Navigation/i });
+      // Start from known open state
+      ensureNavigationOpen();
 
-      const initialLabel = initialButton?.getAttribute("aria-label");
+      // Verify we have close button (nav is open)
+      const closeButton = screen.getByRole("button", {
+        name: /Close Navigation/i,
+      });
+      expect(closeButton).toHaveAttribute("aria-label", "Close Navigation");
 
       // Click to toggle
-      fireEvent.click(initialButton!);
+      fireEvent.click(closeButton);
 
-      // Get new button
-      const newButton =
-        screen.queryByRole("button", { name: /Open Navigation/i }) ||
-        screen.queryByRole("button", { name: /Close Navigation/i });
-
-      const newLabel = newButton?.getAttribute("aria-label");
-
-      // Labels should be different after toggle
-      expect(newLabel).not.toBe(initialLabel);
+      // Verify we now have open button (nav is closed)
+      const openButton = screen.getByRole("button", {
+        name: /Open Navigation/i,
+      });
+      expect(openButton).toHaveAttribute("aria-label", "Open Navigation");
     });
   });
 
@@ -228,12 +242,7 @@ describe("<NavigationBar />", () => {
       const navigationList = screen.getByRole("menu");
 
       // Ensure navigation is closed
-      const closeButton = screen.queryByRole("button", {
-        name: /Close Navigation/i,
-      });
-      if (closeButton) {
-        fireEvent.click(closeButton);
-      }
+      ensureNavigationClosed();
 
       // The class should contain "closed" (CSS Module pattern)
       // It should NOT just be "hidden" (Tailwind utility - which has specificity issues)
