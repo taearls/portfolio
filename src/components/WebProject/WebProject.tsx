@@ -127,7 +127,7 @@ export default function WebProject({
             </Paragraph>
           ))}
           <ul
-            className="flex flex-wrap gap-2 list-none p-0 m-0"
+            className="m-0 flex list-none flex-wrap gap-2 p-0"
             aria-label="Technologies used"
           >
             {tags.map((tag) => (
