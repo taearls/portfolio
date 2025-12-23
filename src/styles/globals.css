@@ -98,13 +98,22 @@
   ); /* darker cyan for WCAG AA compliance (3:1+ contrast) */
   --active-dark: rgb(103 232 249 / 1); /* tailwind cyan-300 */
   --accent-dark: rgb(192 132 252 / 1); /* tailwind purple-400 */
-  --accent-light: rgb(107 33 168 / 1); /* tailwind purple-800 - WCAG AAA compliant (7:1+) */
-  --accent-hover-light: rgb(126 34 206 / 1); /* tailwind purple-700 - lighter for hover */
-  --accent-hover-dark: rgb(216 180 254 / 1); /* tailwind purple-300 - lighter for hover */
+  --accent-light: rgb(
+    107 33 168 / 1
+  ); /* tailwind purple-800 - WCAG AAA compliant (7:1+) */
+  --accent-hover-light: rgb(
+    126 34 206 / 1
+  ); /* tailwind purple-700 - lighter for hover */
+  --accent-hover-dark: rgb(
+    216 180 254 / 1
+  ); /* tailwind purple-300 - lighter for hover */
   --accent-focus: rgb(168 85 247 / 1); /* tailwind purple-500 - focus rings */
   --active-color: light-dark(var(--active-light), var(--active-dark));
   --accent-color: light-dark(var(--accent-light), var(--accent-dark));
-  --accent-hover-color: light-dark(var(--accent-hover-light), var(--accent-hover-dark));
+  --accent-hover-color: light-dark(
+    var(--accent-hover-light),
+    var(--accent-hover-dark)
+  );
   --text-color: light-dark(var(--text-light), var(--text-dark));
   --font-default: "Ubuntu", sans-serif;
   /* --font-emphasis:

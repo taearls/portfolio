@@ -248,8 +248,7 @@ const ContactEmailForm = () => {
             className="mb-1 block font-bold text-gray-800 dark:text-gray-200"
             htmlFor="contactEmail"
           >
-            Email{" "}
-            <span className="text-accent">*</span>
+            Email <span className="text-accent">*</span>
           </label>
           <input
             id="contactEmail"
@@ -300,8 +299,7 @@ const ContactEmailForm = () => {
             className="mb-1 block font-bold text-gray-800 dark:text-gray-200"
             htmlFor="contactMessage"
           >
-            Message{" "}
-            <span className="text-accent">*</span>
+            Message <span className="text-accent">*</span>
           </label>
           <textarea
             id="contactMessage"
@@ -337,7 +335,7 @@ const ContactEmailForm = () => {
           <button
             type="submit"
             disabled={!isFormValid || isSubmitting}
-            className="btn-accent bg-accent-hover flex cursor-pointer items-center gap-2 rounded-lg px-6 py-2 transition-all duration-200 ease-in-out focus:ring-2 focus:ring-offset-2 focus:outline-none ring-accent-focus disabled:cursor-not-allowed disabled:opacity-50 dark:focus:ring-offset-gray-900"
+            className="btn-accent bg-accent-hover ring-accent-focus flex cursor-pointer items-center gap-2 rounded-lg px-6 py-2 transition-all duration-200 ease-in-out focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 dark:focus:ring-offset-gray-900"
           >
             {isSubmitting && (
               <svg
