@@ -9,7 +9,7 @@ describe("Page Render Smoke Tests", () => {
   it("renders the Code Page", () => {
     cy.visit("/code");
 
-    cy.get("h1").should("include.text", "Web Projects");
+    cy.get("h1").should("include.text", "Code");
   });
   it("renders the Contact Page", () => {
     cy.visit("/contact");

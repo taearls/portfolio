@@ -4,12 +4,9 @@ import { lazy } from "react";
 
 // Lazy load page components for code splitting
 const HomePage = lazy(() => import("@/pages/HomePage.tsx"));
+const CodePage = lazy(() => import("@/pages/CodePage.tsx"));
 const ContactPage = lazy(() => import("@/pages/ContactPage.tsx"));
 const NotFoundPage = lazy(() => import("@/pages/NotFoundPage.tsx"));
-const OpenSourceProjectsPage = lazy(
-  () => import("@/pages/OpenSourceProjectsPage.tsx"),
-);
-const WebProjectsPage = lazy(() => import("@/pages/WebProjectsPage.tsx"));
 
 export type RouteDataChildItem = {
   href: string;
@@ -35,22 +32,10 @@ const routes: Array<RouteDataItem> = [
     name: "Home",
   },
   {
-    ariaLabel: "Visit Web Projects Page",
-    childLinks: [
-      {
-        Component: WebProjectsPage,
-        href: "",
-        index: true,
-      },
-    ],
+    Component: CodePage,
+    ariaLabel: "Visit Code Page",
     href: "/code",
     name: "Code",
-  },
-  {
-    Component: OpenSourceProjectsPage,
-    ariaLabel: "Visit Open Source Projects Page",
-    href: "/open-source",
-    name: "Open Source",
   },
   {
     Component: ContactPage,
