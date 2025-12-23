@@ -129,7 +129,7 @@ export default function WebProject({
             {tags.map((tag) => (
               <span
                 key={tag}
-                className="inline-flex items-center rounded-full border border-current px-2 py-1 text-xs font-medium"
+                className="inline-flex items-center rounded-xl border border-current px-2 py-1 text-xs font-medium"
               >
                 {tag}
               </span>
