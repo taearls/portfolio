@@ -1,6 +1,6 @@
 import type { ChangeEvent } from "react";
 
-import { useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 
 import styles from "./SearchInput.module.css";
 
@@ -22,9 +22,11 @@ export default function SearchInput({
   const [localValue, setLocalValue] = useState(value);
 
   // Sync local state when parent value changes (e.g., external clear)
-  if (value !== localValue && value === "") {
-    setLocalValue(value);
-  }
+  useEffect(() => {
+    if (value === "") {
+      setLocalValue("");
+    }
+  }, [value]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
