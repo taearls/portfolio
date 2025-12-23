@@ -1,3 +1,4 @@
+import type { OpenSourceProjectProps } from "@/components/OpenSourceProject/OpenSourceProject.tsx";
 import type { WebProjectProps } from "@/components/WebProject/WebProject.tsx";
 
 // Re-export EMAIL_REGEX from shared-types for convenience
@@ -70,6 +71,58 @@ export const WEB_PROJECTS: Array<Omit<WebProjectProps, "isLast">> = [
  */
 export const ALL_PROJECT_TAGS: Array<string> = Array.from(
   new Set(WEB_PROJECTS.flatMap((project) => project.tags)),
+).sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+
+export const OPEN_SOURCE_PROJECTS: Array<
+  Omit<OpenSourceProjectProps, "isLast">
+> = [
+  {
+    name: "audiate",
+    descriptions: [
+      "A Rust crate that applies music theory to generate chords and scales from given notes.",
+      "Combines my passion for music with systems programming, providing a foundation for building music applications.",
+    ],
+    githubUrl: "https://github.com/taearls/audiate",
+    language: "Rust",
+    tags: ["Rust", "Music Theory", "Library"],
+  },
+  {
+    name: "oxc-devtools",
+    descriptions: [
+      "A focused set of utility crates that assist with debugging the oxc JavaScript/TypeScript toolchain.",
+      "Contributes to the broader Rust ecosystem for web development tooling.",
+    ],
+    githubUrl: "https://github.com/taearls/oxc-devtools",
+    language: "Rust",
+    tags: ["Rust", "Developer Tools", "Open Source"],
+  },
+  {
+    name: "email-service-rs",
+    descriptions: [
+      "A flexible emailing service built with Rust, integrating with the Postmark API for reliable email delivery.",
+      "Designed for high performance and type safety in production environments.",
+    ],
+    githubUrl: "https://github.com/taearls/email-service-rs",
+    language: "Rust",
+    tags: ["Rust", "Postmark", "API"],
+  },
+  {
+    name: "website-security-header-proxy",
+    descriptions: [
+      "A Cloudflare Worker proxy that adds security headers to any website.",
+      "Built with Rust and deployed on Cloudflare's edge network for low-latency security enhancements.",
+    ],
+    githubUrl: "https://github.com/taearls/website-security-header-proxy",
+    language: "Rust",
+    tags: ["Rust", "Cloudflare", "Security"],
+  },
+];
+
+/**
+ * Extract all unique tags from open source projects
+ */
+export const ALL_OPEN_SOURCE_TAGS: Array<string> = Array.from(
+  new Set(OPEN_SOURCE_PROJECTS.flatMap((project) => project.tags)),
 ).sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
 
 export const PORTFOLIO_EMAIL = "tyler.a.earls@gmail.com";

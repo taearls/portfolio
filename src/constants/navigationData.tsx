@@ -6,6 +6,9 @@ import { lazy } from "react";
 const HomePage = lazy(() => import("@/pages/HomePage.tsx"));
 const ContactPage = lazy(() => import("@/pages/ContactPage.tsx"));
 const NotFoundPage = lazy(() => import("@/pages/NotFoundPage.tsx"));
+const OpenSourceProjectsPage = lazy(
+  () => import("@/pages/OpenSourceProjectsPage.tsx"),
+);
 const WebProjectsPage = lazy(() => import("@/pages/WebProjectsPage.tsx"));
 
 export type RouteDataChildItem = {
@@ -42,6 +45,12 @@ const routes: Array<RouteDataItem> = [
     ],
     href: "/code",
     name: "Code",
+  },
+  {
+    Component: OpenSourceProjectsPage,
+    ariaLabel: "Visit Open Source Projects Page",
+    href: "/open-source",
+    name: "Open Source",
   },
   {
     Component: ContactPage,
