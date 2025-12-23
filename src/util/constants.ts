@@ -60,7 +60,7 @@ export const WEB_PROJECTS: Array<Omit<WebProjectProps, "isLast">> = [
     href: "https://space-clones.netlify.com",
     name: "Space Clones",
     tagline: "Beat my high score (if you dare)!",
-    tags: ["JavaScript", "jQuery", "HTML5", "CSS3"],
+    tags: ["JavaScript", "jQuery", "HTML5", "CSS"],
     width: 1200,
   },
 ];
