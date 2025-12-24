@@ -113,7 +113,6 @@ function OpenSourceTab() {
     <FilterableProjectList<FilterableContribution>
       items={FILTERABLE_CONTRIBUTIONS}
       allTags={ALL_CONTRIBUTION_TAGS}
-      searchPlaceholder="Search contributions..."
       renderItem={(contribution, _index, isLast) => (
         <OpenSourceContribution
           key={contribution.projectName}
