@@ -158,7 +158,7 @@ export default function CodePage() {
               "Below you'll find samples of my work, from personal web projects to open source contributions. The majority of my professional work has been for private companies whose source code is not public."
             }
           </Paragraph>
-          <Paragraph>
+          <Paragraph className="self-start">
             {"For more of my work, check out my "}
             <InlineAnchor
               href="https://github.com/taearls"

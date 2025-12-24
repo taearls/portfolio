@@ -16,6 +16,8 @@ export type ParagraphProps = {
   width?: string;
   maxWidth?: string;
   alignment?: TextAlignmentType;
+  /** Additional CSS classes */
+  className?: string;
   "data-testid"?: string;
 };
 
@@ -28,6 +30,7 @@ export default function Paragraph({
   maxWidth = "max-w-65ch",
   width,
   alignment = TextAlignment.LEFT,
+  className,
 }: ParagraphProps) {
   const alignmentClass = getTextAlignmentClass(alignment);
   return (
@@ -41,6 +44,7 @@ export default function Paragraph({
         alignmentClass,
         maxWidth,
         "text-lg leading-normal lg:text-xl",
+        className != null && className,
       )}
     >
       {children}
