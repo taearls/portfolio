@@ -11,7 +11,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.25rem;
-  border-bottom: 2px solid var(--color-border, #e5e7eb);
+  border-bottom: 2px solid color-mix(in srgb, var(--text-color) 30%, transparent);
   margin-bottom: 1.5rem;
 }
 
@@ -25,7 +25,7 @@
   /* Match Paragraph component: text-lg lg:text-xl */
   font-size: 1.125rem;
   font-weight: 500;
-  color: var(--color-text-secondary, #6b7280);
+  color: color-mix(in srgb, var(--text-color) 70%, transparent);
   transition:
     color 0.2s ease,
     background-color 0.2s ease;
@@ -42,17 +42,17 @@
 }
 
 .tab:hover {
-  color: var(--color-text-primary, #111827);
-  background-color: var(--color-hover-bg, rgba(0, 0, 0, 0.05));
+  color: var(--text-color);
+  background-color: color-mix(in srgb, var(--text-color) 8%, transparent);
 }
 
 .tab:focus-visible {
-  outline: 2px solid var(--color-accent, #6366f1);
+  outline: 2px solid var(--accent-focus);
   outline-offset: -2px;
 }
 
 .tab[data-active] {
-  color: var(--color-accent, #6366f1);
+  color: var(--accent-color);
 }
 
 /* Sliding indicator using CSS anchor positioning */
@@ -60,7 +60,7 @@
   position: absolute;
   bottom: -2px;
   height: 2px;
-  background-color: var(--color-accent, #6366f1);
+  background-color: var(--accent-color);
   border-radius: 1px;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 
@@ -113,7 +113,7 @@
 }
 
 .tabPanel:focus-visible {
-  outline: 2px solid var(--color-accent, #6366f1);
+  outline: 2px solid var(--accent-focus);
   outline-offset: 4px;
   border-radius: 0.25rem;
 }
@@ -134,7 +134,7 @@
     flex-direction: column;
     gap: 0;
     border-bottom: none;
-    border-left: 2px solid var(--color-border, #e5e7eb);
+    border-left: 2px solid color-mix(in srgb, var(--text-color) 30%, transparent);
   }
 
   .tab {
@@ -161,22 +161,3 @@
   }
 }
 
-/* Dark mode support */
-@media (prefers-color-scheme: dark) {
-  .tab {
-    color: var(--color-text-secondary-dark, #9ca3af);
-  }
-
-  .tab:hover {
-    color: var(--color-text-primary-dark, #f9fafb);
-    background-color: var(--color-hover-bg-dark, rgba(255, 255, 255, 0.1));
-  }
-
-  .tab[data-active] {
-    color: var(--color-accent-dark, #818cf8);
-  }
-
-  .indicator {
-    background-color: var(--color-accent-dark, #818cf8);
-  }
-}
