@@ -214,10 +214,10 @@ export default function ResumePage() {
           <a
             href="/tyler-earls-resume.pdf"
             download="Tyler Earls - Resume.pdf"
-            className="btn-accent bg-accent-hover ring-accent-focus min-h-11 cursor-pointer rounded-lg px-6 py-2 transition-all duration-200 ease-in-out focus:ring-2 focus:ring-offset-2 focus:outline-none dark:focus:ring-offset-gray-900"
+            className="btn-accent bg-accent-hover ring-accent-focus min-h-11 cursor-pointer self-start rounded-lg px-6 py-2 transition-all duration-200 ease-in-out focus:ring-2 focus:ring-offset-2 focus:outline-none dark:focus:ring-offset-gray-900"
             aria-label="Download resume as PDF"
           >
-            Download PDF
+            Download Resume as PDF
           </a>
         </FlexContainer>
 
