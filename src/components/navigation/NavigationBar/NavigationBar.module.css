@@ -47,6 +47,12 @@
   align-items: center;
   justify-content: center;
   padding: 10px 16px;
+  border-radius: 0.375rem;
+}
+
+/* WCAG 1.4.1 - Provide non-color indicator for active page */
+.navigation-list-container a:global(.active) {
+  background-color: color-mix(in srgb, var(--active-color) 10%, transparent);
 }
 
 .navigation-toggle-container {
