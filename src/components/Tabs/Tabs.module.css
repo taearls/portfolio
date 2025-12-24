@@ -1,0 +1,165 @@
+/* Container with container query context */
+.tabsContainer {
+  container-name: tabs;
+  container-type: inline-size;
+  width: 100%;
+}
+
+/* Tab list with relative positioning for indicator */
+.tabList {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  border-bottom: 2px solid
+    color-mix(in srgb, var(--text-color) 30%, transparent);
+  margin-bottom: 1.5rem;
+}
+
+/* Individual tab button */
+.tab {
+  position: relative;
+  padding: 0.75rem 1.25rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  /* Match Paragraph component: text-lg lg:text-xl */
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: color-mix(in srgb, var(--text-color) 70%, transparent);
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease;
+  border-radius: 0.375rem 0.375rem 0 0;
+
+  /* Anchor name for CSS anchor positioning */
+  anchor-name: --tab-anchor;
+}
+
+@media (min-width: 1024px) {
+  .tab {
+    font-size: 1.25rem;
+  }
+}
+
+.tab:hover {
+  color: var(--text-color);
+  background-color: color-mix(in srgb, var(--text-color) 8%, transparent);
+}
+
+.tab:focus-visible {
+  outline: 2px solid var(--accent-focus);
+  outline-offset: -2px;
+}
+
+.tab[data-active] {
+  color: var(--accent-color);
+  background-color: color-mix(in srgb, var(--accent-color) 10%, transparent);
+}
+
+/* Sliding indicator using CSS anchor positioning */
+.indicator {
+  position: absolute;
+  bottom: -2px;
+  height: 2px;
+  background-color: var(--accent-color);
+  border-radius: 1px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Fallback positioning using calc and CSS custom properties */
+  /* This works in all browsers, anchor positioning enhances it */
+  /* Uses --tab-count for dynamic width calculation */
+  left: calc(var(--active-index, 0) * (100% / var(--tab-count, 3)));
+  width: calc(100% / var(--tab-count, 3));
+}
+
+/* CSS Anchor Positioning enhancement (Chrome 125+) */
+@supports (anchor-name: --tab) {
+  .tab:nth-child(1) {
+    anchor-name: --tab-0;
+  }
+  .tab:nth-child(2) {
+    anchor-name: --tab-1;
+  }
+  .tab:nth-child(3) {
+    anchor-name: --tab-2;
+  }
+
+  .indicator {
+    /* Position relative to the active tab */
+    position-anchor: var(--active-anchor, --tab-0);
+    inset-inline: anchor(start) anchor(end);
+    left: auto;
+    width: auto;
+  }
+
+  /* Update anchor based on active index */
+  .tabList:has(.tab:nth-child(1)[data-active]) .indicator {
+    position-anchor: --tab-0;
+  }
+  .tabList:has(.tab:nth-child(2)[data-active]) .indicator {
+    position-anchor: --tab-1;
+  }
+  .tabList:has(.tab:nth-child(3)[data-active]) .indicator {
+    position-anchor: --tab-2;
+  }
+}
+
+/* Tab panel */
+.tabPanel {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.tabPanel:focus-visible {
+  outline: 2px solid var(--accent-focus);
+  outline-offset: 4px;
+  border-radius: 0.25rem;
+}
+
+/* Entry animation using @starting-style (Chrome 117+, Safari 17.5+) */
+@supports (selector(:has(*))) {
+  .tabPanel:not([hidden]) {
+    @starting-style {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+  }
+}
+
+/* Container query for responsive tabs */
+@container tabs (max-width: 400px) {
+  .tabList {
+    flex-direction: column;
+    gap: 0;
+    border-bottom: none;
+    border-left: 2px solid
+      color-mix(in srgb, var(--text-color) 30%, transparent);
+  }
+
+  .tab {
+    border-radius: 0 0.375rem 0.375rem 0;
+    text-align: left;
+    width: 100%;
+  }
+
+  .indicator {
+    left: -2px;
+    bottom: auto;
+    top: 0;
+    width: 2px;
+    height: calc(100% / var(--tab-count, 3));
+    transform: translateY(calc(var(--active-index, 0) * 100%));
+  }
+
+  /* Disable anchor positioning in vertical mode for simplicity */
+  @supports (anchor-name: --tab) {
+    .indicator {
+      position-anchor: unset;
+      inset-inline: unset;
+    }
+  }
+}

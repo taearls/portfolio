@@ -515,6 +515,56 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 
 ## Changelog
 
+### 2025-12-23 - New Feature: Open Source Projects Page
+
+- **Feature**: Add dedicated Open Source page to showcase Rust projects
+- **Priority**: Feature enhancement
+- **Status**: Completed Dec 23, 2025
+- **Effort**: ~1.5 hours
+- **Impact**: New navigation section highlighting systems programming skills
+
+**Implementation Details**:
+
+1. **Created OpenSourceProject component** (`src/components/OpenSourceProject/`)
+   - GitHub link with icon as primary CTA
+   - Language badge display
+   - Reuses Tag component for technology tags
+   - Responsive layout following existing patterns
+
+2. **Created OpenSourceProjectsPage** (`src/pages/OpenSourceProjectsPage.tsx`)
+   - Header explaining open source contributions
+   - Search and tag filtering (reusing existing components)
+   - Accessibility features (aria-live announcements)
+
+3. **Added 4 Rust projects to showcase**:
+   - **audiate**: Music theory library for chords/scales
+   - **oxc-devtools**: Debugging utilities for oxc toolchain
+   - **email-service-rs**: Postmark email service
+   - **website-security-header-proxy**: Cloudflare security headers
+
+4. **Updated navigation** (`src/constants/navigationData.tsx`)
+   - Added `/open-source` route
+   - Lazy-loaded page component for code splitting
+
+**Files Created**:
+
+- `src/components/OpenSourceProject/OpenSourceProject.tsx`
+- `src/pages/OpenSourceProjectsPage.tsx`
+
+**Files Modified**:
+
+- `src/util/constants.ts` - Added OPEN_SOURCE_PROJECTS and ALL_OPEN_SOURCE_TAGS
+- `src/constants/navigationData.tsx` - Added route
+
+**Testing**:
+
+- ✅ All 211 unit tests passing
+- ✅ TypeScript compilation successful
+- ✅ Production build successful
+- ✅ Lint and format checks passing
+
+---
+
 ### 2025-12-23 - Issue #13 Completed: Web Project Descriptions Update
 
 - **Completed**: #13 - Update Web Projects - Descriptions

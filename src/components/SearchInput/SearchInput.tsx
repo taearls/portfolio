@@ -20,10 +20,16 @@ export default function SearchInput({
   const inputId = useId();
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [localValue, setLocalValue] = useState(value);
+  const [prevValue, setPrevValue] = useState(value);
 
-  // Sync local state when parent value changes (e.g., external clear)
-  if (value !== localValue && value === "") {
-    setLocalValue(value);
+  // Sync local state when parent value changes (e.g., external clear).
+  // This follows React's recommended pattern for adjusting state based on props:
+  // https://react.dev/learn/you-might-not-need-an-effect#adjusting-some-state-when-a-prop-changes
+  if (value !== prevValue) {
+    setPrevValue(value);
+    if (value === "") {
+      setLocalValue("");
+    }
   }
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
