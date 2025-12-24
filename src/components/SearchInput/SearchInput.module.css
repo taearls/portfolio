@@ -9,8 +9,16 @@
 }
 
 .search-label {
+  /* Match Paragraph component: text-lg lg:text-xl */
+  font-size: 1.125rem;
   font-weight: 500;
   color: var(--text-color);
+}
+
+@media (min-width: 1024px) {
+  .search-label {
+    font-size: 1.25rem;
+  }
 }
 
 .search-input-wrapper {

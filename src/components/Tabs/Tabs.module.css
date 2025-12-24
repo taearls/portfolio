@@ -22,7 +22,8 @@
   background: transparent;
   border: none;
   cursor: pointer;
-  font-size: 1rem;
+  /* Match Paragraph component: text-lg lg:text-xl */
+  font-size: 1.125rem;
   font-weight: 500;
   color: var(--color-text-secondary, #6b7280);
   transition:
@@ -32,6 +33,12 @@
 
   /* Anchor name for CSS anchor positioning */
   anchor-name: --tab-anchor;
+}
+
+@media (min-width: 1024px) {
+  .tab {
+    font-size: 1.25rem;
+  }
 }
 
 .tab:hover {

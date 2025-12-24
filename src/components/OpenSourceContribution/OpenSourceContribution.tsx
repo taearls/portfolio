@@ -30,31 +30,34 @@ export default function OpenSourceContribution({
           target="_blank"
           rel="noreferrer"
           aria-label={`View ${projectName} on GitHub`}
-          className="text-primary-text hover:text-accent-color transition-colors"
+          className="inline-flex items-center justify-center min-w-11 min-h-11 -my-2 text-primary-text hover:text-accent-color transition-colors"
         >
           <SvgIcon name="GithubIcon" width="18" height="18" />
         </a>
       </FlexContainer>
 
       {/* Metadata lines */}
-      <p className="text-secondary-text m-0 text-sm">
+      <Paragraph secondary>
         {prCount} {prCount === 1 ? "PR" : "PRs"} merged
-      </p>
-      <p className="text-secondary-text m-0 text-sm">
+      </Paragraph>
+      <Paragraph secondary>
         <span style={{ color: "var(--accent-color)" }}>Tags:</span>{" "}
         {tags.join(" · ")}
-      </p>
+      </Paragraph>
 
       {/* Description */}
       <Paragraph>{description}</Paragraph>
 
       {/* Highlights */}
       <ul
-        className="m-0 list-disc space-y-0.5 pl-5"
+        className="m-0 list-disc space-y-1 pl-5"
         aria-label={`Contribution highlights for ${projectName}`}
       >
         {highlights.map((highlight) => (
-          <li key={highlight} className="text-primary-text text-sm">
+          <li
+            key={highlight}
+            className="text-primary-text text-lg leading-normal lg:text-xl"
+          >
             {highlight}
           </li>
         ))}

@@ -54,17 +54,17 @@ export default function WebProject({
           target="_blank"
           rel="noreferrer"
           aria-label={`Visit ${name}`}
-          className="text-primary-text hover:text-accent-color transition-colors"
+          className="inline-flex items-center justify-center min-w-11 min-h-11 -my-2 text-primary-text hover:text-accent-color transition-colors"
         >
           <SvgIcon name="ExternalLinkIcon" width="18" height="18" />
         </a>
       </FlexContainer>
 
       {/* Metadata line */}
-      <p className="text-secondary-text m-0 text-sm">
+      <Paragraph secondary>
         <span style={{ color: "var(--accent-color)" }}>Tags:</span>{" "}
         {tags.join(" · ")}
-      </p>
+      </Paragraph>
 
       {/* Project image */}
       <div className="my-2 max-w-md">
