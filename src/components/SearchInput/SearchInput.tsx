@@ -21,9 +21,11 @@ export default function SearchInput({
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [localValue, setLocalValue] = useState(value);
 
-  // Sync local state when parent value changes (e.g., external clear)
+  // Sync local state when parent explicitly clears (external reset).
+  // This is intentional - we need to reset local state when parent clears the value.
   useEffect(() => {
     if (value === "") {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setLocalValue("");
     }
   }, [value]);

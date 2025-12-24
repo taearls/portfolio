@@ -54,7 +54,7 @@ export default function WebProject({
           target="_blank"
           rel="noreferrer"
           aria-label={`Visit ${name}`}
-          className="inline-flex items-center justify-center min-w-11 min-h-11 -my-2 text-primary-text hover:text-accent-color transition-colors"
+          className="text-primary-text hover:text-accent-color -my-2 inline-flex min-h-11 min-w-11 items-center justify-center transition-colors"
         >
           <SvgIcon name="ExternalLinkIcon" width="18" height="18" />
         </a>

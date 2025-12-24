@@ -84,12 +84,16 @@ describe("<Tabs />", () => {
 
       // Active tab content is visible
       expect(screen.getByText("First tab content")).toBeInTheDocument();
-      const firstPanel = screen.getByText("First tab content").closest('[role="tabpanel"]');
+      const firstPanel = screen
+        .getByText("First tab content")
+        .closest('[role="tabpanel"]');
       expect(firstPanel).not.toHaveAttribute("hidden");
 
       // Inactive tab content is in DOM but hidden (for state preservation)
       expect(screen.getByText("Second tab content")).toBeInTheDocument();
-      const secondPanel = screen.getByText("Second tab content").closest('[role="tabpanel"]');
+      const secondPanel = screen
+        .getByText("Second tab content")
+        .closest('[role="tabpanel"]');
       expect(secondPanel).toHaveAttribute("hidden");
     });
   });
@@ -157,11 +161,15 @@ describe("<Tabs />", () => {
       );
 
       // Second tab panel is now visible
-      const secondPanel = screen.getByText("Second tab content").closest('[role="tabpanel"]');
+      const secondPanel = screen
+        .getByText("Second tab content")
+        .closest('[role="tabpanel"]');
       expect(secondPanel).not.toHaveAttribute("hidden");
 
       // First tab panel is now hidden (but still in DOM for state preservation)
-      const firstPanel = screen.getByText("First tab content").closest('[role="tabpanel"]');
+      const firstPanel = screen
+        .getByText("First tab content")
+        .closest('[role="tabpanel"]');
       expect(firstPanel).toHaveAttribute("hidden");
     });
 

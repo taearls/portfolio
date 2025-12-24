@@ -11,7 +11,8 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.25rem;
-  border-bottom: 2px solid color-mix(in srgb, var(--text-color) 30%, transparent);
+  border-bottom: 2px solid
+    color-mix(in srgb, var(--text-color) 30%, transparent);
   margin-bottom: 1.5rem;
 }
 
@@ -135,7 +136,8 @@
     flex-direction: column;
     gap: 0;
     border-bottom: none;
-    border-left: 2px solid color-mix(in srgb, var(--text-color) 30%, transparent);
+    border-left: 2px solid
+      color-mix(in srgb, var(--text-color) 30%, transparent);
   }
 
   .tab {
@@ -161,4 +163,3 @@
     }
   }
 }
-

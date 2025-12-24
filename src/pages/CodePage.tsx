@@ -30,7 +30,10 @@ type CombinedProject =
 // Projects without lastModified date are sorted last
 const ALL_PROJECTS: Array<CombinedProject> = [
   ...WEB_PROJECTS.map((p) => ({ ...p, projectType: "web" as const })),
-  ...OPEN_SOURCE_PROJECTS.map((p) => ({ ...p, projectType: "openSource" as const })),
+  ...OPEN_SOURCE_PROJECTS.map((p) => ({
+    ...p,
+    projectType: "openSource" as const,
+  })),
 ].sort((a, b) => {
   const aDate = "lastModified" in a ? a.lastModified : undefined;
   const bDate = "lastModified" in b ? b.lastModified : undefined;
