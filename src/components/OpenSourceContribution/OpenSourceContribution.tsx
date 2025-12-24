@@ -1,5 +1,6 @@
 import type { OpenSourceContributionProps } from "@/util/constants.ts";
 
+import CountLabel from "@/components/CountLabel/CountLabel.tsx";
 import FlexContainer from "@/components/layout/containers/FlexContainer/FlexContainer.tsx";
 import HeadingTwo from "@/components/layout/headings/HeadingTwo.tsx";
 import Paragraph from "@/components/layout/Paragraph/Paragraph.tsx";
@@ -37,9 +38,10 @@ export default function OpenSourceContribution({
       </FlexContainer>
 
       {/* Metadata lines */}
-      <Paragraph secondary>
-        {prCount} {prCount === 1 ? "PR" : "PRs"} merged
-      </Paragraph>
+      <CountLabel
+        count={prCount}
+        label={{ singular: "PR merged", plural: "PRs merged" }}
+      />
       <Paragraph secondary>
         <span style={{ color: "var(--accent-color)" }}>Tags:</span>{" "}
         {tags.join(" · ")}

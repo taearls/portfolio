@@ -1,7 +1,12 @@
+/* Match Paragraph secondary styling: text-lg lg:text-xl with secondary text color */
 .countLabel {
-  display: inline-flex;
-  align-items: center;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--accent-color);
+  font-size: 1.125rem;
+  line-height: 1.5;
+  color: var(--secondary-text-color);
+}
+
+@media (min-width: 1024px) {
+  .countLabel {
+    font-size: 1.25rem;
+  }
 }

@@ -14,8 +14,8 @@ export default function CountLabel({ count, label }: CountLabelProps) {
   const displayLabel = count === 1 ? label.singular : label.plural;
 
   return (
-    <span className={styles.countLabel}>
-      ({count} {displayLabel})
-    </span>
+    <p className={styles.countLabel}>
+      {count} {displayLabel}
+    </p>
   );
 }
