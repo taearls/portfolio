@@ -53,6 +53,7 @@
 
 .tab[data-active] {
   color: var(--accent-color);
+  background-color: color-mix(in srgb, var(--accent-color) 10%, transparent);
 }
 
 /* Sliding indicator using CSS anchor positioning */
