@@ -54,14 +54,14 @@ export const WEB_PROJECTS: Array<Omit<WebProjectProps, "isLast">> = [
     cursorStyle: "url(images/space-clones-cursor.png), pointer",
     descriptions: [
       "An original space shooting video game inspired by Space Invaders, the 1978 arcade classic. Defeat the clone army and then their mothership to advance to the next level.",
-      "If you get a high enough score, you can earn extra lives. Play solo, or take turns with a friend. The galaxy is yours to save from the invading clone army! Created using HTML5, CSS3, JavaScript, and jQuery.",
+      "If you get a high enough score, you can earn extra lives. Play solo, or take turns with a friend. The galaxy is yours to save from the invading clone army! Created using HTML, CSS, JavaScript, and jQuery.",
     ],
     emoji: "😉",
     height: 630,
     href: "https://space-clones.netlify.com",
     name: "Space Clones",
     tagline: "Beat my high score (if you dare)!",
-    tags: ["CSS", "HTML5", "JavaScript", "jQuery"],
+    tags: ["CSS", "HTML", "JavaScript", "jQuery"],
     width: 1200,
   },
 ];
