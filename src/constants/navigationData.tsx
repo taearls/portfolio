@@ -5,6 +5,7 @@ import { lazy } from "react";
 // Lazy load page components for code splitting
 const HomePage = lazy(() => import("@/pages/HomePage.tsx"));
 const CodePage = lazy(() => import("@/pages/CodePage.tsx"));
+const ResumePage = lazy(() => import("@/pages/ResumePage.tsx"));
 const ContactPage = lazy(() => import("@/pages/ContactPage.tsx"));
 const NotFoundPage = lazy(() => import("@/pages/NotFoundPage.tsx"));
 
@@ -36,6 +37,12 @@ const routes: Array<RouteDataItem> = [
     ariaLabel: "Visit Code Page",
     href: "/code",
     name: "Code",
+  },
+  {
+    Component: ResumePage,
+    ariaLabel: "Visit Resume Page",
+    href: "/resume",
+    name: "Resume",
   },
   {
     Component: ContactPage,
