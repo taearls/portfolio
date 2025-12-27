@@ -12,6 +12,23 @@
   );
 }
 
+/* Page entry animation keyframes - matches Tabs.module.css tabPanel animation */
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Inner content wrapper - animated on route changes via React key prop */
+.page-content {
+  animation: pageEnter 0.2s ease forwards;
+}
+
 /* 640px = "sm" breakpoint in Tailwind */
 /* https://tailwindcss.com/docs/screens */
 @media (min-width: 640px) {

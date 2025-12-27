@@ -50,6 +50,15 @@ export default function NavigationBar({ links }: NavigationBarProps) {
     sendNavigationUpdate({ type: NAVIGATION_EVENT.TOGGLE });
   };
 
+  // Close navigation on link click (mobile UX improvement)
+  // On narrow viewports, this closes the dropdown after navigation
+  // On wide viewports, CSS container query keeps links visible regardless of state
+  const handleLinkClick = () => {
+    if (isNavigationOpen.value === NAVIGATION_STATE.OPEN) {
+      sendNavigationUpdate({ type: NAVIGATION_EVENT.TOGGLE });
+    }
+  };
+
   // NOTE: useCallback kept for NavLink className prop stability
   const getNavLinkClass = useCallback(
     (props: NavLinkRenderProps) =>
@@ -69,6 +78,7 @@ export default function NavigationBar({ links }: NavigationBarProps) {
             to={link.href}
             aria-label={link.ariaLabel}
             className={getNavLinkClass}
+            onClick={handleLinkClick}
           >
             <InlineAnchorContent
               isExternal={Boolean(link.isExternal)}

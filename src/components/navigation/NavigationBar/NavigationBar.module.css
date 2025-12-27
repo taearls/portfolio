@@ -55,11 +55,23 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
+
+  /* Smooth open/close animation */
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition:
+    opacity 200ms ease-out,
+    transform 200ms ease-out,
+    visibility 200ms ease-out;
 }
 
-/* Hide navigation when closed (only effective on narrow containers) */
+/* Hide navigation when closed with smooth animation (only effective on narrow containers) */
 .navigation-list-container.closed {
-  display: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-0.5rem);
+  pointer-events: none;
 }
 
 /* WCAG 2.5.5 - Ensure navigation links meet 44×44px minimum touch target */
@@ -112,11 +124,16 @@
     padding: 0;
     background: transparent;
     flex-direction: row;
+    /* No animation needed on wide containers */
+    transition: none;
   }
 
   /* .closed has no effect on wide containers - links always visible */
   .navigation-list-container.closed {
-    display: inline-flex;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    pointer-events: auto;
   }
 
   /* Hide hamburger on wide containers */

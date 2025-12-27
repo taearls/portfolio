@@ -251,4 +251,68 @@ describe("<NavigationBar />", () => {
       expect(navigationList.className).toMatch(/_closed_[a-z0-9]+/i);
     });
   });
+
+  describe("Auto-close on Link Click (Mobile UX)", () => {
+    it("should close navigation when a link is clicked while navigation is open", () => {
+      renderNavigationBar();
+
+      const navigationList = screen.getByRole("menu");
+
+      // Ensure navigation starts in open state
+      ensureNavigationOpen();
+
+      // Verify navigation is open
+      expect(navigationList.className).not.toMatch(/closed/);
+
+      // Click a navigation link
+      const codeLink = screen.getByText("Code");
+      fireEvent.click(codeLink);
+
+      // Navigation should now be closed
+      expect(navigationList.className).toMatch(/closed/);
+    });
+
+    it("should not error when clicking a link while navigation is already closed", () => {
+      renderNavigationBar();
+
+      const navigationList = screen.getByRole("menu");
+
+      // Ensure navigation is closed
+      ensureNavigationClosed();
+
+      // Verify navigation is closed
+      expect(navigationList.className).toMatch(/closed/);
+
+      // Click a navigation link - should not throw or cause issues
+      const contactLink = screen.getByText("Contact");
+      expect(() => fireEvent.click(contactLink)).not.toThrow();
+
+      // Navigation should remain closed
+      expect(navigationList.className).toMatch(/closed/);
+    });
+
+    it("should close navigation regardless of which link is clicked", () => {
+      renderNavigationBar();
+
+      const navigationList = screen.getByRole("menu");
+
+      // Test with Home link
+      ensureNavigationOpen();
+      expect(navigationList.className).not.toMatch(/closed/);
+      fireEvent.click(screen.getByText("Home"));
+      expect(navigationList.className).toMatch(/closed/);
+
+      // Test with Code link
+      ensureNavigationOpen();
+      expect(navigationList.className).not.toMatch(/closed/);
+      fireEvent.click(screen.getByText("Code"));
+      expect(navigationList.className).toMatch(/closed/);
+
+      // Test with Contact link
+      ensureNavigationOpen();
+      expect(navigationList.className).not.toMatch(/closed/);
+      fireEvent.click(screen.getByText("Contact"));
+      expect(navigationList.className).toMatch(/closed/);
+    });
+  });
 });

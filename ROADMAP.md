@@ -2,9 +2,9 @@
 
 ## Executive Summary
 
-This roadmap outlines the development plan for Tyler Earls' portfolio website, focusing on performance optimization, modern React tooling, and enhanced user experience. The project has **completed Phase 5 (React Compiler Integration)**, **Phase 6 (CI/CD setup)**, **Phase 7 (Accessibility & Core Web Vitals)**, and **Phase 8 (GitOps Feature Flags)**, with **10 open issues** including new navigation accessibility improvements.
+This roadmap outlines the development plan for Tyler Earls' portfolio website, focusing on performance optimization, modern React tooling, and enhanced user experience. The project has **completed Phase 5 (React Compiler Integration)**, **Phase 6 (CI/CD setup)**, **Phase 7 (Accessibility & Core Web Vitals)**, and **Phase 8 (GitOps Feature Flags)**, with **9 open issues** including navigation accessibility improvements.
 
-**Current Focus**: Navigation accessibility and UX improvements. New critical issues identified for mobile navigation behavior and accessibility compliance. Priority work includes auto-closing navigation on link click, adding accessible names to toggles, and implementing Escape key/click-outside dismissal.
+**Current Focus**: Navigation accessibility and UX improvements. Critical issues being addressed for mobile navigation behavior and accessibility compliance. Priority work includes adding accessible names to toggles and implementing Escape key/click-outside dismissal.
 
 ---
 
@@ -21,16 +21,15 @@ This roadmap outlines the development plan for Tyler Earls' portfolio website, f
 
 ## Open Issues Summary
 
-### Priority Breakdown (10 Open Issues)
+### Priority Breakdown (9 Open Issues)
 
-#### 🔴 Critical Priority (2 issues)
+#### 🔴 Critical Priority (1 issue)
 
-- **#107** - fix(nav): auto-close mobile navigation when link is clicked - _~1-2 hours_
-  - Labels: `type: bug`, `area: ui`, `area: routing`, `priority: critical`
-  - Impact: Navigation stays open after clicking a link, blocking page content
 - **#108** - fix(a11y): add accessible name to dark mode toggle button - _~30 minutes_
   - Labels: `type: bug`, `area: ui`, `priority: critical`
   - Impact: Screen readers cannot identify the dark mode toggle purpose
+
+✅ **#107** - fix(nav): auto-close mobile navigation when link is clicked - **COMPLETED Dec 27, 2025**
 
 ✅ **#61** - Fix Active Navigation Link Contrast (WCAG AA Failure) - **COMPLETED Nov 16, 2025**
 
@@ -212,25 +211,29 @@ _Successfully migrated to TailwindCSS v4 with modern config_
 
 **Immediate Priority (Critical + High)**:
 
-1. 🔴 **#107** - Auto-close mobile navigation when link is clicked
-   - Priority: CRITICAL
-   - Impact: Navigation blocks content after link click
-   - Effort: ~1-2 hours
-
-2. 🔴 **#108** - Add accessible name to dark mode toggle button
+1. 🔴 **#108** - Add accessible name to dark mode toggle button
    - Priority: CRITICAL
    - Impact: Screen reader accessibility violation
    - Effort: ~30 minutes
 
-3. 🟡 **#109** - Close mobile navigation with Escape key
+2. 🟡 **#109** - Close mobile navigation with Escape key
    - Priority: HIGH
    - Impact: Standard keyboard accessibility pattern
    - Effort: ~1 hour
 
-4. 🟡 **#110** - Close mobile navigation when clicking outside
+3. 🟡 **#110** - Close mobile navigation when clicking outside
    - Priority: HIGH
    - Impact: Expected UX pattern for overlays
    - Effort: ~1-2 hours
+
+**Just Completed**:
+
+1. ✅ **#107** - Auto-close mobile navigation when link is clicked - **COMPLETED**
+   - Priority: 🔴 CRITICAL
+   - Status: Completed Dec 27, 2025
+   - Effort: ~30 minutes (actual)
+   - Changes: Added onClick handler to NavLink that closes navigation when open
+   - Result: Navigation now closes automatically after clicking a link on mobile
 
 **Previous Sprint Progress (Completed):**
 
@@ -468,34 +471,34 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 
 ## Issue Status Summary
 
-| Priority    | Open   | In Progress | Closed (All Time) | Total Open |
-| ----------- | ------ | ----------- | ----------------- | ---------- |
-| 🔴 Critical | 2      | 0           | 1                 | 2          |
-| 🟡 High     | 2      | 0           | 11                | 2          |
-| 🟢 Medium   | 1      | 0           | 5                 | 1          |
-| 🔵 Low      | 5      | 0           | 5                 | 5          |
-| **TOTAL**   | **10** | **0**       | **22**            | **10**     |
+| Priority    | Open  | In Progress | Closed (All Time) | Total Open |
+| ----------- | ----- | ----------- | ----------------- | ---------- |
+| 🔴 Critical | 1     | 0           | 2                 | 1          |
+| 🟡 High     | 2     | 0           | 11                | 2          |
+| 🟢 Medium   | 1     | 0           | 5                 | 1          |
+| 🔵 Low      | 5     | 0           | 5                 | 5          |
+| **TOTAL**   | **9** | **0**       | **23**            | **9**      |
 
 ### Issues by Category
 
 **React Compiler** (0 open, 6 closed): Closed: #38 (epic), #39, #40, #41, #42, #43, #44
-**Bugs** (2 open, 1 closed): Open: #107 (nav auto-close), #108 (a11y toggle name) | Closed: #51 (navigation header overflow)
+**Bugs** (1 open, 2 closed): Open: #108 (a11y toggle name) | Closed: #107 (nav auto-close), #51 (navigation header overflow)
 **Infrastructure** (0 open, 2 closed): Closed: #80 (GitOps feature flags), #72 (Cloudflare feature flags)
 **CI/CD** (1 open, 2 closed): Open: #114 (Stylelint) | Closed: #18 (GitHub Actions pipeline), #72 (feature flags)
 **Accessibility** (1 open, 5 closed): Open: #108 | Closed: #61 (navigation contrast), #62 (touch targets), #63 (CLS mobile), #64 (WCAG AAA), #65 (font size readability)
-**Navigation UX** (6 open): #107, #109, #110, #111, #112, #113
+**Navigation UX** (5 open, 1 closed): Open: #109, #110, #111, #112, #113 | Closed: #107
 **UI/UX** (0 open, 9 closed): Closed: #10 (resume page), #13 (descriptions), #15 (tags/search), #58 (left-align text), #28 (React 19 Meta), #11 (SVG preload), #27 (lazy routes), #72 (feature flags), #14 (contact form)
 **Research** (2 open): #33, #34
 
 ### Effort Distribution (Open Issues Only)
 
-| Effort Level  | Count | Issues                                       |
-| ------------- | ----- | -------------------------------------------- |
-| Small (< 2h)  | 8     | #107, #108, #109, #110, #112, #113, #33, #34 |
-| Medium (2-8h) | 2     | #111, #114                                   |
-| Large (> 8h)  | 0     | —                                            |
+| Effort Level  | Count | Issues                                 |
+| ------------- | ----- | -------------------------------------- |
+| Small (< 2h)  | 7     | #108, #109, #110, #112, #113, #33, #34 |
+| Medium (2-8h) | 2     | #111, #114                             |
+| Large (> 8h)  | 0     | —                                      |
 
-**Note**: 10 open issues, mostly navigation-related. Critical path: #107 → #108 → #109 → #110 (all navigation accessibility/UX fixes).
+**Note**: 9 open issues, mostly navigation-related. Critical path: #108 → #109 → #110 (remaining navigation accessibility/UX fixes).
 
 ---
 
@@ -559,6 +562,43 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 ---
 
 ## Changelog
+
+### 2025-12-27 - Issue #107 Completed: Auto-close Mobile Navigation on Link Click
+
+- **Completed**: #107 - fix(nav): auto-close mobile navigation when link is clicked
+- **Priority**: 🔴 CRITICAL (Bug fix)
+- **Status**: Completed Dec 27, 2025
+- **Effort**: ~30 minutes
+- **Impact**: Navigation now closes automatically after clicking a link on mobile
+
+**Problem:**
+
+- When clicking a navigation link on mobile, the page navigated but the dropdown stayed open
+- Users had to manually close the navigation to see page content
+- Navigation overlay blocked the page heading after navigation
+
+**Solution:**
+
+- Added `handleLinkClick` function to NavigationBar component
+- Function checks if navigation is in OPEN state and toggles it closed
+- Added onClick handler to NavLink components
+- On wide viewports (>=700px), CSS container query keeps links visible regardless of state
+
+**Files Modified:**
+
+- `src/components/navigation/NavigationBar/NavigationBar.tsx` - Added auto-close handler
+
+**Files Created:**
+
+- None (tests added to existing `tests/component/NavigationBar.spec.tsx`)
+
+**Testing:**
+
+- ✅ All 244 unit tests passing (3 new tests for auto-close behavior)
+- ✅ Production build successful
+- ✅ Visual verification on mobile viewports
+
+---
 
 ### 2025-12-27 - ROADMAP Update: Navigation Accessibility Sprint
 
@@ -1875,6 +1915,6 @@ All high-priority accessibility issues (#61, #62, #63) have been resolved. Mediu
 
 ---
 
-**Last Updated**: December 27, 2025 (Navigation Accessibility Sprint - 10 Open Issues)
+**Last Updated**: December 27, 2025 (Navigation Accessibility Sprint - 9 Open Issues)
 **Maintained By**: Tyler Earls
 **Generated With**: Claude Code

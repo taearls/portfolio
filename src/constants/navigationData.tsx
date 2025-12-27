@@ -1,13 +1,11 @@
 import type { ComponentType } from "react";
 
-import { lazy } from "react";
-
-// Lazy load page components for code splitting
-const HomePage = lazy(() => import("@/pages/HomePage.tsx"));
-const CodePage = lazy(() => import("@/pages/CodePage.tsx"));
-const ResumePage = lazy(() => import("@/pages/ResumePage.tsx"));
-const ContactPage = lazy(() => import("@/pages/ContactPage.tsx"));
-const NotFoundPage = lazy(() => import("@/pages/NotFoundPage.tsx"));
+// Eagerly load all pages for instant navigation
+import CodePage from "@/pages/CodePage.tsx";
+import ContactPage from "@/pages/ContactPage.tsx";
+import HomePage from "@/pages/HomePage.tsx";
+import NotFoundPage from "@/pages/NotFoundPage.tsx";
+import ResumePage from "@/pages/ResumePage.tsx";
 
 export type RouteDataChildItem = {
   href: string;
