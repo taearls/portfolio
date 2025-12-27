@@ -2,9 +2,9 @@
 
 ## Executive Summary
 
-This roadmap outlines the development plan for Tyler Earls' portfolio website, focusing on performance optimization, modern React tooling, and enhanced user experience. The project has **completed Phase 5 (React Compiler Integration)**, **Phase 6 (CI/CD setup)**, **Phase 7 (Accessibility & Core Web Vitals)**, and **Phase 8 (GitOps Feature Flags)**, with **9 open issues** including navigation accessibility improvements.
+This roadmap outlines the development plan for Tyler Earls' portfolio website, focusing on performance optimization, modern React tooling, and enhanced user experience. The project has **completed Phase 5 (React Compiler Integration)**, **Phase 6 (CI/CD setup)**, **Phase 7 (Accessibility & Core Web Vitals)**, and **Phase 8 (GitOps Feature Flags)**, with **8 open issues** including navigation accessibility improvements.
 
-**Current Focus**: Navigation accessibility and UX improvements. Critical issues being addressed for mobile navigation behavior and accessibility compliance. Priority work includes adding accessible names to toggles and implementing Escape key/click-outside dismissal.
+**Current Focus**: Navigation accessibility and UX improvements. Critical issues being addressed for mobile navigation behavior and accessibility compliance. Priority work includes adding accessible names to toggles and implementing Escape key dismissal.
 
 ---
 
@@ -21,7 +21,7 @@ This roadmap outlines the development plan for Tyler Earls' portfolio website, f
 
 ## Open Issues Summary
 
-### Priority Breakdown (9 Open Issues)
+### Priority Breakdown (8 Open Issues)
 
 #### 🔴 Critical Priority (1 issue)
 
@@ -33,14 +33,13 @@ This roadmap outlines the development plan for Tyler Earls' portfolio website, f
 
 ✅ **#61** - Fix Active Navigation Link Contrast (WCAG AA Failure) - **COMPLETED Nov 16, 2025**
 
-#### 🟡 High Priority (2 issues)
+#### 🟡 High Priority (1 issue)
 
 - **#109** - feat(nav): close mobile navigation with Escape key - _~1 hour_
   - Labels: `type: enhancement`, `area: ui`, `priority: high`
   - Impact: Standard keyboard accessibility pattern for dismissible overlays
-- **#110** - feat(nav): close mobile navigation when clicking outside - _~1-2 hours_
-  - Labels: `type: enhancement`, `area: ui`, `priority: high`
-  - Impact: Expected UX pattern for dropdown/overlay dismissal
+
+✅ **#110** - feat(nav): close mobile navigation when clicking outside - **COMPLETED Dec 27, 2025**
 
 **Previously Completed:**
 
@@ -221,14 +220,16 @@ _Successfully migrated to TailwindCSS v4 with modern config_
    - Impact: Standard keyboard accessibility pattern
    - Effort: ~1 hour
 
-3. 🟡 **#110** - Close mobile navigation when clicking outside
-   - Priority: HIGH
-   - Impact: Expected UX pattern for overlays
-   - Effort: ~1-2 hours
-
 **Just Completed**:
 
-1. ✅ **#107** - Auto-close mobile navigation when link is clicked - **COMPLETED**
+1. ✅ **#110** - Close mobile navigation when clicking outside - **COMPLETED**
+   - Priority: 🟡 HIGH
+   - Status: Completed Dec 27, 2025
+   - Effort: ~30 minutes (actual)
+   - Changes: Added click-outside handler with useEffect and useRef
+   - Result: Navigation closes when clicking anywhere outside the nav on mobile
+
+2. ✅ **#107** - Auto-close mobile navigation when link is clicked - **COMPLETED**
    - Priority: 🔴 CRITICAL
    - Status: Completed Dec 27, 2025
    - Effort: ~30 minutes (actual)
@@ -474,10 +475,10 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 | Priority    | Open  | In Progress | Closed (All Time) | Total Open |
 | ----------- | ----- | ----------- | ----------------- | ---------- |
 | 🔴 Critical | 1     | 0           | 2                 | 1          |
-| 🟡 High     | 2     | 0           | 11                | 2          |
+| 🟡 High     | 1     | 0           | 12                | 1          |
 | 🟢 Medium   | 1     | 0           | 5                 | 1          |
 | 🔵 Low      | 5     | 0           | 5                 | 5          |
-| **TOTAL**   | **9** | **0**       | **23**            | **9**      |
+| **TOTAL**   | **8** | **0**       | **24**            | **8**      |
 
 ### Issues by Category
 
@@ -486,19 +487,19 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 **Infrastructure** (0 open, 2 closed): Closed: #80 (GitOps feature flags), #72 (Cloudflare feature flags)
 **CI/CD** (1 open, 2 closed): Open: #114 (Stylelint) | Closed: #18 (GitHub Actions pipeline), #72 (feature flags)
 **Accessibility** (1 open, 5 closed): Open: #108 | Closed: #61 (navigation contrast), #62 (touch targets), #63 (CLS mobile), #64 (WCAG AAA), #65 (font size readability)
-**Navigation UX** (5 open, 1 closed): Open: #109, #110, #111, #112, #113 | Closed: #107
+**Navigation UX** (4 open, 2 closed): Open: #109, #111, #112, #113 | Closed: #110, #107
 **UI/UX** (0 open, 9 closed): Closed: #10 (resume page), #13 (descriptions), #15 (tags/search), #58 (left-align text), #28 (React 19 Meta), #11 (SVG preload), #27 (lazy routes), #72 (feature flags), #14 (contact form)
 **Research** (2 open): #33, #34
 
 ### Effort Distribution (Open Issues Only)
 
-| Effort Level  | Count | Issues                                 |
-| ------------- | ----- | -------------------------------------- |
-| Small (< 2h)  | 7     | #108, #109, #110, #112, #113, #33, #34 |
-| Medium (2-8h) | 2     | #111, #114                             |
-| Large (> 8h)  | 0     | —                                      |
+| Effort Level  | Count | Issues                           |
+| ------------- | ----- | -------------------------------- |
+| Small (< 2h)  | 6     | #108, #109, #112, #113, #33, #34 |
+| Medium (2-8h) | 2     | #111, #114                       |
+| Large (> 8h)  | 0     | —                                |
 
-**Note**: 9 open issues, mostly navigation-related. Critical path: #108 → #109 → #110 (remaining navigation accessibility/UX fixes).
+**Note**: 8 open issues, mostly navigation-related. Critical path: #108 → #109 (remaining navigation accessibility/UX fixes).
 
 ---
 
@@ -562,6 +563,44 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 ---
 
 ## Changelog
+
+### 2025-12-27 - Issue #110 Completed: Close Mobile Navigation When Clicking Outside
+
+- **Completed**: #110 - feat(nav): close mobile navigation when clicking outside
+- **Priority**: 🟡 HIGH (Enhancement)
+- **Status**: Completed Dec 27, 2025
+- **Effort**: ~30 minutes
+- **Impact**: Navigation now closes when clicking anywhere outside the nav on mobile
+
+**Problem:**
+
+- Users expected clicking outside the navigation dropdown to close it
+- Standard UX pattern for overlay/dropdown dismissal was missing
+- Mobile users had to tap the hamburger menu again to close navigation
+
+**Solution:**
+
+- Added `useRef` to reference the navigation element
+- Implemented `useEffect` with click-outside detection logic
+- Checks if click target is outside nav AND navigation is open
+- Sends TOGGLE event to close navigation when conditions met
+- Event listener properly cleaned up on unmount
+
+**Files Modified:**
+
+- `src/components/navigation/NavigationBar/NavigationBar.tsx` - Added click-outside handler
+
+**Files Created:**
+
+- None (tests added to existing `tests/component/NavigationBar.spec.tsx`)
+
+**Testing:**
+
+- ✅ All 248 unit tests passing (4 new tests for click-outside behavior)
+- ✅ Production build successful
+- ✅ ESLint passes
+
+---
 
 ### 2025-12-27 - Issue #107 Completed: Auto-close Mobile Navigation on Link Click
 
@@ -1915,6 +1954,6 @@ All high-priority accessibility issues (#61, #62, #63) have been resolved. Mediu
 
 ---
 
-**Last Updated**: December 27, 2025 (Navigation Accessibility Sprint - 9 Open Issues)
+**Last Updated**: December 27, 2025 (Navigation Accessibility Sprint - 8 Open Issues)
 **Maintained By**: Tyler Earls
 **Generated With**: Claude Code

@@ -315,4 +315,89 @@ describe("<NavigationBar />", () => {
       expect(navigationList.className).toMatch(/closed/);
     });
   });
+
+  describe("Auto-close on Click Outside (Mobile UX)", () => {
+    it("should close navigation when clicking outside while navigation is open", () => {
+      renderNavigationBar();
+
+      const navigationList = screen.getByRole("menu");
+
+      // Ensure navigation starts in open state
+      ensureNavigationOpen();
+
+      // Verify navigation is open
+      expect(navigationList.className).not.toMatch(/closed/);
+
+      // Simulate click outside the nav (on the document body)
+      act(() => {
+        fireEvent.click(document.body);
+      });
+
+      // Navigation should now be closed
+      expect(navigationList.className).toMatch(/closed/);
+    });
+
+    it("should not close navigation when clicking inside the nav", () => {
+      renderNavigationBar();
+
+      const navigationList = screen.getByRole("menu");
+
+      // Ensure navigation starts in open state
+      ensureNavigationOpen();
+
+      // Verify navigation is open
+      expect(navigationList.className).not.toMatch(/closed/);
+
+      // Click inside the navigation (on the list itself)
+      act(() => {
+        fireEvent.click(navigationList);
+      });
+
+      // Navigation should still be open
+      expect(navigationList.className).not.toMatch(/closed/);
+    });
+
+    it("should not error when clicking outside while navigation is already closed", () => {
+      renderNavigationBar();
+
+      const navigationList = screen.getByRole("menu");
+
+      // Ensure navigation is closed
+      ensureNavigationClosed();
+
+      // Verify navigation is closed
+      expect(navigationList.className).toMatch(/closed/);
+
+      // Click outside - should not throw or cause issues
+      expect(() => {
+        act(() => {
+          fireEvent.click(document.body);
+        });
+      }).not.toThrow();
+
+      // Navigation should remain closed
+      expect(navigationList.className).toMatch(/closed/);
+    });
+
+    it("should not close navigation when clicking the toggle button", () => {
+      renderNavigationBar();
+
+      const navigationList = screen.getByRole("menu");
+
+      // Ensure navigation is closed first
+      ensureNavigationClosed();
+
+      // Get the toggle button and click it to open
+      const toggleButton = getToggleButton();
+      act(() => {
+        fireEvent.click(toggleButton!);
+      });
+
+      // Navigation should be open
+      expect(navigationList.className).not.toMatch(/closed/);
+
+      // The toggle button click should NOT trigger click-outside
+      // (since the button is inside the nav)
+    });
+  });
 });
