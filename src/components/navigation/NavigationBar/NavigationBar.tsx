@@ -51,7 +51,6 @@ export default function NavigationBar({ links }: NavigationBarProps) {
   const selectedLink = links.find((link) => link.href === location.pathname);
   const navRef = useRef<HTMLElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
-  const firstLinkRef = useRef<HTMLAnchorElement>(null);
 
   // Track if we're on a narrow viewport where focus trap should be active
   const [isNarrowViewport, setIsNarrowViewport] = useState(
@@ -76,15 +75,15 @@ export default function NavigationBar({ links }: NavigationBarProps) {
   // This makes it immediately clear to keyboard/screen reader users that nav is open
   // Only applies on narrow viewports - desktop nav is always visible
   useEffect(() => {
-    if (
-      isNarrowViewport &&
-      isNavigationOpen.value === NAVIGATION_STATE.OPEN &&
-      firstLinkRef.current
-    ) {
-      // Small delay to ensure DOM is ready and focus trap is active
-      requestAnimationFrame(() => {
-        firstLinkRef.current?.focus();
-      });
+    if (isNarrowViewport && isNavigationOpen.value === NAVIGATION_STATE.OPEN) {
+      // Small delay to ensure DOM and focus trap are ready
+      const timeoutId = setTimeout(() => {
+        const firstLink = document.querySelector<HTMLElement>(
+          "[data-first-link='true']",
+        );
+        firstLink?.focus();
+      }, 50);
+      return () => clearTimeout(timeoutId);
     }
   }, [isNarrowViewport, isNavigationOpen.value]);
 
@@ -154,11 +153,11 @@ export default function NavigationBar({ links }: NavigationBarProps) {
         isLast={index === visibleLinks.length - 1}
       >
         <NavLink
-          ref={isFirstLink ? firstLinkRef : undefined}
           to={link.href}
           aria-label={link.ariaLabel}
           className={getNavLinkClass}
           onClick={handleLinkClick}
+          data-first-link={isFirstLink ? "true" : undefined}
         >
           <InlineAnchorContent
             isExternal={Boolean(link.isExternal)}
@@ -184,10 +183,16 @@ export default function NavigationBar({ links }: NavigationBarProps) {
         clickOutsideDeactivates: true,
         // Allow Escape key to close (handled by handleEscape)
         escapeDeactivates: false,
+        // Skip initial focus - we handle it separately via useEffect
+        initialFocus: false,
         // Return focus to toggle button when trap deactivates
         onDeactivate: () => toggleRef.current?.focus(),
         // Prevent focus-trap from throwing if no focusable elements found
         fallbackFocus: () => toggleRef.current ?? document.body,
+        // Allow focusing elements during CSS visibility transition
+        tabbableOptions: {
+          displayCheck: "none",
+        },
       }}
     >
       <div>
