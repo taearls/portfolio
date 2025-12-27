@@ -88,7 +88,7 @@ describe("<NavigationBar />", () => {
     it("should toggle navigation from open to closed when close button is clicked", () => {
       renderNavigationBar();
 
-      const navigationList = screen.getByRole("menu");
+      const navigationList = screen.getByRole("list");
 
       // Ensure navigation starts in open state
       ensureNavigationOpen();
@@ -114,7 +114,7 @@ describe("<NavigationBar />", () => {
     it("should toggle navigation from closed to open when open button is clicked", () => {
       renderNavigationBar();
 
-      const navigationList = screen.getByRole("menu");
+      const navigationList = screen.getByRole("list");
 
       // Ensure navigation starts in closed state
       ensureNavigationClosed();
@@ -140,7 +140,7 @@ describe("<NavigationBar />", () => {
     it("should apply closed CSS class when navigation is closed", () => {
       renderNavigationBar();
 
-      const navigationList = screen.getByRole("menu");
+      const navigationList = screen.getByRole("list");
 
       // Ensure navigation is closed
       ensureNavigationClosed();
@@ -153,7 +153,7 @@ describe("<NavigationBar />", () => {
     it("should remove closed CSS class when navigation is opened", () => {
       renderNavigationBar();
 
-      const navigationList = screen.getByRole("menu");
+      const navigationList = screen.getByRole("list");
 
       // First ensure navigation is closed
       ensureNavigationClosed();
@@ -174,7 +174,7 @@ describe("<NavigationBar />", () => {
     it("should complete a full open-close-open cycle correctly", () => {
       renderNavigationBar();
 
-      const navigationList = screen.getByRole("menu");
+      const navigationList = screen.getByRole("list");
 
       // Start from known open state
       ensureNavigationOpen();
@@ -243,7 +243,7 @@ describe("<NavigationBar />", () => {
     it("should use CSS Module closed class for hiding navigation (not Tailwind hidden)", () => {
       renderNavigationBar();
 
-      const navigationList = screen.getByRole("menu");
+      const navigationList = screen.getByRole("list");
 
       // Ensure navigation is closed
       ensureNavigationClosed();
@@ -260,7 +260,7 @@ describe("<NavigationBar />", () => {
     it("should close navigation when a link is clicked while navigation is open", () => {
       renderNavigationBar();
 
-      const navigationList = screen.getByRole("menu");
+      const navigationList = screen.getByRole("list");
 
       // Ensure navigation starts in open state
       ensureNavigationOpen();
@@ -279,7 +279,7 @@ describe("<NavigationBar />", () => {
     it("should not error when clicking a link while navigation is already closed", () => {
       renderNavigationBar();
 
-      const navigationList = screen.getByRole("menu");
+      const navigationList = screen.getByRole("list");
 
       // Ensure navigation is closed
       ensureNavigationClosed();
@@ -298,7 +298,7 @@ describe("<NavigationBar />", () => {
     it("should close navigation regardless of which link is clicked", () => {
       renderNavigationBar();
 
-      const navigationList = screen.getByRole("menu");
+      const navigationList = screen.getByRole("list");
 
       // Test with Home link
       ensureNavigationOpen();
@@ -324,7 +324,7 @@ describe("<NavigationBar />", () => {
     it("should close navigation when clicking outside while navigation is open", () => {
       renderNavigationBar();
 
-      const navigationList = screen.getByRole("menu");
+      const navigationList = screen.getByRole("list");
 
       // Ensure navigation starts in open state
       ensureNavigationOpen();
@@ -344,7 +344,7 @@ describe("<NavigationBar />", () => {
     it("should not close navigation when clicking inside the nav", () => {
       renderNavigationBar();
 
-      const navigationList = screen.getByRole("menu");
+      const navigationList = screen.getByRole("list");
 
       // Ensure navigation starts in open state
       ensureNavigationOpen();
@@ -364,7 +364,7 @@ describe("<NavigationBar />", () => {
     it("should not error when clicking outside while navigation is already closed", () => {
       renderNavigationBar();
 
-      const navigationList = screen.getByRole("menu");
+      const navigationList = screen.getByRole("list");
 
       // Ensure navigation is closed
       ensureNavigationClosed();
@@ -386,7 +386,7 @@ describe("<NavigationBar />", () => {
     it("should not close navigation when clicking the toggle button", () => {
       renderNavigationBar();
 
-      const navigationList = screen.getByRole("menu");
+      const navigationList = screen.getByRole("list");
 
       // Ensure navigation is closed first
       ensureNavigationClosed();
@@ -409,7 +409,7 @@ describe("<NavigationBar />", () => {
     it("should close navigation when Escape key is pressed while navigation is open", () => {
       renderNavigationBar();
 
-      const navigationList = screen.getByRole("menu");
+      const navigationList = screen.getByRole("list");
 
       // Ensure navigation starts in open state
       ensureNavigationOpen();
@@ -429,7 +429,7 @@ describe("<NavigationBar />", () => {
     it("should not error when pressing Escape while navigation is already closed", () => {
       renderNavigationBar();
 
-      const navigationList = screen.getByRole("menu");
+      const navigationList = screen.getByRole("list");
 
       // Ensure navigation is closed
       ensureNavigationClosed();
@@ -471,7 +471,7 @@ describe("<NavigationBar />", () => {
     it("should not close navigation when other keys are pressed", () => {
       renderNavigationBar();
 
-      const navigationList = screen.getByRole("menu");
+      const navigationList = screen.getByRole("list");
 
       // Ensure navigation starts in open state
       ensureNavigationOpen();
@@ -585,7 +585,7 @@ describe("<NavigationBar />", () => {
       // Open navigation
       ensureNavigationOpen();
 
-      const navigationList = screen.getByRole("menu");
+      const navigationList = screen.getByRole("list");
       expect(navigationList.className).not.toMatch(/closed/);
 
       // Close navigation via toggle

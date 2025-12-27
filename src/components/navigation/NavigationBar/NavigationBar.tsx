@@ -183,7 +183,6 @@ export default function NavigationBar({ links }: NavigationBarProps) {
           - Wide containers (>=700px): .closed has no effect, links always visible horizontally
         */}
         <ul
-          role="menu"
           className={mergeClasses(
             styles["navigation-list-container"],
             isNavigationOpen.value === NAVIGATION_STATE.CLOSED && styles.closed,
