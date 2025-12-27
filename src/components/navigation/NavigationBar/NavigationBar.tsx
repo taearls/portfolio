@@ -154,6 +154,10 @@ export default function NavigationBar({ links }: NavigationBarProps) {
       );
     });
 
+  // Determine if backdrop should be visible (open nav on narrow viewport)
+  const isBackdropVisible =
+    isNarrowViewport && isNavigationOpen.value === NAVIGATION_STATE.OPEN;
+
   return (
     <FocusTrap
       active={isFocusTrapActive}
@@ -168,50 +172,66 @@ export default function NavigationBar({ links }: NavigationBarProps) {
         fallbackFocus: () => toggleRef.current ?? document.body,
       }}
     >
-      <nav
-        ref={navRef}
-        id="navigation-bar"
-        className={mergeClasses(
-          styles["navigation-bar"],
-          isNavigationOpen.value === NAVIGATION_STATE.CLOSED &&
-            styles["nav-closed"],
-        )}
-      >
+      <div>
         {/*
+          Semi-transparent backdrop behind mobile nav dropdown.
+          - Visible only on narrow viewports when nav is open
+          - Clicking backdrop closes navigation (via handleClickOutside)
+          - Hidden on wide viewports via CSS container query
+        */}
+        <div
+          className={mergeClasses(
+            styles["navigation-backdrop"],
+            !isBackdropVisible && styles["backdrop-hidden"],
+          )}
+          aria-hidden="true"
+        />
+        <nav
+          ref={navRef}
+          id="navigation-bar"
+          className={mergeClasses(
+            styles["navigation-bar"],
+            isNavigationOpen.value === NAVIGATION_STATE.CLOSED &&
+              styles["nav-closed"],
+          )}
+        >
+          {/*
           CSS Container Query Behavior (see NavigationBar.module.css):
           - Narrow containers (<700px): .closed hides the list, links shown in dropdown overlay
           - Wide containers (>=700px): .closed has no effect, links always visible horizontally
         */}
-        <ul
-          className={mergeClasses(
-            styles["navigation-list-container"],
-            isNavigationOpen.value === NAVIGATION_STATE.CLOSED && styles.closed,
-          )}
-        >
-          <FlexContainer
-            flexFlow={FlexFlowCSSValue.COLUMN}
-            responsive={navigationContainerResponsiveProp}
+          <ul
+            className={mergeClasses(
+              styles["navigation-list-container"],
+              isNavigationOpen.value === NAVIGATION_STATE.CLOSED &&
+                styles.closed,
+            )}
           >
-            {navigationLinks}
-          </FlexContainer>
-        </ul>
+            <FlexContainer
+              flexFlow={FlexFlowCSSValue.COLUMN}
+              responsive={navigationContainerResponsiveProp}
+            >
+              {navigationLinks}
+            </FlexContainer>
+          </ul>
 
-        <div className={mergeClasses(styles["navigation-toggle-container"])}>
-          <DarkModeToggle visible={true} />
-          {/*
+          <div className={mergeClasses(styles["navigation-toggle-container"])}>
+            <DarkModeToggle visible={true} />
+            {/*
             CSS Container Query Behavior (see NavigationBar.module.css):
             - Narrow containers (<700px): hamburger visible for toggle
             - Wide containers (>=700px): hamburger hidden, links always visible
           */}
-          <div className={mergeClasses(styles["hamburger-wrapper"])}>
-            <NavigationToggle
-              ref={toggleRef}
-              active={isNavigationOpen.value === NAVIGATION_STATE.OPEN}
-              onClick={handleToggle}
-            />
+            <div className={mergeClasses(styles["hamburger-wrapper"])}>
+              <NavigationToggle
+                ref={toggleRef}
+                active={isNavigationOpen.value === NAVIGATION_STATE.OPEN}
+                onClick={handleToggle}
+              />
+            </div>
           </div>
-        </div>
-      </nav>
+        </nav>
+      </div>
     </FocusTrap>
   );
 }

@@ -38,8 +38,14 @@
   --z-index-sticky-tabs: 10;
 
   /* ===========================================================================
-     Overlays (50-59)
+     Overlays (40-59)
      =========================================================================== */
+
+  /**
+   * Semi-transparent backdrop behind mobile navigation dropdown
+   * @used-in src/components/navigation/NavigationBar/NavigationBar.module.css (.navigation-backdrop)
+   */
+  --z-index-nav-backdrop: 40;
 
   /**
    * Mobile navigation dropdown menu overlay
