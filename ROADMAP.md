@@ -2,9 +2,9 @@
 
 ## Executive Summary
 
-This roadmap outlines the development plan for Tyler Earls' portfolio website, focusing on performance optimization, modern React tooling, and enhanced user experience. The project has **completed Phase 5 (React Compiler Integration)**, **Phase 6 (CI/CD setup)**, **Phase 7 (Accessibility & Core Web Vitals)**, and **Phase 8 (GitOps Feature Flags)**, with **7 open issues** including navigation accessibility improvements.
+This roadmap outlines the development plan for Tyler Earls' portfolio website, focusing on performance optimization, modern React tooling, and enhanced user experience. The project has **completed Phase 5 (React Compiler Integration)**, **Phase 6 (CI/CD setup)**, **Phase 7 (Accessibility & Core Web Vitals)**, and **Phase 8 (GitOps Feature Flags)**, with **6 open issues** including navigation accessibility improvements.
 
-**Current Focus**: Navigation accessibility and UX improvements. Critical issues being addressed for mobile navigation behavior and accessibility compliance. Priority work includes adding accessible names to toggles.
+**Current Focus**: Navigation accessibility and UX improvements. All critical accessibility issues resolved. Priority work continues on keyboard navigation and mobile UX enhancements.
 
 ---
 
@@ -21,13 +21,11 @@ This roadmap outlines the development plan for Tyler Earls' portfolio website, f
 
 ## Open Issues Summary
 
-### Priority Breakdown (7 Open Issues)
+### Priority Breakdown (6 Open Issues)
 
-#### 🔴 Critical Priority (1 issue)
+#### 🔴 Critical Priority (0 issues)
 
-- **#108** - fix(a11y): add accessible name to dark mode toggle button - _~30 minutes_
-  - Labels: `type: bug`, `area: ui`, `priority: critical`
-  - Impact: Screen readers cannot identify the dark mode toggle purpose
+✅ **#108** - fix(a11y): add accessible name to dark mode toggle button - **COMPLETED Dec 27, 2025**
 
 ✅ **#107** - fix(nav): auto-close mobile navigation when link is clicked - **COMPLETED Dec 27, 2025**
 
@@ -565,6 +563,45 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 ---
 
 ## Changelog
+
+### 2025-12-27 - Issue #108 Completed: Add Accessible Name to Dark Mode Toggle
+
+- **Completed**: #108 - fix(a11y): add accessible name to dark mode toggle button
+- **Priority**: 🔴 CRITICAL (WCAG 2.1 Level A Compliance)
+- **Status**: Completed Dec 27, 2025
+- **Effort**: ~30 minutes
+- **Impact**: Screen readers now announce meaningful labels for the dark mode toggle
+
+**Problem:**
+
+- Dark mode toggle button had no `aria-label`
+- Screen readers announced "MoonIconSunIcon" which is meaningless to users
+- WCAG 2.1 Level A violation (1.1.1 Non-text Content)
+
+**Solution:**
+
+- Added dynamic `aria-label` to dark mode toggle button
+- Label changes based on current theme state:
+  - "Switch to light mode" when in dark mode
+  - "Switch to dark mode" when in light mode
+- Fixed bug in `getInitialThemeState()` that wasn't properly checking user's system preference
+
+**Files Modified:**
+
+- `src/components/DarkModeToggle/DarkModeToggle.tsx` - Added aria-label attribute
+- `src/state/machines/themeMachine.ts` - Fixed `.matches` check for system preference
+- `tests/component/DarkModeToggle.spec.tsx` - Added aria-label tests
+- `tests/unit/state/themeMachine.test.ts` - Added unit tests for `getInitialThemeState`
+- `tests/component/utils.tsx` - Enhanced test utilities with `initialState` option
+
+**Testing:**
+
+- ✅ Production build successful
+- ✅ ESLint passes
+- ✅ 257 tests passing (4 new tests added)
+- ✅ Screen readers now announce descriptive labels
+
+---
 
 ### 2025-12-27 - Issue #120 Completed: Add Bottom Border to Mobile Navigation
 

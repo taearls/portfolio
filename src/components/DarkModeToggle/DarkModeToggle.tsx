@@ -24,6 +24,11 @@ export default function DarkModeToggle({ visible }: DarkModeToggleProps) {
     <button
       onClick={updateTheme}
       className={mergeClasses(!visible && "hidden")}
+      aria-label={
+        themeState === THEME_STATES.DARK
+          ? "Switch to light mode"
+          : "Switch to dark mode"
+      }
     >
       <span hidden={themeState === THEME_STATES.DARK}>
         <MoonIcon />
