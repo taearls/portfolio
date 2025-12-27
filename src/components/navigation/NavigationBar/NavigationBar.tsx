@@ -51,6 +51,7 @@ export default function NavigationBar({ links }: NavigationBarProps) {
   const selectedLink = links.find((link) => link.href === location.pathname);
   const navRef = useRef<HTMLElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
+  const firstLinkRef = useRef<HTMLAnchorElement>(null);
 
   // Track if we're on a narrow viewport where focus trap should be active
   const [isNarrowViewport, setIsNarrowViewport] = useState(
@@ -70,6 +71,22 @@ export default function NavigationBar({ links }: NavigationBarProps) {
   // Focus trap should only be active on narrow viewports when nav is open
   const isFocusTrapActive =
     isNarrowViewport && isNavigationOpen.value === NAVIGATION_STATE.OPEN;
+
+  // Move focus to first navigation link when mobile nav opens (accessibility)
+  // This makes it immediately clear to keyboard/screen reader users that nav is open
+  // Only applies on narrow viewports - desktop nav is always visible
+  useEffect(() => {
+    if (
+      isNarrowViewport &&
+      isNavigationOpen.value === NAVIGATION_STATE.OPEN &&
+      firstLinkRef.current
+    ) {
+      // Small delay to ensure DOM is ready and focus trap is active
+      requestAnimationFrame(() => {
+        firstLinkRef.current?.focus();
+      });
+    }
+  }, [isNarrowViewport, isNavigationOpen.value]);
 
   // Close navigation when pressing Escape key (keyboard accessibility)
   // On narrow viewports, this closes the dropdown and returns focus to toggle
@@ -128,31 +145,32 @@ export default function NavigationBar({ links }: NavigationBarProps) {
     [],
   );
 
-  const navigationLinks = links
-    .filter((link) => !link.hidden)
-    .map((link, index) => {
-      return (
-        <NavigationBarListItem
-          key={link.name}
-          isLast={index === links.filter((link) => !link.hidden).length - 1}
+  const visibleLinks = links.filter((link) => !link.hidden);
+  const navigationLinks = visibleLinks.map((link, index) => {
+    const isFirstLink = index === 0;
+    return (
+      <NavigationBarListItem
+        key={link.name}
+        isLast={index === visibleLinks.length - 1}
+      >
+        <NavLink
+          ref={isFirstLink ? firstLinkRef : undefined}
+          to={link.href}
+          aria-label={link.ariaLabel}
+          className={getNavLinkClass}
+          onClick={handleLinkClick}
         >
-          <NavLink
-            to={link.href}
-            aria-label={link.ariaLabel}
-            className={getNavLinkClass}
-            onClick={handleLinkClick}
+          <InlineAnchorContent
+            isExternal={Boolean(link.isExternal)}
+            bold
+            underline={selectedLink?.href === link.href}
           >
-            <InlineAnchorContent
-              isExternal={Boolean(link.isExternal)}
-              bold
-              underline={selectedLink?.href === link.href}
-            >
-              {link.name}
-            </InlineAnchorContent>
-          </NavLink>
-        </NavigationBarListItem>
-      );
-    });
+            {link.name}
+          </InlineAnchorContent>
+        </NavLink>
+      </NavigationBarListItem>
+    );
+  });
 
   // Determine if backdrop should be visible (open nav on narrow viewport)
   const isBackdropVisible =

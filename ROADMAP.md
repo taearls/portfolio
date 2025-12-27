@@ -2,7 +2,7 @@
 
 ## Executive Summary
 
-This roadmap outlines the development plan for Tyler Earls' portfolio website, focusing on performance optimization, modern React tooling, and enhanced user experience. The project has **completed Phase 5 (React Compiler Integration)**, **Phase 6 (CI/CD setup)**, **Phase 7 (Accessibility & Core Web Vitals)**, and **Phase 8 (GitOps Feature Flags)**, with **4 open issues** including navigation UX improvements.
+This roadmap outlines the development plan for Tyler Earls' portfolio website, focusing on performance optimization, modern React tooling, and enhanced user experience. The project has **completed Phase 5 (React Compiler Integration)**, **Phase 6 (CI/CD setup)**, **Phase 7 (Accessibility & Core Web Vitals)**, and **Phase 8 (GitOps Feature Flags)**, with **3 open issues** including navigation UX improvements.
 
 **Current Focus**: Navigation UX improvements. All critical and medium priority accessibility issues resolved. Remaining work focuses on visual enhancements and tooling.
 
@@ -21,7 +21,7 @@ This roadmap outlines the development plan for Tyler Earls' portfolio website, f
 
 ## Open Issues Summary
 
-### Priority Breakdown (4 Open Issues)
+### Priority Breakdown (3 Open Issues)
 
 #### 🔴 Critical Priority (0 issues)
 
@@ -57,12 +57,11 @@ This roadmap outlines the development plan for Tyler Earls' portfolio website, f
 
 ✅ **#14** - Add Working Email Contact Form - **COMPLETED Dec 7, 2025**
 
-#### 🔵 Low Priority (4 issues) - Effort: ~1 week total
+#### 🔵 Low Priority (3 issues) - Effort: ~1 week total
 
 ✅ **#112** - feat(nav): add semi-transparent backdrop behind mobile navigation - **COMPLETED Dec 27, 2025**
 
-- **#113** - feat(nav): move focus to first nav link when mobile navigation opens - _~1 hour_
-  - Labels: `type: enhancement`, `area: ui`, `priority: low`
+✅ **#113** - feat(nav): move focus to first nav link when mobile navigation opens - **COMPLETED Dec 27, 2025**
 - **#114** - Add Stylelint for CSS linting - _~2-3 hours_
   - Labels: (none)
   - Note: Adds CSS-specific linting to complement ESLint/OxLint
@@ -561,6 +560,43 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 ---
 
 ## Changelog
+
+### 2025-12-27 - Issue #113 Completed: Move Focus to First Nav Link When Mobile Navigation Opens
+
+- **Completed**: #113 - feat(nav): move focus to first nav link when mobile navigation opens
+- **Priority**: 🔵 LOW (Keyboard Accessibility Enhancement)
+- **Status**: Completed Dec 27, 2025
+- **Effort**: ~1 hour
+- **Impact**: Improved keyboard/screen reader experience when mobile navigation opens
+
+**Problem:**
+
+- When mobile navigation opened, focus remained on the toggle button
+- Keyboard and screen reader users had no immediate indication that navigation was now available
+- Users had to manually Tab to discover the navigation links
+
+**Solution:**
+
+- Added ref to track first navigation link element
+- Added useEffect to move focus to first link when navigation opens on narrow viewports
+- Uses `requestAnimationFrame` to ensure DOM is ready and focus trap is active
+- Focus management only applies on narrow viewports (desktop nav is always visible)
+
+**Files Modified:**
+
+- `src/components/navigation/NavigationBar/NavigationBar.tsx` - Added firstLinkRef and focus effect
+- `tests/component/NavigationBar.spec.tsx` - Added 4 focus behavior tests
+
+**Testing:**
+
+- ✅ Production build successful
+- ✅ ESLint passes
+- ✅ 270 tests passing (4 new tests added)
+- ✅ First link receives focus when mobile nav opens
+- ✅ Focus unchanged on desktop (wide viewport)
+- ✅ Focus returns to toggle button when nav closes
+
+---
 
 ### 2025-12-27 - Issue #112 Completed: Add Semi-transparent Backdrop Behind Mobile Navigation
 
