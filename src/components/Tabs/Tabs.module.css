@@ -29,11 +29,15 @@
   color: color-mix(in srgb, var(--text-color) 70%, transparent);
   transition:
     color 0.2s ease,
-    background-color 0.2s ease;
+    background-color 0.2s ease,
+    transform 0.1s ease;
   border-radius: 0.375rem 0.375rem 0 0;
 
   /* Anchor name for CSS anchor positioning */
   anchor-name: --tab-anchor;
+
+  /* Prevent double-tap zoom on mobile */
+  touch-action: manipulation;
 }
 
 @media (min-width: 1024px) {
@@ -130,36 +134,153 @@
   }
 }
 
-/* Container query for responsive tabs */
-@container tabs (max-width: 400px) {
+/* =============================================================================
+   Mobile Segmented Control (< 640px / sm breakpoint)
+   iOS/Android-inspired pill toggle design for optimal mobile UX
+   ============================================================================= */
+
+@media (max-width: 639px) {
+  /* Segmented control container - sticky on mobile */
   .tabList {
-    flex-direction: column;
+    /* Sticky positioning for the tab bar only (not the content) */
+    /* Note: Nav scrolls away on mobile, so stick to top of viewport */
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: color-mix(
+      in srgb,
+      var(--text-color) 8%,
+      var(--background-color)
+    );
+    /* Subtle shadow to indicate stickiness */
+    box-shadow: 0 2px 8px -2px
+      color-mix(in srgb, var(--text-color) 10%, transparent);
+    /* Segmented control styles */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
     gap: 0;
     border-bottom: none;
-    border-left: 2px solid
-      color-mix(in srgb, var(--text-color) 30%, transparent);
-  }
-
-  .tab {
-    border-radius: 0 0.375rem 0.375rem 0;
-    text-align: left;
+    margin-bottom: 1rem;
+    /* Pill-shaped container */
+    border-radius: 9999px;
+    padding: 4px;
+    /* Full width */
     width: 100%;
   }
 
-  .indicator {
-    left: -2px;
-    bottom: auto;
-    top: 0;
-    width: 2px;
-    height: calc(100% / var(--tab-count, 3));
-    transform: translateY(calc(var(--active-index, 0) * 100%));
+  /* Individual tab as segment */
+  .tab {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Generous touch target */
+    min-height: 44px;
+    padding: 0.625rem 1rem;
+    /* Reset border-radius for pill segments */
+    border-radius: 9999px;
+    /* Inactive state */
+    background: transparent;
+    color: color-mix(in srgb, var(--text-color) 60%, transparent);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    /* Smooth transitions */
+    transition:
+      color 0.2s ease,
+      background-color 0.2s ease,
+      transform 0.1s ease,
+      box-shadow 0.2s ease;
+    /* z-index for proper layering above indicator */
+    z-index: 1;
   }
 
-  /* Disable anchor positioning in vertical mode for simplicity */
-  @supports (anchor-name: --tab) {
-    .indicator {
-      position-anchor: unset;
-      inset-inline: unset;
-    }
+  .tab:hover {
+    color: color-mix(in srgb, var(--text-color) 80%, transparent);
+    background: transparent;
+  }
+
+  /* Touch feedback - subtle scale on press */
+  .tab:active {
+    transform: scale(0.98);
+  }
+
+  /* Active tab styling */
+  .tab[data-active] {
+    color: var(--text-color);
+    /* Active pill background */
+    background: var(--background-color);
+    /* Subtle shadow for depth */
+    box-shadow:
+      0 1px 3px color-mix(in srgb, var(--text-color) 12%, transparent),
+      0 1px 2px color-mix(in srgb, var(--text-color) 8%, transparent);
+  }
+
+  /* Focus visible styling for accessibility */
+  .tab:focus-visible {
+    outline: 2px solid var(--accent-focus);
+    outline-offset: 2px;
+  }
+
+  /* Hide the sliding indicator on mobile - the pill background is the indicator */
+  .indicator {
+    display: none;
+  }
+}
+
+/* Dark mode adjustments for mobile segmented control */
+@media (max-width: 639px) and (prefers-color-scheme: dark) {
+  .tabList {
+    background: color-mix(
+      in srgb,
+      var(--text-color) 12%,
+      var(--background-color)
+    );
+  }
+
+  .tab[data-active] {
+    background: color-mix(
+      in srgb,
+      var(--text-color) 15%,
+      var(--background-color)
+    );
+  }
+}
+
+/* Explicit dark theme class override */
+:global(html.dark-theme) .tabList {
+  @media (max-width: 639px) {
+    background: color-mix(
+      in srgb,
+      var(--text-color) 12%,
+      var(--background-color)
+    );
+  }
+}
+
+:global(html.dark-theme) .tab[data-active] {
+  @media (max-width: 639px) {
+    background: color-mix(
+      in srgb,
+      var(--text-color) 15%,
+      var(--background-color)
+    );
+  }
+}
+
+/* Explicit light theme class override */
+:global(html.light-theme) .tabList {
+  @media (max-width: 639px) {
+    background: color-mix(
+      in srgb,
+      var(--text-color) 8%,
+      var(--background-color)
+    );
+  }
+}
+
+:global(html.light-theme) .tab[data-active] {
+  @media (max-width: 639px) {
+    background: var(--background-color);
   }
 }
