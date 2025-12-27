@@ -12,7 +12,7 @@ export const THEME_EVENT = {
 } as const satisfies Record<string, string>;
 
 export const getInitialThemeState = (): THEME_STATE => {
-  if (window.matchMedia?.("(prefers-color-scheme: dark)")) {
+  if (window.matchMedia?.("(prefers-color-scheme: dark)").matches) {
     return THEME_STATES.DARK;
   }
 
