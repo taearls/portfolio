@@ -3,10 +3,14 @@ import "@testing-library/jest-dom/vitest";
 import type { RouteDataItem } from "@/constants/navigationData.tsx";
 
 import { act, fireEvent, render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router";
 
 import NavigationBar from "@/components/navigation/NavigationBar/NavigationBar.tsx";
 import ThemeContext from "@/state/contexts/ThemeContext.tsx";
+
+// Mobile navigation breakpoint (must match NavigationBar.tsx)
+const MOBILE_NAV_BREAKPOINT = 700;
 
 // Mock navigation links for testing
 const mockLinks: Array<RouteDataItem> = [
@@ -490,6 +494,124 @@ describe("<NavigationBar />", () => {
         fireEvent.keyDown(document, { key: "ArrowDown" });
       });
       expect(navigationList.className).not.toMatch(/closed/);
+    });
+  });
+
+  describe("Focus Trap for Mobile Navigation (Keyboard Accessibility)", () => {
+    const originalInnerWidth = window.innerWidth;
+
+    // Helper to simulate a narrow viewport
+    const setNarrowViewport = () => {
+      Object.defineProperty(window, "innerWidth", {
+        writable: true,
+        configurable: true,
+        value: MOBILE_NAV_BREAKPOINT - 100,
+      });
+      window.dispatchEvent(new Event("resize"));
+    };
+
+    // Helper to simulate a wide viewport
+    const setWideViewport = () => {
+      Object.defineProperty(window, "innerWidth", {
+        writable: true,
+        configurable: true,
+        value: MOBILE_NAV_BREAKPOINT + 100,
+      });
+      window.dispatchEvent(new Event("resize"));
+    };
+
+    afterEach(() => {
+      // Restore original viewport
+      Object.defineProperty(window, "innerWidth", {
+        writable: true,
+        configurable: true,
+        value: originalInnerWidth,
+      });
+    });
+
+    it("should trap focus within navigation on narrow viewports when open", async () => {
+      setNarrowViewport();
+      renderNavigationBar();
+
+      // Ensure navigation is open
+      ensureNavigationOpen();
+
+      // Get all focusable elements in the navigation
+      const navLinks = screen.getAllByRole("link");
+      const toggleButton = screen.getByRole("button", {
+        name: /Close Navigation/i,
+      });
+
+      // Verify navigation links are present
+      expect(navLinks.length).toBeGreaterThan(0);
+
+      // When focus trap is active, Tab should cycle through nav elements
+      // Focus the toggle button first
+      toggleButton.focus();
+      expect(document.activeElement).toBe(toggleButton);
+    });
+
+    it("should allow keyboard users to Tab through all navigation links", async () => {
+      setNarrowViewport();
+      const user = userEvent.setup();
+      renderNavigationBar();
+
+      // Ensure navigation is open
+      ensureNavigationOpen();
+
+      // Get the navigation element
+      const nav = screen.getByRole("navigation");
+
+      // Get navigation links
+      const homeLink = screen.getByRole("link", { name: /Home/i });
+
+      // Focus the first link
+      homeLink.focus();
+      expect(document.activeElement).toBe(homeLink);
+
+      // Tab multiple times and verify focus stays within navigation
+      // The focus trap cycles through: links, dark mode toggle, navigation toggle
+      for (let i = 0; i < 5; i++) {
+        await user.tab();
+        // Verify focus is still within the navigation
+        expect(nav.contains(document.activeElement)).toBe(true);
+      }
+    });
+
+    it("should release focus trap when navigation closes", () => {
+      setNarrowViewport();
+      renderNavigationBar();
+
+      // Open navigation
+      ensureNavigationOpen();
+
+      const navigationList = screen.getByRole("menu");
+      expect(navigationList.className).not.toMatch(/closed/);
+
+      // Close navigation via toggle
+      const closeButton = screen.getByRole("button", {
+        name: /Close Navigation/i,
+      });
+      fireEvent.click(closeButton);
+
+      // Navigation should be closed
+      expect(navigationList.className).toMatch(/closed/);
+
+      // Focus should return to toggle button
+      expect(document.activeElement).toBe(closeButton);
+    });
+
+    it("should not activate focus trap on wide viewports", () => {
+      setWideViewport();
+      renderNavigationBar();
+
+      // On wide viewports, navigation is always visible and focus trap should not be active
+      const navLinks = screen.getAllByRole("link");
+      expect(navLinks.length).toBeGreaterThan(0);
+
+      // Focus should be able to move freely (no trap)
+      navLinks[0].focus();
+      expect(document.activeElement).toBe(navLinks[0]);
     });
   });
 });
