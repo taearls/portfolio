@@ -48,7 +48,6 @@
   /**
    * @description Small breakpoint - large phones, small tablets
    * @used-in Tailwind `sm:` prefix
-   * @used-in useIsMobile hook (max-width: 639px for mobile detection)
    * @used-in Tabs.module.css mobile segmented control (max-width: 639px)
    */
   --breakpoint-sm: 640px;
