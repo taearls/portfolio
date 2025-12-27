@@ -1,4 +1,6 @@
 @import "tailwindcss" source("../");
+@import "./z-index.css";
+@import "./breakpoints.css";
 
 @theme {
   --breakpoint-sm: 40rem;
@@ -66,9 +68,6 @@
   /* Custom widths/max-widths */
   --width-65ch: 65ch;
 
-  /* Custom z-index */
-  --z-index-100: 100;
-
   /* WCAG 2.5.5 - Touch target minimum size */
   --touch-target-min: 44px;
 
@@ -86,7 +85,8 @@
   /* https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/light-dark */
   color-scheme: light dark;
   --expanded-nav-height: 191px;
-  --collapsed-nav-height: 64px;
+  --collapsed-nav-height: 76px; /* Updated to match desktop nav bar height */
+  --content-spacing: 1rem; /* Breathing room between nav and content */
   --footer-height: 80px;
   --body-padding-y: 16px;
   --text-light: #1b1212;

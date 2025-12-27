@@ -1,0 +1,99 @@
+/**
+ * Centralized Breakpoint Configuration
+ * =====================================
+ *
+ * This file documents all breakpoint values used throughout the application.
+ * Reference this file for canonical breakpoint values and their usage.
+ *
+ * TAILWIND BREAKPOINTS (defined in globals.css @theme block):
+ * -----------------------------------------------------------
+ * Tailwind requires breakpoints in rem units within @theme for utility classes.
+ * The @theme block in globals.css defines: --breakpoint-sm: 40rem, etc.
+ *
+ * This file provides the equivalent px values for reference and documentation.
+ *
+ * BREAKPOINT SCALE:
+ * -----------------
+ * - xs:  < 640px   (mobile phones)
+ * - sm:  >= 640px  (large phones, small tablets)  [40rem]
+ * - md:  >= 768px  (tablets)                      [48rem]
+ * - lg:  >= 1024px (laptops, small desktops)      [64rem]
+ * - xl:  >= 1280px (desktops)                     [80rem]
+ * - 2xl: >= 1536px (large desktops)               [96rem]
+ *
+ * CONTAINER QUERY BREAKPOINTS:
+ * ----------------------------
+ * Container queries use component-specific thresholds based on content width,
+ * not viewport width. These are separate from Tailwind viewport breakpoints.
+ *
+ * USAGE:
+ * ------
+ * CSS custom properties can't be used directly in @media queries,
+ * but they document the values and can be used in calc() or JavaScript.
+ *
+ * For @media queries, reference this file for the canonical values:
+ *   @media (min-width: 640px)  -> sm breakpoint
+ *   @media (min-width: 768px)  -> md breakpoint
+ *   @media (min-width: 1024px) -> lg breakpoint
+ *
+ * For @container queries, use the component-specific variables:
+ *   @container nav (min-width: 700px) -> --breakpoint-nav-wide
+ */
+
+:root {
+  /* =========================================================================
+     Viewport Breakpoints (Tailwind-aligned)
+     ========================================================================= */
+
+  /**
+   * @description Small breakpoint - large phones, small tablets
+   * @used-in Tailwind `sm:` prefix
+   * @used-in Tabs.module.css mobile segmented control (max-width: 639px)
+   */
+  --breakpoint-sm: 640px;
+
+  /**
+   * @description Medium breakpoint - tablets
+   * @used-in Tailwind `md:` prefix
+   */
+  --breakpoint-md: 768px;
+
+  /**
+   * @description Large breakpoint - laptops, small desktops
+   * @used-in Tailwind `lg:` prefix
+   * @used-in Tabs.module.css font-size adjustment
+   */
+  --breakpoint-lg: 1024px;
+
+  /**
+   * @description Extra large breakpoint - desktops
+   * @used-in Tailwind `xl:` prefix
+   */
+  --breakpoint-xl: 1280px;
+
+  /**
+   * @description 2x extra large breakpoint - large desktops
+   * @used-in Tailwind `2xl:` prefix
+   */
+  --breakpoint-2xl: 1536px;
+
+  /* =========================================================================
+     Container Query Breakpoints (Content-based)
+     ========================================================================= */
+
+  /**
+   * @description Navigation bar wide threshold
+   * @used-in NavigationBar.module.css:
+   *   - @media (min-width: 700px) for nav bar height/border (container can't query itself)
+   *   - @container nav (min-width: 700px) for child elements (list, hamburger)
+   * @rationale Based on content width: 4 links (~480px) + toggle (~44px) + gaps (~100px) + margin (~76px)
+   *
+   * Behavior:
+   * - Below 700px: 4rem height, no border, hamburger visible, vertical dropdown
+   * - At/above 700px: 76px height, bottom border, hamburger hidden, horizontal nav
+   *
+   * Note: The nav bar element uses @media because a CSS container cannot query
+   * its own size - container queries only work on descendant elements.
+   */
+  --breakpoint-nav-wide: 700px;
+}
