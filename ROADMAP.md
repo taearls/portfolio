@@ -2,7 +2,7 @@
 
 ## Executive Summary
 
-This roadmap outlines the development plan for Tyler Earls' portfolio website, focusing on performance optimization, modern React tooling, and enhanced user experience. The project has **completed Phase 5 (React Compiler Integration)**, **Phase 6 (CI/CD setup)**, **Phase 7 (Accessibility & Core Web Vitals)**, and **Phase 8 (GitOps Feature Flags)**, with **5 open issues** including navigation UX improvements.
+This roadmap outlines the development plan for Tyler Earls' portfolio website, focusing on performance optimization, modern React tooling, and enhanced user experience. The project has **completed Phase 5 (React Compiler Integration)**, **Phase 6 (CI/CD setup)**, **Phase 7 (Accessibility & Core Web Vitals)**, and **Phase 8 (GitOps Feature Flags)**, with **4 open issues** including navigation UX improvements.
 
 **Current Focus**: Navigation UX improvements. All critical and medium priority accessibility issues resolved. Remaining work focuses on visual enhancements and tooling.
 
@@ -21,7 +21,7 @@ This roadmap outlines the development plan for Tyler Earls' portfolio website, f
 
 ## Open Issues Summary
 
-### Priority Breakdown (5 Open Issues)
+### Priority Breakdown (4 Open Issues)
 
 #### 🔴 Critical Priority (0 issues)
 
@@ -57,10 +57,10 @@ This roadmap outlines the development plan for Tyler Earls' portfolio website, f
 
 ✅ **#14** - Add Working Email Contact Form - **COMPLETED Dec 7, 2025**
 
-#### 🔵 Low Priority (5 issues) - Effort: ~1 week total
+#### 🔵 Low Priority (4 issues) - Effort: ~1 week total
 
-- **#112** - feat(nav): add semi-transparent backdrop behind mobile navigation - _~1-2 hours_
-  - Labels: `type: enhancement`, `area: ui`, `priority: low`
+✅ **#112** - feat(nav): add semi-transparent backdrop behind mobile navigation - **COMPLETED Dec 27, 2025**
+
 - **#113** - feat(nav): move focus to first nav link when mobile navigation opens - _~1 hour_
   - Labels: `type: enhancement`, `area: ui`, `priority: low`
 - **#114** - Add Stylelint for CSS linting - _~2-3 hours_
@@ -561,6 +561,47 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 ---
 
 ## Changelog
+
+### 2025-12-27 - Issue #112 Completed: Add Semi-transparent Backdrop Behind Mobile Navigation
+
+- **Completed**: #112 - feat(nav): add semi-transparent backdrop behind mobile navigation
+- **Priority**: 🔵 LOW (Visual Enhancement)
+- **Status**: Completed Dec 27, 2025
+- **Effort**: ~1 hour
+- **Impact**: Improved visual feedback when mobile navigation is open
+
+**Problem:**
+
+- When mobile navigation dropdown was open, there was no visual indication that main content was "behind" an overlay
+- Made the UI feel less polished and less obvious that navigation was a modal-like state
+- No visual separation between nav overlay and content
+
+**Solution:**
+
+- Added semi-transparent backdrop element behind mobile navigation dropdown
+- Backdrop visible only on narrow viewports when navigation is open
+- Clicking backdrop closes navigation (integrates with existing click-outside behavior)
+- Dark theme support with slightly darker backdrop for better contrast
+- Backdrop hidden on wide viewports via CSS container query
+- Added z-index variable for proper layering
+
+**Files Modified:**
+
+- `src/components/navigation/NavigationBar/NavigationBar.tsx` - Added backdrop element with visibility logic
+- `src/components/navigation/NavigationBar/NavigationBar.module.css` - Added backdrop styles with animations
+- `src/styles/z-index.css` - Added `--z-index-nav-backdrop` variable
+- `tests/component/NavigationBar.spec.tsx` - Added 5 backdrop tests
+
+**Testing:**
+
+- ✅ Production build successful
+- ✅ ESLint passes
+- ✅ 266 tests passing (5 new tests added)
+- ✅ Backdrop visible when navigation opens on mobile
+- ✅ Backdrop hidden on desktop
+- ✅ Clicking backdrop closes navigation
+
+---
 
 ### 2025-12-27 - Issue #111 Completed: Improve Keyboard Tab Order for Mobile Navigation
 

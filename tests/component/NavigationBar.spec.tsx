@@ -614,4 +614,118 @@ describe("<NavigationBar />", () => {
       expect(document.activeElement).toBe(navLinks[0]);
     });
   });
+
+  describe("Semi-transparent Backdrop (Mobile UX)", () => {
+    const originalInnerWidth = window.innerWidth;
+
+    // Helper to simulate a narrow viewport
+    const setNarrowViewport = () => {
+      Object.defineProperty(window, "innerWidth", {
+        writable: true,
+        configurable: true,
+        value: MOBILE_NAV_BREAKPOINT - 100,
+      });
+      window.dispatchEvent(new Event("resize"));
+    };
+
+    // Helper to simulate a wide viewport
+    const setWideViewport = () => {
+      Object.defineProperty(window, "innerWidth", {
+        writable: true,
+        configurable: true,
+        value: MOBILE_NAV_BREAKPOINT + 100,
+      });
+      window.dispatchEvent(new Event("resize"));
+    };
+
+    afterEach(() => {
+      // Restore original viewport
+      Object.defineProperty(window, "innerWidth", {
+        writable: true,
+        configurable: true,
+        value: originalInnerWidth,
+      });
+    });
+
+    it("should show backdrop when navigation is open on narrow viewport", () => {
+      setNarrowViewport();
+      renderNavigationBar();
+
+      // Ensure navigation is open
+      ensureNavigationOpen();
+
+      // Find the backdrop element by its CSS class pattern
+      const backdrop = document.querySelector('[class*="navigation-backdrop"]');
+      expect(backdrop).toBeInTheDocument();
+
+      // Backdrop should be visible (not have backdrop-hidden class)
+      expect(backdrop?.className).not.toMatch(/backdrop-hidden/);
+    });
+
+    it("should hide backdrop when navigation is closed on narrow viewport", () => {
+      setNarrowViewport();
+      renderNavigationBar();
+
+      // Ensure navigation is closed
+      ensureNavigationClosed();
+
+      // Find the backdrop element
+      const backdrop = document.querySelector('[class*="navigation-backdrop"]');
+      expect(backdrop).toBeInTheDocument();
+
+      // Backdrop should be hidden (have backdrop-hidden class)
+      expect(backdrop?.className).toMatch(/backdrop-hidden/);
+    });
+
+    it("should close navigation when clicking on backdrop", () => {
+      setNarrowViewport();
+      renderNavigationBar();
+
+      const navigationList = screen.getByRole("list");
+
+      // Ensure navigation is open
+      ensureNavigationOpen();
+      expect(navigationList.className).not.toMatch(/closed/);
+
+      // Click on the backdrop
+      const backdrop = document.querySelector('[class*="navigation-backdrop"]');
+      expect(backdrop).toBeInTheDocument();
+
+      act(() => {
+        fireEvent.click(backdrop!);
+      });
+
+      // Navigation should now be closed
+      expect(navigationList.className).toMatch(/closed/);
+    });
+
+    it("should have aria-hidden attribute on backdrop for accessibility", () => {
+      renderNavigationBar();
+
+      // Find the backdrop element
+      const backdrop = document.querySelector('[class*="navigation-backdrop"]');
+      expect(backdrop).toBeInTheDocument();
+      expect(backdrop).toHaveAttribute("aria-hidden", "true");
+    });
+
+    it("should toggle backdrop visibility with navigation state", () => {
+      setNarrowViewport();
+      renderNavigationBar();
+
+      const backdrop = document.querySelector('[class*="navigation-backdrop"]');
+      expect(backdrop).toBeInTheDocument();
+
+      // Start with navigation closed
+      ensureNavigationClosed();
+      expect(backdrop?.className).toMatch(/backdrop-hidden/);
+
+      // Open navigation
+      ensureNavigationOpen();
+      expect(backdrop?.className).not.toMatch(/backdrop-hidden/);
+
+      // Close navigation
+      ensureNavigationClosed();
+      expect(backdrop?.className).toMatch(/backdrop-hidden/);
+    });
+  });
 });
