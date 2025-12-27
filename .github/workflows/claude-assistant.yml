@@ -1,0 +1,276 @@
+name: Claude Assistant
+
+on:
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+
+permissions:
+  issues: write
+  pull-requests: write
+  contents: write
+  actions: read
+
+jobs:
+  respond:
+    name: Process Claude Request
+    runs-on: ubuntu-latest
+
+    # Prevent infinite loops - don't respond to bot comments
+    if: |
+      !github.event.comment.user.login.endsWith('[bot]') &&
+      (contains(github.event.comment.body, '@claude') ||
+       contains(github.event.comment.body, '/claude'))
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Extract comment context
+        id: context
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const context = {
+              commentBody: context.payload.comment.body,
+              commentAuthor: context.payload.comment.user.login,
+              commentUrl: context.payload.comment.html_url,
+              eventType: context.eventName,
+            };
+
+            // Issue comment
+            if (context.eventName === 'issue_comment') {
+              const issue = context.payload.issue;
+              context.issueNumber = issue.number;
+              context.issueTitle = issue.title;
+              context.issueBody = issue.body;
+              context.issueUrl = issue.html_url;
+              context.isPullRequest = !!issue.pull_request;
+
+              // If it's a PR comment, fetch PR details
+              if (context.isPullRequest) {
+                const { data: pr } = await github.rest.pulls.get({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  pull_number: issue.number
+                });
+                context.prBranch = pr.head.ref;
+                context.prBaseBranch = pr.base.ref;
+                context.prDiff = pr.diff_url;
+              }
+            }
+
+            // PR review comment
+            if (context.eventName === 'pull_request_review_comment') {
+              const pr = context.payload.pull_request;
+              context.issueNumber = pr.number;
+              context.issueTitle = pr.title;
+              context.issueBody = pr.body;
+              context.issueUrl = pr.html_url;
+              context.isPullRequest = true;
+              context.prBranch = pr.head.ref;
+              context.prBaseBranch = pr.base.ref;
+              context.prDiff = pr.diff_url;
+
+              // Include the specific file and line being commented on
+              const reviewComment = context.payload.comment;
+              context.reviewFilePath = reviewComment.path;
+              context.reviewDiffHunk = reviewComment.diff_hunk;
+              context.reviewLine = reviewComment.line;
+            }
+
+            // Set outputs
+            for (const [key, value] of Object.entries(context)) {
+              core.setOutput(key, value);
+            }
+
+            console.log('Context extracted:', JSON.stringify(context, null, 2));
+            return context;
+
+      - name: Parse Claude command
+        id: command
+        run: |
+          COMMENT_BODY='${{ steps.context.outputs.commentBody }}'
+
+          # Detect command type
+          if echo "$COMMENT_BODY" | grep -qiE '@claude\s+(implement|code|fix|create)'; then
+            COMMAND_TYPE="implement"
+          elif echo "$COMMENT_BODY" | grep -qiE '@claude\s+(review|check|analyze)'; then
+            COMMAND_TYPE="review"
+          elif echo "$COMMENT_BODY" | grep -qiE '@claude\s+(help|explain|what|how|why)'; then
+            COMMAND_TYPE="explain"
+          elif echo "$COMMENT_BODY" | grep -qiE '/claude'; then
+            COMMAND_TYPE="implement"
+          else
+            COMMAND_TYPE="respond"
+          fi
+
+          echo "command_type=$COMMAND_TYPE" >> $GITHUB_OUTPUT
+          echo "Detected command type: $COMMAND_TYPE"
+
+      - name: Gather repository context
+        id: repo-context
+        if: steps.command.outputs.command_type == 'implement' || steps.command.outputs.command_type == 'review'
+        run: |
+          # Create a context file with repository structure
+          mkdir -p /tmp/claude-context
+
+          # Get file tree
+          tree -L 3 -I 'node_modules|dist|.git' --charset ascii > /tmp/claude-context/file-tree.txt || \
+            find . -type f -not -path '*/node_modules/*' -not -path '*/dist/*' -not -path '*/.git/*' | head -100 > /tmp/claude-context/file-tree.txt
+
+          # Get package.json for dependencies
+          if [ -f package.json ]; then
+            cp package.json /tmp/claude-context/package.json
+          fi
+
+          # Get relevant source files if this is a PR
+          if [ "${{ steps.context.outputs.isPullRequest }}" = "true" ]; then
+            # Get changed files in the PR
+            git diff --name-only origin/${{ steps.context.outputs.prBaseBranch }}...${{ steps.context.outputs.prBranch }} > /tmp/claude-context/changed-files.txt || true
+          fi
+
+          echo "context_dir=/tmp/claude-context" >> $GITHUB_OUTPUT
+
+      - name: Call Claude API
+        id: claude
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          COMMENT_BODY: ${{ steps.context.outputs.commentBody }}
+          COMMAND_TYPE: ${{ steps.command.outputs.command_type }}
+          ISSUE_TITLE: ${{ steps.context.outputs.issueTitle }}
+          ISSUE_BODY: ${{ steps.context.outputs.issueBody }}
+          IS_PULL_REQUEST: ${{ steps.context.outputs.isPullRequest }}
+          CONTEXT_DIR: ${{ steps.repo-context.outputs.context_dir }}
+        run: |
+          # Install required dependencies
+          npm install -g @anthropic-ai/sdk
+
+          # Run the Claude integration script
+          node .github/scripts/claude-integration.js
+
+      - name: Post Claude response
+        if: steps.claude.outputs.response != ''
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const response = `${{ steps.claude.outputs.response }}`;
+            const issueNumber = ${{ steps.context.outputs.issueNumber }};
+
+            const comment = `## 🤖 Claude Assistant Response\n\n${response}\n\n---\n*Triggered by @${{ steps.context.outputs.commentAuthor }}*`;
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber,
+              body: comment
+            });
+
+            console.log('Posted Claude response to issue #' + issueNumber);
+
+      - name: Create implementation branch
+        if: steps.command.outputs.command_type == 'implement' && steps.claude.outputs.should_implement == 'true'
+        id: branch
+        run: |
+          BRANCH_NAME="claude/auto-implementation-${{ github.run_id }}"
+
+          # Create and checkout new branch
+          git checkout -b "$BRANCH_NAME"
+
+          echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
+          echo "Created branch: $BRANCH_NAME"
+
+      - name: Apply Claude changes
+        if: steps.command.outputs.command_type == 'implement' && steps.claude.outputs.should_implement == 'true'
+        run: |
+          # The claude-integration.js script should output files to /tmp/claude-changes/
+          if [ -d /tmp/claude-changes ]; then
+            echo "Applying changes from Claude..."
+            cp -r /tmp/claude-changes/* .
+
+            # Configure git
+            git config user.name "Claude Assistant"
+            git config user.email "claude-assistant@github-actions"
+
+            # Add and commit changes
+            git add .
+            git commit -m "feat: implement changes requested by @${{ steps.context.outputs.commentAuthor }}
+
+Requested in: ${{ steps.context.outputs.commentUrl }}
+
+Auto-generated by Claude Assistant workflow" || echo "No changes to commit"
+
+            # Push to remote
+            git push -u origin ${{ steps.branch.outputs.branch_name }}
+
+            echo "Changes pushed to ${{ steps.branch.outputs.branch_name }}"
+          else
+            echo "No changes directory found, skipping..."
+          fi
+
+      - name: Create pull request
+        if: steps.command.outputs.command_type == 'implement' && steps.claude.outputs.should_implement == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const branchName = '${{ steps.branch.outputs.branch_name }}';
+            const baseBranch = '${{ steps.context.outputs.prBaseBranch }}' || 'main';
+            const issueNumber = ${{ steps.context.outputs.issueNumber }};
+
+            try {
+              const { data: pr } = await github.rest.pulls.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: `🤖 Auto-implementation: ${{ steps.context.outputs.issueTitle }}`,
+                head: branchName,
+                base: baseBranch,
+                body: `## Auto-generated by Claude Assistant
+
+This PR implements the changes requested in #${issueNumber}
+
+**Requested by**: @${{ steps.context.outputs.commentAuthor }}
+**Original comment**: ${{ steps.context.outputs.commentUrl }}
+
+### Changes
+${{ steps.claude.outputs.changes_summary }}
+
+---
+*This PR was automatically created by the Claude Assistant workflow. Please review carefully before merging.*`
+              });
+
+              // Comment on original issue/PR with link to new PR
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issueNumber,
+                body: `✅ I've created PR #${pr.number} with the requested implementation.\n\nPlease review: ${pr.html_url}`
+              });
+
+              console.log('Created PR:', pr.html_url);
+            } catch (error) {
+              console.error('Failed to create PR:', error);
+              core.setFailed('Failed to create pull request: ' + error.message);
+            }
+
+      - name: Handle errors
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issueNumber = ${{ steps.context.outputs.issueNumber }};
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber,
+              body: `❌ Sorry, I encountered an error while processing your request.\n\nPlease check the [workflow run logs](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}) for details.\n\n*Triggered by @${{ steps.context.outputs.commentAuthor }}*`
+            });
