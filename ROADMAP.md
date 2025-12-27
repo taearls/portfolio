@@ -75,6 +75,8 @@ This roadmap outlines the development plan for Tyler Earls' portfolio website, f
 - **#34** - Spike: Experiment with CodeRabbit - _~1-2 hours_
   - Labels: `type: spike`, `area: ci/cd`, `priority: low`, `effort: small`
 
+✅ **#120** - fix(nav): add bottom border to mobile navigation when closed - **COMPLETED Dec 27, 2025**
+
 ✅ **#105** - Vertically center navigation toggle button - **COMPLETED Dec 27, 2025**
 
 ✅ **#103** - Improve mobile UX for Code page tabs - **COMPLETED Dec 27, 2025**
@@ -563,6 +565,40 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 ---
 
 ## Changelog
+
+### 2025-12-27 - Issue #120 Completed: Add Bottom Border to Mobile Navigation
+
+- **Completed**: #120 - fix(nav): add bottom border to mobile navigation when closed
+- **Priority**: 🔵 LOW (Visual Polish)
+- **Status**: Completed Dec 27, 2025
+- **Effort**: ~10 minutes
+- **Impact**: Consistent visual separation between navigation and page content
+
+**Problem:**
+
+- Mobile navigation had no bottom border when closed
+- Page content appeared to blend into navigation area
+- Visual inconsistency between open/closed states
+
+**Solution:**
+
+- Added `.nav-closed` class to nav bar when navigation is closed
+- Nav bar border only shows when closed (via `.nav-closed` class)
+- List container border shows when expanded
+- Only one border visible at a time - at bottom of nav bar when closed, at bottom of dropdown when open
+
+**Files Modified:**
+
+- `src/components/navigation/NavigationBar/NavigationBar.module.css` - Added `.nav-closed` class with border
+- `src/components/navigation/NavigationBar/NavigationBar.tsx` - Added conditional `.nav-closed` class
+
+**Testing:**
+
+- ✅ Production build successful
+- ✅ ESLint passes
+- ✅ Border appears in both light and dark modes
+
+---
 
 ### 2025-12-27 - Issue #109 Completed: Close Mobile Navigation with Escape Key
 
