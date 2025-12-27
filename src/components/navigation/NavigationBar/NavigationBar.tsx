@@ -3,7 +3,8 @@ import type { FlexContainerProps } from "@/types/FlexContainer.ts";
 import type { NavLinkRenderProps } from "react-router";
 
 import { useMachine } from "@xstate/react";
-import { useCallback, useEffect, useRef } from "react";
+import FocusTrap from "focus-trap-react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { NavLink, useLocation } from "react-router";
 
 import DarkModeToggle from "@/components/DarkModeToggle/DarkModeToggle.tsx";
@@ -40,6 +41,9 @@ const navigationContainerResponsiveProp: FlexContainerProps["responsive"] = {
  * sm:flex-col sm:flex-row sm:gap-x-1 sm:gap-x-2 sm:gap-x-3 sm:gap-x-4 sm:gap-x-5 sm:gap-x-6 sm:gap-x-7 sm:gap-x-8
  * md:flex-col md:flex-row lg:flex-col lg:flex-row xl:flex-col xl:flex-row 2xl:flex-col 2xl:flex-row
  */
+// Breakpoint for mobile navigation (matches CSS container query)
+const MOBILE_NAV_BREAKPOINT = 700;
+
 export default function NavigationBar({ links }: NavigationBarProps) {
   const [isNavigationOpen, sendNavigationUpdate] =
     useMachine(navigationMachine);
@@ -47,6 +51,25 @@ export default function NavigationBar({ links }: NavigationBarProps) {
   const selectedLink = links.find((link) => link.href === location.pathname);
   const navRef = useRef<HTMLElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
+
+  // Track if we're on a narrow viewport where focus trap should be active
+  const [isNarrowViewport, setIsNarrowViewport] = useState(
+    typeof window !== "undefined" && window.innerWidth < MOBILE_NAV_BREAKPOINT,
+  );
+
+  // Update viewport state on resize
+  useEffect(() => {
+    const handleResize = () => {
+      setIsNarrowViewport(window.innerWidth < MOBILE_NAV_BREAKPOINT);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Focus trap should only be active on narrow viewports when nav is open
+  const isFocusTrapActive =
+    isNarrowViewport && isNavigationOpen.value === NAVIGATION_STATE.OPEN;
 
   // Close navigation when pressing Escape key (keyboard accessibility)
   // On narrow viewports, this closes the dropdown and returns focus to toggle
@@ -132,50 +155,63 @@ export default function NavigationBar({ links }: NavigationBarProps) {
     });
 
   return (
-    <nav
-      ref={navRef}
-      id="navigation-bar"
-      className={mergeClasses(
-        styles["navigation-bar"],
-        isNavigationOpen.value === NAVIGATION_STATE.CLOSED &&
-          styles["nav-closed"],
-      )}
+    <FocusTrap
+      active={isFocusTrapActive}
+      focusTrapOptions={{
+        // Allow clicking outside to close (handled by handleClickOutside)
+        clickOutsideDeactivates: true,
+        // Allow Escape key to close (handled by handleEscape)
+        escapeDeactivates: false,
+        // Return focus to toggle button when trap deactivates
+        onDeactivate: () => toggleRef.current?.focus(),
+        // Prevent focus-trap from throwing if no focusable elements found
+        fallbackFocus: () => toggleRef.current ?? document.body,
+      }}
     >
-      {/*
-        CSS Container Query Behavior (see NavigationBar.module.css):
-        - Narrow containers (<700px): .closed hides the list, links shown in dropdown overlay
-        - Wide containers (>=700px): .closed has no effect, links always visible horizontally
-      */}
-      <ul
-        role="menu"
+      <nav
+        ref={navRef}
+        id="navigation-bar"
         className={mergeClasses(
-          styles["navigation-list-container"],
-          isNavigationOpen.value === NAVIGATION_STATE.CLOSED && styles.closed,
+          styles["navigation-bar"],
+          isNavigationOpen.value === NAVIGATION_STATE.CLOSED &&
+            styles["nav-closed"],
         )}
       >
-        <FlexContainer
-          flexFlow={FlexFlowCSSValue.COLUMN}
-          responsive={navigationContainerResponsiveProp}
-        >
-          {navigationLinks}
-        </FlexContainer>
-      </ul>
-
-      <div className={mergeClasses(styles["navigation-toggle-container"])}>
-        <DarkModeToggle visible={true} />
         {/*
           CSS Container Query Behavior (see NavigationBar.module.css):
-          - Narrow containers (<700px): hamburger visible for toggle
-          - Wide containers (>=700px): hamburger hidden, links always visible
+          - Narrow containers (<700px): .closed hides the list, links shown in dropdown overlay
+          - Wide containers (>=700px): .closed has no effect, links always visible horizontally
         */}
-        <div className={mergeClasses(styles["hamburger-wrapper"])}>
-          <NavigationToggle
-            ref={toggleRef}
-            active={isNavigationOpen.value === NAVIGATION_STATE.OPEN}
-            onClick={handleToggle}
-          />
+        <ul
+          className={mergeClasses(
+            styles["navigation-list-container"],
+            isNavigationOpen.value === NAVIGATION_STATE.CLOSED && styles.closed,
+          )}
+        >
+          <FlexContainer
+            flexFlow={FlexFlowCSSValue.COLUMN}
+            responsive={navigationContainerResponsiveProp}
+          >
+            {navigationLinks}
+          </FlexContainer>
+        </ul>
+
+        <div className={mergeClasses(styles["navigation-toggle-container"])}>
+          <DarkModeToggle visible={true} />
+          {/*
+            CSS Container Query Behavior (see NavigationBar.module.css):
+            - Narrow containers (<700px): hamburger visible for toggle
+            - Wide containers (>=700px): hamburger hidden, links always visible
+          */}
+          <div className={mergeClasses(styles["hamburger-wrapper"])}>
+            <NavigationToggle
+              ref={toggleRef}
+              active={isNavigationOpen.value === NAVIGATION_STATE.OPEN}
+              onClick={handleToggle}
+            />
+          </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+    </FocusTrap>
   );
 }

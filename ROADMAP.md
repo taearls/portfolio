@@ -2,9 +2,9 @@
 
 ## Executive Summary
 
-This roadmap outlines the development plan for Tyler Earls' portfolio website, focusing on performance optimization, modern React tooling, and enhanced user experience. The project has **completed Phase 5 (React Compiler Integration)**, **Phase 6 (CI/CD setup)**, **Phase 7 (Accessibility & Core Web Vitals)**, and **Phase 8 (GitOps Feature Flags)**, with **6 open issues** including navigation accessibility improvements.
+This roadmap outlines the development plan for Tyler Earls' portfolio website, focusing on performance optimization, modern React tooling, and enhanced user experience. The project has **completed Phase 5 (React Compiler Integration)**, **Phase 6 (CI/CD setup)**, **Phase 7 (Accessibility & Core Web Vitals)**, and **Phase 8 (GitOps Feature Flags)**, with **5 open issues** including navigation UX improvements.
 
-**Current Focus**: Navigation accessibility and UX improvements. All critical accessibility issues resolved. Priority work continues on keyboard navigation and mobile UX enhancements.
+**Current Focus**: Navigation UX improvements. All critical and medium priority accessibility issues resolved. Remaining work focuses on visual enhancements and tooling.
 
 ---
 
@@ -21,7 +21,7 @@ This roadmap outlines the development plan for Tyler Earls' portfolio website, f
 
 ## Open Issues Summary
 
-### Priority Breakdown (6 Open Issues)
+### Priority Breakdown (5 Open Issues)
 
 #### 🔴 Critical Priority (0 issues)
 
@@ -47,11 +47,9 @@ This roadmap outlines the development plan for Tyler Earls' portfolio website, f
 
 ✅ **#63** - Fix Cumulative Layout Shift (CLS) on Mobile - **COMPLETED Nov 23, 2025**
 
-#### 🟢 Medium Priority (1 issue)
+#### 🟢 Medium Priority (0 issues)
 
-- **#111** - feat(nav): improve keyboard tab order for mobile navigation - _~1-2 hours_
-  - Labels: `type: enhancement`, `area: ui`, `priority: medium`
-  - Impact: Better keyboard navigation flow through mobile nav
+✅ **#111** - feat(nav): improve keyboard tab order for mobile navigation - **COMPLETED Dec 27, 2025**
 
 ✅ **#11** - Preload Sprite SVG in development and production - **COMPLETED Nov 24, 2025**
 
@@ -563,6 +561,44 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 ---
 
 ## Changelog
+
+### 2025-12-27 - Issue #111 Completed: Improve Keyboard Tab Order for Mobile Navigation
+
+- **Completed**: #111 - feat(nav): improve keyboard tab order for mobile navigation
+- **Priority**: 🟢 MEDIUM (Keyboard Accessibility)
+- **Status**: Completed Dec 27, 2025
+- **Effort**: ~1 hour
+- **Impact**: Keyboard users can now Tab through all navigation links without focus escaping to main content
+
+**Problem:**
+
+- When mobile navigation was open, pressing Tab skipped navigation links and jumped to main content
+- Keyboard users couldn't navigate through the mobile menu
+- Focus was not properly contained within the navigation overlay
+
+**Solution:**
+
+- Implemented focus trap using `focus-trap-react` library
+- Focus trap activates only on narrow viewports (<700px) when navigation is open
+- Tab key cycles through all focusable elements within navigation
+- Focus trap releases when navigation closes, returning focus to toggle button
+- Wide viewports unaffected (navigation always visible, no trap needed)
+
+**Files Modified:**
+
+- `src/components/navigation/NavigationBar/NavigationBar.tsx` - Added FocusTrap wrapper and viewport detection
+- `tests/component/NavigationBar.spec.tsx` - Added focus trap tests
+- `package.json` - Added focus-trap-react dependency
+
+**Testing:**
+
+- ✅ Production build successful
+- ✅ ESLint passes
+- ✅ 261 tests passing (4 new tests added)
+- ✅ Focus stays within navigation when Tab is pressed
+- ✅ Focus trap only active on narrow viewports
+
+---
 
 ### 2025-12-27 - Issue #108 Completed: Add Accessible Name to Dark Mode Toggle
 
