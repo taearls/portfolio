@@ -2,7 +2,13 @@ import "@testing-library/jest-dom/vitest";
 
 import type { RouteDataItem } from "@/constants/navigationData.tsx";
 
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router";
 
@@ -782,13 +788,10 @@ describe("<NavigationBar />", () => {
         fireEvent.click(openButton);
       });
 
-      // Wait for requestAnimationFrame to complete
-      await act(async () => {
-        await new Promise((resolve) => requestAnimationFrame(resolve));
+      // Wait for focus to move to first link (async due to setTimeout in implementation)
+      await waitFor(() => {
+        expect(document.activeElement).toBe(homeLink);
       });
-
-      // Focus should now be on the first link
-      expect(document.activeElement).toBe(homeLink);
     });
 
     it("should not change focus when navigation opens on wide viewport", async () => {
@@ -810,14 +813,15 @@ describe("<NavigationBar />", () => {
       // Open navigation
       ensureNavigationOpen();
 
-      // Wait for focus to move to first link
-      await act(async () => {
-        await new Promise((resolve) => requestAnimationFrame(resolve));
-      });
-
       // Get the close button (toggle button)
       const closeButton = screen.getByRole("button", {
         name: /Close Navigation/i,
+      });
+
+      // Wait for focus to move to first link
+      const homeLink = screen.getByRole("link", { name: /Home/i });
+      await waitFor(() => {
+        expect(document.activeElement).toBe(homeLink);
       });
 
       // Close navigation

@@ -62,6 +62,7 @@ This roadmap outlines the development plan for Tyler Earls' portfolio website, f
 ✅ **#112** - feat(nav): add semi-transparent backdrop behind mobile navigation - **COMPLETED Dec 27, 2025**
 
 ✅ **#113** - feat(nav): move focus to first nav link when mobile navigation opens - **COMPLETED Dec 27, 2025**
+
 - **#114** - Add Stylelint for CSS linting - _~2-3 hours_
   - Labels: (none)
   - Note: Adds CSS-specific linting to complement ESLint/OxLint
@@ -577,15 +578,16 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 
 **Solution:**
 
-- Added ref to track first navigation link element
-- Added useEffect to move focus to first link when navigation opens on narrow viewports
-- Uses `requestAnimationFrame` to ensure DOM is ready and focus trap is active
+- Added `data-first-link="true"` attribute to first NavLink for DOM selection
+- Added separate useEffect with setTimeout(50ms) to move focus after focus trap initializes
+- Uses `document.querySelector("[data-first-link='true']")` to find and focus element
+- Set FocusTrap's `initialFocus: false` to prevent conflicts with custom focus management
 - Focus management only applies on narrow viewports (desktop nav is always visible)
 
 **Files Modified:**
 
-- `src/components/navigation/NavigationBar/NavigationBar.tsx` - Added firstLinkRef and focus effect
-- `tests/component/NavigationBar.spec.tsx` - Added 4 focus behavior tests
+- `src/components/navigation/NavigationBar/NavigationBar.tsx` - Added data attribute and focus effect
+- `tests/component/NavigationBar.spec.tsx` - Added 4 focus behavior tests using `waitFor` for robustness
 
 **Testing:**
 
