@@ -2,9 +2,9 @@
 
 ## Executive Summary
 
-This roadmap outlines the development plan for Tyler Earls' portfolio website, focusing on performance optimization, modern React tooling, and enhanced user experience. The project has **completed Phase 5 (React Compiler Integration)**, **Phase 6 (CI/CD setup)**, **Phase 7 (Accessibility & Core Web Vitals)**, and **Phase 8 (GitOps Feature Flags)**, with **4 open low-priority issues** remaining.
+This roadmap outlines the development plan for Tyler Earls' portfolio website, focusing on performance optimization, modern React tooling, and enhanced user experience. The project has **completed Phase 5 (React Compiler Integration)**, **Phase 6 (CI/CD setup)**, **Phase 7 (Accessibility & Core Web Vitals)**, and **Phase 8 (GitOps Feature Flags)**, with **10 open issues** including new navigation accessibility improvements.
 
-**Current Focus**: All critical, high, and medium priority work complete! Only low-priority enhancements and research spikes remain. The portfolio is production-ready with comprehensive accessibility compliance, feature flag infrastructure, and CI/CD automation.
+**Current Focus**: Navigation accessibility and UX improvements. New critical issues identified for mobile navigation behavior and accessibility compliance. Priority work includes auto-closing navigation on link click, adding accessible names to toggles, and implementing Escape key/click-outside dismissal.
 
 ---
 
@@ -21,17 +21,27 @@ This roadmap outlines the development plan for Tyler Earls' portfolio website, f
 
 ## Open Issues Summary
 
-### Priority Breakdown (4 Open Issues)
+### Priority Breakdown (10 Open Issues)
 
-#### 🔴 Critical Priority (0 issues)
+#### 🔴 Critical Priority (2 issues)
 
-_All critical issues resolved!_
+- **#107** - fix(nav): auto-close mobile navigation when link is clicked - _~1-2 hours_
+  - Labels: `type: bug`, `area: ui`, `area: routing`, `priority: critical`
+  - Impact: Navigation stays open after clicking a link, blocking page content
+- **#108** - fix(a11y): add accessible name to dark mode toggle button - _~30 minutes_
+  - Labels: `type: bug`, `area: ui`, `priority: critical`
+  - Impact: Screen readers cannot identify the dark mode toggle purpose
 
 ✅ **#61** - Fix Active Navigation Link Contrast (WCAG AA Failure) - **COMPLETED Nov 16, 2025**
 
-#### 🟡 High Priority (0 issues)
+#### 🟡 High Priority (2 issues)
 
-_All high-priority issues resolved!_
+- **#109** - feat(nav): close mobile navigation with Escape key - _~1 hour_
+  - Labels: `type: enhancement`, `area: ui`, `priority: high`
+  - Impact: Standard keyboard accessibility pattern for dismissible overlays
+- **#110** - feat(nav): close mobile navigation when clicking outside - _~1-2 hours_
+  - Labels: `type: enhancement`, `area: ui`, `priority: high`
+  - Impact: Expected UX pattern for dropdown/overlay dismissal
 
 **Previously Completed:**
 
@@ -43,9 +53,11 @@ _All high-priority issues resolved!_
 
 ✅ **#63** - Fix Cumulative Layout Shift (CLS) on Mobile - **COMPLETED Nov 23, 2025**
 
-#### 🟢 Medium Priority (0 issues)
+#### 🟢 Medium Priority (1 issue)
 
-_All medium-priority issues resolved!_
+- **#111** - feat(nav): improve keyboard tab order for mobile navigation - _~1-2 hours_
+  - Labels: `type: enhancement`, `area: ui`, `priority: medium`
+  - Impact: Better keyboard navigation flow through mobile nav
 
 ✅ **#11** - Preload Sprite SVG in development and production - **COMPLETED Nov 24, 2025**
 
@@ -53,15 +65,19 @@ _All medium-priority issues resolved!_
 
 ✅ **#14** - Add Working Email Contact Form - **COMPLETED Dec 7, 2025**
 
-#### 🔵 Low Priority (3 issues) - Effort: ~1-2 weeks total
+#### 🔵 Low Priority (5 issues) - Effort: ~1 week total
 
+- **#112** - feat(nav): add semi-transparent backdrop behind mobile navigation - _~1-2 hours_
+  - Labels: `type: enhancement`, `area: ui`, `priority: low`
+- **#113** - feat(nav): move focus to first nav link when mobile navigation opens - _~1 hour_
+  - Labels: `type: enhancement`, `area: ui`, `priority: low`
+- **#114** - Add Stylelint for CSS linting - _~2-3 hours_
+  - Labels: (none)
+  - Note: Adds CSS-specific linting to complement ESLint/OxLint
 - **#33** - Spike: Integrate PRs with Graphite - _~1-2 hours_
   - Labels: `type: spike`, `area: ci/cd`, `priority: low`, `effort: small`
 - **#34** - Spike: Experiment with CodeRabbit - _~1-2 hours_
   - Labels: `type: spike`, `area: ci/cd`, `priority: low`, `effort: small`
-- **#64** - Improve Color Contrast for WCAG AAA Compliance - _~2-4 hours_
-  - Title: 🔵 MINOR
-  - Note: WCAG AA already met, AAA is enhancement
 
 ✅ **#105** - Vertically center navigation toggle button - **COMPLETED Dec 27, 2025**
 
@@ -74,6 +90,8 @@ _All medium-priority issues resolved!_
 ✅ **#15** - Update Web Projects - Add User Selectable Tags and Search - Update Layout - **COMPLETED Dec 23, 2025**
 
 ✅ **#65** - Increase Font Size for Desktop/Tablet Readability - **COMPLETED Dec 23, 2025**
+
+✅ **#64** - Improve Color Contrast for WCAG AAA Compliance - **COMPLETED Dec 27, 2025**
 
 ---
 
@@ -186,11 +204,33 @@ _Successfully migrated to TailwindCSS v4 with modern config_
 
 ## Current Sprint
 
-### Sprint Goals (Dec 16, 2025 - Ongoing)
+### Sprint Goals (Dec 27, 2025 - Ongoing)
 
-**Primary Objective**: 🎉 Maintenance Mode - All Critical Work Complete!
+**Primary Objective**: 🔴 Navigation Accessibility & UX Fixes
 
-**Status**: The portfolio is production-ready. All critical, high, and medium priority issues have been resolved. Only low-priority enhancements remain, which can be tackled as time permits.
+**Status**: New navigation-related issues identified that need immediate attention. Critical bugs affecting mobile navigation behavior and accessibility compliance must be addressed.
+
+**Immediate Priority (Critical + High)**:
+
+1. 🔴 **#107** - Auto-close mobile navigation when link is clicked
+   - Priority: CRITICAL
+   - Impact: Navigation blocks content after link click
+   - Effort: ~1-2 hours
+
+2. 🔴 **#108** - Add accessible name to dark mode toggle button
+   - Priority: CRITICAL
+   - Impact: Screen reader accessibility violation
+   - Effort: ~30 minutes
+
+3. 🟡 **#109** - Close mobile navigation with Escape key
+   - Priority: HIGH
+   - Impact: Standard keyboard accessibility pattern
+   - Effort: ~1 hour
+
+4. 🟡 **#110** - Close mobile navigation when clicking outside
+   - Priority: HIGH
+   - Impact: Expected UX pattern for overlays
+   - Effort: ~1-2 hours
 
 **Previous Sprint Progress (Completed):**
 
@@ -428,33 +468,34 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 
 ## Issue Status Summary
 
-| Priority    | Open  | In Progress | Closed (All Time) | Total Open |
-| ----------- | ----- | ----------- | ----------------- | ---------- |
-| 🔴 Critical | 0     | 0           | 1                 | 0          |
-| 🟡 High     | 0     | 0           | 11                | 0          |
-| 🟢 Medium   | 0     | 0           | 5                 | 0          |
-| 🔵 Low      | 3     | 0           | 4                 | 3          |
-| **TOTAL**   | **3** | **0**       | **21**            | **3**      |
+| Priority    | Open   | In Progress | Closed (All Time) | Total Open |
+| ----------- | ------ | ----------- | ----------------- | ---------- |
+| 🔴 Critical | 2      | 0           | 1                 | 2          |
+| 🟡 High     | 2      | 0           | 11                | 2          |
+| 🟢 Medium   | 1      | 0           | 5                 | 1          |
+| 🔵 Low      | 5      | 0           | 5                 | 5          |
+| **TOTAL**   | **10** | **0**       | **22**            | **10**     |
 
 ### Issues by Category
 
 **React Compiler** (0 open, 6 closed): Closed: #38 (epic), #39, #40, #41, #42, #43, #44
-**Bugs** (0 open, 1 closed): Closed: #51 (navigation header overflow)
+**Bugs** (2 open, 1 closed): Open: #107 (nav auto-close), #108 (a11y toggle name) | Closed: #51 (navigation header overflow)
 **Infrastructure** (0 open, 2 closed): Closed: #80 (GitOps feature flags), #72 (Cloudflare feature flags)
-**CI/CD** (0 open, 2 closed): Closed: #18 (GitHub Actions pipeline), #72 (feature flags)
-**Accessibility** (1 open, 4 closed): Open: #64 | Closed: #61 (navigation contrast), #62 (touch targets), #63 (CLS mobile), #65 (font size readability)
+**CI/CD** (1 open, 2 closed): Open: #114 (Stylelint) | Closed: #18 (GitHub Actions pipeline), #72 (feature flags)
+**Accessibility** (1 open, 5 closed): Open: #108 | Closed: #61 (navigation contrast), #62 (touch targets), #63 (CLS mobile), #64 (WCAG AAA), #65 (font size readability)
+**Navigation UX** (6 open): #107, #109, #110, #111, #112, #113
 **UI/UX** (0 open, 9 closed): Closed: #10 (resume page), #13 (descriptions), #15 (tags/search), #58 (left-align text), #28 (React 19 Meta), #11 (SVG preload), #27 (lazy routes), #72 (feature flags), #14 (contact form)
 **Research** (2 open): #33, #34
 
 ### Effort Distribution (Open Issues Only)
 
-| Effort Level  | Count | Issues   |
-| ------------- | ----- | -------- |
-| Small (< 2h)  | 2     | #33, #34 |
-| Medium (2-8h) | 1     | #64      |
-| Large (> 8h)  | 0     | —        |
+| Effort Level  | Count | Issues                                       |
+| ------------- | ----- | -------------------------------------------- |
+| Small (< 2h)  | 8     | #107, #108, #109, #110, #112, #113, #33, #34 |
+| Medium (2-8h) | 2     | #111, #114                                   |
+| Large (> 8h)  | 0     | —                                            |
 
-**Note**: All critical, high, and medium priority issues have been resolved. Only 3 low-priority enhancement and research issues remain.
+**Note**: 10 open issues, mostly navigation-related. Critical path: #107 → #108 → #109 → #110 (all navigation accessibility/UX fixes).
 
 ---
 
@@ -518,6 +559,31 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 ---
 
 ## Changelog
+
+### 2025-12-27 - ROADMAP Update: Navigation Accessibility Sprint
+
+- **Major Update**: 8 new navigation-related issues identified and prioritized
+- **New Issues Added**:
+  - 🔴 #107 - Auto-close mobile navigation when link clicked (CRITICAL)
+  - 🔴 #108 - Add accessible name to dark mode toggle (CRITICAL)
+  - 🟡 #109 - Close navigation with Escape key (HIGH)
+  - 🟡 #110 - Close navigation when clicking outside (HIGH)
+  - 🟢 #111 - Improve keyboard tab order for mobile nav (MEDIUM)
+  - 🔵 #112 - Add semi-transparent backdrop behind mobile nav (LOW)
+  - 🔵 #113 - Move focus to first nav link when nav opens (LOW)
+  - 🔵 #114 - Add Stylelint for CSS linting (LOW)
+- **Completed Since Last Update**:
+  - ✅ #64 - WCAG AAA Color Contrast
+  - ✅ z-index centralization and container queries refactoring (PR #115)
+- **Priority Changes**:
+  - Total open issues: 10 (up from 3)
+  - Critical: 2 (up from 0)
+  - High: 2 (up from 0)
+  - Medium: 1 (up from 0)
+  - Low: 5 (up from 3)
+- **Impact**: New sprint focused on navigation accessibility and UX fixes
+
+---
 
 ### 2025-12-27 - Issue #105 Completed: Vertically Center Navigation Toggle
 
@@ -1809,6 +1875,6 @@ All high-priority accessibility issues (#61, #62, #63) have been resolved. Mediu
 
 ---
 
-**Last Updated**: December 27, 2025 (All Priority Work Complete - 3 Low-Priority Issues Remaining)
+**Last Updated**: December 27, 2025 (Navigation Accessibility Sprint - 10 Open Issues)
 **Maintained By**: Tyler Earls
 **Generated With**: Claude Code
