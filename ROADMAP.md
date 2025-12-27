@@ -489,11 +489,11 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 
 ### Effort Distribution (Open Issues Only)
 
-| Effort Level  | Count | Issues                                   |
-| ------------- | ----- | ---------------------------------------- |
+| Effort Level  | Count | Issues                                       |
+| ------------- | ----- | -------------------------------------------- |
 | Small (< 2h)  | 8     | #107, #108, #109, #110, #112, #113, #33, #34 |
-| Medium (2-8h) | 2     | #111, #114                               |
-| Large (> 8h)  | 0     | —                                        |
+| Medium (2-8h) | 2     | #111, #114                                   |
+| Large (> 8h)  | 0     | —                                            |
 
 **Note**: 10 open issues, mostly navigation-related. Critical path: #107 → #108 → #109 → #110 (all navigation accessibility/UX fixes).
 
