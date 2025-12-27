@@ -3,7 +3,7 @@ import type { FlexContainerProps } from "@/types/FlexContainer.ts";
 import type { NavLinkRenderProps } from "react-router";
 
 import { useMachine } from "@xstate/react";
-import { useCallback } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { NavLink, useLocation } from "react-router";
 
 import DarkModeToggle from "@/components/DarkModeToggle/DarkModeToggle.tsx";
@@ -45,6 +45,25 @@ export default function NavigationBar({ links }: NavigationBarProps) {
     useMachine(navigationMachine);
   const location = useLocation();
   const selectedLink = links.find((link) => link.href === location.pathname);
+  const navRef = useRef<HTMLElement>(null);
+
+  // Close navigation when clicking outside (mobile UX improvement)
+  // On narrow viewports, this closes the dropdown when user clicks elsewhere
+  // On wide viewports, CSS container query keeps links visible regardless of state
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        navRef.current &&
+        !navRef.current.contains(event.target as Node) &&
+        isNavigationOpen.value === NAVIGATION_STATE.OPEN
+      ) {
+        sendNavigationUpdate({ type: NAVIGATION_EVENT.TOGGLE });
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, [isNavigationOpen.value, sendNavigationUpdate]);
 
   const handleToggle = () => {
     sendNavigationUpdate({ type: NAVIGATION_EVENT.TOGGLE });
@@ -93,7 +112,11 @@ export default function NavigationBar({ links }: NavigationBarProps) {
     });
 
   return (
-    <nav id="navigation-bar" className={mergeClasses(styles["navigation-bar"])}>
+    <nav
+      ref={navRef}
+      id="navigation-bar"
+      className={mergeClasses(styles["navigation-bar"])}
+    >
       {/*
         CSS Container Query Behavior (see NavigationBar.module.css):
         - Narrow containers (<700px): .closed hides the list, links shown in dropdown overlay
