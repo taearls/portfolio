@@ -46,6 +46,26 @@ export default function NavigationBar({ links }: NavigationBarProps) {
   const location = useLocation();
   const selectedLink = links.find((link) => link.href === location.pathname);
   const navRef = useRef<HTMLElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+
+  // Close navigation when pressing Escape key (keyboard accessibility)
+  // On narrow viewports, this closes the dropdown and returns focus to toggle
+  // On wide viewports, CSS container query keeps links visible regardless of state
+  useEffect(() => {
+    const handleEscape = (event: KeyboardEvent) => {
+      if (
+        event.key === "Escape" &&
+        isNavigationOpen.value === NAVIGATION_STATE.OPEN
+      ) {
+        sendNavigationUpdate({ type: NAVIGATION_EVENT.TOGGLE });
+        // Return focus to toggle button for keyboard accessibility
+        toggleRef.current?.focus();
+      }
+    };
+
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [isNavigationOpen.value, sendNavigationUpdate]);
 
   // Close navigation when clicking outside (mobile UX improvement)
   // On narrow viewports, this closes the dropdown when user clicks elsewhere
@@ -146,6 +166,7 @@ export default function NavigationBar({ links }: NavigationBarProps) {
         */}
         <div className={mergeClasses(styles["hamburger-wrapper"])}>
           <NavigationToggle
+            ref={toggleRef}
             active={isNavigationOpen.value === NAVIGATION_STATE.OPEN}
             onClick={handleToggle}
           />

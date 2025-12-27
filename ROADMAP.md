@@ -2,9 +2,9 @@
 
 ## Executive Summary
 
-This roadmap outlines the development plan for Tyler Earls' portfolio website, focusing on performance optimization, modern React tooling, and enhanced user experience. The project has **completed Phase 5 (React Compiler Integration)**, **Phase 6 (CI/CD setup)**, **Phase 7 (Accessibility & Core Web Vitals)**, and **Phase 8 (GitOps Feature Flags)**, with **8 open issues** including navigation accessibility improvements.
+This roadmap outlines the development plan for Tyler Earls' portfolio website, focusing on performance optimization, modern React tooling, and enhanced user experience. The project has **completed Phase 5 (React Compiler Integration)**, **Phase 6 (CI/CD setup)**, **Phase 7 (Accessibility & Core Web Vitals)**, and **Phase 8 (GitOps Feature Flags)**, with **7 open issues** including navigation accessibility improvements.
 
-**Current Focus**: Navigation accessibility and UX improvements. Critical issues being addressed for mobile navigation behavior and accessibility compliance. Priority work includes adding accessible names to toggles and implementing Escape key dismissal.
+**Current Focus**: Navigation accessibility and UX improvements. Critical issues being addressed for mobile navigation behavior and accessibility compliance. Priority work includes adding accessible names to toggles.
 
 ---
 
@@ -21,7 +21,7 @@ This roadmap outlines the development plan for Tyler Earls' portfolio website, f
 
 ## Open Issues Summary
 
-### Priority Breakdown (8 Open Issues)
+### Priority Breakdown (7 Open Issues)
 
 #### 🔴 Critical Priority (1 issue)
 
@@ -33,11 +33,9 @@ This roadmap outlines the development plan for Tyler Earls' portfolio website, f
 
 ✅ **#61** - Fix Active Navigation Link Contrast (WCAG AA Failure) - **COMPLETED Nov 16, 2025**
 
-#### 🟡 High Priority (1 issue)
+#### 🟡 High Priority (0 issues)
 
-- **#109** - feat(nav): close mobile navigation with Escape key - _~1 hour_
-  - Labels: `type: enhancement`, `area: ui`, `priority: high`
-  - Impact: Standard keyboard accessibility pattern for dismissible overlays
+✅ **#109** - feat(nav): close mobile navigation with Escape key - **COMPLETED Dec 27, 2025**
 
 ✅ **#110** - feat(nav): close mobile navigation when clicking outside - **COMPLETED Dec 27, 2025**
 
@@ -208,28 +206,30 @@ _Successfully migrated to TailwindCSS v4 with modern config_
 
 **Status**: New navigation-related issues identified that need immediate attention. Critical bugs affecting mobile navigation behavior and accessibility compliance must be addressed.
 
-**Immediate Priority (Critical + High)**:
+**Immediate Priority (Critical)**:
 
 1. 🔴 **#108** - Add accessible name to dark mode toggle button
    - Priority: CRITICAL
    - Impact: Screen reader accessibility violation
    - Effort: ~30 minutes
 
-2. 🟡 **#109** - Close mobile navigation with Escape key
-   - Priority: HIGH
-   - Impact: Standard keyboard accessibility pattern
-   - Effort: ~1 hour
-
 **Just Completed**:
 
-1. ✅ **#110** - Close mobile navigation when clicking outside - **COMPLETED**
+1. ✅ **#109** - Close mobile navigation with Escape key - **COMPLETED**
+   - Priority: 🟡 HIGH
+   - Status: Completed Dec 27, 2025
+   - Effort: ~30 minutes (actual)
+   - Changes: Added Escape key handler with useEffect, focus returns to toggle button
+   - Result: Pressing Escape closes mobile navigation and returns focus to toggle
+
+2. ✅ **#110** - Close mobile navigation when clicking outside - **COMPLETED**
    - Priority: 🟡 HIGH
    - Status: Completed Dec 27, 2025
    - Effort: ~30 minutes (actual)
    - Changes: Added click-outside handler with useEffect and useRef
    - Result: Navigation closes when clicking anywhere outside the nav on mobile
 
-2. ✅ **#107** - Auto-close mobile navigation when link is clicked - **COMPLETED**
+3. ✅ **#107** - Auto-close mobile navigation when link is clicked - **COMPLETED**
    - Priority: 🔴 CRITICAL
    - Status: Completed Dec 27, 2025
    - Effort: ~30 minutes (actual)
@@ -475,10 +475,10 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 | Priority    | Open  | In Progress | Closed (All Time) | Total Open |
 | ----------- | ----- | ----------- | ----------------- | ---------- |
 | 🔴 Critical | 1     | 0           | 2                 | 1          |
-| 🟡 High     | 1     | 0           | 12                | 1          |
+| 🟡 High     | 0     | 0           | 13                | 0          |
 | 🟢 Medium   | 1     | 0           | 5                 | 1          |
 | 🔵 Low      | 5     | 0           | 5                 | 5          |
-| **TOTAL**   | **8** | **0**       | **24**            | **8**      |
+| **TOTAL**   | **7** | **0**       | **25**            | **7**      |
 
 ### Issues by Category
 
@@ -487,19 +487,19 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 **Infrastructure** (0 open, 2 closed): Closed: #80 (GitOps feature flags), #72 (Cloudflare feature flags)
 **CI/CD** (1 open, 2 closed): Open: #114 (Stylelint) | Closed: #18 (GitHub Actions pipeline), #72 (feature flags)
 **Accessibility** (1 open, 5 closed): Open: #108 | Closed: #61 (navigation contrast), #62 (touch targets), #63 (CLS mobile), #64 (WCAG AAA), #65 (font size readability)
-**Navigation UX** (4 open, 2 closed): Open: #109, #111, #112, #113 | Closed: #110, #107
+**Navigation UX** (3 open, 3 closed): Open: #111, #112, #113 | Closed: #109, #110, #107
 **UI/UX** (0 open, 9 closed): Closed: #10 (resume page), #13 (descriptions), #15 (tags/search), #58 (left-align text), #28 (React 19 Meta), #11 (SVG preload), #27 (lazy routes), #72 (feature flags), #14 (contact form)
 **Research** (2 open): #33, #34
 
 ### Effort Distribution (Open Issues Only)
 
-| Effort Level  | Count | Issues                           |
-| ------------- | ----- | -------------------------------- |
-| Small (< 2h)  | 6     | #108, #109, #112, #113, #33, #34 |
-| Medium (2-8h) | 2     | #111, #114                       |
-| Large (> 8h)  | 0     | —                                |
+| Effort Level  | Count | Issues                     |
+| ------------- | ----- | -------------------------- |
+| Small (< 2h)  | 5     | #108, #112, #113, #33, #34 |
+| Medium (2-8h) | 2     | #111, #114                 |
+| Large (> 8h)  | 0     | —                          |
 
-**Note**: 8 open issues, mostly navigation-related. Critical path: #108 → #109 (remaining navigation accessibility/UX fixes).
+**Note**: 7 open issues. Critical path: #108 (remaining critical accessibility fix).
 
 ---
 
@@ -563,6 +563,46 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 ---
 
 ## Changelog
+
+### 2025-12-27 - Issue #109 Completed: Close Mobile Navigation with Escape Key
+
+- **Completed**: #109 - feat(nav): close mobile navigation with Escape key
+- **Priority**: 🟡 HIGH (Keyboard Accessibility)
+- **Status**: Completed Dec 27, 2025
+- **Effort**: ~30 minutes
+- **Impact**: Standard keyboard accessibility pattern for dismissible overlays now supported
+
+**Problem:**
+
+- Keyboard users expected to press Escape to dismiss the mobile navigation overlay
+- Users had to Tab to the close button and press Enter to close navigation
+- Missing standard keyboard accessibility pattern
+
+**Solution:**
+
+- Added `useEffect` with keydown event listener for Escape key
+- Checks if Escape is pressed AND navigation is open
+- Sends TOGGLE event to close navigation when conditions met
+- Returns focus to toggle button after closing (accessibility requirement)
+- Added `forwardRef` to NavigationToggle for focus management
+- Event listener properly cleaned up on unmount
+
+**Files Modified:**
+
+- `src/components/navigation/NavigationBar/NavigationBar.tsx` - Added Escape key handler and toggle ref
+- `src/components/navigation/NavigationToggle/NavigationToggle.tsx` - Added forwardRef for focus management
+
+**Files Created:**
+
+- None (tests added to existing `tests/component/NavigationBar.spec.tsx`)
+
+**Testing:**
+
+- ✅ All 252 unit tests passing (4 new tests for Escape key behavior)
+- ✅ Production build successful
+- ✅ ESLint passes
+
+---
 
 ### 2025-12-27 - Issue #110 Completed: Close Mobile Navigation When Clicking Outside
 
@@ -1954,6 +1994,6 @@ All high-priority accessibility issues (#61, #62, #63) have been resolved. Mediu
 
 ---
 
-**Last Updated**: December 27, 2025 (Navigation Accessibility Sprint - 8 Open Issues)
+**Last Updated**: December 27, 2025 (Navigation Accessibility Sprint - 7 Open Issues)
 **Maintained By**: Tyler Earls
 **Generated With**: Claude Code
