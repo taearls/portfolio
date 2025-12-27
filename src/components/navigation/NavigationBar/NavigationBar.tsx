@@ -44,6 +44,11 @@ const navigationContainerResponsiveProp: FlexContainerProps["responsive"] = {
 // Breakpoint for mobile navigation (matches CSS container query)
 const MOBILE_NAV_BREAKPOINT = 700;
 
+// Delay before focusing first link after nav opens
+// Needed because focus-trap-react isn't fully initialized immediately
+// TODO: Refactor to use focus-trap's callbacks instead of setTimeout (see #129)
+const FOCUS_TRAP_INIT_DELAY_MS = 50;
+
 export default function NavigationBar({ links }: NavigationBarProps) {
   const [isNavigationOpen, sendNavigationUpdate] =
     useMachine(navigationMachine);
@@ -76,13 +81,13 @@ export default function NavigationBar({ links }: NavigationBarProps) {
   // Only applies on narrow viewports - desktop nav is always visible
   useEffect(() => {
     if (isNarrowViewport && isNavigationOpen.value === NAVIGATION_STATE.OPEN) {
-      // Small delay to ensure DOM and focus trap are ready
+      // Small delay to ensure focus trap is fully initialized
       const timeoutId = setTimeout(() => {
         const firstLink = document.querySelector<HTMLElement>(
           "[data-first-link='true']",
         );
         firstLink?.focus();
-      }, 50);
+      }, FOCUS_TRAP_INIT_DELAY_MS);
       return () => clearTimeout(timeoutId);
     }
   }, [isNarrowViewport, isNavigationOpen.value]);
