@@ -16,7 +16,12 @@
   container-name: nav;
 }
 
-/* Wide viewport: taller nav bar with bottom border
+/* Show bottom border on nav bar only when navigation is closed (mobile) */
+.navigation-bar.nav-closed {
+  border-bottom: 1px solid;
+}
+
+/* Wide viewport: taller nav bar with border
    Note: The nav bar itself uses @media (not @container) because a container
    cannot query its own size - container queries only work on descendants */
 @media (min-width: 700px) {

@@ -135,7 +135,11 @@ export default function NavigationBar({ links }: NavigationBarProps) {
     <nav
       ref={navRef}
       id="navigation-bar"
-      className={mergeClasses(styles["navigation-bar"])}
+      className={mergeClasses(
+        styles["navigation-bar"],
+        isNavigationOpen.value === NAVIGATION_STATE.CLOSED &&
+          styles["nav-closed"],
+      )}
     >
       {/*
         CSS Container Query Behavior (see NavigationBar.module.css):
