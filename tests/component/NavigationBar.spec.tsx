@@ -400,4 +400,96 @@ describe("<NavigationBar />", () => {
       // (since the button is inside the nav)
     });
   });
+
+  describe("Close on Escape Key (Keyboard Accessibility)", () => {
+    it("should close navigation when Escape key is pressed while navigation is open", () => {
+      renderNavigationBar();
+
+      const navigationList = screen.getByRole("menu");
+
+      // Ensure navigation starts in open state
+      ensureNavigationOpen();
+
+      // Verify navigation is open
+      expect(navigationList.className).not.toMatch(/closed/);
+
+      // Press Escape key
+      act(() => {
+        fireEvent.keyDown(document, { key: "Escape" });
+      });
+
+      // Navigation should now be closed
+      expect(navigationList.className).toMatch(/closed/);
+    });
+
+    it("should not error when pressing Escape while navigation is already closed", () => {
+      renderNavigationBar();
+
+      const navigationList = screen.getByRole("menu");
+
+      // Ensure navigation is closed
+      ensureNavigationClosed();
+
+      // Verify navigation is closed
+      expect(navigationList.className).toMatch(/closed/);
+
+      // Press Escape key - should not throw or cause issues
+      expect(() => {
+        act(() => {
+          fireEvent.keyDown(document, { key: "Escape" });
+        });
+      }).not.toThrow();
+
+      // Navigation should remain closed
+      expect(navigationList.className).toMatch(/closed/);
+    });
+
+    it("should return focus to toggle button after pressing Escape", () => {
+      renderNavigationBar();
+
+      // Ensure navigation starts in open state
+      ensureNavigationOpen();
+
+      // Get the toggle button (it should be "Close Navigation" when open)
+      const toggleButton = screen.getByRole("button", {
+        name: /Close Navigation/i,
+      });
+
+      // Press Escape key
+      act(() => {
+        fireEvent.keyDown(document, { key: "Escape" });
+      });
+
+      // Toggle button should now have focus
+      expect(document.activeElement).toBe(toggleButton);
+    });
+
+    it("should not close navigation when other keys are pressed", () => {
+      renderNavigationBar();
+
+      const navigationList = screen.getByRole("menu");
+
+      // Ensure navigation starts in open state
+      ensureNavigationOpen();
+
+      // Verify navigation is open
+      expect(navigationList.className).not.toMatch(/closed/);
+
+      // Press other keys
+      act(() => {
+        fireEvent.keyDown(document, { key: "Enter" });
+      });
+      expect(navigationList.className).not.toMatch(/closed/);
+
+      act(() => {
+        fireEvent.keyDown(document, { key: "Tab" });
+      });
+      expect(navigationList.className).not.toMatch(/closed/);
+
+      act(() => {
+        fireEvent.keyDown(document, { key: "ArrowDown" });
+      });
+      expect(navigationList.className).not.toMatch(/closed/);
+    });
+  });
 });
