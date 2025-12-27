@@ -84,6 +84,11 @@ export default function NavigationBar({ links }: NavigationBarProps) {
 
   return (
     <nav id="navigation-bar" className={mergeClasses(styles["navigation-bar"])}>
+      {/*
+        CSS Container Query Behavior (see NavigationBar.module.css):
+        - Narrow containers (<700px): .closed hides the list, links shown in dropdown overlay
+        - Wide containers (>=700px): .closed has no effect, links always visible horizontally
+      */}
       <ul
         role="menu"
         className={mergeClasses(
@@ -100,15 +105,18 @@ export default function NavigationBar({ links }: NavigationBarProps) {
       </ul>
 
       <div className={mergeClasses(styles["navigation-toggle-container"])}>
-        {/* <RenderIf condition={isNavigationOpen.value === NAVIGATION_STATE.OPEN}> */}
-        <DarkModeToggle
-          visible={isNavigationOpen.value === NAVIGATION_STATE.OPEN}
-        />
-        {/* </RenderIf> */}
-        <NavigationToggle
-          active={isNavigationOpen.value === NAVIGATION_STATE.OPEN}
-          onClick={handleToggle}
-        />
+        <DarkModeToggle visible={true} />
+        {/*
+          CSS Container Query Behavior (see NavigationBar.module.css):
+          - Narrow containers (<700px): hamburger visible for toggle
+          - Wide containers (>=700px): hamburger hidden, links always visible
+        */}
+        <div className={mergeClasses(styles["hamburger-wrapper"])}>
+          <NavigationToggle
+            active={isNavigationOpen.value === NAVIGATION_STATE.OPEN}
+            onClick={handleToggle}
+          />
+        </div>
       </div>
     </nav>
   );

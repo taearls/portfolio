@@ -1,7 +1,15 @@
 .page-container {
   /* Prevent CLS by setting initial margin-top equal to expected nav height */
   margin-top: var(--expanded-nav-height);
-  min-height: calc(100vh - (var(--expanded-nav-height) + var(--footer-height)));
+  /* Add breathing room between nav and content */
+  padding-top: var(--content-spacing);
+  min-height: calc(
+    100vh -
+      (
+        var(--expanded-nav-height) + var(--content-spacing) +
+          var(--footer-height)
+      )
+  );
 }
 
 /* 640px = "sm" breakpoint in Tailwind */
@@ -9,8 +17,13 @@
 @media (min-width: 640px) {
   .page-container {
     margin-top: var(--collapsed-nav-height);
+    padding-top: var(--content-spacing);
     min-height: calc(
-      100vh - (var(--collapsed-nav-height) + var(--footer-height))
+      100vh -
+        (
+          var(--collapsed-nav-height) + var(--content-spacing) +
+            var(--footer-height)
+        )
     );
   }
 }

@@ -1,0 +1,75 @@
+/**
+ * Z-Index Scale
+ * =============================================================================
+ * Centralized z-index constants for consistent layering across the application.
+ *
+ * USAGE: Import this file and use the CSS custom properties in your styles.
+ *        @import "@/styles/z-index.css";
+ *        z-index: var(--z-index-nav-dropdown);
+ *
+ * SCALE GUIDE:
+ *   1-9:     Component-level layering (within a component)
+ *   10-19:   Sticky elements (tab bars, headers)
+ *   50-59:   Overlays (dropdowns, menus)
+ *   60-69:   Interactive controls above overlays
+ *   100+:    Modals, dialogs, tooltips (reserved for future use)
+ * =============================================================================
+ */
+
+:root {
+  /* ===========================================================================
+     Component-level layering (1-9)
+     =========================================================================== */
+
+  /**
+   * Tab button layering above sliding indicator
+   * @used-in src/components/Tabs/Tabs.module.css (.tab)
+   */
+  --z-index-tab-button: 1;
+
+  /* ===========================================================================
+     Sticky elements (10-19)
+     =========================================================================== */
+
+  /**
+   * Sticky tab list on mobile - stays visible while scrolling
+   * @used-in src/components/Tabs/Tabs.module.css (.tabList @media mobile)
+   */
+  --z-index-sticky-tabs: 10;
+
+  /* ===========================================================================
+     Overlays (50-59)
+     =========================================================================== */
+
+  /**
+   * Mobile navigation dropdown menu overlay
+   * @used-in src/components/navigation/NavigationBar/NavigationBar.module.css (.navigation-list-container)
+   */
+  --z-index-nav-dropdown: 50;
+
+  /* ===========================================================================
+     Interactive controls above overlays (60-69)
+     =========================================================================== */
+
+  /**
+   * Navigation toggle button (hamburger menu) - must be above dropdown
+   * @used-in src/components/navigation/NavigationBar/NavigationBar.module.css (.navigation-toggle-container)
+   */
+  --z-index-nav-toggle: 60;
+
+  /* ===========================================================================
+     Modals and dialogs (100+) - Reserved for future use
+     =========================================================================== */
+
+  /**
+   * Reserved for modal dialogs
+   * @used-in (not yet used)
+   */
+  --z-index-modal: 100;
+
+  /**
+   * Reserved for tooltips (above modals)
+   * @used-in (not yet used)
+   */
+  --z-index-tooltip: 110;
+}

@@ -7,12 +7,23 @@
   display: grid;
   top: 0;
   position: absolute;
-  min-height: 4rem;
+  height: 4rem;
   width: 100%;
-  border-bottom: 1px;
-  border-style: solid;
   grid-template-columns: 1fr min-content;
   grid-template-areas: "list toggle";
+  /* Enable container queries for responsive navigation of child elements */
+  container-type: inline-size;
+  container-name: nav;
+}
+
+/* Wide viewport: taller nav bar with bottom border
+   Note: The nav bar itself uses @media (not @container) because a container
+   cannot query its own size - container queries only work on descendants */
+@media (min-width: 700px) {
+  .navigation-bar {
+    height: 76px;
+    border-bottom: 1px solid;
+  }
 }
 
 .navigation-bar * {
@@ -21,21 +32,32 @@
   font-size: 24px;
 }
 
+/* =============================================================================
+   Navigation List Container - Base (Narrow) Styles
+   ============================================================================= */
+
 .navigation-list-container {
-  grid-area: list;
+  /* Narrow container: dropdown overlay below nav bar */
+  position: absolute;
+  top: 4rem;
+  left: 0;
+  width: 100%;
+  background-color: var(--background-color);
+  z-index: var(--z-index-nav-dropdown);
+  border-bottom: 1px solid;
+  padding: 1rem 0;
+  max-height: calc(100vh - 4rem);
+  overflow-y: auto;
+  gap: 0.5rem;
+
+  /* Flex layout for nav links */
   display: inline-flex;
-  height: auto;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  justify-self: center;
-  align-self: center;
-  width: fit-content;
-  /* Updated from 68px to 76px to accommodate 44px toggle height + 32px padding (sm: breakpoint and above) */
-  @apply sm:h-[76px] sm:w-full sm:flex-row;
 }
 
-/* Hide navigation when closed on mobile - uses CSS Module specificity to override inline-flex */
+/* Hide navigation when closed (only effective on narrow containers) */
 .navigation-list-container.closed {
   display: none;
 }
@@ -49,6 +71,10 @@
   padding: 10px 16px;
 }
 
+/* =============================================================================
+   Toggle Container - Contains dark mode toggle and hamburger
+   ============================================================================= */
+
 .navigation-toggle-container {
   position: absolute;
   top: 50%;
@@ -60,4 +86,41 @@
   column-gap: 1rem;
   width: fit-content;
   margin: 0 1rem;
+  z-index: var(--z-index-nav-toggle);
+}
+
+/* Wrapper for hamburger button - hidden on wide containers via container query */
+.hamburger-wrapper {
+  display: inline-flex;
+}
+
+/* =============================================================================
+   Container Queries - Wide Navigation (≥700px)
+   Horizontal nav with inline links, hamburger hidden
+   ============================================================================= */
+
+@container nav (min-width: 700px) {
+  .navigation-list-container {
+    /* Return to normal flow inside nav bar */
+    position: static;
+    height: 76px;
+    width: 100%;
+    max-height: none;
+    overflow: visible;
+    gap: 0;
+    border: none;
+    padding: 0;
+    background: transparent;
+    flex-direction: row;
+  }
+
+  /* .closed has no effect on wide containers - links always visible */
+  .navigation-list-container.closed {
+    display: inline-flex;
+  }
+
+  /* Hide hamburger on wide containers */
+  .hamburger-wrapper {
+    display: none;
+  }
 }
