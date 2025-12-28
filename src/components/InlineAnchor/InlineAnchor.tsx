@@ -59,7 +59,7 @@ export function InlineAnchorContent({
       className={mergeClasses(
         boldClass,
         accent && "accent",
-        "group focus:shadow-outline-light dark:focus:shadow-outline-dark inline-flex items-center gap-x-1 rounded-sm text-lg focus:outline-none sm:items-center sm:justify-center",
+        "group inline-flex items-center gap-x-1 rounded-sm text-lg sm:items-center sm:justify-center",
       )}
     >
       <span className={mergeClasses(underline && "underline", "inline-flex")}>
