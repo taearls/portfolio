@@ -16,7 +16,6 @@ describe("Mobile Navigation Focus", () => {
       cy.findByRole("button", { name: /open navigation/i }).click();
 
       // Wait for focus to be applied (matches FOCUS_TRAP_INIT_DELAY_MS)
-      // eslint-disable-next-line cypress/no-unnecessary-waiting
       cy.wait(100);
 
       // Assert that the first navigation link has focus
@@ -28,7 +27,6 @@ describe("Mobile Navigation Focus", () => {
       cy.findByRole("button", { name: /open navigation/i }).click();
 
       // Wait for focus to be applied
-      // eslint-disable-next-line cypress/no-unnecessary-waiting
       cy.wait(100);
 
       // Get the first link and verify focus styles are applied
@@ -51,7 +49,6 @@ describe("Mobile Navigation Focus", () => {
       cy.findByRole("button", { name: /open navigation/i }).click();
 
       // Wait for focus to be applied
-      // eslint-disable-next-line cypress/no-unnecessary-waiting
       cy.wait(100);
 
       // Get the first link and verify the outline color
@@ -84,7 +81,6 @@ describe("Mobile Navigation Focus", () => {
       cy.findByRole("button", { name: /open navigation/i }).click();
 
       // Wait for nav to open
-      // eslint-disable-next-line cypress/no-unnecessary-waiting
       cy.wait(100);
 
       // Verify each navigation link shows focus ring when focused
