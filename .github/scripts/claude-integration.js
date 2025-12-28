@@ -6,10 +6,10 @@
  * This script handles the integration between GitHub Actions and Anthropic's Claude API.
  * It processes comment requests, gathers context, calls Claude, and prepares responses.
  */
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
+import { join } from "path";
 
-import Anthropic from '@anthropic-ai/sdk';
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
-import { join } from 'path';
+import Anthropic from "@anthropic-ai/sdk";
 
 // Environment variables
 const {
@@ -25,12 +25,12 @@ const {
 
 // Validate required environment variables
 if (!ANTHROPIC_API_KEY) {
-  console.error('ERROR: ANTHROPIC_API_KEY is not set');
+  console.error("ERROR: ANTHROPIC_API_KEY is not set");
   process.exit(1);
 }
 
 if (!GITHUB_OUTPUT) {
-  console.error('ERROR: GITHUB_OUTPUT is not set');
+  console.error("ERROR: GITHUB_OUTPUT is not set");
   process.exit(1);
 }
 
@@ -48,31 +48,33 @@ function gatherContext() {
     commandType: COMMAND_TYPE,
     issueTitle: ISSUE_TITLE,
     issueBody: ISSUE_BODY,
-    isPullRequest: IS_PULL_REQUEST === 'true',
+    isPullRequest: IS_PULL_REQUEST === "true",
   };
 
   if (CONTEXT_DIR && existsSync(CONTEXT_DIR)) {
     // Read file tree
-    const fileTreePath = join(CONTEXT_DIR, 'file-tree.txt');
+    const fileTreePath = join(CONTEXT_DIR, "file-tree.txt");
     if (existsSync(fileTreePath)) {
-      context.fileTree = readFileSync(fileTreePath, 'utf-8');
+      context.fileTree = readFileSync(fileTreePath, "utf-8");
     }
 
     // Read package.json
-    const packageJsonPath = join(CONTEXT_DIR, 'package.json');
+    const packageJsonPath = join(CONTEXT_DIR, "package.json");
     if (existsSync(packageJsonPath)) {
       try {
-        context.packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf-8'));
+        context.packageJson = JSON.parse(
+          readFileSync(packageJsonPath, "utf-8"),
+        );
       } catch (error) {
-        console.warn('Failed to parse package.json:', error.message);
+        console.warn("Failed to parse package.json:", error.message);
       }
     }
 
     // Read changed files (for PRs)
-    const changedFilesPath = join(CONTEXT_DIR, 'changed-files.txt');
+    const changedFilesPath = join(CONTEXT_DIR, "changed-files.txt");
     if (existsSync(changedFilesPath)) {
-      context.changedFiles = readFileSync(changedFilesPath, 'utf-8')
-        .split('\n')
+      context.changedFiles = readFileSync(changedFilesPath, "utf-8")
+        .split("\n")
         .filter(Boolean);
     }
   }
@@ -100,7 +102,7 @@ Repository context:
   }
 
   if (context.packageJson) {
-    systemPrompt += `\n\nProject dependencies: ${Object.keys(context.packageJson.dependencies || {}).join(', ')}`;
+    systemPrompt += `\n\nProject dependencies: ${Object.keys(context.packageJson.dependencies || {}).join(", ")}`;
   }
 
   let userPrompt = `User comment: ${context.commentBody}`;
@@ -110,18 +112,18 @@ Repository context:
   }
 
   if (context.changedFiles && context.changedFiles.length > 0) {
-    userPrompt += `\n\nFiles changed in this PR:\n${context.changedFiles.join('\n')}`;
+    userPrompt += `\n\nFiles changed in this PR:\n${context.changedFiles.join("\n")}`;
   }
 
   // Customize prompt based on command type
   switch (context.commandType) {
-    case 'implement':
+    case "implement":
       systemPrompt += `\n\nYour task is to provide a detailed implementation plan or code suggestion. Be specific and actionable.`;
       break;
-    case 'review':
+    case "review":
       systemPrompt += `\n\nYour task is to review the code changes and provide constructive feedback.`;
       break;
-    case 'explain':
+    case "explain":
       systemPrompt += `\n\nYour task is to provide a clear, concise explanation.`;
       break;
     default:
@@ -135,7 +137,7 @@ Repository context:
  * Call Claude API
  */
 async function callClaude(systemPrompt, userPrompt) {
-  console.log('Calling Claude API...');
+  console.log("Calling Claude API...");
 
   try {
     // Create an abort controller for timeout
@@ -143,12 +145,12 @@ async function callClaude(systemPrompt, userPrompt) {
     const timeout = setTimeout(() => controller.abort(), 60000); // 60s timeout
 
     const message = await anthropic.messages.create({
-      model: 'claude-sonnet-4-20241022',
+      model: "claude-sonnet-4-20241022",
       max_tokens: 4096,
       system: systemPrompt,
       messages: [
         {
-          role: 'user',
+          role: "user",
           content: userPrompt,
         },
       ],
@@ -157,12 +159,12 @@ async function callClaude(systemPrompt, userPrompt) {
     clearTimeout(timeout);
 
     const response = message.content[0].text;
-    console.log('Claude API call successful');
+    console.log("Claude API call successful");
     return response;
   } catch (error) {
-    console.error('Error calling Claude API:', error);
-    if (error.name === 'AbortError') {
-      throw new Error('Claude API request timed out after 60 seconds');
+    console.error("Error calling Claude API:", error);
+    if (error.name === "AbortError") {
+      throw new Error("Claude API request timed out after 60 seconds");
     }
     throw error;
   }
@@ -175,13 +177,13 @@ function processResponse(response, commandType) {
   const result = {
     response: response,
     shouldImplement: false,
-    changesSummary: '',
+    changesSummary: "",
   };
 
   // For implementation requests, check if Claude provided code or actionable steps
-  if (commandType === 'implement') {
+  if (commandType === "implement") {
     // Check if response contains code blocks
-    const hasCodeBlocks = response.includes('```');
+    const hasCodeBlocks = response.includes("```");
     const hasActionableSteps = /\d+\.\s+/g.test(response);
 
     if (hasCodeBlocks || hasActionableSteps) {
@@ -198,16 +200,19 @@ function processResponse(response, commandType) {
  */
 function extractSummary(response) {
   // Try to extract first paragraph or first 200 characters
-  const lines = response.split('\n').filter(Boolean);
+  const lines = response.split("\n").filter(Boolean);
   const firstMeaningfulLine = lines.find(
-    (line) => line.length > 20 && !line.startsWith('#')
+    (line) => line.length > 20 && !line.startsWith("#"),
   );
 
   if (firstMeaningfulLine) {
-    return firstMeaningfulLine.slice(0, 200) + (firstMeaningfulLine.length > 200 ? '...' : '');
+    return (
+      firstMeaningfulLine.slice(0, 200) +
+      (firstMeaningfulLine.length > 200 ? "..." : "")
+    );
   }
 
-  return response.slice(0, 200) + '...';
+  return response.slice(0, 200) + "...";
 }
 
 /**
@@ -215,7 +220,7 @@ function extractSummary(response) {
  */
 function setOutput(key, value) {
   const output = `${key}=${value}\n`;
-  writeFileSync(GITHUB_OUTPUT, output, { flag: 'a' });
+  writeFileSync(GITHUB_OUTPUT, output, { flag: "a" });
 }
 
 /**
@@ -223,8 +228,8 @@ function setOutput(key, value) {
  */
 async function main() {
   try {
-    console.log('Starting Claude integration...');
-    console.log('Command type:', COMMAND_TYPE);
+    console.log("Starting Claude integration...");
+    console.log("Command type:", COMMAND_TYPE);
 
     // Gather context
     const context = gatherContext();
@@ -239,16 +244,16 @@ async function main() {
     const result = processResponse(response, COMMAND_TYPE);
 
     // Set outputs for GitHub Actions
-    setOutput('response', result.response.replace(/\n/g, '\\n'));
-    setOutput('should_implement', result.shouldImplement);
-    setOutput('changes_summary', result.changesSummary.replace(/\n/g, '\\n'));
+    setOutput("response", result.response.replace(/\n/g, "\\n"));
+    setOutput("should_implement", result.shouldImplement);
+    setOutput("changes_summary", result.changesSummary.replace(/\n/g, "\\n"));
 
-    console.log('Claude integration completed successfully');
-    console.log('Should implement:', result.shouldImplement);
+    console.log("Claude integration completed successfully");
+    console.log("Should implement:", result.shouldImplement);
   } catch (error) {
-    console.error('Fatal error:', error);
-    setOutput('response', `Error: ${error.message}`);
-    setOutput('should_implement', 'false');
+    console.error("Fatal error:", error);
+    setOutput("response", `Error: ${error.message}`);
+    setOutput("should_implement", "false");
     process.exit(1);
   }
 }
