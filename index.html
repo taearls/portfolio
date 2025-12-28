@@ -4,47 +4,13 @@
     <meta charset="UTF-8" />
     <link rel="icon" href="/images/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Critical CSS: Inline font-face declarations to prevent FOUT/CLS -->
-    <style>
-      /* Self-hosted fonts - MUST be inline to prevent CLS */
-      /* Ubuntu metrics adjusted to match Arial fallback to prevent layout shift */
-      @font-face {
-        font-family: "Ubuntu";
-        src: url("/fonts/ubuntu-regular.woff2") format("woff2");
-        font-weight: 400;
-        font-style: normal;
-        font-display: swap;
-        ascent-override: 100%;
-        descent-override: 25%;
-        line-gap-override: 0%;
-        size-adjust: 95%;
-      }
+    <!--
+      @font-face declarations moved to globals.css to fix mobile Android rendering issue.
 
-      @font-face {
-        font-family: "Ubuntu";
-        src: url("/fonts/ubuntu-bold.woff2") format("woff2");
-        font-weight: 700;
-        font-style: normal;
-        font-display: swap;
-        ascent-override: 100%;
-        descent-override: 25%;
-        line-gap-override: 0%;
-        size-adjust: 95%;
-      }
-
-      /* Limelight metrics adjusted to match serif fallback */
-      @font-face {
-        font-family: "Limelight";
-        src: url("/fonts/limelight-regular.woff2") format("woff2");
-        font-weight: 400;
-        font-style: normal;
-        font-display: swap;
-        ascent-override: 110%;
-        descent-override: 25%;
-        line-gap-override: 0%;
-        size-adjust: 90%;
-      }
-    </style>
+      Previous implementation used inline <style> tags to prevent CLS, but Android Chrome
+      has issues resolving relative font paths in inline styles. Moving to external CSS
+      fixes the mobile rendering issue with minimal CLS impact (fonts still preloaded below).
+    -->
 
     <!-- Preload font files (now @font-face rules are already defined above) -->
     <link

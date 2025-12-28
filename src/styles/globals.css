@@ -2,6 +2,45 @@
 @import "./z-index.css";
 @import "./breakpoints.css";
 
+/* Self-hosted fonts - moved from inline to prevent mobile Android font loading issues */
+/* Ubuntu metrics adjusted to match Arial fallback to prevent layout shift */
+@font-face {
+  font-family: "Ubuntu";
+  src: url("/fonts/ubuntu-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  ascent-override: 100%;
+  descent-override: 25%;
+  line-gap-override: 0%;
+  size-adjust: 95%;
+}
+
+@font-face {
+  font-family: "Ubuntu";
+  src: url("/fonts/ubuntu-bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  ascent-override: 100%;
+  descent-override: 25%;
+  line-gap-override: 0%;
+  size-adjust: 95%;
+}
+
+/* Limelight metrics adjusted to match serif fallback */
+@font-face {
+  font-family: "Limelight";
+  src: url("/fonts/limelight-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  ascent-override: 110%;
+  descent-override: 25%;
+  line-gap-override: 0%;
+  size-adjust: 90%;
+}
+
 @theme {
   --breakpoint-sm: 40rem;
   --breakpoint-md: 48rem;
@@ -185,6 +224,18 @@ button {
   justify-content: center;
   padding: 6px;
   cursor: pointer;
+}
+
+/* =============================================================================
+   Global Focus Styles (WCAG 2.4.7 - Focus Visible)
+   Centralized focus ring for all interactive elements using --active-color
+   ============================================================================= */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--active-color);
+  outline-offset: 2px;
+  /* Create stacking context so outline paints above surrounding text */
+  position: relative;
 }
 
 /* CLS Optimization - Prevent layout shifts from image loading */
