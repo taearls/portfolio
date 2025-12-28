@@ -195,6 +195,8 @@ a:focus-visible,
 button:focus-visible {
   outline: 2px solid var(--active-color);
   outline-offset: 2px;
+  /* Create stacking context so outline paints above surrounding text */
+  position: relative;
 }
 
 /* CLS Optimization - Prevent layout shifts from image loading */
