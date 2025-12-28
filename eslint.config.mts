@@ -18,6 +18,7 @@ const config = typescriptEslint.config(
       "node_modules",
       "prettier.config.mjs",
       "**/.wrangler/**",
+      ".github/scripts/**",
     ],
   },
   {

@@ -1,0 +1,5 @@
+# Prettier ignore file
+
+# GitHub Actions workflows with inline scripts can cause parsing issues
+.github/workflows/*.yml
+.github/workflows/*.yaml
