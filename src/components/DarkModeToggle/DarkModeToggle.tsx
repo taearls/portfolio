@@ -5,6 +5,7 @@ import { THEME_EVENT, THEME_STATES } from "@/state/machines/themeMachine.ts";
 import { mergeClasses } from "@/util/styling/styling.utils.ts";
 import MoonIcon from "../icons/MoonIcon.tsx";
 import SunIcon from "../icons/SunIcon.tsx";
+import styles from "./DarkModeToggle.module.css";
 
 export type DarkModeToggleProps = {
   visible: boolean;
@@ -23,7 +24,7 @@ export default function DarkModeToggle({ visible }: DarkModeToggleProps) {
   return (
     <button
       onClick={updateTheme}
-      className={mergeClasses(!visible && "hidden")}
+      className={mergeClasses(styles["dark-mode-toggle"], !visible && "hidden")}
       aria-label={
         themeState === THEME_STATES.DARK
           ? "Switch to light mode"

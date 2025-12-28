@@ -45,7 +45,7 @@
 }
 
 .clear-button:focus-visible {
-  outline: 2px solid var(--accent-focus);
+  outline: 2px solid var(--active-color);
   outline-offset: 2px;
 }
 

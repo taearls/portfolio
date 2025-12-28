@@ -27,6 +27,11 @@
   background-color: var(--active-color);
 }
 
+#custom-toggler:focus-visible {
+  outline: 2px solid var(--active-color);
+  outline-offset: 2px;
+}
+
 .active #toggler-top {
   transform: translateY(10px) rotate(-135deg);
 }

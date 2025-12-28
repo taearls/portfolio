@@ -52,7 +52,7 @@
 }
 
 .tab:focus-visible {
-  outline: 2px solid var(--accent-focus);
+  outline: 2px solid var(--active-color);
   outline-offset: -2px;
 }
 
@@ -119,7 +119,7 @@
 }
 
 .tabPanel:focus-visible {
-  outline: 2px solid var(--accent-focus);
+  outline: 2px solid var(--active-color);
   outline-offset: 4px;
   border-radius: 0.25rem;
 }
@@ -218,7 +218,7 @@
 
   /* Focus visible styling for accessibility */
   .tab:focus-visible {
-    outline: 2px solid var(--accent-focus);
+    outline: 2px solid var(--active-color);
     outline-offset: 2px;
   }
 
