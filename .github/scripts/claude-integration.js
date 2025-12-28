@@ -61,7 +61,11 @@ function gatherContext() {
     // Read package.json
     const packageJsonPath = join(CONTEXT_DIR, 'package.json');
     if (existsSync(packageJsonPath)) {
-      context.packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf-8'));
+      try {
+        context.packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf-8'));
+      } catch (error) {
+        console.warn('Failed to parse package.json:', error.message);
+      }
     }
 
     // Read changed files (for PRs)
@@ -134,8 +138,12 @@ async function callClaude(systemPrompt, userPrompt) {
   console.log('Calling Claude API...');
 
   try {
+    // Create an abort controller for timeout
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 60000); // 60s timeout
+
     const message = await anthropic.messages.create({
-      model: 'claude-sonnet-4-20250514',
+      model: 'claude-sonnet-4-20241022',
       max_tokens: 4096,
       system: systemPrompt,
       messages: [
@@ -146,11 +154,16 @@ async function callClaude(systemPrompt, userPrompt) {
       ],
     });
 
+    clearTimeout(timeout);
+
     const response = message.content[0].text;
     console.log('Claude API call successful');
     return response;
   } catch (error) {
     console.error('Error calling Claude API:', error);
+    if (error.name === 'AbortError') {
+      throw new Error('Claude API request timed out after 60 seconds');
+    }
     throw error;
   }
 }

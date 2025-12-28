@@ -190,16 +190,16 @@ Edit `.github/scripts/claude-integration.js` to use a different model:
 
 ```javascript
 const message = await anthropic.messages.create({
-  model: 'claude-sonnet-4-20250514', // Change this to another model
+  model: 'claude-sonnet-4-20241022', // Change this to another model
   max_tokens: 4096,
   // ...
 });
 ```
 
-Available models:
-- `claude-opus-4-20250514` - Most capable, slower
-- `claude-sonnet-4-20250514` - Balanced (recommended)
-- `claude-haiku-4-20250514` - Fastest, more concise
+Available models (check Anthropic's documentation for the latest):
+- `claude-opus-4-20241022` - Most capable, slower
+- `claude-sonnet-4-20241022` - Balanced (recommended, currently used)
+- `claude-haiku-3-20240307` - Fastest, more concise
 
 ### Adjusting Permissions
 
@@ -362,6 +362,18 @@ Each Claude API call consumes tokens and incurs costs:
 3. **Limit who can trigger** - Consider adding author validation
 4. **Monitor usage** - Check Anthropic Console for unusual activity
 5. **Rotate keys periodically** - Update the secret every 90 days
+
+### Built-in Security Features
+
+The workflow includes several security protections:
+
+- **Command Injection Prevention**: User input is sanitized using `github-script` instead of bash
+- **String Injection Protection**: All template interpolations use `toJSON()` for safe escaping
+- **File Operation Validation**: Prevents modification of `.git/` and `.github/workflows/`
+- **Protected Files Warning**: Alerts on changes to `.env` or secret files
+- **API Timeout**: 60-second timeout prevents hanging requests
+- **Concurrency Control**: Prevents multiple simultaneous runs on the same issue/PR
+- **Bot Loop Prevention**: Automatically ignores comments from bot accounts
 
 ## Future Enhancements
 
