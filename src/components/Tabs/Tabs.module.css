@@ -51,8 +51,8 @@
   background-color: color-mix(in srgb, var(--text-color) 8%, transparent);
 }
 
+/* Override global focus offset - inset for tabs with bottom border */
 .tab:focus-visible {
-  outline: 2px solid var(--active-color);
   outline-offset: -2px;
 }
 
@@ -118,8 +118,8 @@
     transform 0.2s ease;
 }
 
+/* Override global focus offset - larger for content panels */
 .tabPanel:focus-visible {
-  outline: 2px solid var(--active-color);
   outline-offset: 4px;
   border-radius: 0.25rem;
 }
@@ -216,9 +216,8 @@
       0 1px 2px color-mix(in srgb, var(--text-color) 8%, transparent);
   }
 
-  /* Focus visible styling for accessibility */
+  /* Reset focus offset to default for mobile pill design */
   .tab:focus-visible {
-    outline: 2px solid var(--active-color);
     outline-offset: 2px;
   }
 

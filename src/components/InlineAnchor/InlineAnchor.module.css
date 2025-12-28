@@ -7,7 +7,4 @@
   padding-bottom: 0.5rem;
 }
 
-.inline-anchor-link:focus-visible {
-  outline: 2px solid var(--active-color);
-  outline-offset: 2px;
-}
+/* Focus styles handled by globals.css */

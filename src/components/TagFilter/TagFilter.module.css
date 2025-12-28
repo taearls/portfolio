@@ -44,11 +44,6 @@
   color: var(--accent-hover-color);
 }
 
-.clear-button:focus-visible {
-  outline: 2px solid var(--active-color);
-  outline-offset: 2px;
-}
-
 .tag-container {
   display: flex;
   flex-wrap: wrap;
