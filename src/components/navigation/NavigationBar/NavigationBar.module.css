@@ -119,6 +119,12 @@
   padding: 10px 16px;
 }
 
+/* Focus indicator for keyboard navigation (WCAG 2.4.7) */
+.navigation-list-container a:focus {
+  outline: 2px solid var(--active-color);
+  outline-offset: 2px;
+}
+
 /* =============================================================================
    Toggle Container - Contains dark mode toggle and hamburger
    ============================================================================= */

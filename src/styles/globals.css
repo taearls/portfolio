@@ -187,6 +187,18 @@ button {
   cursor: pointer;
 }
 
+/* =============================================================================
+   Global Focus Styles (WCAG 2.4.7 - Focus Visible)
+   Centralized focus ring for all interactive elements using --active-color
+   ============================================================================= */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--active-color);
+  outline-offset: 2px;
+  /* Create stacking context so outline paints above surrounding text */
+  position: relative;
+}
+
 /* CLS Optimization - Prevent layout shifts from image loading */
 img {
   /* Ensure images maintain aspect ratio and don't cause layout shifts */

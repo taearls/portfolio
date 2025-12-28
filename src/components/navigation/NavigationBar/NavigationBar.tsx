@@ -44,6 +44,11 @@ const navigationContainerResponsiveProp: FlexContainerProps["responsive"] = {
 // Breakpoint for mobile navigation (matches CSS container query)
 const MOBILE_NAV_BREAKPOINT = 700;
 
+// Delay before focusing first link after nav opens
+// Needed because focus-trap-react isn't fully initialized immediately
+// TODO: Refactor to use focus-trap's callbacks instead of setTimeout (see #129)
+const FOCUS_TRAP_INIT_DELAY_MS = 50;
+
 export default function NavigationBar({ links }: NavigationBarProps) {
   const [isNavigationOpen, sendNavigationUpdate] =
     useMachine(navigationMachine);
@@ -70,6 +75,22 @@ export default function NavigationBar({ links }: NavigationBarProps) {
   // Focus trap should only be active on narrow viewports when nav is open
   const isFocusTrapActive =
     isNarrowViewport && isNavigationOpen.value === NAVIGATION_STATE.OPEN;
+
+  // Move focus to first navigation link when mobile nav opens (accessibility)
+  // This makes it immediately clear to keyboard/screen reader users that nav is open
+  // Only applies on narrow viewports - desktop nav is always visible
+  useEffect(() => {
+    if (isNarrowViewport && isNavigationOpen.value === NAVIGATION_STATE.OPEN) {
+      // Small delay to ensure focus trap is fully initialized
+      const timeoutId = setTimeout(() => {
+        const firstLink = document.querySelector<HTMLElement>(
+          "[data-first-link='true']",
+        );
+        firstLink?.focus();
+      }, FOCUS_TRAP_INIT_DELAY_MS);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [isNarrowViewport, isNavigationOpen.value]);
 
   // Close navigation when pressing Escape key (keyboard accessibility)
   // On narrow viewports, this closes the dropdown and returns focus to toggle
@@ -128,31 +149,32 @@ export default function NavigationBar({ links }: NavigationBarProps) {
     [],
   );
 
-  const navigationLinks = links
-    .filter((link) => !link.hidden)
-    .map((link, index) => {
-      return (
-        <NavigationBarListItem
-          key={link.name}
-          isLast={index === links.filter((link) => !link.hidden).length - 1}
+  const visibleLinks = links.filter((link) => !link.hidden);
+  const navigationLinks = visibleLinks.map((link, index) => {
+    const isFirstLink = index === 0;
+    return (
+      <NavigationBarListItem
+        key={link.name}
+        isLast={index === visibleLinks.length - 1}
+      >
+        <NavLink
+          to={link.href}
+          aria-label={link.ariaLabel}
+          className={getNavLinkClass}
+          onClick={handleLinkClick}
+          data-first-link={isFirstLink ? "true" : undefined}
         >
-          <NavLink
-            to={link.href}
-            aria-label={link.ariaLabel}
-            className={getNavLinkClass}
-            onClick={handleLinkClick}
+          <InlineAnchorContent
+            isExternal={Boolean(link.isExternal)}
+            bold
+            underline={selectedLink?.href === link.href}
           >
-            <InlineAnchorContent
-              isExternal={Boolean(link.isExternal)}
-              bold
-              underline={selectedLink?.href === link.href}
-            >
-              {link.name}
-            </InlineAnchorContent>
-          </NavLink>
-        </NavigationBarListItem>
-      );
-    });
+            {link.name}
+          </InlineAnchorContent>
+        </NavLink>
+      </NavigationBarListItem>
+    );
+  });
 
   // Determine if backdrop should be visible (open nav on narrow viewport)
   const isBackdropVisible =
@@ -166,10 +188,16 @@ export default function NavigationBar({ links }: NavigationBarProps) {
         clickOutsideDeactivates: true,
         // Allow Escape key to close (handled by handleEscape)
         escapeDeactivates: false,
+        // Skip initial focus - we handle it separately via useEffect
+        initialFocus: false,
         // Return focus to toggle button when trap deactivates
         onDeactivate: () => toggleRef.current?.focus(),
         // Prevent focus-trap from throwing if no focusable elements found
         fallbackFocus: () => toggleRef.current ?? document.body,
+        // Allow focusing elements during CSS visibility transition
+        tabbableOptions: {
+          displayCheck: "none",
+        },
       }}
     >
       <div>
