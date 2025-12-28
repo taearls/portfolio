@@ -120,7 +120,7 @@
 }
 
 /* Focus indicator for keyboard navigation (WCAG 2.4.7) */
-.navigation-list-container a:focus-visible {
+.navigation-list-container a:focus {
   outline: 2px solid var(--active-color);
   outline-offset: 2px;
 }
