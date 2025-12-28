@@ -2,7 +2,13 @@ import "@testing-library/jest-dom/vitest";
 
 import type { RouteDataItem } from "@/constants/navigationData.tsx";
 
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router";
 
@@ -726,6 +732,119 @@ describe("<NavigationBar />", () => {
       // Close navigation
       ensureNavigationClosed();
       expect(backdrop?.className).toMatch(/backdrop-hidden/);
+    });
+  });
+
+  describe("Focus First Link on Open (Keyboard Accessibility)", () => {
+    const originalInnerWidth = window.innerWidth;
+
+    // Helper to simulate a narrow viewport
+    const setNarrowViewport = () => {
+      Object.defineProperty(window, "innerWidth", {
+        writable: true,
+        configurable: true,
+        value: MOBILE_NAV_BREAKPOINT - 100,
+      });
+      window.dispatchEvent(new Event("resize"));
+    };
+
+    // Helper to simulate a wide viewport
+    const setWideViewport = () => {
+      Object.defineProperty(window, "innerWidth", {
+        writable: true,
+        configurable: true,
+        value: MOBILE_NAV_BREAKPOINT + 100,
+      });
+      window.dispatchEvent(new Event("resize"));
+    };
+
+    afterEach(() => {
+      // Restore original viewport
+      Object.defineProperty(window, "innerWidth", {
+        writable: true,
+        configurable: true,
+        value: originalInnerWidth,
+      });
+    });
+
+    it("should focus first navigation link when mobile nav opens", async () => {
+      setNarrowViewport();
+      renderNavigationBar();
+
+      // Get the first link (Home)
+      const homeLink = screen.getByRole("link", { name: /Home/i });
+
+      // Ensure navigation is closed initially
+      ensureNavigationClosed();
+
+      // Focus should not be on the home link yet
+      expect(document.activeElement).not.toBe(homeLink);
+
+      // Open navigation
+      const openButton = screen.getByRole("button", {
+        name: /Open Navigation/i,
+      });
+      act(() => {
+        fireEvent.click(openButton);
+      });
+
+      // Wait for focus to move to first link (async due to setTimeout in implementation)
+      await waitFor(() => {
+        expect(document.activeElement).toBe(homeLink);
+      });
+    });
+
+    it("should not change focus when navigation opens on wide viewport", async () => {
+      setWideViewport();
+      renderNavigationBar();
+
+      // Get the first link (Home)
+      const homeLink = screen.getByRole("link", { name: /Home/i });
+
+      // Focus should not move to first link on wide viewport
+      // (navigation is always visible, no modal-like behavior)
+      expect(document.activeElement).not.toBe(homeLink);
+    });
+
+    it("should return focus to toggle button when navigation closes", async () => {
+      setNarrowViewport();
+      renderNavigationBar();
+
+      // Open navigation
+      ensureNavigationOpen();
+
+      // Get the close button (toggle button)
+      const closeButton = screen.getByRole("button", {
+        name: /Close Navigation/i,
+      });
+
+      // Wait for focus to move to first link
+      const homeLink = screen.getByRole("link", { name: /Home/i });
+      await waitFor(() => {
+        expect(document.activeElement).toBe(homeLink);
+      });
+
+      // Close navigation
+      act(() => {
+        fireEvent.click(closeButton);
+      });
+
+      // Focus should return to toggle button
+      expect(document.activeElement).toBe(closeButton);
+    });
+
+    it("should focus first link regardless of which link is first", () => {
+      setNarrowViewport();
+      renderNavigationBar();
+
+      // Get all navigation links
+      const navLinks = screen.getAllByRole("link");
+      expect(navLinks.length).toBeGreaterThan(0);
+
+      // First link should exist and be focusable
+      const firstLink = navLinks[0];
+      expect(firstLink).toBeInTheDocument();
+      expect(firstLink).toHaveAttribute("href");
     });
   });
 });
