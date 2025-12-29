@@ -1,14 +1,14 @@
-# Claude Assistant Workflow
+# Claude Code GitHub Integration
 
-This GitHub Actions workflow enables Claude (Anthropic's AI assistant) to respond to comments on issues and pull requests, and optionally implement requested changes automatically.
+This repository uses the official [Anthropic Claude Code GitHub Action](https://github.com/anthropics/claude-code-action) to enable Claude to respond to comments on issues and pull requests.
 
 ## Features
 
-- 🤖 **Automatic Response**: Claude responds to mentions in issue/PR comments
-- 💬 **Multiple Command Types**: Support for implementation, review, explanation, and general help
-- 🔄 **Auto-Implementation**: Can create PRs with code changes based on requests
+- 🤖 **Automatic Response**: Claude responds to @claude mentions in issue/PR comments
+- 💬 **Intelligent Mode Detection**: Automatically determines whether to review, implement, or explain
+- 🔄 **Code Implementation**: Can create PRs with code changes based on requests
 - 🛡️ **Safety First**: Built-in protections against bot loops and unauthorized access
-- 📝 **Context-Aware**: Gathers repository structure and PR changes for informed responses
+- 📝 **Context-Aware**: Uses CLAUDE.md for project-specific guidelines
 
 ## Setup
 
@@ -28,303 +28,123 @@ This GitHub Actions workflow enables Claude (Anthropic's AI assistant) to respon
 4. Check **Allow GitHub Actions to create and approve pull requests**
 5. Click **Save**
 
-### 3. Deploy the Workflow
+### 3. Workflow is Ready
 
-The workflow is already configured in `.github/workflows/claude-assistant.yml`. It will automatically run when:
+The workflow is configured in `.github/workflows/claude-code.yml` and will automatically run when:
 
-- Someone comments on an issue
-- Someone comments on a pull request
-- Someone adds a review comment on a PR
+- Someone mentions @claude in an issue comment
+- Someone mentions @claude in a pull request comment
+- Someone mentions @claude in a PR review
+- An issue is opened or assigned with @claude in the title or body
 
 ## Usage
 
 ### Triggering Claude
 
-Claude responds when you mention it in a comment using one of these patterns:
-
-#### General Format
+Simply mention `@claude` in any comment and provide your request:
 
 ```
-@claude <your request>
+@claude can you review this PR for security issues?
 ```
-
-#### Slash Command Format
-
-```
-/claude <your request>
-```
-
-### Command Types
-
-The workflow automatically detects the type of request based on keywords:
-
-#### 1. Implementation Requests
-
-Triggers when you ask Claude to implement, code, fix, or create something.
-
-**Examples:**
 
 ```
 @claude implement a dark mode toggle for the settings page
-@claude fix the bug in the authentication flow
-@claude create a new component for user profiles
-/claude add error handling to the API calls
 ```
 
-**What happens:**
-
-- Claude analyzes the request and repository context
-- Provides an implementation plan or code suggestion
-- If the response includes code, Claude can automatically:
-  - Create a new branch (`claude/auto-implementation-<run-id>`)
-  - Commit the changes
-  - Open a pull request for review
-
-#### 2. Review Requests
-
-Triggers when you ask Claude to review, check, or analyze code.
-
-**Examples:**
-
 ```
-@claude review this pull request
-@claude check if there are any security issues
-@claude analyze the performance of this code
-```
-
-**What happens:**
-
-- Claude examines the PR changes
-- Provides constructive feedback
-- Suggests improvements
-
-#### 3. Explanation Requests
-
-Triggers when you ask Claude to help, explain, or answer questions.
-
-**Examples:**
-
-```
-@claude help me understand this error
-@claude explain how the state management works
-@claude what does this function do?
-```
-
-**What happens:**
-
-- Claude provides a clear, detailed explanation
-- References relevant code and documentation
-
-#### 4. General Responses
-
-For any other mentions that don't match the above patterns.
-
-**Examples:**
-
-```
-@claude what do you think about this approach?
-@claude any suggestions for improving this?
+@claude explain how the state management works in this codebase
 ```
 
 ## How It Works
 
-### Workflow Steps
+### Official Claude Code Action
 
-1. **Trigger Detection**
-   - Listens for new comments on issues and PRs
-   - Filters out bot comments to prevent loops
-   - Checks for `@claude` or `/claude` mentions
+The workflow uses `anthropics/claude-code-action@v1`, the official GitHub Action maintained by Anthropic. This action:
 
-2. **Context Gathering**
-   - Extracts comment details (body, author, URL)
-   - Collects issue/PR information (title, description, number)
-   - For PRs: gathers branch names, changed files, and diffs
-   - Builds repository context (file tree, dependencies)
+1. **Detects Mentions**: Listens for @claude in comments across issues and PRs
+2. **Gathers Context**: Automatically understands the repository structure and relevant code
+3. **Processes Requests**: Uses Claude Code (not just the API) for intelligent code understanding
+4. **Takes Action**: Can respond with comments, create branches, commit changes, and open PRs
+5. **Tracks Progress**: Updates comments with progress indicators
 
-3. **Command Parsing**
-   - Analyzes the comment to determine intent
-   - Classifies as: implement, review, explain, or respond
+### Configuration
 
-4. **Claude API Call**
-   - Constructs a detailed prompt with all context
-   - Calls Anthropic's Claude API (Sonnet 4.5 model)
-   - Receives and processes the response
+The workflow is configured in `.github/workflows/claude-code.yml`:
 
-5. **Action Execution**
-   - **Always**: Posts Claude's response as a comment
-   - **For implementations** (if code is generated):
-     - Creates a new branch
-     - Applies the changes
-     - Commits with descriptive message
-     - Pushes to remote
-     - Opens a pull request
-     - Comments on original issue with PR link
+```yaml
+- uses: anthropics/claude-code-action@v1
+  with:
+    anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+    claude_args: |
+      --model claude-sonnet-4-5-20250929
+      --max-turns 15
+      --system-prompt "You are assisting with Tyler Earls' portfolio website..."
+```
 
-6. **Error Handling**
-   - If anything fails, posts an error comment
-   - Includes link to workflow run logs
+### Repository Context (CLAUDE.md)
+
+The action automatically reads `CLAUDE.md` from the repository root for project-specific guidelines. This file provides Claude with:
+
+- Project overview and architecture
+- Essential commands (dev, test, build, deploy)
+- Coding standards and patterns
+- Testing strategy
+- Key file locations
 
 ## Safety Features
 
 ### 1. Bot Loop Prevention
 
-```yaml
-if: !github.event.comment.user.login.endsWith('[bot]')
-```
-
-The workflow will not trigger on comments from bot accounts, preventing infinite response loops.
+The workflow only triggers on human-authored comments, not bot accounts.
 
 ### 2. Explicit Triggers Only
 
-Claude only responds when explicitly mentioned with `@claude` or `/claude`. It won't respond to every comment.
+Claude only responds when explicitly mentioned with `@claude`.
 
 ### 3. Manual PR Review Required
 
-All auto-generated PRs must be manually reviewed and merged. The workflow cannot bypass branch protection rules.
+All auto-generated PRs must be manually reviewed and merged. The workflow respects branch protection rules.
 
 ### 4. Audit Trail
 
-Every action is logged and traceable:
+Every action is logged:
 
-- Workflow run logs
-- Commit messages reference the original comment
-- PR descriptions link to the triggering issue/comment
+- Workflow run logs in GitHub Actions
+- Commit messages reference the original request
+- PR descriptions link to triggering comments
 
-## Configuration
-
-### Customizing Triggers
-
-Edit `.github/workflows/claude-assistant.yml` to modify trigger conditions:
-
-```yaml
-# Current: triggers on @claude or /claude
-if: |
-  !github.event.comment.user.login.endsWith('[bot]') &&
-  (contains(github.event.comment.body, '@claude') ||
-   contains(github.event.comment.body, '/claude'))
-```
+## Configuration Options
 
 ### Changing the Model
 
-Edit `.github/scripts/claude-integration.js` to use a different model:
-
-```javascript
-const message = await anthropic.messages.create({
-  model: "claude-sonnet-4-20241022", // Change this to another model
-  max_tokens: 4096,
-  // ...
-});
-```
-
-Available models (check Anthropic's documentation for the latest):
-
-- `claude-opus-4-20241022` - Most capable, slower
-- `claude-sonnet-4-20241022` - Balanced (recommended, currently used)
-- `claude-haiku-3-20240307` - Fastest, more concise
-
-### Adjusting Permissions
-
-The workflow requires these permissions (set in `.github/workflows/claude-assistant.yml`):
+Edit `.github/workflows/claude-code.yml` to use a different model:
 
 ```yaml
-permissions:
-  issues: write # To comment on issues
-  pull-requests: write # To comment on and create PRs
-  contents: write # To commit changes
-  actions: read # To read workflow context
+claude_args: |
+  --model claude-opus-4-1-20250805  # More capable, slower
+  --max-turns 15
 ```
 
-Reduce permissions if you don't want auto-implementation:
+Available models:
+
+- `claude-sonnet-4-5-20250929` - Balanced (currently used)
+- `claude-opus-4-1-20250805` - Most capable
+
+### Customizing Behavior
+
+You can customize Claude's behavior with additional CLI arguments:
 
 ```yaml
-permissions:
-  issues: write
-  pull-requests: write
-  contents: read # Changed from write
+claude_args: |
+  --model claude-sonnet-4-5-20250929
+  --max-turns 20
+  --allowedTools "Bash(npm install),Bash(npm run build),Bash(npm test)"
+  --system-prompt "Custom instructions here..."
 ```
 
-## Examples
+### Advanced Settings
 
-### Example 1: Bug Fix Request
-
-**Comment:**
-
-```
-@claude fix the memory leak in the useEffect hook on the Dashboard component
-```
-
-**Claude's Response:**
-
-```
-## 🤖 Claude Assistant Response
-
-I've identified the memory leak in `src/components/Dashboard.tsx:42`. The issue is that
-the event listener isn't being cleaned up.
-
-Here's the fix:
-
-[code snippet with fix]
-
-I'll create a PR with this change.
-```
-
-**Result:**
-
-- New PR created: `🤖 Auto-implementation: fix the memory leak...`
-- PR includes the fix with tests
-- Links back to original issue
-
-### Example 2: Code Review
-
-**Comment:**
-
-```
-@claude review this PR for security issues
-```
-
-**Claude's Response:**
-
-```
-## 🤖 Claude Assistant Response
-
-I've reviewed the changes in this PR. Here are my findings:
-
-✅ **Positive:**
-- Input validation is correctly implemented
-- SQL queries use parameterized statements
-
-⚠️ **Concerns:**
-- Line 45: API key is logged in error message (potential leak)
-- Line 78: User input isn't sanitized before HTML rendering (XSS risk)
-
-**Recommendations:**
-[detailed suggestions]
-```
-
-### Example 3: Implementation Request
-
-**Comment:**
-
-```
-/claude implement pagination for the projects list with 12 items per page
-```
-
-**Claude's Response:**
-
-```
-## 🤖 Claude Assistant Response
-
-I'll implement pagination for the projects list. Here's my plan:
-
-1. Add pagination state to ProjectsList component
-2. Create Pagination component with prev/next controls
-3. Update API calls to support page parameter
-4. Add URL parameter syncing
-
-✅ I've created PR #123 with the requested implementation.
-
-Please review: [PR link]
-```
+For advanced configuration, see the [official documentation](https://github.com/anthropics/claude-code-action/blob/main/docs/usage.md).
 
 ## Troubleshooting
 
@@ -332,14 +152,14 @@ Please review: [PR link]
 
 **Check:**
 
-1. Is the workflow file in `.github/workflows/claude-assistant.yml`?
-2. Did you mention `@claude` or use `/claude` in the comment?
-3. Is the comment from a bot account? (Bot comments are ignored)
+1. Is the workflow file at `.github/workflows/claude-code.yml`?
+2. Did you mention `@claude` in the comment?
+3. Is the comment from a human account (not a bot)?
 4. Check the Actions tab for workflow runs and errors
 
 ### API Key Errors
 
-**Error message:** `ERROR: ANTHROPIC_API_KEY is not set`
+**Error message:** `Error: Missing required input 'anthropic_api_key'`
 
 **Fix:**
 
@@ -357,27 +177,6 @@ Please review: [PR link]
 2. Enable **Read and write permissions**
 3. Check **Allow GitHub Actions to create and approve pull requests**
 
-### Claude Responds But Can't Create PRs
-
-**Possible causes:**
-
-1. `contents: write` permission not enabled
-2. Branch protection rules preventing force pushes
-3. Network issues during git push
-
-**Fix:**
-
-- Check workflow logs for specific error messages
-- Verify all permissions are enabled
-- Ensure branch protection allows Claude branches
-
-## Limitations
-
-- **Rate Limits**: Anthropic API has rate limits; excessive use may be throttled
-- **Context Size**: Very large PRs may exceed Claude's context window
-- **Code Quality**: Auto-generated code should always be reviewed before merging
-- **Complex Changes**: Multi-file refactorings may require manual intervention
-
 ## Cost Considerations
 
 Each Claude API call consumes tokens and incurs costs:
@@ -387,51 +186,26 @@ Each Claude API call consumes tokens and incurs costs:
 
 **Cost control tips:**
 
-- Use Haiku model for simple requests (cheaper)
-- Limit context by excluding large files
-- Set up budget alerts in Anthropic Console
+- Monitor usage in Anthropic Console
+- Set up budget alerts
+- Use `--max-turns` to limit lengthy interactions
 
 ## Security Best Practices
 
 1. **Never commit the API key** - Always use GitHub Secrets
 2. **Review auto-generated PRs** - Don't auto-merge
-3. **Limit who can trigger** - Consider adding author validation
-4. **Monitor usage** - Check Anthropic Console for unusual activity
-5. **Rotate keys periodically** - Update the secret every 90 days
+3. **Monitor usage** - Check Anthropic Console for unusual activity
+4. **Rotate keys periodically** - Update the secret every 90 days
 
-### Built-in Security Features
+## Learn More
 
-The workflow includes several security protections:
-
-- **Command Injection Prevention**: User input is sanitized using `github-script` instead of bash
-- **String Injection Protection**: All template interpolations use `toJSON()` for safe escaping
-- **File Operation Validation**: Prevents modification of `.git/` and `.github/workflows/`
-- **Protected Files Warning**: Alerts on changes to `.env` or secret files
-- **API Timeout**: 60-second timeout prevents hanging requests
-- **Concurrency Control**: Prevents multiple simultaneous runs on the same issue/PR
-- **Bot Loop Prevention**: Automatically ignores comments from bot accounts
-
-## Future Enhancements
-
-Potential improvements for future versions:
-
-- [ ] Support for multiple approval workflows
-- [ ] Integration with project management tools
-- [ ] Custom prompt templates per repository
-- [ ] Scheduled code audits and suggestions
-- [ ] Support for code review directly in PR diffs
-
-## Support
-
-For issues or questions:
-
-1. Check the [workflow logs](../../actions/workflows/claude-assistant.yml)
-2. Review this documentation
-3. Open an issue in the repository
-4. Check Anthropic's [documentation](https://docs.anthropic.com/)
+- [Claude Code Action Repository](https://github.com/anthropics/claude-code-action)
+- [Official Documentation](https://github.com/anthropics/claude-code-action/blob/main/docs/usage.md)
+- [Common Workflows](https://code.claude.com/docs/en/common-workflows)
+- [Anthropic Documentation](https://docs.anthropic.com/)
 
 ---
 
-**Version**: 1.0.0
-**Last Updated**: 2025-12-27
+**Version**: 2.0.0 (Using Official Action)
+**Last Updated**: 2025-12-29
 **Maintained By**: Tyler Earls
