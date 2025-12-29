@@ -64,6 +64,9 @@ function useOnPropChange<T>(
 ): void {
   const previousRef = useRef<T>(value);
 
+  // This pattern follows React's recommendation for adjusting state when props change:
+  // https://react.dev/learn/you-might-not-need-an-effect#adjusting-some-state-when-a-prop-changes
+  // The React Compiler cannot optimize this pattern (react-hooks/todo), but it's intentional.
   if (!isEqual(value, previousRef.current)) {
     const previous = previousRef.current;
     previousRef.current = value;

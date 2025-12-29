@@ -103,8 +103,9 @@ const ContactEmailForm = () => {
 
       if (!response.ok) {
         if (response.status === 429) {
+          const retryAfter = data.retryAfter ?? 60;
           setError({
-            message: `Too many requests. Please try again in ${data.retryAfter ?? 60} seconds.`,
+            message: `Too many requests. Please try again in ${retryAfter} seconds.`,
           });
         } else if (response.status === 400 && data.details) {
           setError({
@@ -112,8 +113,10 @@ const ContactEmailForm = () => {
             fields: data.details,
           });
         } else {
+          const errorMessage =
+            data.error ?? "Failed to send message. Please try again.";
           setError({
-            message: data.error ?? "Failed to send message. Please try again.",
+            message: errorMessage,
           });
         }
         setStatus("error");
