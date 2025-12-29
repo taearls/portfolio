@@ -57,21 +57,31 @@ import { useRef } from "react";
  * @note The default equality uses `===` which treats `NaN !== NaN`. If working
  * with values that may be NaN, consider using `Object.is` for the isEqual parameter.
  */
+// Default equality function defined at module level for React Compiler optimization
+function defaultIsEqual<T>(a: T, b: T): boolean {
+  return a === b;
+}
+
+/**
+ * This hook uses React's recommended pattern for adjusting state when props change.
+ * It intentionally reads/writes refs during render, which the React Compiler flags
+ * but is correct for this specific use case.
+ * @see https://react.dev/learn/you-might-not-need-an-effect#adjusting-some-state-when-a-prop-changes
+ */
+/* eslint-disable react-hooks/refs -- Intentional: React docs recommend reading refs during render for this pattern */
 function useOnPropChange<T>(
   value: T,
   onChange: (previous: T, current: T) => void,
-  // eslint-disable-next-line react-hooks/todo -- Arrow function default cannot be optimized, but this is the cleanest API
-  isEqual: (a: T, b: T) => boolean = (a, b) => a === b,
+  isEqual: (a: T, b: T) => boolean = defaultIsEqual,
 ): void {
   const previousRef = useRef<T>(value);
 
-  // This pattern follows React's recommendation for adjusting state when props change:
-  // https://react.dev/learn/you-might-not-need-an-effect#adjusting-some-state-when-a-prop-changes
   if (!isEqual(value, previousRef.current)) {
     const previous = previousRef.current;
     previousRef.current = value;
     onChange(previous, value);
   }
 }
+/* eslint-enable react-hooks/refs */
 
 export default useOnPropChange;
