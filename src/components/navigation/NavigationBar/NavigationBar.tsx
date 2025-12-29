@@ -167,18 +167,9 @@ export default function NavigationBar({ links }: NavigationBarProps) {
         clickOutsideDeactivates: true,
         // Allow Escape key to close (handled by handleEscape)
         escapeDeactivates: false,
-        // Skip initial focus - we handle it in onPostActivate
-        initialFocus: false,
-        // Move focus to first link after focus trap activates (accessibility)
-        // requestAnimationFrame ensures DOM is ready after CSS transitions
-        onPostActivate: () => {
-          requestAnimationFrame(() => {
-            const firstLink = document.querySelector<HTMLElement>(
-              "[data-first-link='true']",
-            );
-            firstLink?.focus();
-          });
-        },
+        // Focus first navigation link when trap activates (accessibility)
+        // Using selector string lets focus-trap handle timing internally
+        initialFocus: "[data-first-link='true']",
         // Return focus to toggle button when trap deactivates
         onDeactivate: () => toggleRef.current?.focus(),
         // Prevent focus-trap from throwing if no focusable elements found
