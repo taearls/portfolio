@@ -63,6 +63,8 @@ This roadmap outlines the development plan for Tyler Earls' portfolio website, f
 
 ✅ **#113** - feat(nav): move focus to first nav link when mobile navigation opens - **COMPLETED Dec 27, 2025**
 
+✅ **#125** - feat(hooks): add useOnPropChange hook and refactor prop-sync patterns - **COMPLETED Dec 29, 2025**
+
 - **#114** - Add Stylelint for CSS linting - _~2-3 hours_
   - Labels: (none)
   - Note: Adds CSS-specific linting to complement ESLint/OxLint
@@ -561,6 +563,50 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 ---
 
 ## Changelog
+
+### 2025-12-29 - Issue #125 Completed: Add useOnPropChange Hook and Refactor Prop-Sync Patterns
+
+- **Completed**: #125 - feat(hooks): add useOnPropChange hook and refactor prop-sync patterns
+- **Priority**: 🔵 LOW (Code Quality Enhancement)
+- **Status**: Completed Dec 29, 2025
+- **Effort**: ~1 hour
+- **Impact**: Improved render performance by eliminating extra render cycles in 2 components
+
+**Background:**
+
+React's documentation recommends comparing values during render rather than in useEffect when adjusting state based on prop changes. This avoids extra render cycles with stale values.
+
+**Implementation:**
+
+1. **Created `useOnPropChange` hook** (`src/hooks/useOnPropChange.ts`)
+   - Uses React-recommended pattern of comparing during render
+   - Accepts a value to watch, an onChange callback, and optional custom equality function
+   - Comprehensive JSDoc documentation with examples
+
+2. **Refactored `InputToggle.tsx`**
+   - Replaced `useEffect(() => setChecked(...), [isChecked])` pattern
+   - Now uses `useOnPropChange(isChecked, ...)` for cleaner, more efficient sync
+
+3. **Refactored `SearchInput.tsx`**
+   - Removed manual `prevValue` state (one fewer useState)
+   - Replaced inline comparison logic with `useOnPropChange` hook
+
+**Files Added/Modified:**
+
+- `src/hooks/useOnPropChange.ts` - New hook with full TypeScript support
+- `tests/unit/hooks/useOnPropChange.test.ts` - 19 unit tests covering all edge cases
+- `src/components/InputToggle/InputToggle.tsx` - Refactored to use new hook
+- `src/components/SearchInput/SearchInput.tsx` - Refactored to use new hook
+
+**Testing:**
+
+- ✅ 19 new unit tests for useOnPropChange hook
+- ✅ All 289 unit tests passing
+- ✅ All 61 integration tests passing
+- ✅ ESLint, OxLint, and Prettier pass
+- ✅ Build succeeds
+
+---
 
 ### 2025-12-29 - Issue #128 Completed: Fix Cypress Contact Form Test Intercept Failures
 
