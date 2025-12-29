@@ -13,15 +13,16 @@ export type SocialMediaIconProps = {
 
 export default function SocialMediaIcon({
   name,
-  ariaLabel = `Go to ${name}`,
+  ariaLabel,
   accent = true,
   href,
   icon,
 }: SocialMediaIconProps) {
+  const resolvedAriaLabel = ariaLabel ?? `Go to ${name}`;
   return (
     <a
       href={href}
-      aria-label={ariaLabel}
+      aria-label={resolvedAriaLabel}
       className={mergeClasses(
         styles["icon-base"],
         styles["icon"],

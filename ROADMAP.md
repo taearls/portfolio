@@ -65,6 +65,8 @@ This roadmap outlines the development plan for Tyler Earls' portfolio website, f
 
 ✅ **#125** - feat(hooks): add useOnPropChange hook and refactor prop-sync patterns - **COMPLETED Dec 29, 2025**
 
+✅ **#123** - feat(eslint): add eslint-plugin-react-compiler to detect unoptimizable components - **COMPLETED Dec 29, 2025**
+
 - **#114** - Add Stylelint for CSS linting - _~2-3 hours_
   - Labels: (none)
   - Note: Adds CSS-specific linting to complement ESLint/OxLint
@@ -482,7 +484,7 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 
 ### Issues by Category
 
-**React Compiler** (0 open, 6 closed): Closed: #38 (epic), #39, #40, #41, #42, #43, #44
+**React Compiler** (0 open, 7 closed): Closed: #38 (epic), #39, #40, #41, #42, #43, #44, #123
 **Bugs** (1 open, 2 closed): Open: #108 (a11y toggle name) | Closed: #107 (nav auto-close), #51 (navigation header overflow)
 **Infrastructure** (0 open, 2 closed): Closed: #80 (GitOps feature flags), #72 (Cloudflare feature flags)
 **CI/CD** (1 open, 2 closed): Open: #114 (Stylelint) | Closed: #18 (GitHub Actions pipeline), #72 (feature flags)
@@ -563,6 +565,42 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 ---
 
 ## Changelog
+
+### 2025-12-29 - Issue #123 Completed: React Compiler ESLint Rules Already Active
+
+- **Completed**: #123 - feat(eslint): add eslint-plugin-react-compiler to detect unoptimizable components
+- **Priority**: 🔵 LOW (Tooling Enhancement)
+- **Status**: Completed Dec 29, 2025
+- **Effort**: < 30 min
+
+**Background:**
+
+The original issue requested adding `eslint-plugin-react-compiler` to detect components that can't be optimized by the React Compiler. However, this plugin has been deprecated and its rules merged into `eslint-plugin-react-hooks`.
+
+**Implementation:**
+
+The project already had `eslint-plugin-react-hooks@7.0.1` configured with `recommended.rules`, which includes all React Compiler diagnostics:
+
+- `purity` - Validates component/hook purity
+- `refs` - Validates correct ref usage (no read/write during render)
+- `set-state-in-render` - Prevents state setting during render
+- `immutability` - Prevents mutating props, state, and immutable values
+- `static-components` - Validates components aren't recreated per render
+- `unsupported-syntax` - Flags syntax React Compiler doesn't support
+- Plus 11 more rules
+
+**Changes Made:**
+
+- Added documentation comment in `eslint.config.mts` explaining the React Compiler rules
+- Verified all lint checks pass (no optimization issues in codebase)
+
+**Testing:**
+
+- ✅ `npm run lint:check` passes
+- ✅ `npm run format:check` passes
+- ✅ All React Compiler rules active and detecting optimization issues
+
+---
 
 ### 2025-12-29 - Issue #125 Completed: Add useOnPropChange Hook and Refactor Prop-Sync Patterns
 

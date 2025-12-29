@@ -32,11 +32,19 @@ const config = typescriptEslint.config(
   },
   eslintJsPlugin.configs.recommended,
   ...typescriptEslint.configs.recommended,
+  // React Hooks plugin with React Compiler rules
+  // The recommended config includes React Compiler diagnostics (purity, refs, set-state-in-render,
+  // immutability, static-components, etc.) that surface optimization issues during development.
+  // See: https://react.dev/reference/eslint-plugin-react-hooks
   {
     plugins: {
       "react-hooks": eslintPluginReactHooks,
     },
-    rules: eslintPluginReactHooks.configs.recommended.rules,
+    rules: {
+      ...eslintPluginReactHooks.configs.recommended.rules,
+      // Surface React Compiler TODO comments as warnings during development
+      "react-hooks/todo": "warn",
+    },
   },
   // NOTE: react-perf plugin disabled - React Compiler handles these optimizations automatically
   // eslintPluginReactPerf.configs.flat.recommended,
