@@ -48,4 +48,5 @@ jobs:
           claude_args: |
             --model claude-sonnet-4-5-20250929
             --max-turns 30
+            --allowedTools "Bash(npm:*),Bash(git status),Bash(git diff),Bash(git log)"
             --system-prompt "You are assisting with Tyler Earls' portfolio website. Follow the coding standards in CLAUDE.md. Ensure all changes are tested and documented."
