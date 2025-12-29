@@ -141,9 +141,9 @@ const ContactEmailForm = () => {
         error: "Failed to parse server response.",
       }),
     );
-    const result: FetchResult = fetchResult.ok
-      ? { ok: true, data }
-      : { ok: false, status: fetchResult.status, data };
+    const result = fetchResult.ok
+      ? ({ ok: true, data } as const)
+      : ({ ok: false, status: fetchResult.status, data } as const);
 
     // Handle result outside try/catch (enables React Compiler optimization)
     if (result.ok) {
@@ -155,31 +155,27 @@ const ContactEmailForm = () => {
       setTimeout(() => {
         setStatus("idle");
       }, 5000);
-      return;
-    }
-
-    // Error handling
-    if (result.status === null) {
-      setError({
-        message: "Network error. Please check your connection and try again.",
-      });
-    } else if (result.status === 429) {
-      const retryAfter = getRetryAfterSeconds(result.data);
-      setError({
-        message: `Too many requests. Please try again in ${retryAfter} seconds.`,
-      });
-    } else if (result.status === 400 && hasValidationDetails(result.data)) {
-      setError({
-        message: "Please fix the following errors:",
-        fields: result.data.details,
-      });
     } else {
-      const errorMessage = getErrorMessage(result.data);
-      setError({ message: errorMessage });
+      // Error handling
+      const { status, data } = result;
+      if (status === 429) {
+        const retryAfter = getRetryAfterSeconds(data);
+        setError({
+          message: `Too many requests. Please try again in ${retryAfter} seconds.`,
+        });
+      } else if (status === 400 && hasValidationDetails(data)) {
+        setError({
+          message: "Please fix the following errors:",
+          fields: data.details,
+        });
+      } else {
+        const errorMessage = getErrorMessage(data);
+        setError({ message: errorMessage });
+      }
+      setStatus("error");
+      turnstileRef.current?.reset();
+      setTurnstileToken(null);
     }
-    setStatus("error");
-    turnstileRef.current?.reset();
-    setTurnstileToken(null);
   };
 
   const handleChange = (
