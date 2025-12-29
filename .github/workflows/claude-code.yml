@@ -47,5 +47,5 @@ jobs:
           # Configure Claude's behavior
           claude_args: |
             --model claude-sonnet-4-5-20250929
-            --max-turns 15
+            --max-turns 30
             --system-prompt "You are assisting with Tyler Earls' portfolio website. Follow the coding standards in CLAUDE.md. Ensure all changes are tested and documented."
