@@ -4,29 +4,13 @@
  * These tests use localStorage cache pre-population instead of cy.intercept + cy.wait
  * to avoid cross-origin interception issues when the feature flags API runs on a
  * different port (localhost:8787) than the app (localhost:4173).
+ *
+ * Uses cy.setFlagsCache() command from support/support.ts
  */
 
 import type { FeatureFlags } from "../../src/types/featureFlags.ts";
 
 describe("Contact Form Integration", () => {
-  const CACHE_KEY = "portfolio:feature-flags";
-
-  /**
-   * Helper to pre-populate feature flags cache in localStorage
-   * This bypasses the network request entirely, making tests reliable
-   */
-  const setFlagsCache = (flags: FeatureFlags) => {
-    cy.window().then((win) => {
-      win.localStorage.setItem(
-        CACHE_KEY,
-        JSON.stringify({
-          flags,
-          timestamp: Date.now(),
-        }),
-      );
-    });
-  };
-
   beforeEach(() => {
     cy.clearLocalStorage();
   });
@@ -39,7 +23,7 @@ describe("Contact Form Integration", () => {
         },
       };
 
-      setFlagsCache(mockFlags);
+      cy.setFlagsCache(mockFlags);
       cy.visit("/contact");
 
       // Form should be visible
@@ -56,7 +40,7 @@ describe("Contact Form Integration", () => {
         },
       };
 
-      setFlagsCache(mockFlags);
+      cy.setFlagsCache(mockFlags);
       cy.visit("/contact");
 
       // Form should not be visible
@@ -72,7 +56,7 @@ describe("Contact Form Integration", () => {
         },
       };
 
-      setFlagsCache(mockFlags);
+      cy.setFlagsCache(mockFlags);
 
       // Stub Turnstile before visiting the page
       cy.stubTurnstile();
@@ -129,7 +113,7 @@ describe("Contact Form Integration", () => {
         },
       };
 
-      setFlagsCache(mockFlags);
+      cy.setFlagsCache(mockFlags);
 
       // Stub Turnstile before visiting the page
       cy.stubTurnstile();
@@ -254,7 +238,7 @@ describe("Contact Form Integration", () => {
         },
       };
 
-      setFlagsCache(mockFlags);
+      cy.setFlagsCache(mockFlags);
 
       // Stub Turnstile before visiting the page
       cy.stubTurnstile();
@@ -298,7 +282,7 @@ describe("Contact Form Integration", () => {
         },
       };
 
-      setFlagsCache(mockFlags);
+      cy.setFlagsCache(mockFlags);
 
       // Stub Turnstile before visiting the page
       cy.stubTurnstile();
@@ -363,7 +347,7 @@ describe("Contact Form Integration", () => {
         },
       };
 
-      setFlagsCache(mockFlags);
+      cy.setFlagsCache(mockFlags);
 
       // Stub Turnstile before visiting the page
       cy.stubTurnstile();
@@ -469,7 +453,7 @@ describe("Contact Form Integration", () => {
         },
       };
 
-      setFlagsCache(mockFlags);
+      cy.setFlagsCache(mockFlags);
 
       // Stub Turnstile before visiting the page
       cy.stubTurnstile();
@@ -526,7 +510,7 @@ describe("Contact Form Integration", () => {
         },
       };
 
-      setFlagsCache(mockFlags);
+      cy.setFlagsCache(mockFlags);
 
       // Stub Turnstile before visiting the page
       cy.stubTurnstile();

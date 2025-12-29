@@ -8,31 +8,15 @@
  * Tests use localStorage cache pre-population instead of cy.intercept + cy.wait
  * to avoid cross-origin interception issues when the feature flags API runs on a
  * different port (localhost:8787) than the app (localhost:4173).
+ *
+ * Uses cy.setFlagsCache() command from support/support.ts
  */
 
 import type { FeatureFlags } from "../../src/types/featureFlags.ts";
 
 describe("Feature Flags Integration", () => {
+  // Cache key for localStorage assertions - must match the key used in the application
   const CACHE_KEY = "portfolio:feature-flags";
-
-  /**
-   * Helper to pre-populate feature flags cache in localStorage
-   * This bypasses the network request entirely, making tests reliable
-   */
-  const setFlagsCache = (
-    flags: FeatureFlags,
-    timestamp: number = Date.now(),
-  ) => {
-    cy.window().then((win) => {
-      win.localStorage.setItem(
-        CACHE_KEY,
-        JSON.stringify({
-          flags,
-          timestamp,
-        }),
-      );
-    });
-  };
 
   beforeEach(() => {
     // Clear localStorage before each test
@@ -69,7 +53,7 @@ describe("Feature Flags Integration", () => {
       const mockFlags: FeatureFlags = {
         "email-contact-form": { enabled: true },
       };
-      setFlagsCache(mockFlags);
+      cy.setFlagsCache(mockFlags);
 
       cy.visit("/contact");
 
@@ -93,7 +77,7 @@ describe("Feature Flags Integration", () => {
           message: "Contact form temporarily disabled",
         },
       };
-      setFlagsCache(mockFlags);
+      cy.setFlagsCache(mockFlags);
 
       cy.visit("/contact");
 
@@ -114,7 +98,7 @@ describe("Feature Flags Integration", () => {
           message: "Contact form is now available!",
         },
       };
-      setFlagsCache(mockFlags);
+      cy.setFlagsCache(mockFlags);
 
       cy.visit("/");
 
@@ -136,7 +120,7 @@ describe("Feature Flags Integration", () => {
         },
       };
 
-      setFlagsCache(cachedFlags);
+      cy.setFlagsCache(cachedFlags);
 
       cy.visit("/");
 
@@ -182,7 +166,7 @@ describe("Feature Flags Integration", () => {
         },
       };
 
-      setFlagsCache(mockFlags);
+      cy.setFlagsCache(mockFlags);
 
       cy.visit("/contact");
 
@@ -205,7 +189,7 @@ describe("Feature Flags Integration", () => {
         },
       };
 
-      setFlagsCache(mockFlags);
+      cy.setFlagsCache(mockFlags);
 
       cy.visit("/contact");
 
@@ -237,7 +221,7 @@ describe("Feature Flags Integration", () => {
       };
 
       // Set expired cache
-      setFlagsCache(cachedFlags, oldTimestamp);
+      cy.setFlagsCache(cachedFlags, oldTimestamp);
 
       cy.visit("/");
 
@@ -258,7 +242,7 @@ describe("Feature Flags Integration", () => {
         },
       };
 
-      setFlagsCache(cachedFlags, freshTimestamp);
+      cy.setFlagsCache(cachedFlags, freshTimestamp);
 
       cy.visit("/contact");
 
@@ -286,7 +270,7 @@ describe("Feature Flags Integration", () => {
         },
       };
 
-      setFlagsCache(mockFlags);
+      cy.setFlagsCache(mockFlags);
 
       cy.visit("/");
 
