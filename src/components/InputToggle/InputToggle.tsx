@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+
+import useOnPropChange from "@/hooks/useOnPropChange.ts";
 
 export type InputToggleProps = {
   id: string;
@@ -15,9 +17,9 @@ export default function InputToggle({
 }: InputToggleProps) {
   const [checked, setChecked] = useState<boolean>(Boolean(isChecked));
 
-  useEffect(() => {
-    setChecked(Boolean(isChecked));
-  }, [isChecked]);
+  useOnPropChange(isChecked, (_, current) => {
+    setChecked(Boolean(current));
+  });
 
   const handleCheckboxChange = () => {
     setChecked((prevState) => !prevState);
