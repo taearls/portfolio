@@ -69,6 +69,7 @@
     "babel-plugin-react-compiler": "1.0.0",
     "concurrently": "^9.1.2",
     "cypress": "^15.8.1",
+    "cypress-real-events": "^1.15.0",
     "eslint": "^9.37.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-import-resolver-alias": "^1.1.2",

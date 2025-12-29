@@ -167,14 +167,14 @@ export default function NavigationBar({ links }: NavigationBarProps) {
         clickOutsideDeactivates: true,
         // Allow Escape key to close (handled by handleEscape)
         escapeDeactivates: false,
-        // Focus first navigation link when trap activates (accessibility)
-        // Using selector string lets focus-trap handle timing internally
+        // Focus the first navigation link when trap activates
+        // CSS visibility is instant (not transitioned), so element is immediately focusable
         initialFocus: "[data-first-link='true']",
         // Return focus to toggle button when trap deactivates
         onDeactivate: () => toggleRef.current?.focus(),
         // Prevent focus-trap from throwing if no focusable elements found
         fallbackFocus: () => toggleRef.current ?? document.body,
-        // Allow focusing elements during CSS visibility transition
+        // Skip visibility check - CSS visibility is instant, element is focusable
         tabbableOptions: {
           displayCheck: "none",
         },
