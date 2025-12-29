@@ -60,13 +60,13 @@ import { useRef } from "react";
 function useOnPropChange<T>(
   value: T,
   onChange: (previous: T, current: T) => void,
+  // eslint-disable-next-line react-hooks/todo -- Arrow function default cannot be optimized, but this is the cleanest API
   isEqual: (a: T, b: T) => boolean = (a, b) => a === b,
 ): void {
   const previousRef = useRef<T>(value);
 
   // This pattern follows React's recommendation for adjusting state when props change:
   // https://react.dev/learn/you-might-not-need-an-effect#adjusting-some-state-when-a-prop-changes
-  // The React Compiler cannot optimize this pattern (react-hooks/todo), but it's intentional.
   if (!isEqual(value, previousRef.current)) {
     const previous = previousRef.current;
     previousRef.current = value;

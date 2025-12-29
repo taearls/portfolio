@@ -26,6 +26,27 @@ interface ContactResponse {
   retryAfter?: number;
 }
 
+// Result type for fetch operation (enables React Compiler optimization by moving conditionals outside try/catch)
+type FetchResult =
+  | { ok: true; data: ContactResponse }
+  | { ok: false; status: number; data: ContactResponse }
+  | { ok: false; status: null; networkError: true };
+
+// Helper to normalize response data with defaults
+function getRetryAfterSeconds(data: ContactResponse): number {
+  return data.retryAfter ?? 60;
+}
+
+function getErrorMessage(data: ContactResponse): string {
+  return data.error ?? "Failed to send message. Please try again.";
+}
+
+function hasValidationDetails(
+  data: ContactResponse,
+): data is ContactResponse & { details: Array<string> } {
+  return Array.isArray(data.details) && data.details.length > 0;
+}
+
 /**
  * ContactEmailForm - Email contact form for portfolio with Postmark integration
  *
@@ -83,69 +104,82 @@ const ContactEmailForm = () => {
 
     setStatus("submitting");
 
-    try {
-      const response = await fetch(API_URIS.CONTACT, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          message: formData.message,
-          website: formData.website, // Honeypot
-          turnstileToken,
-        }),
-      });
-
-      const data = (await response.json()) as ContactResponse;
-
-      if (!response.ok) {
-        if (response.status === 429) {
-          const retryAfter = data.retryAfter ?? 60;
-          setError({
-            message: `Too many requests. Please try again in ${retryAfter} seconds.`,
-          });
-        } else if (response.status === 400 && data.details) {
-          setError({
-            message: "Please fix the following errors:",
-            fields: data.details,
-          });
-        } else {
-          const errorMessage =
-            data.error ?? "Failed to send message. Please try again.";
-          setError({
-            message: errorMessage,
-          });
-        }
-        setStatus("error");
-        // Reset Turnstile on error
-        turnstileRef.current?.reset();
-        setTurnstileToken(null);
-        return;
-      }
-
-      setStatus("success");
-      setFormData({ email: "", message: "", name: "", website: "" });
-      // Reset Turnstile on success
-      turnstileRef.current?.reset();
-      setTurnstileToken(null);
-
-      // Reset to idle after 5 seconds so user can submit again if needed
-      setTimeout(() => {
-        setStatus("idle");
-      }, 5000);
-    } catch (err) {
+    // Perform fetch outside try/catch for React Compiler optimization
+    // Network errors are caught via .catch() to avoid conditionals in try blocks
+    const fetchResult = await fetch(API_URIS.CONTACT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        name: formData.name,
+        email: formData.email,
+        message: formData.message,
+        website: formData.website, // Honeypot
+        turnstileToken,
+      }),
+    }).catch((err): null => {
       console.error("Form submission error:", err);
+      return null;
+    });
+
+    // Handle network error (fetch returned null)
+    if (fetchResult === null) {
       setError({
         message: "Network error. Please check your connection and try again.",
       });
       setStatus("error");
-      // Reset Turnstile on error
       turnstileRef.current?.reset();
       setTurnstileToken(null);
+      return;
     }
+
+    const data = await fetchResult.json().catch(
+      (): ContactResponse => ({
+        success: false,
+        error: "Failed to parse server response.",
+      }),
+    );
+    const result: FetchResult = fetchResult.ok
+      ? { ok: true, data }
+      : { ok: false, status: fetchResult.status, data };
+
+    // Handle result outside try/catch (enables React Compiler optimization)
+    if (result.ok) {
+      setStatus("success");
+      setFormData({ email: "", message: "", name: "", website: "" });
+      turnstileRef.current?.reset();
+      setTurnstileToken(null);
+      // Reset to idle after 5 seconds so user can submit again if needed
+      setTimeout(() => {
+        setStatus("idle");
+      }, 5000);
+      return;
+    }
+
+    // Error handling
+    if (result.status === null) {
+      setError({
+        message: "Network error. Please check your connection and try again.",
+      });
+    } else if (result.status === 429) {
+      const retryAfter = getRetryAfterSeconds(result.data);
+      setError({
+        message: `Too many requests. Please try again in ${retryAfter} seconds.`,
+      });
+    } else if (result.status === 400 && hasValidationDetails(result.data)) {
+      setError({
+        message: "Please fix the following errors:",
+        fields: result.data.details,
+      });
+    } else {
+      const errorMessage = getErrorMessage(result.data);
+      setError({ message: errorMessage });
+    }
+    setStatus("error");
+    turnstileRef.current?.reset();
+    setTurnstileToken(null);
   };
 
   const handleChange = (
