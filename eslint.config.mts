@@ -40,7 +40,11 @@ const config = typescriptEslint.config(
     plugins: {
       "react-hooks": eslintPluginReactHooks,
     },
-    rules: eslintPluginReactHooks.configs.recommended.rules,
+    rules: {
+      ...eslintPluginReactHooks.configs.recommended.rules,
+      // Surface React Compiler TODO comments as warnings during development
+      "react-hooks/todo": "warn",
+    },
   },
   // NOTE: react-perf plugin disabled - React Compiler handles these optimizations automatically
   // eslintPluginReactPerf.configs.flat.recommended,
