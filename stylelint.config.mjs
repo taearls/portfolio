@@ -58,10 +58,10 @@ export default {
     // Allow custom property patterns with double-dashes (Tailwind generates these)
     "custom-property-pattern": null,
 
-    // Allow Tailwind font-family value case (e.g., "Asul")
+    // Allow PascalCase font-family names (e.g., "Asul", "Helvetica")
     "value-keyword-case": [
       "lower",
-      { ignoreFunctions: ["local"], ignoreKeywords: ["Asul"] },
+      { ignoreFunctions: ["local"], ignoreKeywords: [/^[A-Z]/] },
     ],
 
     // Allow traditional media query syntax (min-width: 640px)
