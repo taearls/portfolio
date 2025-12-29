@@ -20,14 +20,14 @@
 }
 
 .loading-spinner {
-  font-size: 16px;
-  width: 1em;
-  height: 1em;
   border-radius: 50%;
+  font-size: 16px;
+  height: 1em;
+  left: 50%;
   position: fixed;
   top: 50%;
-  left: 50%;
   transform: translate(-50%, -50%);
+  width: 1em;
 }
 
 html.light-theme .loading-spinner {

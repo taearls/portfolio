@@ -1,18 +1,18 @@
 @import "tailwindcss";
 
 .tag-filter-header {
-  display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
+  display: flex;
   flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
 }
 
 .tag-filter-label {
+  color: var(--text-color);
   /* Match Paragraph component: text-lg lg:text-xl */
   font-size: 1.125rem;
   font-weight: 500;
-  color: var(--text-color);
 }
 
 @media (min-width: 1024px) {
@@ -22,15 +22,15 @@
 }
 
 .clear-button {
-  /* Match Paragraph component: text-lg lg:text-xl */
-  font-size: 1.125rem;
-  color: var(--accent-color);
   background: none;
   border: none;
-  cursor: pointer;
-  text-decoration: underline;
-  padding: 0.25rem 0.5rem;
   border-radius: 4px;
+  color: var(--accent-color);
+  cursor: pointer;
+  /* Match Paragraph component: text-lg lg:text-xl */
+  font-size: 1.125rem;
+  padding: 0.25rem 0.5rem;
+  text-decoration: underline;
   transition: opacity 0.2s ease;
 }
 

@@ -1,10 +1,10 @@
 /* WCAG 2.5.5 - Ensure social media icon links meet 44×44px minimum touch target */
 .icon-base {
-  min-width: var(--touch-target-min);
-  min-height: var(--touch-target-min);
-  display: inline-flex;
   align-items: center;
+  display: inline-flex;
   justify-content: center;
+  min-height: var(--touch-target-min);
+  min-width: var(--touch-target-min);
   padding: 6px;
 }
 

@@ -5,40 +5,40 @@
 /* Self-hosted fonts - moved from inline to prevent mobile Android font loading issues */
 /* Ubuntu metrics adjusted to match Arial fallback to prevent layout shift */
 @font-face {
-  font-family: "Ubuntu";
-  src: url("/fonts/ubuntu-regular.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
   ascent-override: 100%;
   descent-override: 25%;
+  font-display: swap;
+  font-family: "Ubuntu";
+  font-style: normal;
+  font-weight: 400;
   line-gap-override: 0%;
   size-adjust: 95%;
+  src: url("/fonts/ubuntu-regular.woff2") format("woff2");
 }
 
 @font-face {
-  font-family: "Ubuntu";
-  src: url("/fonts/ubuntu-bold.woff2") format("woff2");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
   ascent-override: 100%;
   descent-override: 25%;
+  font-display: swap;
+  font-family: "Ubuntu";
+  font-style: normal;
+  font-weight: 700;
   line-gap-override: 0%;
   size-adjust: 95%;
+  src: url("/fonts/ubuntu-bold.woff2") format("woff2");
 }
 
 /* Limelight metrics adjusted to match serif fallback */
 @font-face {
-  font-family: "Limelight";
-  src: url("/fonts/limelight-regular.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
   ascent-override: 110%;
   descent-override: 25%;
+  font-display: swap;
+  font-family: "Limelight";
+  font-style: normal;
+  font-weight: 400;
   line-gap-override: 0%;
   size-adjust: 90%;
+  src: url("/fonts/limelight-regular.woff2") format("woff2");
 }
 
 @theme {
@@ -167,9 +167,9 @@
 }
 
 html {
+  font-family: var(--font-default);
   min-height: 100vh;
   min-width: 100vw;
-  font-family: var(--font-default);
 }
 
 /* 
@@ -206,9 +206,9 @@ html * {
 
   .accent,
   .accent *:not(#moon-icon *, #sun-icon *) {
+    color: var(--accent-color);
     fill: var(--accent-color);
     stroke: var(--accent-color);
-    color: var(--accent-color);
   }
 }
 
@@ -217,13 +217,13 @@ html * {
  * If future components need different sizing, use .btn-compact or similar exceptions.
  */
 button {
-  min-width: var(--touch-target-min);
-  min-height: var(--touch-target-min);
-  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  padding: 6px;
   cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  min-height: var(--touch-target-min);
+  min-width: var(--touch-target-min);
+  padding: 6px;
 }
 
 /* =============================================================================
@@ -240,11 +240,11 @@ button:focus-visible {
 
 /* CLS Optimization - Prevent layout shifts from image loading */
 img {
-  /* Ensure images maintain aspect ratio and don't cause layout shifts */
-  max-width: 100%;
-  height: auto;
   /* Use containment to isolate layout calculations */
   contain: layout;
+  height: auto;
+  /* Ensure images maintain aspect ratio and don't cause layout shifts */
+  max-width: 100%;
 }
 
 /* =============================================================================
