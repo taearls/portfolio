@@ -3,6 +3,13 @@ import "@testing-library/cypress/add-commands";
 // https://github.com/dmtrKovalenko/cypress-real-events
 import "cypress-real-events";
 
+import type { FeatureFlags } from "../../../src/types/featureFlags.ts";
+
+/**
+ * Feature flags cache key - must match the key used in the application
+ */
+const FEATURE_FLAGS_CACHE_KEY = "portfolio:feature-flags";
+
 /**
  * Custom Cypress commands for Turnstile integration testing
  *
@@ -38,6 +45,13 @@ declare global {
        * Wait for form to be submittable (all fields valid + Turnstile passed)
        */
       waitForFormReady(): Chainable<void>;
+
+      /**
+       * Pre-populate feature flags cache in localStorage
+       * This bypasses the network request entirely, making tests reliable
+       * by avoiding cross-origin interception issues
+       */
+      setFlagsCache(flags: FeatureFlags, timestamp?: number): Chainable<void>;
     }
   }
 }
@@ -209,3 +223,18 @@ Cypress.Commands.add("waitForFormReady", () => {
   cy.waitForTurnstile();
   cy.get('button[type="submit"]').should("not.be.disabled");
 });
+
+Cypress.Commands.add(
+  "setFlagsCache",
+  (flags: FeatureFlags, timestamp: number = Date.now()) => {
+    cy.window().then((win) => {
+      win.localStorage.setItem(
+        FEATURE_FLAGS_CACHE_KEY,
+        JSON.stringify({
+          flags,
+          timestamp,
+        }),
+      );
+    });
+  },
+);

@@ -1,13 +1,16 @@
 /**
  * Integration tests for Contact Form functionality
+ *
+ * These tests use localStorage cache pre-population instead of cy.intercept + cy.wait
+ * to avoid cross-origin interception issues when the feature flags API runs on a
+ * different port (localhost:8787) than the app (localhost:4173).
+ *
+ * Uses cy.setFlagsCache() command from support/support.ts
  */
 
 import type { FeatureFlags } from "../../src/types/featureFlags.ts";
 
 describe("Contact Form Integration", () => {
-  const FEATURE_FLAGS_API_URL = "http://localhost:8787/api/flags";
-  const CONTACT_API_URL = "http://localhost:8788/api/contact";
-
   beforeEach(() => {
     cy.clearLocalStorage();
   });
@@ -20,13 +23,8 @@ describe("Contact Form Integration", () => {
         },
       };
 
-      cy.intercept("GET", FEATURE_FLAGS_API_URL, {
-        statusCode: 200,
-        body: mockFlags,
-      }).as("getFlags");
-
+      cy.setFlagsCache(mockFlags);
       cy.visit("/contact");
-      cy.wait("@getFlags");
 
       // Form should be visible
       cy.get("#contact-email-form").should("be.visible");
@@ -42,13 +40,8 @@ describe("Contact Form Integration", () => {
         },
       };
 
-      cy.intercept("GET", FEATURE_FLAGS_API_URL, {
-        statusCode: 200,
-        body: mockFlags,
-      }).as("getFlags");
-
+      cy.setFlagsCache(mockFlags);
       cy.visit("/contact");
-      cy.wait("@getFlags");
 
       // Form should not be visible
       cy.get("#contact-email-form").should("not.exist");
@@ -63,16 +56,15 @@ describe("Contact Form Integration", () => {
         },
       };
 
-      cy.intercept("GET", FEATURE_FLAGS_API_URL, {
-        statusCode: 200,
-        body: mockFlags,
-      }).as("getFlags");
+      cy.setFlagsCache(mockFlags);
 
       // Stub Turnstile before visiting the page
       cy.stubTurnstile();
 
       cy.visit("/contact");
-      cy.wait("@getFlags");
+
+      // Wait for form to be visible before running tests
+      cy.get("#contact-email-form").should("be.visible");
     });
 
     it("disables submit button when form is incomplete", () => {
@@ -121,20 +113,20 @@ describe("Contact Form Integration", () => {
         },
       };
 
-      cy.intercept("GET", FEATURE_FLAGS_API_URL, {
-        statusCode: 200,
-        body: mockFlags,
-      }).as("getFlags");
+      cy.setFlagsCache(mockFlags);
 
       // Stub Turnstile before visiting the page
       cy.stubTurnstile();
 
       cy.visit("/contact");
-      cy.wait("@getFlags");
+
+      // Wait for form to be visible before running tests
+      cy.get("#contact-email-form").should("be.visible");
     });
 
     it("submits form successfully", () => {
-      cy.intercept("POST", CONTACT_API_URL, {
+      // Use glob pattern for cross-origin interception
+      cy.intercept("POST", "**/api/contact", {
         statusCode: 200,
         body: { success: true, message: "Message sent successfully" },
       }).as("submitForm");
@@ -152,9 +144,10 @@ describe("Contact Form Integration", () => {
       // Submit the form
       cy.get('button[type="submit"]').click();
 
-      // Wait for API call and verify success
-      cy.wait("@submitForm");
-      cy.contains("Message sent successfully").should("be.visible");
+      // Verify success message appears (UI-based assertion instead of cy.wait)
+      cy.contains("Message sent successfully", { timeout: 10000 }).should(
+        "be.visible",
+      );
 
       // Form should be reset after successful submission
       cy.get("#contactName").should("have.value", "");
@@ -163,7 +156,8 @@ describe("Contact Form Integration", () => {
     });
 
     it("shows error on server failure", () => {
-      cy.intercept("POST", CONTACT_API_URL, {
+      // Use glob pattern for cross-origin interception
+      cy.intercept("POST", "**/api/contact", {
         statusCode: 500,
         body: { success: false, error: "Failed to send message" },
       }).as("submitForm");
@@ -179,13 +173,15 @@ describe("Contact Form Integration", () => {
       cy.waitForFormReady();
       cy.get('button[type="submit"]').click();
 
-      // Wait for API call and verify error is shown
-      cy.wait("@submitForm");
-      cy.contains("Failed to send message").should("be.visible");
+      // Verify error message appears (UI-based assertion instead of cy.wait)
+      cy.contains("Failed to send message", { timeout: 10000 }).should(
+        "be.visible",
+      );
     });
 
     it("shows rate limit error", () => {
-      cy.intercept("POST", CONTACT_API_URL, {
+      // Use glob pattern for cross-origin interception
+      cy.intercept("POST", "**/api/contact", {
         statusCode: 429,
         body: { success: false, error: "Rate limited", retryAfter: 3600 },
       }).as("submitForm");
@@ -201,16 +197,15 @@ describe("Contact Form Integration", () => {
       cy.waitForFormReady();
       cy.get('button[type="submit"]').click();
 
-      // Wait for API call and verify rate limit error
+      // Verify rate limit error message appears (UI-based assertion instead of cy.wait)
       // The component shows "Too many requests. Please try again in X seconds."
-      cy.wait("@submitForm");
-      cy.contains("Too many requests").should("be.visible");
+      cy.contains("Too many requests", { timeout: 10000 }).should("be.visible");
     });
 
     it("shows loading state while submitting", () => {
-      // Delay the response to observe loading state
-      cy.intercept("POST", CONTACT_API_URL, {
-        delay: 500,
+      // Use glob pattern for cross-origin interception with delay
+      cy.intercept("POST", "**/api/contact", {
+        delay: 1000,
         statusCode: 200,
         body: { success: true, message: "Message sent successfully" },
       }).as("submitForm");
@@ -224,11 +219,14 @@ describe("Contact Form Integration", () => {
       cy.waitForFormReady();
       cy.get('button[type="submit"]').click();
 
-      // Button should show loading state
+      // Button should show loading state immediately after click
       cy.get('button[type="submit"]').should("be.disabled");
       cy.contains("Sending").should("be.visible");
 
-      cy.wait("@submitForm");
+      // Eventually the success message should appear
+      cy.contains("Message sent successfully", { timeout: 10000 }).should(
+        "be.visible",
+      );
     });
   });
 
@@ -240,16 +238,15 @@ describe("Contact Form Integration", () => {
         },
       };
 
-      cy.intercept("GET", FEATURE_FLAGS_API_URL, {
-        statusCode: 200,
-        body: mockFlags,
-      }).as("getFlags");
+      cy.setFlagsCache(mockFlags);
 
       // Stub Turnstile before visiting the page
       cy.stubTurnstile();
 
       cy.visit("/contact");
-      cy.wait("@getFlags");
+
+      // Wait for form to be visible before running tests
+      cy.get("#contact-email-form").should("be.visible");
     });
 
     it("has proper form labels", () => {
@@ -285,16 +282,15 @@ describe("Contact Form Integration", () => {
         },
       };
 
-      cy.intercept("GET", FEATURE_FLAGS_API_URL, {
-        statusCode: 200,
-        body: mockFlags,
-      }).as("getFlags");
+      cy.setFlagsCache(mockFlags);
 
       // Stub Turnstile before visiting the page
       cy.stubTurnstile();
 
       cy.visit("/contact");
-      cy.wait("@getFlags");
+
+      // Wait for form to be visible before running tests
+      cy.get("#contact-email-form").should("be.visible");
     });
 
     it("renders Turnstile widget", () => {
@@ -318,7 +314,8 @@ describe("Contact Form Integration", () => {
     });
 
     it("resets Turnstile after successful submission", () => {
-      cy.intercept("POST", CONTACT_API_URL, {
+      // Use glob pattern for cross-origin interception
+      cy.intercept("POST", "**/api/contact", {
         statusCode: 200,
         body: { success: true, message: "Message sent successfully" },
       }).as("submitForm");
@@ -332,7 +329,10 @@ describe("Contact Form Integration", () => {
       cy.waitForFormReady();
       cy.get('button[type="submit"]').click();
 
-      cy.wait("@submitForm");
+      // Verify success message appears (UI-based assertion instead of cy.wait)
+      cy.contains("Message sent successfully", { timeout: 10000 }).should(
+        "be.visible",
+      );
 
       // After success, form resets and Turnstile should re-render
       cy.get('iframe[src*="turnstile"]', { timeout: 10000 }).should("exist");
@@ -347,20 +347,20 @@ describe("Contact Form Integration", () => {
         },
       };
 
-      cy.intercept("GET", FEATURE_FLAGS_API_URL, {
-        statusCode: 200,
-        body: mockFlags,
-      }).as("getFlags");
+      cy.setFlagsCache(mockFlags);
 
       // Stub Turnstile before visiting the page
       cy.stubTurnstile();
 
       cy.visit("/contact");
-      cy.wait("@getFlags");
+
+      // Wait for form to be visible before running tests
+      cy.get("#contact-email-form").should("be.visible");
     });
 
     it("handles network error gracefully", () => {
-      cy.intercept("POST", CONTACT_API_URL, {
+      // Use glob pattern for cross-origin interception
+      cy.intercept("POST", "**/api/contact", {
         forceNetworkError: true,
       }).as("submitForm");
 
@@ -372,14 +372,15 @@ describe("Contact Form Integration", () => {
       cy.waitForFormReady();
       cy.get('button[type="submit"]').click();
 
-      // Should show a user-friendly error message
-      cy.contains(/error|failed|try again/i, { timeout: 5000 }).should(
+      // Should show a user-friendly error message (UI-based assertion)
+      cy.contains(/error|failed|try again/i, { timeout: 10000 }).should(
         "be.visible",
       );
     });
 
     it("handles validation errors from server", () => {
-      cy.intercept("POST", CONTACT_API_URL, {
+      // Use glob pattern for cross-origin interception
+      cy.intercept("POST", "**/api/contact", {
         statusCode: 400,
         body: {
           success: false,
@@ -396,13 +397,15 @@ describe("Contact Form Integration", () => {
       cy.waitForFormReady();
       cy.get('button[type="submit"]').click();
 
-      cy.wait("@submitForm");
-      cy.contains(/validation failed|invalid/i).should("be.visible");
+      // Verify validation error appears (UI-based assertion instead of cy.wait)
+      cy.contains(/validation failed|invalid/i, { timeout: 10000 }).should(
+        "be.visible",
+      );
     });
 
     it("clears error message on retry", () => {
-      // First submission fails
-      cy.intercept("POST", CONTACT_API_URL, {
+      // First submission fails - use glob pattern for cross-origin interception
+      cy.intercept("POST", "**/api/contact", {
         statusCode: 500,
         body: { success: false, error: "Server error" },
       }).as("submitFormFail");
@@ -415,11 +418,11 @@ describe("Contact Form Integration", () => {
       cy.waitForFormReady();
       cy.get('button[type="submit"]').click();
 
-      cy.wait("@submitFormFail");
-      cy.contains("Server error").should("be.visible");
+      // Verify error appears (UI-based assertion instead of cy.wait)
+      cy.contains("Server error", { timeout: 10000 }).should("be.visible");
 
-      // Second submission succeeds
-      cy.intercept("POST", CONTACT_API_URL, {
+      // Second submission succeeds - use glob pattern for cross-origin interception
+      cy.intercept("POST", "**/api/contact", {
         statusCode: 200,
         body: { success: true, message: "Message sent successfully" },
       }).as("submitFormSuccess");
@@ -433,10 +436,12 @@ describe("Contact Form Integration", () => {
       cy.waitForFormReady();
       cy.get('button[type="submit"]').click();
 
-      cy.wait("@submitFormSuccess");
-      // Error should be cleared and success shown
+      // Verify success message appears (UI-based assertion instead of cy.wait)
+      cy.contains("Message sent successfully", { timeout: 10000 }).should(
+        "be.visible",
+      );
+      // Error should be cleared
       cy.contains("Server error").should("not.exist");
-      cy.contains("Message sent successfully").should("be.visible");
     });
   });
 
@@ -448,16 +453,15 @@ describe("Contact Form Integration", () => {
         },
       };
 
-      cy.intercept("GET", FEATURE_FLAGS_API_URL, {
-        statusCode: 200,
-        body: mockFlags,
-      }).as("getFlags");
+      cy.setFlagsCache(mockFlags);
 
       // Stub Turnstile before visiting the page
       cy.stubTurnstile();
 
       cy.visit("/contact");
-      cy.wait("@getFlags");
+
+      // Wait for form to be visible before running tests
+      cy.get("#contact-email-form").should("be.visible");
     });
 
     it("form is visible in light mode", () => {
@@ -506,16 +510,15 @@ describe("Contact Form Integration", () => {
         },
       };
 
-      cy.intercept("GET", FEATURE_FLAGS_API_URL, {
-        statusCode: 200,
-        body: mockFlags,
-      }).as("getFlags");
+      cy.setFlagsCache(mockFlags);
 
       // Stub Turnstile before visiting the page
       cy.stubTurnstile();
 
       cy.visit("/contact");
-      cy.wait("@getFlags");
+
+      // Wait for form to be visible before running tests
+      cy.get("#contact-email-form").should("be.visible");
     });
 
     it("displays contact page heading", () => {
