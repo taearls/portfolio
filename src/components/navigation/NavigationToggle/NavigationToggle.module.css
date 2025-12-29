@@ -1,26 +1,26 @@
 #custom-toggler {
-  /* WCAG 2.5.5 - Touch target minimum 44×44px for mobile accessibility */
-  min-width: var(--touch-target-min);
-  min-height: var(--touch-target-min);
-  width: var(--touch-target-min);
-  height: var(--touch-target-min);
+  align-items: center;
   display: flex;
   flex-flow: column;
   gap: 0.5rem 0;
+  height: var(--touch-target-min);
   justify-content: center;
-  align-items: center;
+  min-height: var(--touch-target-min);
+  /* WCAG 2.5.5 - Touch target minimum 44×44px for mobile accessibility */
+  min-width: var(--touch-target-min);
   /* Add padding for better touch area */
   padding: 4px;
+  width: var(--touch-target-min);
 }
 
 #custom-toggler > div {
-  width: 36px;
+  background-color: var(--accent-color);
   height: 2px;
   transition:
     transform 500ms ease,
     opacity 500ms;
+  width: 36px;
   will-change: transform, opacity;
-  background-color: var(--accent-color);
 }
 
 #custom-toggler:hover > div {

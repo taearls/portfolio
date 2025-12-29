@@ -1,8 +1,6 @@
 .page-container {
   /* Prevent CLS by setting initial margin-top equal to expected nav height */
   margin-top: var(--expanded-nav-height);
-  /* Add breathing room between nav and content */
-  padding-top: var(--content-spacing);
   min-height: calc(
     100vh -
       (
@@ -10,6 +8,8 @@
           var(--footer-height)
       )
   );
+  /* Add breathing room between nav and content */
+  padding-top: var(--content-spacing);
 }
 
 /* Page entry animation keyframes - matches Tabs.module.css tabPanel animation */

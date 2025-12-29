@@ -2,9 +2,9 @@
 
 ## Executive Summary
 
-This roadmap outlines the development plan for Tyler Earls' portfolio website, focusing on performance optimization, modern React tooling, and enhanced user experience. The project has **completed Phase 5 (React Compiler Integration)**, **Phase 6 (CI/CD setup)**, **Phase 7 (Accessibility & Core Web Vitals)**, and **Phase 8 (GitOps Feature Flags)**, with **3 open issues** including navigation UX improvements.
+This roadmap outlines the development plan for Tyler Earls' portfolio website, focusing on performance optimization, modern React tooling, and enhanced user experience. The project has **completed Phase 5 (React Compiler Integration)**, **Phase 6 (CI/CD setup)**, **Phase 7 (Accessibility & Core Web Vitals)**, and **Phase 8 (GitOps Feature Flags)**, with **2 open issues** focusing on tooling research.
 
-**Current Focus**: Navigation UX improvements. All critical and medium priority accessibility issues resolved. Remaining work focuses on visual enhancements and tooling.
+**Current Focus**: CSS tooling now complete with Stylelint. All critical and medium priority accessibility issues resolved. Remaining work focuses on tooling research (Graphite, CodeRabbit).
 
 ---
 
@@ -21,7 +21,7 @@ This roadmap outlines the development plan for Tyler Earls' portfolio website, f
 
 ## Open Issues Summary
 
-### Priority Breakdown (3 Open Issues)
+### Priority Breakdown (2 Open Issues)
 
 #### 🔴 Critical Priority (0 issues)
 
@@ -57,7 +57,7 @@ This roadmap outlines the development plan for Tyler Earls' portfolio website, f
 
 ✅ **#14** - Add Working Email Contact Form - **COMPLETED Dec 7, 2025**
 
-#### 🔵 Low Priority (3 issues) - Effort: ~1 week total
+#### 🔵 Low Priority (2 issues) - Effort: ~3-4 hours total
 
 ✅ **#112** - feat(nav): add semi-transparent backdrop behind mobile navigation - **COMPLETED Dec 27, 2025**
 
@@ -67,9 +67,8 @@ This roadmap outlines the development plan for Tyler Earls' portfolio website, f
 
 ✅ **#123** - feat(eslint): add eslint-plugin-react-compiler to detect unoptimizable components - **COMPLETED Dec 29, 2025**
 
-- **#114** - Add Stylelint for CSS linting - _~2-3 hours_
-  - Labels: (none)
-  - Note: Adds CSS-specific linting to complement ESLint/OxLint
+✅ **#114** - Add Stylelint for CSS linting - **COMPLETED Dec 29, 2025**
+
 - **#33** - Spike: Integrate PRs with Graphite - _~1-2 hours_
   - Labels: `type: spike`, `area: ci/cd`, `priority: low`, `effort: small`
 - **#34** - Spike: Experiment with CodeRabbit - _~1-2 hours_
@@ -487,7 +486,7 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 **React Compiler** (0 open, 7 closed): Closed: #38 (epic), #39, #40, #41, #42, #43, #44, #123
 **Bugs** (1 open, 2 closed): Open: #108 (a11y toggle name) | Closed: #107 (nav auto-close), #51 (navigation header overflow)
 **Infrastructure** (0 open, 2 closed): Closed: #80 (GitOps feature flags), #72 (Cloudflare feature flags)
-**CI/CD** (1 open, 2 closed): Open: #114 (Stylelint) | Closed: #18 (GitHub Actions pipeline), #72 (feature flags)
+**CI/CD** (0 open, 3 closed): Closed: #114 (Stylelint), #18 (GitHub Actions pipeline), #72 (feature flags)
 **Accessibility** (1 open, 5 closed): Open: #108 | Closed: #61 (navigation contrast), #62 (touch targets), #63 (CLS mobile), #64 (WCAG AAA), #65 (font size readability)
 **Navigation UX** (3 open, 3 closed): Open: #111, #112, #113 | Closed: #109, #110, #107
 **UI/UX** (0 open, 9 closed): Closed: #10 (resume page), #13 (descriptions), #15 (tags/search), #58 (left-align text), #28 (React 19 Meta), #11 (SVG preload), #27 (lazy routes), #72 (feature flags), #14 (contact form)
@@ -498,7 +497,7 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 | Effort Level  | Count | Issues                     |
 | ------------- | ----- | -------------------------- |
 | Small (< 2h)  | 5     | #108, #112, #113, #33, #34 |
-| Medium (2-8h) | 2     | #111, #114                 |
+| Medium (2-8h) | 1     | #111                       |
 | Large (> 8h)  | 0     | —                          |
 
 **Note**: 7 open issues. Critical path: #108 (remaining critical accessibility fix).
@@ -565,6 +564,57 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 ---
 
 ## Changelog
+
+### 2025-12-29 - Issue #114 Completed: Add Stylelint for CSS Linting
+
+- **Completed**: #114 - Add Stylelint for CSS linting
+- **Priority**: 🔵 LOW (Tooling Enhancement)
+- **Status**: Completed Dec 29, 2025
+- **Effort**: ~1 hour
+
+**Background:**
+
+CSS errors are often silent failures - a typo in a property name doesn't throw an error, the browser just ignores it. Stylelint catches these issues automatically before they reach users.
+
+**Implementation:**
+
+1. **Installed dependencies**:
+   - `stylelint@^16` - Core CSS linter
+   - `stylelint-config-standard@^36` - Standard shared config
+   - `stylelint-order@^6` - Property ordering plugin
+   - `@dreamsicle.io/stylelint-config-tailwindcss@^1` - Tailwind CSS support
+
+2. **Created `stylelint.config.js`** with project-specific rules:
+   - CSS Modules support (`:global`, `:local` pseudo-classes)
+   - Alphabetical property ordering (warning level for gradual adoption)
+   - Tailwind CSS directive support (`@apply`, `@layer`, etc.)
+   - Relaxed rules for font-face ordering, keyframe naming, etc.
+
+3. **Added npm scripts**:
+   - `npm run lint:css` - Check CSS files
+   - `npm run lint:css:fix` - Auto-fix CSS issues
+
+4. **Updated VS Code settings**:
+   - Enabled Stylelint validation for CSS files
+   - Configured auto-fix on save
+
+5. **Integrated into CI pipeline**:
+   - Added `lint:css` to the `ci` script
+
+**Files Added/Modified:**
+
+- `stylelint.config.js` - New configuration file
+- `package.json` - Added scripts and dependencies
+- `.vscode/settings.json` - Added Stylelint integration
+- Multiple CSS files - Auto-fixed property ordering
+
+**Testing:**
+
+- ✅ `npm run lint:css` passes with no errors
+- ✅ All CSS files auto-fixed for property ordering
+- ✅ VS Code integration working
+
+---
 
 ### 2025-12-29 - Issue #123 Completed: React Compiler ESLint Rules Already Active
 
@@ -1001,7 +1051,7 @@ React's documentation recommends comparing values during render rather than in u
   - 🟢 #111 - Improve keyboard tab order for mobile nav (MEDIUM)
   - 🔵 #112 - Add semi-transparent backdrop behind mobile nav (LOW)
   - 🔵 #113 - Move focus to first nav link when nav opens (LOW)
-  - 🔵 #114 - Add Stylelint for CSS linting (LOW)
+  - ✅ #114 - Add Stylelint for CSS linting (LOW) - COMPLETED Dec 29, 2025
 - **Completed Since Last Update**:
   - ✅ #64 - WCAG AAA Color Contrast
   - ✅ z-index centralization and container queries refactoring (PR #115)
