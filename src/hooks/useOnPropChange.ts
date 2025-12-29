@@ -53,6 +53,9 @@ import { useRef } from "react";
  * @important The onChange callback runs during render, so it should only be used
  * for state adjustments (calling setState). For side effects like API calls or
  * logging to external services, use useEffect instead.
+ *
+ * @note The default equality uses `===` which treats `NaN !== NaN`. If working
+ * with values that may be NaN, consider using `Object.is` for the isEqual parameter.
  */
 function useOnPropChange<T>(
   value: T,
