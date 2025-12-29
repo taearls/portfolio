@@ -25,6 +25,14 @@ jobs:
       id-token: write
       actions: read
     steps:
+      - name: Validate API key exists
+        run: |
+          if [ -z "${{ secrets.ANTHROPIC_API_KEY }}" ]; then
+            echo "::error::ANTHROPIC_API_KEY secret is not set. Please add it in Settings → Secrets → Actions."
+            exit 1
+          fi
+          echo "API key validated"
+
       - name: Checkout repository
         uses: actions/checkout@v5
         with:

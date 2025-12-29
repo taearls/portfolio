@@ -108,6 +108,7 @@ All auto-generated PRs must be manually reviewed and merged. The workflow respec
 ### 4. Audit Trail
 
 Every action is logged:
+
 - Workflow run logs in GitHub Actions
 - Commit messages reference the original request
 - PR descriptions link to triggering comments
@@ -125,6 +126,7 @@ claude_args: |
 ```
 
 Available models:
+
 - `claude-sonnet-4-5-20250929` - Balanced (currently used)
 - `claude-opus-4-1-20250805` - Most capable
 
@@ -183,6 +185,7 @@ Each Claude API call consumes tokens and incurs costs:
 - Typical comment response: 2,000-5,000 tokens (~$0.01-$0.05 per request)
 
 **Cost control tips:**
+
 - Monitor usage in Anthropic Console
 - Set up budget alerts
 - Use `--max-turns` to limit lengthy interactions
