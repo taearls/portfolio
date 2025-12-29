@@ -562,6 +562,45 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 
 ## Changelog
 
+### 2025-12-29 - Issue #128 Completed: Fix Cypress Contact Form Test Intercept Failures
+
+- **Completed**: #128 - fix(tests): eliminate flaky cy.intercept + cy.wait pattern for feature flags
+- **Priority**: 🟡 HIGH (Test Reliability)
+- **Status**: Completed Dec 29, 2025
+- **Effort**: ~2 hours
+- **Impact**: All Cypress integration tests now pass reliably in CI and locally
+
+**Problem:**
+
+- All 26 contact-form.cy.ts tests were failing with `cy.wait("@getFlags")` timeout
+- 8 tests in feature-flags.cy.ts were marked as `it.skip` due to same issue
+- Root cause: Cross-origin interception issues between localhost:4173 (app) and localhost:8787 (API)
+- `cy.intercept()` doesn't reliably match requests to different origins in early React lifecycle
+
+**Solution:**
+
+1. **Cache pre-population pattern**: Replaced network intercepts with localStorage cache pre-population
+   - Use `setFlagsCache(mockFlags)` helper to inject flags before `cy.visit()`
+   - Eliminates fragile `cy.wait("@getFlags")` pattern entirely
+2. **Glob patterns for POST requests**: Changed `CONTACT_API_URL` intercepts to use `**/api/contact` glob pattern
+3. **UI-based assertions**: Replaced `cy.wait("@submitForm")` with direct UI assertions
+   - `cy.contains("Message sent successfully", { timeout: 10000 }).should("be.visible")`
+4. **Removed all `it.skip` markers**: All 13 feature-flags.cy.ts tests now run and pass
+
+**Files Modified:**
+
+- `tests/integration/contact-form.cy.ts` - Refactored 26 tests to use cache pre-population and UI assertions
+- `tests/integration/feature-flags.cy.ts` - Removed 8 `it.skip` markers, refactored to use cache pattern
+
+**Testing:**
+
+- ✅ All 61 integration tests passing
+- ✅ All 270 unit tests passing
+- ✅ ESLint and Prettier pass
+- ✅ No more flaky network intercept timeouts
+
+---
+
 ### 2025-12-27 - Issue #113 Completed: Move Focus to First Nav Link When Mobile Navigation Opens
 
 - **Completed**: #113 - feat(nav): move focus to first nav link when mobile navigation opens
