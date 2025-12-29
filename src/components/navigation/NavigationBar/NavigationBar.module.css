@@ -96,10 +96,11 @@
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
+  /* Note: visibility is NOT transitioned - it toggles instantly for immediate focusability
+     while opacity/transform provide the visual animation */
   transition:
     opacity 200ms ease-out,
-    transform 200ms ease-out,
-    visibility 200ms ease-out;
+    transform 200ms ease-out;
 }
 
 /* Hide navigation when closed with smooth animation (only effective on narrow containers) */
