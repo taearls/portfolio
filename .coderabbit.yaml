@@ -37,6 +37,14 @@ reviews:
         - Accessibility (ARIA labels, keyboard navigation, focus management)
         - Performance (unnecessary re-renders, missing memoization where needed)
 
+    - path: "src/pages/**"
+      instructions: |
+        Review page components for:
+        - Proper use of React Router hooks and components
+        - SEO considerations (meta tags, document title)
+        - Page-level error boundaries
+        - Lazy loading of heavy components
+
     - path: "src/hooks/**"
       instructions: |
         Review React hooks for:
@@ -79,6 +87,7 @@ reviews:
     ignore_paths:
       - "package-lock.json"
       - "*.lock"
+      - "*.md"
       - "dist/**"
       - "coverage/**"
 
