@@ -43,7 +43,7 @@ brew install git
 
 ## Authentication
 
-1. Visit https://app.graphite.com/activate and sign in with your GitHub account
+1. Visit [https://app.graphite.com/activate](https://app.graphite.com/activate) and sign in with your GitHub account
 2. Copy the displayed command and run it:
 
 ```bash
@@ -58,7 +58,7 @@ You should see: `Saved auth token to ~/.graphite_user_config`
 
 A **stack** is a series of dependent branches/PRs where each builds on the previous one. Instead of one large PR with 500+ lines, you create multiple small PRs (< 200 lines each) that form a stack.
 
-```
+```text
 main
  └── feature/auth-types      (PR #1: Add types)
       └── feature/auth-api   (PR #2: Add API layer)
