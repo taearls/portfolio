@@ -173,6 +173,7 @@ gt down
    ```
 
 5. **After reviews, sync and land**:
+
    ```bash
    gt stack sync
    # After approval, PRs merge from bottom to top
