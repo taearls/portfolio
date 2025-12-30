@@ -577,11 +577,16 @@ describe("<NavigationBar />", () => {
 
       // Tab multiple times and verify focus stays within navigation
       // The focus trap cycles through: links, dark mode toggle, navigation toggle
-      for (let i = 0; i < 5; i++) {
-        await user.tab();
-        // Verify focus is still within the navigation
-        expect(nav.contains(document.activeElement)).toBe(true);
-      }
+      await user.tab();
+      expect(nav.contains(document.activeElement)).toBe(true);
+      await user.tab();
+      expect(nav.contains(document.activeElement)).toBe(true);
+      await user.tab();
+      expect(nav.contains(document.activeElement)).toBe(true);
+      await user.tab();
+      expect(nav.contains(document.activeElement)).toBe(true);
+      await user.tab();
+      expect(nav.contains(document.activeElement)).toBe(true);
     });
 
     it("should release focus trap when navigation closes", () => {
