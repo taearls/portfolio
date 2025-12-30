@@ -1,0 +1,54 @@
+.badge {
+  align-items: center;
+  border-radius: 9999px;
+  display: inline-flex;
+  font-size: 0.75rem;
+  font-weight: 600;
+  gap: 0.375rem;
+  padding: 0.25rem 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.badge-enabled {
+  background-color: rgba(34, 197, 94, 0.15);
+  color: rgb(22, 163, 74);
+}
+
+.badge-disabled {
+  background-color: rgba(239, 68, 68, 0.15);
+  color: rgb(220, 38, 38);
+}
+
+/* Dark mode adjustments */
+html.dark-theme .badge-enabled {
+  background-color: rgba(34, 197, 94, 0.2);
+  color: rgb(74, 222, 128);
+}
+
+html.dark-theme .badge-disabled {
+  background-color: rgba(239, 68, 68, 0.2);
+  color: rgb(248, 113, 113);
+}
+
+.indicator {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+}
+
+.indicator-enabled {
+  background-color: rgb(22, 163, 74);
+}
+
+.indicator-disabled {
+  background-color: rgb(220, 38, 38);
+}
+
+html.dark-theme .indicator-enabled {
+  background-color: rgb(74, 222, 128);
+}
+
+html.dark-theme .indicator-disabled {
+  background-color: rgb(248, 113, 113);
+}

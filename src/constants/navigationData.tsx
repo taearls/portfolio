@@ -1,6 +1,7 @@
 import type { ComponentType } from "react";
 
 // Eagerly load all pages for instant navigation
+import AdminFlagsPage from "@/pages/AdminFlagsPage/index.ts";
 import CodePage from "@/pages/CodePage.tsx";
 import ContactPage from "@/pages/ContactPage.tsx";
 import HomePage from "@/pages/HomePage.tsx";
@@ -47,6 +48,13 @@ const routes: Array<RouteDataItem> = [
     ariaLabel: "Visit Contact Page",
     href: "/contact",
     name: "Contact",
+  },
+  {
+    Component: AdminFlagsPage,
+    ariaLabel: "Visit Admin Feature Flags Page",
+    hidden: true,
+    href: "/admin/flags",
+    name: "Feature Flags",
   },
   {
     Component: NotFoundPage,

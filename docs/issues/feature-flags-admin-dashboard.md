@@ -7,11 +7,13 @@ Add a simple admin dashboard page at `/admin/flags` that provides a visual overv
 ## Motivation
 
 Currently, viewing feature flags requires either:
+
 - Accessing the Cloudflare KV dashboard (shows raw JSON)
 - Running `npm run flags:list` in the terminal
 - Reading the `flipt.yaml` file directly
 
 A simple UI would make it easier to:
+
 - Quickly verify flag states during development
 - Debug feature flag issues in production
 - Provide visibility to non-technical stakeholders
@@ -69,21 +71,23 @@ A simple UI would make it easier to:
 
 For each flag, show:
 
-| Field | Source |
-|-------|--------|
-| Flag key | `flipt.yaml` + runtime API |
-| Enabled status | Runtime API response |
-| Description | `flipt.yaml` |
-| Type | Build-time vs Runtime |
-| Last updated | Cache timestamp |
+| Field          | Source                     |
+| -------------- | -------------------------- |
+| Flag key       | `flipt.yaml` + runtime API |
+| Enabled status | Runtime API response       |
+| Description    | `flipt.yaml`               |
+| Type           | Build-time vs Runtime      |
+| Last updated   | Cache timestamp            |
 
 ### Security Considerations
 
 **Phase 1 (MVP):**
+
 - Page is publicly accessible but read-only
 - No sensitive data exposed (flags are already public via API)
 
 **Phase 2 (Future):**
+
 - Add authentication for admin routes
 - Add toggle functionality with auth protection
 - Audit logging for flag changes
