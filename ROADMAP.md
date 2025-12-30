@@ -599,6 +599,7 @@ Graphite is a developer tool for managing stacked PRs - breaking down large feat
 **Implementation:**
 
 Created `docs/GRAPHITE_SETUP.md` with:
+
 - Installation instructions (Homebrew and npm)
 - Authentication setup guide
 - Core concepts (stacks, upstack, downstack)

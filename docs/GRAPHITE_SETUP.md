@@ -145,11 +145,13 @@ gt down
 ## Recommended Workflow
 
 1. **Start from main**:
+
    ```bash
    gt trunk  # Switch to main and sync
    ```
 
 2. **Create your first branch**:
+
    ```bash
    gt bc feature/add-types
    # Make changes
@@ -157,6 +159,7 @@ gt down
    ```
 
 3. **Stack another branch on top**:
+
    ```bash
    gt bc feature/add-api
    # Make changes
@@ -164,6 +167,7 @@ gt down
    ```
 
 4. **Submit your stack for review**:
+
    ```bash
    gt stack submit
    ```
@@ -185,6 +189,7 @@ gt down
 ## VS Code Extension
 
 Graphite also offers a VS Code extension for visual stack management:
+
 - Install from VS Code marketplace: "Graphite"
 - Provides visual stack overview
 - Quick actions for common operations
