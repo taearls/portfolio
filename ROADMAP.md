@@ -2,9 +2,9 @@
 
 ## Executive Summary
 
-This roadmap outlines the development plan for Tyler Earls' portfolio website, focusing on performance optimization, modern React tooling, and enhanced user experience. The project has **completed Phase 5 (React Compiler Integration)**, **Phase 6 (CI/CD setup)**, **Phase 7 (Accessibility & Core Web Vitals)**, and **Phase 8 (GitOps Feature Flags)**, with **2 open issues** focusing on tooling research.
+This roadmap outlines the development plan for Tyler Earls' portfolio website, focusing on performance optimization, modern React tooling, and enhanced user experience. The project has **completed Phase 5 (React Compiler Integration)**, **Phase 6 (CI/CD setup)**, **Phase 7 (Accessibility & Core Web Vitals)**, and **Phase 8 (GitOps Feature Flags)**, with **1 open issue** focusing on tooling research.
 
-**Current Focus**: CSS tooling now complete with Stylelint. All critical and medium priority accessibility issues resolved. Remaining work focuses on tooling research (Graphite, CodeRabbit).
+**Current Focus**: CodeRabbit AI code review now configured. All critical and medium priority accessibility issues resolved. Remaining work focuses on Graphite integration spike.
 
 ---
 
@@ -21,7 +21,7 @@ This roadmap outlines the development plan for Tyler Earls' portfolio website, f
 
 ## Open Issues Summary
 
-### Priority Breakdown (2 Open Issues)
+### Priority Breakdown (1 Open Issue)
 
 #### 🔴 Critical Priority (0 issues)
 
@@ -57,7 +57,7 @@ This roadmap outlines the development plan for Tyler Earls' portfolio website, f
 
 ✅ **#14** - Add Working Email Contact Form - **COMPLETED Dec 7, 2025**
 
-#### 🔵 Low Priority (2 issues) - Effort: ~3-4 hours total
+#### 🔵 Low Priority (1 issue) - Effort: ~1-2 hours total
 
 ✅ **#112** - feat(nav): add semi-transparent backdrop behind mobile navigation - **COMPLETED Dec 27, 2025**
 
@@ -71,8 +71,8 @@ This roadmap outlines the development plan for Tyler Earls' portfolio website, f
 
 - **#33** - Spike: Integrate PRs with Graphite - _~1-2 hours_
   - Labels: `type: spike`, `area: ci/cd`, `priority: low`, `effort: small`
-- **#34** - Spike: Experiment with CodeRabbit - _~1-2 hours_
-  - Labels: `type: spike`, `area: ci/cd`, `priority: low`, `effort: small`
+
+✅ **#34** - Spike: Experiment with CodeRabbit - **COMPLETED Dec 29, 2025**
 
 ✅ **#120** - fix(nav): add bottom border to mobile navigation when closed - **COMPLETED Dec 27, 2025**
 
@@ -490,7 +490,7 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 **Accessibility** (1 open, 5 closed): Open: #108 | Closed: #61 (navigation contrast), #62 (touch targets), #63 (CLS mobile), #64 (WCAG AAA), #65 (font size readability)
 **Navigation UX** (3 open, 3 closed): Open: #111, #112, #113 | Closed: #109, #110, #107
 **UI/UX** (0 open, 9 closed): Closed: #10 (resume page), #13 (descriptions), #15 (tags/search), #58 (left-align text), #28 (React 19 Meta), #11 (SVG preload), #27 (lazy routes), #72 (feature flags), #14 (contact form)
-**Research** (2 open): #33, #34
+**Research** (1 open, 1 closed): Open: #33 (Graphite) | Closed: #34 (CodeRabbit)
 
 ### Effort Distribution (Open Issues Only)
 
@@ -564,6 +564,58 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 ---
 
 ## Changelog
+
+### 2025-12-29 - Issue #34 Completed: Spike - Experiment with CodeRabbit
+
+- **Completed**: #34 - Spike: Experiment with CodeRabbit
+- **Priority**: 🔵 LOW (Research/Spike)
+- **Status**: Completed Dec 29, 2025
+- **Effort**: ~30 min
+
+**Background:**
+
+CodeRabbit is an AI-powered code review tool that provides automated, context-aware feedback on pull requests. This spike evaluated whether CodeRabbit would be useful for the portfolio project.
+
+**Research Findings:**
+
+1. **What is CodeRabbit?**
+   - AI-powered code reviewer that analyzes PR diffs and provides feedback
+   - Integrates directly with GitHub (also supports GitLab and Bitbucket)
+   - Uses advanced LLMs to understand code context and suggest improvements
+   - Free for open source projects
+
+2. **Key Features:**
+   - Instant PR summaries and line-by-line code review
+   - Security vulnerability and secrets detection
+   - Customizable review rules via `.coderabbit.yaml`
+   - Path-based review instructions for different file types
+   - Chat interface for follow-up questions
+
+3. **Setup Requirements:**
+   - Install CodeRabbit GitHub App on the repository
+   - Add `.coderabbit.yaml` configuration file (optional but recommended)
+   - No code changes required - works via GitHub integration
+
+**Implementation:**
+
+Created `.coderabbit.yaml` with project-specific configuration:
+
+- Assertive review profile for thorough feedback
+- Path-based instructions for React components, hooks, state machines, CSS, and tests
+- Disabled poem feature for professional reviews
+- Configured to skip draft PRs and ignore lock files
+
+**Recommendation:**
+
+✅ **Recommended for adoption** - CodeRabbit provides valuable AI-assisted code review that complements manual reviews. The configuration is now ready; the repository owner just needs to install the CodeRabbit GitHub App.
+
+**Next Steps:**
+
+1. Visit https://coderabbit.ai and authenticate with GitHub
+2. Install CodeRabbit on the `taearls/portfolio` repository
+3. Create a test PR to see CodeRabbit in action
+
+---
 
 ### 2025-12-29 - Issue #114 Completed: Add Stylelint for CSS Linting
 

@@ -1,0 +1,97 @@
+# CodeRabbit AI Code Review Configuration
+# Documentation: https://docs.coderabbit.ai/guides/configure-coderabbit
+
+# Language for reviews (ISO 639-1 code)
+language: "en-US"
+
+# Enable early access features
+early_access: false
+
+# Review settings
+reviews:
+  # Review intensity: "chill" (fewer comments), "assertive" (more thorough)
+  profile: "assertive"
+
+  # Whether CodeRabbit should request changes on PRs
+  request_changes_workflow: false
+
+  # Generate a high-level summary of changes
+  high_level_summary: true
+
+  # Add a fun poem to the review (disable for professional repos)
+  poem: false
+
+  # Show review status in PR comments
+  review_status: true
+
+  # Collapse the code walkthrough section
+  collapse_walkthrough: false
+
+  # Path-based review instructions
+  path_instructions:
+    - path: "src/components/**"
+      instructions: |
+        Review React components for:
+        - Proper TypeScript types (no 'any')
+        - React Compiler compatibility (no patterns that break optimization)
+        - Accessibility (ARIA labels, keyboard navigation, focus management)
+        - Performance (unnecessary re-renders, missing memoization where needed)
+
+    - path: "src/pages/**"
+      instructions: |
+        Review page components for:
+        - Proper use of React Router hooks and components
+        - SEO considerations (meta tags, document title)
+        - Page-level error boundaries
+        - Lazy loading of heavy components
+
+    - path: "src/hooks/**"
+      instructions: |
+        Review React hooks for:
+        - Correct dependency arrays
+        - Proper cleanup in useEffect
+        - Following React hook rules
+
+    - path: "src/state/**"
+      instructions: |
+        Review XState machines for:
+        - Proper state transitions
+        - Type safety
+        - Event handling
+
+    - path: "**/*.css"
+      instructions: |
+        Review CSS for:
+        - Consistent use of CSS custom properties
+        - Accessibility (color contrast, focus indicators)
+        - Mobile responsiveness
+        - Tailwind CSS best practices
+
+    - path: "tests/**"
+      instructions: |
+        Review tests for:
+        - Comprehensive coverage
+        - Clear test descriptions
+        - Proper assertions
+        - No flaky patterns (proper async handling)
+
+  # Auto-review settings
+  auto_review:
+    # Enable automatic reviews on new PRs
+    enabled: true
+
+    # Skip draft PRs
+    drafts: false
+
+    # Ignore patterns (use glob syntax)
+    ignore_paths:
+      - "package-lock.json"
+      - "*.lock"
+      - "*.md"
+      - "dist/**"
+      - "coverage/**"
+
+# Chat settings
+chat:
+  # Enable automatic replies to comments
+  auto_reply: true
