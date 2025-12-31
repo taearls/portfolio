@@ -2,12 +2,13 @@ import type { FeatureFlags } from "@/types/featureFlags.ts";
 
 import { useEffect, useState } from "react";
 
+import ErrorBoundary from "@/components/ErrorBoundary/ErrorBoundary.tsx";
 import FlagStatusBadge from "@/components/FlagStatusBadge/FlagStatusBadge.tsx";
 import { useFeatureFlags } from "@/hooks/useFeatureFlags.ts";
 import { FLAG_METADATA } from "@/types/featureFlags.ts";
 import styles from "./AdminFlagsPage.module.css";
 
-export default function AdminFlagsPage() {
+function AdminFlagsPageContent() {
   const { flags, isLoading, error, refetch } = useFeatureFlags();
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [lastRefresh, setLastRefresh] = useState<Date | null>(null);
@@ -128,5 +129,13 @@ export default function AdminFlagsPage() {
         </span>
       </div>
     </main>
+  );
+}
+
+export default function AdminFlagsPage() {
+  return (
+    <ErrorBoundary>
+      <AdminFlagsPageContent />
+    </ErrorBoundary>
   );
 }
