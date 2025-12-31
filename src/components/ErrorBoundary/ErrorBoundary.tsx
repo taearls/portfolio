@@ -2,6 +2,7 @@ import type { ErrorInfo, ReactNode, RefObject } from "react";
 
 import { Component, createRef } from "react";
 
+import ActionButton from "@/components/ActionButton";
 import styles from "./ErrorBoundary.module.css";
 
 interface ErrorBoundaryProps {
@@ -85,13 +86,13 @@ export default class ErrorBoundary extends Component<
             {this.state.error && (
               <p className={styles.details}>{this.getDisplayMessage()}</p>
             )}
-            <button
-              type="button"
-              className={styles.button}
+            <ActionButton
               onClick={this.handleReset}
+              loadingLabel="Retrying..."
+              className={styles.button}
             >
               Try Again
-            </button>
+            </ActionButton>
           </div>
         </div>
       );
