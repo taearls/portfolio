@@ -23,7 +23,7 @@ export default class ErrorBoundary extends Component<
   ErrorBoundaryProps,
   ErrorBoundaryState
 > {
-  private headingRef: RefObject<HTMLHeadingElement | null>;
+  private headingRef: RefObject<HTMLHeadingElement>;
 
   constructor(props: ErrorBoundaryProps) {
     super(props);
@@ -74,7 +74,7 @@ export default class ErrorBoundary extends Component<
       }
 
       return (
-        <div className={styles.container} role="alert" aria-live="assertive">
+        <div className={styles.container} role="alert">
           <div className={styles.content}>
             <h2 ref={this.headingRef} className={styles.title} tabIndex={-1}>
               Something went wrong
