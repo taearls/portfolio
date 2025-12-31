@@ -22,7 +22,7 @@ A simple UI would make it easier to:
 
 ### Architecture
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────┐
 │                    /admin/flags page                        │
 ├─────────────────────────────────────────────────────────────┤
@@ -108,7 +108,7 @@ None required - uses existing stack.
 
 ### File Structure
 
-```
+```text
 src/
 ├── pages/
 │   └── AdminFlagsPage/

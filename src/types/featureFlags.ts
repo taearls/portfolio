@@ -32,12 +32,17 @@ export interface CachedFlags {
 }
 
 /**
+ * Flag type categories for different evaluation strategies
+ */
+export type FlagType = "runtime" | "build-time";
+
+/**
  * Metadata for each feature flag (descriptions, type info)
  * Co-located with type definitions to maintain single source of truth
  */
 export interface FlagMetadata {
   description: string;
-  type: "runtime";
+  type: FlagType;
 }
 
 export const FLAG_METADATA: Record<keyof FeatureFlags, FlagMetadata> = {

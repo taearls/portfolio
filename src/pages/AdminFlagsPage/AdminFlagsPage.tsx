@@ -1,6 +1,6 @@
 import type { FeatureFlags } from "@/types/featureFlags.ts";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import FlagStatusBadge from "@/components/FlagStatusBadge/FlagStatusBadge.tsx";
 import { useFeatureFlags } from "@/hooks/useFeatureFlags.ts";
@@ -12,11 +12,18 @@ export default function AdminFlagsPage() {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [lastRefresh, setLastRefresh] = useState<Date | null>(null);
 
+  useEffect(() => {
+    document.title = "Feature Flags - Admin";
+  }, []);
+
   const handleRefresh = async () => {
     setIsRefreshing(true);
-    await refetch();
-    setLastRefresh(new Date());
-    setIsRefreshing(false);
+    try {
+      await refetch();
+      setLastRefresh(new Date());
+    } finally {
+      setIsRefreshing(false);
+    }
   };
 
   const flagEntries = Object.entries(flags) as Array<
