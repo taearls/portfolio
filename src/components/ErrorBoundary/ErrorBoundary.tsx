@@ -2,7 +2,7 @@ import type { ErrorInfo, ReactNode, RefObject } from "react";
 
 import { Component, createRef } from "react";
 
-import ActionButton from "@/components/ActionButton";
+import ActionButton from "@/components/ActionButton/index.ts";
 import styles from "./ErrorBoundary.module.css";
 
 interface ErrorBoundaryProps {
@@ -24,7 +24,7 @@ export default class ErrorBoundary extends Component<
   ErrorBoundaryProps,
   ErrorBoundaryState
 > {
-  private headingRef: RefObject<HTMLHeadingElement | null>;
+  private headingRef: RefObject<HTMLHeadingElement>;
 
   constructor(props: ErrorBoundaryProps) {
     super(props);

@@ -1,2 +1,2 @@
-export { default } from "./ActionButton";
-export type { ActionButtonProps } from "./ActionButton.types";
+export { default } from "./ActionButton.tsx";
+export type { ActionButtonProps } from "./ActionButton.types.ts";

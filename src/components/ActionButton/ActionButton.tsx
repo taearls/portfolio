@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { ActionButtonProps } from "./ActionButton.types";
+import type { ActionButtonProps } from "./ActionButton.types.ts";
 import styles from "./ActionButton.module.css";
 
 /**
@@ -34,8 +34,8 @@ export default function ActionButton({
         await result;
       }
     } catch (error) {
-      // Allow errors to propagate to error boundaries or handlers
-      // but ensure we reset the loading state
+      // Log error for debugging but don't rethrow to avoid crashing the app
+      // The component gracefully handles errors by resetting loading state
       console.error("ActionButton: Error during onClick:", error);
     } finally {
       setInternalIsLoading(false);
