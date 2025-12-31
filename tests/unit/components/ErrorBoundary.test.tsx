@@ -7,7 +7,7 @@ import "@testing-library/jest-dom/vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import ErrorBoundary from "@/components/ErrorBoundary/ErrorBoundary.tsx";
+import ErrorBoundary from "@/components/ErrorBoundary/index.ts";
 
 // Component that throws an error
 function ThrowError({ shouldThrow }: { shouldThrow: boolean }) {
