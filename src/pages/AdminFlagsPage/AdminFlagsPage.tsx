@@ -29,10 +29,9 @@ export default function AdminFlagsPage() {
     setIsRefreshing(false);
   };
 
-  const flagEntries = Object.entries(flags) as [
-    keyof FeatureFlags,
-    FeatureFlags[keyof FeatureFlags],
-  ][];
+  const flagEntries = Object.entries(flags) as Array<
+    [keyof FeatureFlags, FeatureFlags[keyof FeatureFlags]]
+  >;
 
   if (isLoading && !lastRefresh) {
     return (
