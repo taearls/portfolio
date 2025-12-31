@@ -4,18 +4,8 @@ import { useState } from "react";
 
 import FlagStatusBadge from "@/components/FlagStatusBadge/FlagStatusBadge.tsx";
 import { useFeatureFlags } from "@/hooks/useFeatureFlags.ts";
+import { FLAG_METADATA } from "@/types/featureFlags.ts";
 import styles from "./AdminFlagsPage.module.css";
-
-// Flag metadata (descriptions from flipt.yaml)
-const FLAG_METADATA: Record<
-  keyof FeatureFlags,
-  { description: string; type: "runtime" }
-> = {
-  "email-contact-form": {
-    description: "Email contact form with Postmark integration",
-    type: "runtime",
-  },
-};
 
 export default function AdminFlagsPage() {
   const { flags, isLoading, error, refetch } = useFeatureFlags();

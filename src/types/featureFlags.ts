@@ -30,3 +30,19 @@ export interface CachedFlags {
   flags: FeatureFlags;
   timestamp: number;
 }
+
+/**
+ * Metadata for each feature flag (descriptions, type info)
+ * Co-located with type definitions to maintain single source of truth
+ */
+export interface FlagMetadata {
+  description: string;
+  type: "runtime";
+}
+
+export const FLAG_METADATA: Record<keyof FeatureFlags, FlagMetadata> = {
+  "email-contact-form": {
+    description: "Email contact form with Postmark integration",
+    type: "runtime",
+  },
+};
