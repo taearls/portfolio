@@ -295,14 +295,15 @@ describe("Feature Flags Integration", () => {
      * Uses cy.intercept to mock the feature flags API response,
      * ensuring consistent test behavior regardless of API availability.
      *
-     * Note: Tests run in dev mode (vite dev), so we intercept the dev URL.
+     * API URL is configured in cypress.config.ts and can be overridden
+     * via CYPRESS_featureFlagsApi environment variable for different environments.
      */
 
-    const FEATURE_FLAGS_API_URL = "http://localhost:8787/api/flags";
-
     const visitAdminWithFlags = (flags: FeatureFlags) => {
+      const apiUrl = Cypress.env("featureFlagsApi") as string;
+
       // Intercept the API request and return mock flags
-      cy.intercept("GET", FEATURE_FLAGS_API_URL, {
+      cy.intercept("GET", apiUrl, {
         statusCode: 200,
         body: flags,
       }).as("getFlags");
