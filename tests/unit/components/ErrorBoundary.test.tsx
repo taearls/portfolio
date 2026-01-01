@@ -4,7 +4,7 @@
 
 import "@testing-library/jest-dom/vitest";
 
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 import ErrorBoundary from "@/components/ErrorBoundary/index.ts";
@@ -75,7 +75,7 @@ describe("ErrorBoundary", () => {
       ).toBeInTheDocument();
     });
 
-    it("should reset error state when Try Again is clicked", () => {
+    it("should reset error state when Try Again is clicked", async () => {
       let shouldThrow = true;
 
       function ConditionalThrow() {
@@ -97,10 +97,13 @@ describe("ErrorBoundary", () => {
       // Change condition before clicking Try Again
       shouldThrow = false;
 
-      // Click Try Again - this should reset and re-render successfully
+      // Click Try Again - this triggers async reset with brief delay
       fireEvent.click(screen.getByRole("button", { name: /try again/i }));
 
-      expect(screen.getByText("Child content")).toBeInTheDocument();
+      // Wait for async reset to complete
+      await waitFor(() => {
+        expect(screen.getByText("Child content")).toBeInTheDocument();
+      });
       expect(
         screen.queryByText("Something went wrong"),
       ).not.toBeInTheDocument();

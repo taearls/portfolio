@@ -50,8 +50,15 @@ export default class ErrorBoundary extends Component<
     console.error("ErrorBoundary caught an error:", error, errorInfo);
   }
 
-  handleReset = (): void => {
-    this.setState({ hasError: false, error: null });
+  handleReset = (): Promise<void> => {
+    // Return a promise with brief delay to prevent rapid re-clicking
+    // ActionButton will show loading state during this delay
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        this.setState({ hasError: false, error: null });
+        resolve();
+      }, 150);
+    });
   };
 
   /**
