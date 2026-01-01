@@ -17,7 +17,10 @@ export default function FlagStatusBadge({ enabled }: FlagStatusBadgeProps) {
   );
 
   return (
-    <output className={badgeClass} aria-label={enabled ? "Enabled" : "Disabled"}>
+    <output
+      className={badgeClass}
+      aria-label={enabled ? "Enabled" : "Disabled"}
+    >
       <span className={indicatorClass} aria-hidden="true" />
       {enabled ? "Enabled" : "Disabled"}
     </output>
