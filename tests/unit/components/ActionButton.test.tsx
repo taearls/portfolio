@@ -2,7 +2,8 @@ import "@testing-library/jest-dom/vitest";
 
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, it, expect, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
+
 import ActionButton from "@/components/ActionButton/ActionButton.tsx";
 
 describe("ActionButton", () => {
@@ -10,7 +11,9 @@ describe("ActionButton", () => {
     it("should render with children text", () => {
       render(<ActionButton onClick={() => {}}>Click Me</ActionButton>);
 
-      expect(screen.getByRole("button", { name: "Click Me" })).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", { name: "Click Me" }),
+      ).toBeInTheDocument();
     });
 
     it("should apply custom className", () => {
@@ -197,9 +200,7 @@ describe("ActionButton", () => {
         .spyOn(console, "error")
         .mockImplementation(() => {});
 
-      const handleClick = vi.fn(() =>
-        Promise.reject(new Error("Test error")),
-      );
+      const handleClick = vi.fn(() => Promise.reject(new Error("Test error")));
 
       render(<ActionButton onClick={handleClick}>Click Me</ActionButton>);
 
