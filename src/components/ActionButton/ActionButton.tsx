@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import type { ActionButtonProps } from "./ActionButton.types.ts";
 import styles from "./ActionButton.module.css";
 
@@ -20,7 +20,7 @@ export default function ActionButton({
   // Use external loading state if provided, otherwise use internal state
   const isLoading = externalIsLoading || internalIsLoading;
 
-  const handleClick = async () => {
+  const handleClick = useCallback(async () => {
     if (isLoading || disabled) {
       return;
     }
@@ -40,7 +40,7 @@ export default function ActionButton({
     } finally {
       setInternalIsLoading(false);
     }
-  };
+  }, [onClick, isLoading, disabled]);
 
   const buttonClasses = [
     styles.button,

@@ -2,7 +2,7 @@ import type { ErrorInfo, ReactNode, RefObject } from "react";
 
 import { Component, createRef } from "react";
 
-import ActionButton from "@/components/ActionButton/index.ts";
+import ActionButton from "@/components/ActionButton/ActionButton.tsx";
 import styles from "./ErrorBoundary.module.css";
 
 interface ErrorBoundaryProps {

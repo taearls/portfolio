@@ -3,7 +3,7 @@ import "@testing-library/jest-dom/vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, it, expect, vi } from "vitest";
-import ActionButton from "@/components/ActionButton/index.ts";
+import ActionButton from "@/components/ActionButton/ActionButton.tsx";
 
 describe("ActionButton", () => {
   describe("rendering", () => {
