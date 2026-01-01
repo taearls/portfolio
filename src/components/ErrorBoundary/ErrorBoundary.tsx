@@ -24,7 +24,7 @@ export default class ErrorBoundary extends Component<
   ErrorBoundaryProps,
   ErrorBoundaryState
 > {
-  private headingRef: RefObject<HTMLHeadingElement>;
+  private headingRef: RefObject<HTMLHeadingElement | null>;
 
   constructor(props: ErrorBoundaryProps) {
     super(props);

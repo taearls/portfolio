@@ -238,8 +238,8 @@ describe("ActionButton", () => {
 
       const button = screen.getByRole("button");
 
-      // Focus the button
-      button.focus();
+      // Focus the button using tab (more consistent with userEvent pattern)
+      await user.tab();
       expect(button).toHaveFocus();
 
       // Press Enter
