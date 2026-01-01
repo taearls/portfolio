@@ -200,7 +200,6 @@ describe("ActionButton", () => {
         .spyOn(console, "error")
         .mockImplementation(() => {});
 
-      // Don't reject the promise - just throw an error synchronously
       const testError = new Error("Test error");
       const handleClick = vi.fn(() => {
         throw testError;

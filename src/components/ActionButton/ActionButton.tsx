@@ -36,9 +36,10 @@ export default function ActionButton({
         await result;
       }
     } catch (error) {
-      // Log error for debugging, then re-throw to allow error boundaries to catch it
+      // Log error for debugging
+      // Note: We don't re-throw because async handlers can't be caught by Error Boundaries
+      // (Error Boundaries only catch synchronous render errors, not rejected promises)
       console.error("ActionButton: Error during onClick:", error);
-      throw error;
     } finally {
       setInternalIsLoading(false);
     }
