@@ -194,20 +194,31 @@ describe("ActionButton", () => {
       });
     });
 
-    it("should handle rejected promises gracefully", async () => {
+    it("should log errors before re-throwing them", async () => {
       const user = userEvent.setup();
       const consoleErrorSpy = vi
         .spyOn(console, "error")
         .mockImplementation(() => {});
 
-      const handleClick = vi.fn(() => Promise.reject(new Error("Test error")));
+      const testError = new Error("Test error");
+      const handleClick = vi.fn(() => Promise.reject(testError));
 
       render(<ActionButton onClick={handleClick}>Click Me</ActionButton>);
 
       const button = screen.getByRole("button");
+
+      // Click the button - this will trigger the error
       await user.click(button);
 
-      // Should return to normal state even after error
+      // Error should be logged by ActionButton before being re-thrown
+      await waitFor(() => {
+        expect(consoleErrorSpy).toHaveBeenCalledWith(
+          "ActionButton: Error during onClick:",
+          testError,
+        );
+      });
+
+      // Loading state should be reset even after error
       await waitFor(() => {
         expect(button).not.toBeDisabled();
       });

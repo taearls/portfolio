@@ -36,9 +36,9 @@ export default function ActionButton({
         await result;
       }
     } catch (error) {
-      // Log error for debugging but don't rethrow to avoid crashing the app
-      // The component gracefully handles errors by resetting loading state
+      // Log error for debugging, then re-throw to allow error boundaries to catch it
       console.error("ActionButton: Error during onClick:", error);
+      throw error;
     } finally {
       setInternalIsLoading(false);
     }
