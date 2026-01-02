@@ -4,7 +4,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
-import ActionButton from "@/components/ActionButton";
+import ActionButton from "@/components/ActionButton/index.ts";
 
 describe("ActionButton", () => {
   describe("rendering", () => {
