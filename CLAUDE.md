@@ -100,6 +100,23 @@ This project uses **npm workspaces** for managing multiple packages:
 - Test files follow `.test.ts` or `.spec.tsx` naming convention
 - Component tests use Testing Library utilities
 
+#### Testing Best Practices
+
+**⚠️ Never use explicit timeouts in test logic:**
+
+- Avoid `cy.get(selector, { timeout: N })` in Cypress tests
+- Avoid `setTimeout`, `sleep`, or similar timing functions in any tests
+- Both Cypress and Vitest have built-in retry mechanisms that handle timing automatically
+- Rely on default retry behavior rather than hardcoding wait times
+- If a test needs more time, configure global timeout settings in the test framework config, not in individual tests
+
+**Why?**
+
+- Explicit timeouts make tests brittle and environment-dependent
+- They create false positives/negatives based on machine speed
+- They increase test execution time unnecessarily
+- Framework retry logic is more reliable and maintainable
+
 ### Development Notes
 
 - React Router configured for client-side only (SSR disabled)

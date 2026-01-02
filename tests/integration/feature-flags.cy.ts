@@ -314,7 +314,8 @@ describe("Feature Flags Integration", () => {
       cy.wait("@getFlags");
 
       // Wait for table to be visible (indicates page loaded with flags)
-      cy.get("table", { timeout: 10000 }).should("exist");
+      // Relying on Cypress's built-in retry logic instead of explicit timeout
+      cy.get("table").should("exist");
     };
 
     it("should display the admin dashboard with page title", () => {
