@@ -4,8 +4,9 @@
 
 import "@testing-library/jest-dom/vitest";
 
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 
 import ErrorBoundary from "@/components/ErrorBoundary/index.ts";
 
@@ -76,6 +77,7 @@ describe("ErrorBoundary", () => {
     });
 
     it("should reset error state when Try Again is clicked", async () => {
+      const user = userEvent.setup();
       let shouldThrow = true;
 
       function ConditionalThrow() {
@@ -98,7 +100,7 @@ describe("ErrorBoundary", () => {
       shouldThrow = false;
 
       // Click Try Again - this triggers async reset with brief delay
-      fireEvent.click(screen.getByRole("button", { name: /try again/i }));
+      await user.click(screen.getByRole("button", { name: /try again/i }));
 
       // Wait for async reset to complete
       await waitFor(() => {
