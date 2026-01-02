@@ -7,7 +7,8 @@ const BASE_CYPRESS_DIR = "tests/integration";
  * Can be overridden via CYPRESS_* environment variables
  */
 const API_URLS = {
-  // Development (vite dev mode on port 4173)
+  // Development: Cloudflare Worker dev server on port 8787 (wrangler dev)
+  // Note: Port 4173 (baseUrl) is the Vite preview server for the React app
   featureFlagsApi: "http://localhost:8787/api/flags",
   // Production URL (for reference, can override via CYPRESS_featureFlagsApi)
   // "https://portfolio-feature-flags.tyler-a-earls.workers.dev/api/flags"

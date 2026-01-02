@@ -4,7 +4,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
-import ActionButton from "@/components/ActionButton/ActionButton.tsx";
+import ActionButton from "@/components/ActionButton";
 
 describe("ActionButton", () => {
   describe("rendering", () => {
@@ -200,32 +200,34 @@ describe("ActionButton", () => {
         .spyOn(console, "error")
         .mockImplementation(() => {});
 
-      const testError = new Error("Test error");
-      const handleClick = vi.fn(() => {
-        throw testError;
-      });
+      try {
+        const testError = new Error("Test error");
+        const handleClick = vi.fn(() => {
+          throw testError;
+        });
 
-      render(<ActionButton onClick={handleClick}>Click Me</ActionButton>);
+        render(<ActionButton onClick={handleClick}>Click Me</ActionButton>);
 
-      const button = screen.getByRole("button");
+        const button = screen.getByRole("button");
 
-      // Click the button - this will trigger the error
-      await user.click(button);
+        // Click the button - this will trigger the error
+        await user.click(button);
 
-      // Wait for error to be logged by ActionButton
-      await waitFor(() => {
-        expect(consoleErrorSpy).toHaveBeenCalledWith(
-          "ActionButton: Error during onClick:",
-          testError,
-        );
-      });
+        // Wait for error to be logged by ActionButton
+        await waitFor(() => {
+          expect(consoleErrorSpy).toHaveBeenCalledWith(
+            "ActionButton: Error during onClick:",
+            testError,
+          );
+        });
 
-      // Loading state should be reset even after error
-      await waitFor(() => {
-        expect(button).not.toBeDisabled();
-      });
-
-      consoleErrorSpy.mockRestore();
+        // Loading state should be reset even after error
+        await waitFor(() => {
+          expect(button).not.toBeDisabled();
+        });
+      } finally {
+        consoleErrorSpy.mockRestore();
+      }
     });
   });
 
