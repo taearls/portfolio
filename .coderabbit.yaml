@@ -10,7 +10,7 @@ early_access: false
 # Review settings
 reviews:
   # Review intensity: "chill" (fewer comments), "assertive" (more thorough)
-  profile: "assertive"
+  profile: "chill"
 
   # Whether CodeRabbit should request changes on PRs
   request_changes_workflow: false
