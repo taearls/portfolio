@@ -286,4 +286,198 @@ describe("Feature Flags Integration", () => {
       });
     });
   });
+
+  describe("Admin Flags Dashboard (/admin/flags)", () => {
+    /**
+     * Tests for the feature flags admin dashboard that displays
+     * current flag states in a read-only table view.
+     *
+     * Uses cy.intercept to mock the feature flags API response,
+     * ensuring consistent test behavior regardless of API availability.
+     *
+     * API URL is configured in cypress.config.ts and can be overridden
+     * via CYPRESS_featureFlagsApi environment variable for different environments.
+     */
+
+    const visitAdminWithFlags = (flags: FeatureFlags) => {
+      const apiUrl = Cypress.env("featureFlagsApi") as string;
+
+      // Intercept the API request and return mock flags
+      cy.intercept("GET", apiUrl, {
+        statusCode: 200,
+        body: flags,
+      }).as("getFlags");
+
+      cy.visit("/admin/flags");
+
+      // Wait for the API request to complete
+      cy.wait("@getFlags");
+
+      // Wait for table to be visible (indicates page loaded with flags)
+      // Relying on Cypress's built-in retry logic instead of explicit timeout
+      cy.get("table").should("exist");
+    };
+
+    it("should display the admin dashboard with page title", () => {
+      const mockFlags: FeatureFlags = {
+        "email-contact-form": { enabled: true },
+      };
+
+      visitAdminWithFlags(mockFlags);
+
+      // Verify page title
+      cy.get("h1").should("contain.text", "Feature Flags");
+
+      // Verify document title is set
+      cy.title().should("eq", "Feature Flags - Admin");
+    });
+
+    it("should display flags table with correct columns", () => {
+      const mockFlags: FeatureFlags = {
+        "email-contact-form": { enabled: true },
+      };
+
+      visitAdminWithFlags(mockFlags);
+
+      // Verify table headers
+      cy.get("table").should("exist");
+      cy.get("th").should("have.length", 3);
+      cy.get("th").eq(0).should("contain.text", "Flag");
+      cy.get("th").eq(1).should("contain.text", "Status");
+      cy.get("th").eq(2).should("contain.text", "Description");
+    });
+
+    it("should display enabled flag with correct status badge", () => {
+      const mockFlags: FeatureFlags = {
+        "email-contact-form": { enabled: true },
+      };
+
+      visitAdminWithFlags(mockFlags);
+
+      // Verify flag row
+      cy.get("table tbody tr").should("have.length.at.least", 1);
+      cy.get("table tbody tr")
+        .first()
+        .within(() => {
+          cy.get("td").eq(0).should("contain.text", "email-contact-form");
+          cy.get("td").eq(1).should("contain.text", "Enabled");
+        });
+    });
+
+    it("should display disabled flag with correct status badge", () => {
+      const mockFlags: FeatureFlags = {
+        "email-contact-form": { enabled: false },
+      };
+
+      visitAdminWithFlags(mockFlags);
+
+      // Verify disabled status
+      cy.get("table tbody tr")
+        .first()
+        .within(() => {
+          cy.get("td").eq(1).should("contain.text", "Disabled");
+        });
+    });
+
+    it("should display flag description from metadata", () => {
+      const mockFlags: FeatureFlags = {
+        "email-contact-form": { enabled: true },
+      };
+
+      visitAdminWithFlags(mockFlags);
+
+      // Verify description column shows metadata
+      cy.get("table tbody tr")
+        .first()
+        .within(() => {
+          cy.get("td")
+            .eq(2)
+            .should("contain.text", "Email contact form with Postmark");
+        });
+    });
+
+    it("should have a refresh button", () => {
+      const mockFlags: FeatureFlags = {
+        "email-contact-form": { enabled: true },
+      };
+
+      visitAdminWithFlags(mockFlags);
+
+      // Verify refresh button exists and is clickable
+      cy.get('button[aria-label="Refresh feature flags"]').should("exist");
+      cy.get('button[aria-label="Refresh feature flags"]').should(
+        "contain.text",
+        "Refresh",
+      );
+      cy.get('button[aria-label="Refresh feature flags"]').should(
+        "not.be.disabled",
+      );
+    });
+
+    it("should display status bar", () => {
+      const mockFlags: FeatureFlags = {
+        "email-contact-form": { enabled: true },
+      };
+
+      visitAdminWithFlags(mockFlags);
+
+      // Verify status bar exists (may show "Connected" or "Last updated")
+      cy.get("main").should("exist");
+      // The status bar should contain some status text
+      cy.get("main").should("contain.text", "feature flags");
+    });
+
+    it("should be accessible via keyboard navigation", () => {
+      const mockFlags: FeatureFlags = {
+        "email-contact-form": { enabled: true },
+      };
+
+      visitAdminWithFlags(mockFlags);
+
+      // Tab to refresh button and verify it can be focused
+      cy.get('button[aria-label="Refresh feature flags"]').focus();
+      cy.get('button[aria-label="Refresh feature flags"]').should("have.focus");
+    });
+
+    it("should display status badge with proper ARIA attributes", () => {
+      const mockFlags: FeatureFlags = {
+        "email-contact-form": { enabled: true },
+      };
+
+      visitAdminWithFlags(mockFlags);
+
+      // Verify status badge has proper accessibility (using output element)
+      cy.get("output").should("exist");
+      cy.get('output[aria-label="Enabled"]').should("exist");
+    });
+
+    it("should work correctly in dark mode", () => {
+      const mockFlags: FeatureFlags = {
+        "email-contact-form": { enabled: true },
+      };
+
+      visitAdminWithFlags(mockFlags);
+
+      // Apply dark mode directly (toggle is tested elsewhere)
+      cy.document().then((doc) => {
+        doc.documentElement.classList.remove("light-theme");
+        doc.documentElement.classList.add("dark-theme");
+      });
+
+      // Verify dark mode class is applied
+      cy.get("html").should("have.class", "dark-theme");
+
+      // Verify table is still visible in dark mode
+      cy.get("table").should("be.visible");
+      cy.get("h1").should("be.visible");
+    });
+
+    it("should not appear in main navigation", () => {
+      cy.visit("/");
+
+      // Admin flags page should not be in the main navigation
+      cy.get("nav").should("not.contain.text", "Feature Flags");
+      cy.get("nav").should("not.contain.text", "Admin");
+    });
+  });
 });
