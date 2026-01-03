@@ -6,57 +6,55 @@
  * different port (localhost:8787) than the app (localhost:4173).
  *
  * Uses cy.setFlagsCache() command from support/support.ts
+ * Uses FLAG_TEST_MATRIX for parametrized testing across flag states
  */
 
 import type { FeatureFlags } from "../../src/types/featureFlags.ts";
+import {
+  FLAG_TEST_MATRIX,
+  getScenario,
+  forEachScenario,
+  forEachEnabledScenario,
+} from "./support/test-matrix.ts";
 
 describe("Contact Form Integration", () => {
   beforeEach(() => {
     cy.clearLocalStorage();
   });
 
-  describe("Form Display with Feature Flag", () => {
-    it("shows contact form when feature flag is enabled", () => {
-      const mockFlags: FeatureFlags = {
-        "email-contact-form": {
-          enabled: true,
-        },
-      };
+  describe("Form Display with Feature Flag (Matrix Pattern)", () => {
+    /**
+     * Parametrized tests using FLAG_TEST_MATRIX
+     * Covers all flag states: enabled, disabled, disabledNoMessage
+     */
+    forEachScenario((scenario) => {
+      it(`${scenario.description}`, () => {
+        cy.setFlagsCache(scenario.flags);
+        cy.visit("/contact");
 
-      cy.setFlagsCache(mockFlags);
-      cy.visit("/contact");
+        // Assert form visibility based on scenario expectations
+        if (scenario.expectations.formVisible) {
+          cy.get("#contact-email-form").should("be.visible");
+          cy.get("#contactName").should("be.visible");
+          cy.get("#contactEmail").should("be.visible");
+          cy.get("#contactMessage").should("be.visible");
+        } else {
+          cy.get("#contact-email-form").should("not.exist");
+        }
 
-      // Form should be visible
-      cy.get("#contact-email-form").should("be.visible");
-      cy.get("#contactName").should("be.visible");
-      cy.get("#contactEmail").should("be.visible");
-      cy.get("#contactMessage").should("be.visible");
-    });
-
-    it("hides contact form when feature flag is disabled", () => {
-      const mockFlags: FeatureFlags = {
-        "email-contact-form": {
-          enabled: false,
-        },
-      };
-
-      cy.setFlagsCache(mockFlags);
-      cy.visit("/contact");
-
-      // Form should not be visible
-      cy.get("#contact-email-form").should("not.exist");
+        // Assert message display based on scenario expectations
+        if (scenario.expectations.showsMessage && scenario.expectations.messageText) {
+          cy.contains(scenario.expectations.messageText).should("be.visible");
+        }
+      });
     });
   });
 
   describe("Form Validation", () => {
     beforeEach(() => {
-      const mockFlags: FeatureFlags = {
-        "email-contact-form": {
-          enabled: true,
-        },
-      };
-
-      cy.setFlagsCache(mockFlags);
+      // Use enabled scenario from test matrix
+      const enabledScenario = getScenario("enabled");
+      cy.setFlagsCache(enabledScenario.flags);
 
       // Stub Turnstile before visiting the page
       cy.stubTurnstile();
@@ -107,13 +105,9 @@ describe("Contact Form Integration", () => {
 
   describe("Form Submission", () => {
     beforeEach(() => {
-      const mockFlags: FeatureFlags = {
-        "email-contact-form": {
-          enabled: true,
-        },
-      };
-
-      cy.setFlagsCache(mockFlags);
+      // Use enabled scenario from test matrix
+      const enabledScenario = getScenario("enabled");
+      cy.setFlagsCache(enabledScenario.flags);
 
       // Stub Turnstile before visiting the page
       cy.stubTurnstile();
@@ -232,13 +226,9 @@ describe("Contact Form Integration", () => {
 
   describe("Accessibility", () => {
     beforeEach(() => {
-      const mockFlags: FeatureFlags = {
-        "email-contact-form": {
-          enabled: true,
-        },
-      };
-
-      cy.setFlagsCache(mockFlags);
+      // Use enabled scenario from test matrix
+      const enabledScenario = getScenario("enabled");
+      cy.setFlagsCache(enabledScenario.flags);
 
       // Stub Turnstile before visiting the page
       cy.stubTurnstile();
@@ -276,13 +266,9 @@ describe("Contact Form Integration", () => {
 
   describe("Turnstile Widget", () => {
     beforeEach(() => {
-      const mockFlags: FeatureFlags = {
-        "email-contact-form": {
-          enabled: true,
-        },
-      };
-
-      cy.setFlagsCache(mockFlags);
+      // Use enabled scenario from test matrix
+      const enabledScenario = getScenario("enabled");
+      cy.setFlagsCache(enabledScenario.flags);
 
       // Stub Turnstile before visiting the page
       cy.stubTurnstile();
@@ -341,13 +327,9 @@ describe("Contact Form Integration", () => {
 
   describe("Error Handling", () => {
     beforeEach(() => {
-      const mockFlags: FeatureFlags = {
-        "email-contact-form": {
-          enabled: true,
-        },
-      };
-
-      cy.setFlagsCache(mockFlags);
+      // Use enabled scenario from test matrix
+      const enabledScenario = getScenario("enabled");
+      cy.setFlagsCache(enabledScenario.flags);
 
       // Stub Turnstile before visiting the page
       cy.stubTurnstile();
@@ -447,13 +429,9 @@ describe("Contact Form Integration", () => {
 
   describe("Dark Mode Support", () => {
     beforeEach(() => {
-      const mockFlags: FeatureFlags = {
-        "email-contact-form": {
-          enabled: true,
-        },
-      };
-
-      cy.setFlagsCache(mockFlags);
+      // Use enabled scenario from test matrix
+      const enabledScenario = getScenario("enabled");
+      cy.setFlagsCache(enabledScenario.flags);
 
       // Stub Turnstile before visiting the page
       cy.stubTurnstile();
@@ -504,13 +482,9 @@ describe("Contact Form Integration", () => {
 
   describe("Contact Page Content", () => {
     beforeEach(() => {
-      const mockFlags: FeatureFlags = {
-        "email-contact-form": {
-          enabled: true,
-        },
-      };
-
-      cy.setFlagsCache(mockFlags);
+      // Use enabled scenario from test matrix
+      const enabledScenario = getScenario("enabled");
+      cy.setFlagsCache(enabledScenario.flags);
 
       // Stub Turnstile before visiting the page
       cy.stubTurnstile();
