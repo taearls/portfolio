@@ -14,8 +14,8 @@
  */
 
 import type { FeatureFlags } from "../../src/types/featureFlags.ts";
-import { CACHE_KEY } from "../../src/constants/featureFlags.ts";
 
+import { CACHE_KEY } from "../../src/constants/featureFlags.ts";
 import { forEachScenario, getScenario } from "./support/test-matrix.ts";
 
 describe("Feature Flags Integration", () => {
