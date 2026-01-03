@@ -14,10 +14,8 @@
  */
 
 import type { FeatureFlags } from "../../src/types/featureFlags.ts";
-import {
-  getScenario,
-  forEachScenario,
-} from "./support/test-matrix.ts";
+
+import { forEachScenario, getScenario } from "./support/test-matrix.ts";
 
 describe("Feature Flags Integration", () => {
   // Cache key for localStorage assertions - must match the key used in the application
@@ -166,7 +164,10 @@ describe("Feature Flags Integration", () => {
         }
 
         // Assert message display based on scenario expectations
-        if (scenario.expectations.showsMessage && scenario.expectations.messageText) {
+        if (
+          scenario.expectations.showsMessage &&
+          scenario.expectations.messageText
+        ) {
           cy.contains(scenario.expectations.messageText).should("exist");
         }
 
@@ -175,12 +176,12 @@ describe("Feature Flags Integration", () => {
           const cached = win.localStorage.getItem(CACHE_KEY);
           const parsed = JSON.parse(cached!);
           expect(parsed.flags["email-contact-form"].enabled).to.equal(
-            scenario.flags["email-contact-form"].enabled
+            scenario.flags["email-contact-form"].enabled,
           );
 
           if (scenario.flags["email-contact-form"].message) {
             expect(parsed.flags["email-contact-form"].message).to.equal(
-              scenario.flags["email-contact-form"].message
+              scenario.flags["email-contact-form"].message,
             );
           }
         });

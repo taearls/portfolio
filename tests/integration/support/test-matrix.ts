@@ -43,7 +43,7 @@ export interface FlagTestScenario {
  * - Expected UI state (form visibility, messages)
  * - Test case identifier and description
  */
-export const FLAG_TEST_MATRIX: FlagTestScenario[] = [
+export const FLAG_TEST_MATRIX: Array<FlagTestScenario> = [
   {
     id: "enabled",
     description: "Feature flag enabled - form visible and functional",
@@ -63,13 +63,15 @@ export const FLAG_TEST_MATRIX: FlagTestScenario[] = [
     flags: {
       "email-contact-form": {
         enabled: false,
-        message: "Contact form is temporarily unavailable. Please try again later.",
+        message:
+          "Contact form is temporarily unavailable. Please try again later.",
       },
     },
     expectations: {
       formVisible: false,
       showsMessage: true,
-      messageText: "Contact form is temporarily unavailable. Please try again later.",
+      messageText:
+        "Contact form is temporarily unavailable. Please try again later.",
     },
   },
   {
@@ -101,14 +103,14 @@ export function getScenario(id: string): FlagTestScenario {
 /**
  * Get all scenarios where the form is expected to be visible
  */
-export function getEnabledScenarios(): FlagTestScenario[] {
+export function getEnabledScenarios(): Array<FlagTestScenario> {
   return FLAG_TEST_MATRIX.filter((s) => s.expectations.formVisible);
 }
 
 /**
  * Get all scenarios where the form is expected to be hidden
  */
-export function getDisabledScenarios(): FlagTestScenario[] {
+export function getDisabledScenarios(): Array<FlagTestScenario> {
   return FLAG_TEST_MATRIX.filter((s) => !s.expectations.formVisible);
 }
 
@@ -130,7 +132,7 @@ export function getDisabledScenarios(): FlagTestScenario[] {
  * });
  */
 export function forEachScenario(
-  testFn: (scenario: FlagTestScenario) => void
+  testFn: (scenario: FlagTestScenario) => void,
 ): void {
   FLAG_TEST_MATRIX.forEach(testFn);
 }
@@ -139,7 +141,7 @@ export function forEachScenario(
  * Utility to run tests only for enabled scenarios
  */
 export function forEachEnabledScenario(
-  testFn: (scenario: FlagTestScenario) => void
+  testFn: (scenario: FlagTestScenario) => void,
 ): void {
   getEnabledScenarios().forEach(testFn);
 }
@@ -148,7 +150,7 @@ export function forEachEnabledScenario(
  * Utility to run tests only for disabled scenarios
  */
 export function forEachDisabledScenario(
-  testFn: (scenario: FlagTestScenario) => void
+  testFn: (scenario: FlagTestScenario) => void,
 ): void {
   getDisabledScenarios().forEach(testFn);
 }

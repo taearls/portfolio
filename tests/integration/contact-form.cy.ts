@@ -10,11 +10,12 @@
  */
 
 import type { FeatureFlags } from "../../src/types/featureFlags.ts";
+
 import {
   FLAG_TEST_MATRIX,
-  getScenario,
-  forEachScenario,
   forEachEnabledScenario,
+  forEachScenario,
+  getScenario,
 } from "./support/test-matrix.ts";
 
 describe("Contact Form Integration", () => {
@@ -43,7 +44,10 @@ describe("Contact Form Integration", () => {
         }
 
         // Assert message display based on scenario expectations
-        if (scenario.expectations.showsMessage && scenario.expectations.messageText) {
+        if (
+          scenario.expectations.showsMessage &&
+          scenario.expectations.messageText
+        ) {
           cy.contains(scenario.expectations.messageText).should("be.visible");
         }
       });
