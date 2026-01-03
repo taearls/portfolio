@@ -142,9 +142,7 @@ describe("Contact Form Integration", () => {
       cy.get('button[type="submit"]').click();
 
       // Verify success message appears (UI-based assertion instead of cy.wait)
-      cy.contains("Message sent successfully", { timeout: 10000 }).should(
-        "be.visible",
-      );
+      cy.contains("Message sent successfully").should("be.visible");
 
       // Form should be reset after successful submission
       cy.get("#contactName").should("have.value", "");
@@ -171,9 +169,7 @@ describe("Contact Form Integration", () => {
       cy.get('button[type="submit"]').click();
 
       // Verify error message appears (UI-based assertion instead of cy.wait)
-      cy.contains("Failed to send message", { timeout: 10000 }).should(
-        "be.visible",
-      );
+      cy.contains("Failed to send message").should("be.visible");
     });
 
     it("shows rate limit error", () => {
@@ -196,7 +192,7 @@ describe("Contact Form Integration", () => {
 
       // Verify rate limit error message appears (UI-based assertion instead of cy.wait)
       // The component shows "Too many requests. Please try again in X seconds."
-      cy.contains("Too many requests", { timeout: 10000 }).should("be.visible");
+      cy.contains("Too many requests").should("be.visible");
     });
 
     it("shows loading state while submitting", () => {
@@ -221,9 +217,7 @@ describe("Contact Form Integration", () => {
       cy.contains("Sending").should("be.visible");
 
       // Eventually the success message should appear
-      cy.contains("Message sent successfully", { timeout: 10000 }).should(
-        "be.visible",
-      );
+      cy.contains("Message sent successfully").should("be.visible");
     });
   });
 
@@ -284,7 +278,7 @@ describe("Contact Form Integration", () => {
 
     it("renders Turnstile widget", () => {
       // Turnstile widget should be rendered as an iframe
-      cy.get('iframe[src*="turnstile"]', { timeout: 10000 }).should("exist");
+      cy.get('iframe[src*="turnstile"]').should("exist");
     });
 
     it("enables submit button after Turnstile passes and form is valid", () => {
@@ -319,12 +313,10 @@ describe("Contact Form Integration", () => {
       cy.get('button[type="submit"]').click();
 
       // Verify success message appears (UI-based assertion instead of cy.wait)
-      cy.contains("Message sent successfully", { timeout: 10000 }).should(
-        "be.visible",
-      );
+      cy.contains("Message sent successfully").should("be.visible");
 
       // After success, form resets and Turnstile should re-render
-      cy.get('iframe[src*="turnstile"]', { timeout: 10000 }).should("exist");
+      cy.get('iframe[src*="turnstile"]').should("exist");
     });
   });
 
@@ -358,9 +350,7 @@ describe("Contact Form Integration", () => {
       cy.get('button[type="submit"]').click();
 
       // Should show a user-friendly error message (UI-based assertion)
-      cy.contains(/error|failed|try again/i, { timeout: 10000 }).should(
-        "be.visible",
-      );
+      cy.contains(/error|failed|try again/i).should("be.visible");
     });
 
     it("handles validation errors from server", () => {
@@ -383,9 +373,7 @@ describe("Contact Form Integration", () => {
       cy.get('button[type="submit"]').click();
 
       // Verify validation error appears (UI-based assertion instead of cy.wait)
-      cy.contains(/validation failed|invalid/i, { timeout: 10000 }).should(
-        "be.visible",
-      );
+      cy.contains(/validation failed|invalid/i).should("be.visible");
     });
 
     it("clears error message on retry", () => {
@@ -404,7 +392,7 @@ describe("Contact Form Integration", () => {
       cy.get('button[type="submit"]').click();
 
       // Verify error appears (UI-based assertion instead of cy.wait)
-      cy.contains("Server error", { timeout: 10000 }).should("be.visible");
+      cy.contains("Server error").should("be.visible");
 
       // Second submission succeeds - use glob pattern for cross-origin interception
       cy.intercept("POST", "**/api/contact", {
@@ -422,9 +410,7 @@ describe("Contact Form Integration", () => {
       cy.get('button[type="submit"]').click();
 
       // Verify success message appears (UI-based assertion instead of cy.wait)
-      cy.contains("Message sent successfully", { timeout: 10000 }).should(
-        "be.visible",
-      );
+      cy.contains("Message sent successfully").should("be.visible");
       // Error should be cleared
       cy.contains("Server error").should("not.exist");
     });
