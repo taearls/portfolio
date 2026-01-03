@@ -13,7 +13,6 @@ import type { FeatureFlags } from "../../src/types/featureFlags.ts";
 
 import {
   FLAG_TEST_MATRIX,
-  forEachEnabledScenario,
   forEachScenario,
   getScenario,
 } from "./support/test-matrix.ts";

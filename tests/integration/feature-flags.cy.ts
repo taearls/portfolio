@@ -14,12 +14,12 @@
  */
 
 import type { FeatureFlags } from "../../src/types/featureFlags.ts";
+import { CACHE_KEY } from "../../src/constants/featureFlags.ts";
 
 import { forEachScenario, getScenario } from "./support/test-matrix.ts";
 
 describe("Feature Flags Integration", () => {
-  // Cache key for localStorage assertions - must match the key used in the application
-  const CACHE_KEY = "portfolio:feature-flags";
+  // Cache key imported from constants to ensure consistency with application
 
   beforeEach(() => {
     // Clear localStorage before each test
