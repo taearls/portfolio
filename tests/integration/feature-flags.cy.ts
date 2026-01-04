@@ -118,7 +118,9 @@ describe("Feature Flags Integration", () => {
         expect(cached).to.exist;
 
         const parsed = JSON.parse(cached!);
-        expect(parsed.flags["email-contact-form"].enabled).to.equal(true);
+        expect(parsed.flags["email-contact-form"].enabled).to.equal(
+          enabledScenario.flags["email-contact-form"].enabled,
+        );
       });
     });
 

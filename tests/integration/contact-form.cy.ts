@@ -11,11 +11,7 @@
 
 import type { FeatureFlags } from "../../src/types/featureFlags.ts";
 
-import {
-  FLAG_TEST_MATRIX,
-  forEachScenario,
-  getScenario,
-} from "./support/test-matrix.ts";
+import { forEachScenario, getScenario } from "./support/test-matrix.ts";
 
 describe("Contact Form Integration", () => {
   beforeEach(() => {
