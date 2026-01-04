@@ -197,8 +197,10 @@ Cypress.Commands.overwrite(
           }
         },
       };
+      // @ts-expect-error - Cypress overwrite signature issue with optional parameters
       return originalFn(url, mergedOptions);
     }
+    // @ts-expect-error - Cypress overwrite signature issue with optional parameters
     return originalFn(url, options);
   },
 );
