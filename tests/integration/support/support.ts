@@ -197,8 +197,10 @@ Cypress.Commands.overwrite(
           }
         },
       };
+      // @ts-expect-error - Cypress overwrite signature issue with optional parameters
       return originalFn(url, mergedOptions);
     }
+    // @ts-expect-error - Cypress overwrite signature issue with optional parameters
     return originalFn(url, options);
   },
 );
@@ -206,7 +208,7 @@ Cypress.Commands.overwrite(
 Cypress.Commands.add("waitForTurnstile", () => {
   // Wait for the submit button to become enabled (indicates token received)
   // This works with both real Turnstile and our mock
-  cy.get('button[type="submit"]', { timeout: 15000 }).should("not.be.disabled");
+  cy.get('button[type="submit"]').should("not.be.disabled");
 });
 
 Cypress.Commands.add(
