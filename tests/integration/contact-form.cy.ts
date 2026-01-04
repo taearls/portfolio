@@ -6,57 +6,54 @@
  * different port (localhost:8787) than the app (localhost:4173).
  *
  * Uses cy.setFlagsCache() command from support/support.ts
+ * Uses FLAG_TEST_MATRIX for parametrized testing across flag states
  */
 
 import type { FeatureFlags } from "../../src/types/featureFlags.ts";
+
+import { forEachScenario, getScenario } from "./support/test-matrix.ts";
 
 describe("Contact Form Integration", () => {
   beforeEach(() => {
     cy.clearLocalStorage();
   });
 
-  describe("Form Display with Feature Flag", () => {
-    it("shows contact form when feature flag is enabled", () => {
-      const mockFlags: FeatureFlags = {
-        "email-contact-form": {
-          enabled: true,
-        },
-      };
+  describe("Form Display with Feature Flag (Matrix Pattern)", () => {
+    /**
+     * Parametrized tests using FLAG_TEST_MATRIX
+     * Covers all flag states: enabled, disabled, disabledNoMessage
+     */
+    forEachScenario((scenario) => {
+      it(`${scenario.description}`, () => {
+        cy.setFlagsCache(scenario.flags);
+        cy.visit("/contact");
 
-      cy.setFlagsCache(mockFlags);
-      cy.visit("/contact");
+        // Assert form visibility based on scenario expectations
+        if (scenario.expectations.formVisible) {
+          cy.get("#contact-email-form").should("be.visible");
+          cy.get("#contactName").should("be.visible");
+          cy.get("#contactEmail").should("be.visible");
+          cy.get("#contactMessage").should("be.visible");
+        } else {
+          cy.get("#contact-email-form").should("not.exist");
+        }
 
-      // Form should be visible
-      cy.get("#contact-email-form").should("be.visible");
-      cy.get("#contactName").should("be.visible");
-      cy.get("#contactEmail").should("be.visible");
-      cy.get("#contactMessage").should("be.visible");
-    });
-
-    it("hides contact form when feature flag is disabled", () => {
-      const mockFlags: FeatureFlags = {
-        "email-contact-form": {
-          enabled: false,
-        },
-      };
-
-      cy.setFlagsCache(mockFlags);
-      cy.visit("/contact");
-
-      // Form should not be visible
-      cy.get("#contact-email-form").should("not.exist");
+        // Assert message display based on scenario expectations
+        if (
+          scenario.expectations.showsMessage &&
+          scenario.expectations.messageText
+        ) {
+          cy.contains(scenario.expectations.messageText).should("be.visible");
+        }
+      });
     });
   });
 
   describe("Form Validation", () => {
     beforeEach(() => {
-      const mockFlags: FeatureFlags = {
-        "email-contact-form": {
-          enabled: true,
-        },
-      };
-
-      cy.setFlagsCache(mockFlags);
+      // Use enabled scenario from test matrix
+      const enabledScenario = getScenario("enabled");
+      cy.setFlagsCache(enabledScenario.flags);
 
       // Stub Turnstile before visiting the page
       cy.stubTurnstile();
@@ -107,13 +104,9 @@ describe("Contact Form Integration", () => {
 
   describe("Form Submission", () => {
     beforeEach(() => {
-      const mockFlags: FeatureFlags = {
-        "email-contact-form": {
-          enabled: true,
-        },
-      };
-
-      cy.setFlagsCache(mockFlags);
+      // Use enabled scenario from test matrix
+      const enabledScenario = getScenario("enabled");
+      cy.setFlagsCache(enabledScenario.flags);
 
       // Stub Turnstile before visiting the page
       cy.stubTurnstile();
@@ -145,9 +138,7 @@ describe("Contact Form Integration", () => {
       cy.get('button[type="submit"]').click();
 
       // Verify success message appears (UI-based assertion instead of cy.wait)
-      cy.contains("Message sent successfully", { timeout: 10000 }).should(
-        "be.visible",
-      );
+      cy.contains("Message sent successfully").should("be.visible");
 
       // Form should be reset after successful submission
       cy.get("#contactName").should("have.value", "");
@@ -174,9 +165,7 @@ describe("Contact Form Integration", () => {
       cy.get('button[type="submit"]').click();
 
       // Verify error message appears (UI-based assertion instead of cy.wait)
-      cy.contains("Failed to send message", { timeout: 10000 }).should(
-        "be.visible",
-      );
+      cy.contains("Failed to send message").should("be.visible");
     });
 
     it("shows rate limit error", () => {
@@ -199,7 +188,7 @@ describe("Contact Form Integration", () => {
 
       // Verify rate limit error message appears (UI-based assertion instead of cy.wait)
       // The component shows "Too many requests. Please try again in X seconds."
-      cy.contains("Too many requests", { timeout: 10000 }).should("be.visible");
+      cy.contains("Too many requests").should("be.visible");
     });
 
     it("shows loading state while submitting", () => {
@@ -224,21 +213,15 @@ describe("Contact Form Integration", () => {
       cy.contains("Sending").should("be.visible");
 
       // Eventually the success message should appear
-      cy.contains("Message sent successfully", { timeout: 10000 }).should(
-        "be.visible",
-      );
+      cy.contains("Message sent successfully").should("be.visible");
     });
   });
 
   describe("Accessibility", () => {
     beforeEach(() => {
-      const mockFlags: FeatureFlags = {
-        "email-contact-form": {
-          enabled: true,
-        },
-      };
-
-      cy.setFlagsCache(mockFlags);
+      // Use enabled scenario from test matrix
+      const enabledScenario = getScenario("enabled");
+      cy.setFlagsCache(enabledScenario.flags);
 
       // Stub Turnstile before visiting the page
       cy.stubTurnstile();
@@ -276,13 +259,9 @@ describe("Contact Form Integration", () => {
 
   describe("Turnstile Widget", () => {
     beforeEach(() => {
-      const mockFlags: FeatureFlags = {
-        "email-contact-form": {
-          enabled: true,
-        },
-      };
-
-      cy.setFlagsCache(mockFlags);
+      // Use enabled scenario from test matrix
+      const enabledScenario = getScenario("enabled");
+      cy.setFlagsCache(enabledScenario.flags);
 
       // Stub Turnstile before visiting the page
       cy.stubTurnstile();
@@ -295,7 +274,7 @@ describe("Contact Form Integration", () => {
 
     it("renders Turnstile widget", () => {
       // Turnstile widget should be rendered as an iframe
-      cy.get('iframe[src*="turnstile"]', { timeout: 10000 }).should("exist");
+      cy.get('iframe[src*="turnstile"]').should("exist");
     });
 
     it("enables submit button after Turnstile passes and form is valid", () => {
@@ -330,24 +309,18 @@ describe("Contact Form Integration", () => {
       cy.get('button[type="submit"]').click();
 
       // Verify success message appears (UI-based assertion instead of cy.wait)
-      cy.contains("Message sent successfully", { timeout: 10000 }).should(
-        "be.visible",
-      );
+      cy.contains("Message sent successfully").should("be.visible");
 
       // After success, form resets and Turnstile should re-render
-      cy.get('iframe[src*="turnstile"]', { timeout: 10000 }).should("exist");
+      cy.get('iframe[src*="turnstile"]').should("exist");
     });
   });
 
   describe("Error Handling", () => {
     beforeEach(() => {
-      const mockFlags: FeatureFlags = {
-        "email-contact-form": {
-          enabled: true,
-        },
-      };
-
-      cy.setFlagsCache(mockFlags);
+      // Use enabled scenario from test matrix
+      const enabledScenario = getScenario("enabled");
+      cy.setFlagsCache(enabledScenario.flags);
 
       // Stub Turnstile before visiting the page
       cy.stubTurnstile();
@@ -373,9 +346,7 @@ describe("Contact Form Integration", () => {
       cy.get('button[type="submit"]').click();
 
       // Should show a user-friendly error message (UI-based assertion)
-      cy.contains(/error|failed|try again/i, { timeout: 10000 }).should(
-        "be.visible",
-      );
+      cy.contains(/error|failed|try again/i).should("be.visible");
     });
 
     it("handles validation errors from server", () => {
@@ -398,9 +369,7 @@ describe("Contact Form Integration", () => {
       cy.get('button[type="submit"]').click();
 
       // Verify validation error appears (UI-based assertion instead of cy.wait)
-      cy.contains(/validation failed|invalid/i, { timeout: 10000 }).should(
-        "be.visible",
-      );
+      cy.contains(/validation failed|invalid/i).should("be.visible");
     });
 
     it("clears error message on retry", () => {
@@ -419,7 +388,7 @@ describe("Contact Form Integration", () => {
       cy.get('button[type="submit"]').click();
 
       // Verify error appears (UI-based assertion instead of cy.wait)
-      cy.contains("Server error", { timeout: 10000 }).should("be.visible");
+      cy.contains("Server error").should("be.visible");
 
       // Second submission succeeds - use glob pattern for cross-origin interception
       cy.intercept("POST", "**/api/contact", {
@@ -437,9 +406,7 @@ describe("Contact Form Integration", () => {
       cy.get('button[type="submit"]').click();
 
       // Verify success message appears (UI-based assertion instead of cy.wait)
-      cy.contains("Message sent successfully", { timeout: 10000 }).should(
-        "be.visible",
-      );
+      cy.contains("Message sent successfully").should("be.visible");
       // Error should be cleared
       cy.contains("Server error").should("not.exist");
     });
@@ -447,13 +414,9 @@ describe("Contact Form Integration", () => {
 
   describe("Dark Mode Support", () => {
     beforeEach(() => {
-      const mockFlags: FeatureFlags = {
-        "email-contact-form": {
-          enabled: true,
-        },
-      };
-
-      cy.setFlagsCache(mockFlags);
+      // Use enabled scenario from test matrix
+      const enabledScenario = getScenario("enabled");
+      cy.setFlagsCache(enabledScenario.flags);
 
       // Stub Turnstile before visiting the page
       cy.stubTurnstile();
@@ -504,13 +467,9 @@ describe("Contact Form Integration", () => {
 
   describe("Contact Page Content", () => {
     beforeEach(() => {
-      const mockFlags: FeatureFlags = {
-        "email-contact-form": {
-          enabled: true,
-        },
-      };
-
-      cy.setFlagsCache(mockFlags);
+      // Use enabled scenario from test matrix
+      const enabledScenario = getScenario("enabled");
+      cy.setFlagsCache(enabledScenario.flags);
 
       // Stub Turnstile before visiting the page
       cy.stubTurnstile();

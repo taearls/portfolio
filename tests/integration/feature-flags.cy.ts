@@ -10,13 +10,16 @@
  * different port (localhost:8787) than the app (localhost:4173).
  *
  * Uses cy.setFlagsCache() command from support/support.ts
+ * Uses FLAG_TEST_MATRIX for parametrized testing across flag states
  */
 
 import type { FeatureFlags } from "../../src/types/featureFlags.ts";
 
+import { CACHE_KEY } from "../../src/constants/featureFlags.ts";
+import { forEachScenario, getScenario } from "./support/test-matrix.ts";
+
 describe("Feature Flags Integration", () => {
-  // Cache key for localStorage assertions - must match the key used in the application
-  const CACHE_KEY = "portfolio:feature-flags";
+  // Cache key imported from constants to ensure consistency with application
 
   beforeEach(() => {
     // Clear localStorage before each test
@@ -49,11 +52,9 @@ describe("Feature Flags Integration", () => {
       // When FEATURE_EMAIL_CONTACT_FORM is true at build time,
       // the ContactEmailForm component is included in the bundle
 
-      // Pre-populate cache with enabled flag
-      const mockFlags: FeatureFlags = {
-        "email-contact-form": { enabled: true },
-      };
-      cy.setFlagsCache(mockFlags);
+      // Pre-populate cache with enabled flag from test matrix
+      const enabledScenario = getScenario("enabled");
+      cy.setFlagsCache(enabledScenario.flags);
 
       cy.visit("/contact");
 
@@ -70,14 +71,9 @@ describe("Feature Flags Integration", () => {
       // - Build-time flag FEATURE_EMAIL_CONTACT_FORM is true (code is in bundle)
       // - Runtime flag can still disable it without a rebuild
 
-      // Pre-populate cache with disabled flag (simulating runtime override)
-      const mockFlags: FeatureFlags = {
-        "email-contact-form": {
-          enabled: false,
-          message: "Contact form temporarily disabled",
-        },
-      };
-      cy.setFlagsCache(mockFlags);
+      // Pre-populate cache with disabled flag from test matrix (simulating runtime override)
+      const disabledScenario = getScenario("disabled");
+      cy.setFlagsCache(disabledScenario.flags);
 
       cy.visit("/contact");
 
@@ -85,20 +81,17 @@ describe("Feature Flags Integration", () => {
       cy.get("#contact-email-form").should("not.exist");
 
       // Disabled message should be shown
-      cy.contains("Contact form temporarily disabled").should("exist");
+      if (disabledScenario.expectations.messageText) {
+        cy.contains(disabledScenario.expectations.messageText).should("exist");
+      }
     });
   });
 
   describe("Runtime flags - Loading (Cloudflare Worker)", () => {
     it("should fetch and display feature flags on app load", () => {
-      // Pre-populate cache with mock flags
-      const mockFlags: FeatureFlags = {
-        "email-contact-form": {
-          enabled: true,
-          message: "Contact form is now available!",
-        },
-      };
-      cy.setFlagsCache(mockFlags);
+      // Pre-populate cache with enabled flag from test matrix
+      const enabledScenario = getScenario("enabled");
+      cy.setFlagsCache(enabledScenario.flags);
 
       cy.visit("/");
 
@@ -108,19 +101,14 @@ describe("Feature Flags Integration", () => {
         expect(cached).to.exist;
 
         const parsed = JSON.parse(cached!);
-        expect(parsed.flags).to.deep.equal(mockFlags);
+        expect(parsed.flags).to.deep.equal(enabledScenario.flags);
       });
     });
 
     it("should use cached flags when available", () => {
-      const cachedFlags: FeatureFlags = {
-        "email-contact-form": {
-          enabled: true,
-          message: "Cached message",
-        },
-      };
-
-      cy.setFlagsCache(cachedFlags);
+      // Use enabled scenario from test matrix
+      const enabledScenario = getScenario("enabled");
+      cy.setFlagsCache(enabledScenario.flags);
 
       cy.visit("/");
 
@@ -130,7 +118,9 @@ describe("Feature Flags Integration", () => {
         expect(cached).to.exist;
 
         const parsed = JSON.parse(cached!);
-        expect(parsed.flags["email-contact-form"].enabled).to.equal(true);
+        expect(parsed.flags["email-contact-form"].enabled).to.equal(
+          enabledScenario.flags["email-contact-form"].enabled,
+        );
       });
     });
 
@@ -158,55 +148,45 @@ describe("Feature Flags Integration", () => {
     });
   });
 
-  describe("Runtime flags - Contact form behavior", () => {
-    it("should respect contact form enabled flag", () => {
-      const mockFlags: FeatureFlags = {
-        "email-contact-form": {
-          enabled: true,
-        },
-      };
+  describe("Runtime flags - Contact form behavior (Matrix Pattern)", () => {
+    /**
+     * Parametrized tests using FLAG_TEST_MATRIX
+     * Covers all flag states: enabled, disabled, disabledNoMessage
+     */
+    forEachScenario((scenario) => {
+      it(`${scenario.description}`, () => {
+        cy.setFlagsCache(scenario.flags);
+        cy.visit("/contact");
 
-      cy.setFlagsCache(mockFlags);
+        // Assert form visibility based on scenario expectations
+        if (scenario.expectations.formVisible) {
+          cy.get("#contact-email-form").should("be.visible");
+        } else {
+          cy.get("#contact-email-form").should("not.exist");
+        }
 
-      cy.visit("/contact");
+        // Assert message display based on scenario expectations
+        if (
+          scenario.expectations.showsMessage &&
+          scenario.expectations.messageText
+        ) {
+          cy.contains(scenario.expectations.messageText).should("exist");
+        }
 
-      // Verify the contact form is visible
-      cy.get("#contact-email-form").should("be.visible");
+        // Verify flag is stored correctly in cache
+        cy.window().then((win) => {
+          const cached = win.localStorage.getItem(CACHE_KEY);
+          const parsed = JSON.parse(cached!);
+          expect(parsed.flags["email-contact-form"].enabled).to.equal(
+            scenario.flags["email-contact-form"].enabled,
+          );
 
-      // Verify the flag is accessible in cache
-      cy.window().then((win) => {
-        const cached = win.localStorage.getItem(CACHE_KEY);
-        const parsed = JSON.parse(cached!);
-        expect(parsed.flags["email-contact-form"].enabled).to.equal(true);
-      });
-    });
-
-    it("should respect contact form disabled flag", () => {
-      const mockFlags: FeatureFlags = {
-        "email-contact-form": {
-          enabled: false,
-          message: "Contact form is temporarily unavailable",
-        },
-      };
-
-      cy.setFlagsCache(mockFlags);
-
-      cy.visit("/contact");
-
-      // Verify disabled state - form should not exist
-      cy.get("#contact-email-form").should("not.exist");
-
-      // Message should be displayed
-      cy.contains("Contact form is temporarily unavailable").should("exist");
-
-      // Verify flag in cache
-      cy.window().then((win) => {
-        const cached = win.localStorage.getItem(CACHE_KEY);
-        const parsed = JSON.parse(cached!);
-        expect(parsed.flags["email-contact-form"].enabled).to.equal(false);
-        expect(parsed.flags["email-contact-form"].message).to.equal(
-          "Contact form is temporarily unavailable",
-        );
+          if (scenario.flags["email-contact-form"].message) {
+            expect(parsed.flags["email-contact-form"].message).to.equal(
+              scenario.flags["email-contact-form"].message,
+            );
+          }
+        });
       });
     });
   });
@@ -214,14 +194,10 @@ describe("Feature Flags Integration", () => {
   describe("Runtime flags - Cache behavior", () => {
     it("should expire cache after TTL", () => {
       const oldTimestamp = Date.now() - 120000; // 2 minutes ago (expired)
-      const cachedFlags: FeatureFlags = {
-        "email-contact-form": {
-          enabled: true,
-        },
-      };
 
-      // Set expired cache
-      cy.setFlagsCache(cachedFlags, oldTimestamp);
+      // Use enabled scenario from test matrix with expired timestamp
+      const enabledScenario = getScenario("enabled");
+      cy.setFlagsCache(enabledScenario.flags, oldTimestamp);
 
       cy.visit("/");
 
@@ -235,14 +211,10 @@ describe("Feature Flags Integration", () => {
 
     it("should use fresh cache immediately", () => {
       const freshTimestamp = Date.now(); // Fresh cache
-      const cachedFlags: FeatureFlags = {
-        "email-contact-form": {
-          enabled: true,
-          message: "Fresh cached flag",
-        },
-      };
 
-      cy.setFlagsCache(cachedFlags, freshTimestamp);
+      // Use enabled scenario from test matrix with fresh timestamp
+      const enabledScenario = getScenario("enabled");
+      cy.setFlagsCache(enabledScenario.flags, freshTimestamp);
 
       cy.visit("/contact");
 
@@ -264,13 +236,9 @@ describe("Feature Flags Integration", () => {
     });
 
     it("should store flags with correct structure in cache", () => {
-      const mockFlags: FeatureFlags = {
-        "email-contact-form": {
-          enabled: true,
-        },
-      };
-
-      cy.setFlagsCache(mockFlags);
+      // Use enabled scenario from test matrix
+      const enabledScenario = getScenario("enabled");
+      cy.setFlagsCache(enabledScenario.flags);
 
       cy.visit("/");
 
@@ -319,11 +287,9 @@ describe("Feature Flags Integration", () => {
     };
 
     it("should display the admin dashboard with page title", () => {
-      const mockFlags: FeatureFlags = {
-        "email-contact-form": { enabled: true },
-      };
-
-      visitAdminWithFlags(mockFlags);
+      // Use enabled scenario from test matrix
+      const enabledScenario = getScenario("enabled");
+      visitAdminWithFlags(enabledScenario.flags);
 
       // Verify page title
       cy.get("h1").should("contain.text", "Feature Flags");
@@ -333,11 +299,9 @@ describe("Feature Flags Integration", () => {
     });
 
     it("should display flags table with correct columns", () => {
-      const mockFlags: FeatureFlags = {
-        "email-contact-form": { enabled: true },
-      };
-
-      visitAdminWithFlags(mockFlags);
+      // Use enabled scenario from test matrix
+      const enabledScenario = getScenario("enabled");
+      visitAdminWithFlags(enabledScenario.flags);
 
       // Verify table headers
       cy.get("table").should("exist");
@@ -348,11 +312,9 @@ describe("Feature Flags Integration", () => {
     });
 
     it("should display enabled flag with correct status badge", () => {
-      const mockFlags: FeatureFlags = {
-        "email-contact-form": { enabled: true },
-      };
-
-      visitAdminWithFlags(mockFlags);
+      // Use enabled scenario from test matrix
+      const enabledScenario = getScenario("enabled");
+      visitAdminWithFlags(enabledScenario.flags);
 
       // Verify flag row
       cy.get("table tbody tr").should("have.length.at.least", 1);
@@ -365,11 +327,9 @@ describe("Feature Flags Integration", () => {
     });
 
     it("should display disabled flag with correct status badge", () => {
-      const mockFlags: FeatureFlags = {
-        "email-contact-form": { enabled: false },
-      };
-
-      visitAdminWithFlags(mockFlags);
+      // Use disabledNoMessage scenario from test matrix (disabled without message)
+      const disabledScenario = getScenario("disabledNoMessage");
+      visitAdminWithFlags(disabledScenario.flags);
 
       // Verify disabled status
       cy.get("table tbody tr")
@@ -380,11 +340,9 @@ describe("Feature Flags Integration", () => {
     });
 
     it("should display flag description from metadata", () => {
-      const mockFlags: FeatureFlags = {
-        "email-contact-form": { enabled: true },
-      };
-
-      visitAdminWithFlags(mockFlags);
+      // Use enabled scenario from test matrix
+      const enabledScenario = getScenario("enabled");
+      visitAdminWithFlags(enabledScenario.flags);
 
       // Verify description column shows metadata
       cy.get("table tbody tr")
@@ -397,11 +355,9 @@ describe("Feature Flags Integration", () => {
     });
 
     it("should have a refresh button", () => {
-      const mockFlags: FeatureFlags = {
-        "email-contact-form": { enabled: true },
-      };
-
-      visitAdminWithFlags(mockFlags);
+      // Use enabled scenario from test matrix
+      const enabledScenario = getScenario("enabled");
+      visitAdminWithFlags(enabledScenario.flags);
 
       // Verify refresh button exists and is clickable
       cy.get('button[aria-label="Refresh feature flags"]').should("exist");
@@ -415,11 +371,9 @@ describe("Feature Flags Integration", () => {
     });
 
     it("should display status bar", () => {
-      const mockFlags: FeatureFlags = {
-        "email-contact-form": { enabled: true },
-      };
-
-      visitAdminWithFlags(mockFlags);
+      // Use enabled scenario from test matrix
+      const enabledScenario = getScenario("enabled");
+      visitAdminWithFlags(enabledScenario.flags);
 
       // Verify status bar exists (may show "Connected" or "Last updated")
       cy.get("main").should("exist");
@@ -428,11 +382,9 @@ describe("Feature Flags Integration", () => {
     });
 
     it("should be accessible via keyboard navigation", () => {
-      const mockFlags: FeatureFlags = {
-        "email-contact-form": { enabled: true },
-      };
-
-      visitAdminWithFlags(mockFlags);
+      // Use enabled scenario from test matrix
+      const enabledScenario = getScenario("enabled");
+      visitAdminWithFlags(enabledScenario.flags);
 
       // Tab to refresh button and verify it can be focused
       cy.get('button[aria-label="Refresh feature flags"]').focus();
@@ -440,11 +392,9 @@ describe("Feature Flags Integration", () => {
     });
 
     it("should display status badge with proper ARIA attributes", () => {
-      const mockFlags: FeatureFlags = {
-        "email-contact-form": { enabled: true },
-      };
-
-      visitAdminWithFlags(mockFlags);
+      // Use enabled scenario from test matrix
+      const enabledScenario = getScenario("enabled");
+      visitAdminWithFlags(enabledScenario.flags);
 
       // Verify status badge has proper accessibility (using output element)
       cy.get("output").should("exist");
@@ -452,11 +402,9 @@ describe("Feature Flags Integration", () => {
     });
 
     it("should work correctly in dark mode", () => {
-      const mockFlags: FeatureFlags = {
-        "email-contact-form": { enabled: true },
-      };
-
-      visitAdminWithFlags(mockFlags);
+      // Use enabled scenario from test matrix
+      const enabledScenario = getScenario("enabled");
+      visitAdminWithFlags(enabledScenario.flags);
 
       // Apply dark mode directly (toggle is tested elsewhere)
       cy.document().then((doc) => {
