@@ -17,6 +17,12 @@ const API_URLS = {
 export default defineConfig({
   e2e: {
     baseUrl: "http://localhost:4173",
+    // Retry configuration for CI stability
+    // runMode: retries in CI (headless), openMode: retries in interactive mode
+    retries: {
+      runMode: 2,
+      openMode: 0,
+    },
     downloadsFolder: `${BASE_CYPRESS_DIR}/downloads`,
     fixturesFolder: `${BASE_CYPRESS_DIR}/fixtures`,
     screenshotsFolder: `${BASE_CYPRESS_DIR}/screenshots`,
