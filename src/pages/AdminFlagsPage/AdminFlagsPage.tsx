@@ -19,12 +19,16 @@ function AdminFlagsPageContent() {
 
   const handleRefresh = async () => {
     setIsRefreshing(true);
-    try {
-      await refetch();
-      setLastRefresh(new Date());
-    } finally {
-      setIsRefreshing(false);
-    }
+    // Using .then/.catch instead of try/finally to satisfy React Compiler
+    // (React Compiler doesn't yet support try statements with finally clauses)
+    await refetch()
+      .then(() => {
+        setLastRefresh(new Date());
+      })
+      .catch(() => {
+        // Error is already captured in the useFeatureFlags hook's error state
+      });
+    setIsRefreshing(false);
   };
 
   const flagEntries = Object.entries(flags) as Array<

@@ -27,22 +27,21 @@ export default function ActionButton({
       return;
     }
 
-    try {
-      setInternalIsLoading(true);
-      const result = onClick();
-
-      // If onClick returns a promise, wait for it
-      if (result instanceof Promise) {
-        await result;
-      }
-    } catch (error) {
-      // Log error for debugging
-      // Note: We don't re-throw because async handlers can't be caught by Error Boundaries
-      // (Error Boundaries only catch synchronous render errors, not rejected promises)
-      console.error("ActionButton: Error during onClick:", error);
-    } finally {
-      setInternalIsLoading(false);
-    }
+    // Using Promise wrapper instead of try/finally to satisfy React Compiler
+    // (React Compiler doesn't yet support try statements with finally clauses)
+    setInternalIsLoading(true);
+    await new Promise<void>((resolve) => {
+      Promise.resolve()
+        .then(() => onClick())
+        .catch((error: unknown) => {
+          // Log error for debugging
+          // Note: We don't re-throw because async handlers can't be caught by Error Boundaries
+          // (Error Boundaries only catch synchronous render errors, not rejected promises)
+          console.error("ActionButton: Error during onClick:", error);
+        })
+        .then(() => resolve());
+    });
+    setInternalIsLoading(false);
   };
 
   const buttonClasses = [
