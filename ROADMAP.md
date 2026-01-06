@@ -2,9 +2,9 @@
 
 ## Executive Summary
 
-This roadmap outlines the development plan for Tyler Earls' portfolio website, focusing on performance optimization, modern React tooling, and enhanced user experience. The project has **completed Phase 5 (React Compiler Integration)**, **Phase 6 (CI/CD setup)**, **Phase 7 (Accessibility & Core Web Vitals)**, and **Phase 8 (GitOps Feature Flags)**, with **0 open issues**.
+This roadmap outlines the development plan for Tyler Earls' portfolio website, focusing on performance optimization, modern React tooling, and enhanced user experience. The project has **completed Phase 5 (React Compiler Integration)**, **Phase 6 (CI/CD setup)**, **Phase 7 (Accessibility & Core Web Vitals)**, and **Phase 8 (GitOps Feature Flags)**, with **2 open issues** (#145 awaiting upstream, #160 admin toggle enhancement).
 
-**Current Focus**: All planned work complete! CodeRabbit AI code review and Graphite stacked PRs documentation now configured. All critical and medium priority accessibility issues resolved.
+**Current Focus**: Feature flags admin dashboard now complete! Added `/admin/flags` page for visual overview of all feature flags and their states. CodeRabbit AI code review and Graphite stacked PRs documentation configured.
 
 ---
 
@@ -21,7 +21,23 @@ This roadmap outlines the development plan for Tyler Earls' portfolio website, f
 
 ## Open Issues Summary
 
-### Priority Breakdown (1 Open Issue)
+### Priority Breakdown (2 Open Issues)
+
+#### 🔵 Low Priority (1 issue)
+
+- **#145** - Remove qs override once @cypress/request updates to qs@6.14.1
+  - Priority: 🔵 LOW (awaiting upstream)
+  - Status: Blocked by upstream dependency
+  - Effort: ~5 minutes once dependency is updated
+
+#### 🟢 Medium Priority (1 issue)
+
+- **#160** - feat: Add toggle functionality to admin flags dashboard
+  - Priority: 🟢 MEDIUM (enhancement)
+  - Status: Open - follow-up to #143
+  - Effort: ~2-4 hours
+
+✅ **#143** - feat: Add feature flags admin dashboard page - **COMPLETED Jan 6, 2026**
 
 #### 🔴 Critical Priority (0 issues)
 
@@ -474,32 +490,32 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 
 | Priority    | Open  | In Progress | Closed (All Time) | Total Open |
 | ----------- | ----- | ----------- | ----------------- | ---------- |
-| 🔴 Critical | 1     | 0           | 2                 | 1          |
+| 🔴 Critical | 0     | 0           | 3                 | 0          |
 | 🟡 High     | 0     | 0           | 13                | 0          |
-| 🟢 Medium   | 1     | 0           | 5                 | 1          |
-| 🔵 Low      | 5     | 0           | 5                 | 5          |
-| **TOTAL**   | **7** | **0**       | **25**            | **7**      |
+| 🟢 Medium   | 1     | 0           | 6                 | 1          |
+| 🔵 Low      | 1     | 0           | 10                | 1          |
+| **TOTAL**   | **2** | **0**       | **32**            | **2**      |
 
 ### Issues by Category
 
-**React Compiler** (0 open, 7 closed): Closed: #38 (epic), #39, #40, #41, #42, #43, #44, #123
-**Bugs** (1 open, 2 closed): Open: #108 (a11y toggle name) | Closed: #107 (nav auto-close), #51 (navigation header overflow)
-**Infrastructure** (0 open, 2 closed): Closed: #80 (GitOps feature flags), #72 (Cloudflare feature flags)
-**CI/CD** (0 open, 3 closed): Closed: #114 (Stylelint), #18 (GitHub Actions pipeline), #72 (feature flags)
-**Accessibility** (1 open, 5 closed): Open: #108 | Closed: #61 (navigation contrast), #62 (touch targets), #63 (CLS mobile), #64 (WCAG AAA), #65 (font size readability)
-**Navigation UX** (3 open, 3 closed): Open: #111, #112, #113 | Closed: #109, #110, #107
-**UI/UX** (0 open, 9 closed): Closed: #10 (resume page), #13 (descriptions), #15 (tags/search), #58 (left-align text), #28 (React 19 Meta), #11 (SVG preload), #27 (lazy routes), #72 (feature flags), #14 (contact form)
-**Research** (1 open, 1 closed): Open: #33 (Graphite) | Closed: #34 (CodeRabbit)
+**React Compiler** (0 open, 8 closed): Closed: #38 (epic), #39, #40, #41, #42, #43, #44, #123
+**Bugs** (0 open, 3 closed): Closed: #108 (a11y toggle name), #107 (nav auto-close), #51 (navigation header overflow)
+**Infrastructure** (1 open, 3 closed): Open: #160 (admin toggle) | Closed: #143 (admin dashboard), #80 (GitOps feature flags), #72 (Cloudflare feature flags)
+**CI/CD** (1 open, 3 closed): Open: #145 (awaiting upstream) | Closed: #114 (Stylelint), #18 (GitHub Actions pipeline)
+**Accessibility** (0 open, 6 closed): Closed: #108, #61 (navigation contrast), #62 (touch targets), #63 (CLS mobile), #64 (WCAG AAA), #65 (font size readability)
+**Navigation UX** (0 open, 6 closed): Closed: #111, #112, #113, #109, #110, #107, #120, #105
+**UI/UX** (0 open, 10 closed): Closed: #10 (resume page), #13 (descriptions), #15 (tags/search), #103 (mobile tabs), #58 (left-align text), #28 (React 19 Meta), #11 (SVG preload), #27 (lazy routes), #14 (contact form), #125 (useOnPropChange hook)
+**Research** (0 open, 2 closed): Closed: #33 (Graphite), #34 (CodeRabbit)
 
 ### Effort Distribution (Open Issues Only)
 
-| Effort Level  | Count | Issues                     |
-| ------------- | ----- | -------------------------- |
-| Small (< 2h)  | 5     | #108, #112, #113, #33, #34 |
-| Medium (2-8h) | 1     | #111                       |
-| Large (> 8h)  | 0     | —                          |
+| Effort Level  | Count | Issues |
+| ------------- | ----- | ------ |
+| Small (< 2h)  | 1     | #145   |
+| Medium (2-8h) | 1     | #160   |
+| Large (> 8h)  | 0     | —      |
 
-**Note**: 7 open issues. Critical path: #108 (remaining critical accessibility fix).
+**Note**: 2 open issues. #145 blocked on upstream dependency, #160 is enhancement for admin dashboard.
 
 ---
 
@@ -563,6 +579,58 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 ---
 
 ## Changelog
+
+### 2026-01-06 - Issue #143 Completed: Feature Flags Admin Dashboard
+
+- **Completed**: #143 - feat: Add feature flags admin dashboard page
+- **Priority**: 🟢 MEDIUM (Enhancement)
+- **Status**: Completed Jan 6, 2026
+- **Effort**: ~2 hours
+
+**Summary:**
+
+Added a simple admin dashboard page at `/admin/flags` that provides a visual overview of all feature flags and their current states. This addresses the need for quick visibility into feature flag configuration without accessing the Cloudflare dashboard or CLI. **Important**: This page is development-only and completely tree-shaken from production builds for security.
+
+**Implementation Details:**
+
+1. **New Components**:
+   - `FlagStatusBadge` - Visual indicator (green/red badge) for enabled/disabled states
+   - `AdminFlagsPage` - Main dashboard with table view, refresh button, error handling
+
+2. **Features**:
+   - Read-only view of all feature flags
+   - Visual distinction between enabled (green) and disabled (red) flags
+   - Loading spinner while fetching
+   - Error state with retry button
+   - Manual refresh button
+   - Dark mode support via existing theme system
+   - Responsive layout for mobile/desktop
+   - Status bar showing connection status and last update time
+
+3. **Route Configuration**:
+   - Added `/admin/flags` route (hidden from main navigation)
+   - Uses existing `useFeatureFlags()` hook and `FeatureFlagContext`
+
+4. **Security**:
+   - **Development-only**: Page is completely excluded from production builds
+   - Uses `import.meta.env.DEV` conditional with `React.lazy()` for tree-shaking
+   - AdminFlagsPage and FlagStatusBadge components not bundled in production
+
+5. **Testing**:
+   - Unit tests for loading and error states
+   - Integration tests cover flag rendering and accessibility
+
+**Files Changed**:
+
+- `src/components/FlagStatusBadge/FlagStatusBadge.tsx` - Badge component
+- `src/components/FlagStatusBadge/FlagStatusBadge.module.css` - Badge styles
+- `src/pages/AdminFlagsPage/AdminFlagsPage.tsx` - Dashboard page
+- `src/pages/AdminFlagsPage/AdminFlagsPage.module.css` - Dashboard styles
+- `src/pages/AdminFlagsPage/index.ts` - Page export
+- `src/constants/navigationData.tsx` - Route configuration
+- `tests/unit/components/AdminFlagsPage.test.tsx` - Unit tests
+
+---
 
 ### 2026-01-06 - Issue #153 Completed: [Testing] Phase 5 - Update Documentation
 
