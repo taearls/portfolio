@@ -1,5 +1,8 @@
 /**
  * Unit tests for FeatureFlagWrapper component
+ *
+ * Focus: Loading state transitions and error handling
+ * Note: Feature enabled/disabled rendering is covered by integration tests
  */
 
 import "@testing-library/jest-dom/vitest";
@@ -7,7 +10,7 @@ import "@testing-library/jest-dom/vitest";
 import type { FeatureFlags } from "@/types/featureFlags.ts";
 
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import FeatureFlagWrapper from "@/components/FeatureFlagWrapper/FeatureFlagWrapper.tsx";
 import * as useFeatureFlagsHook from "@/hooks/useFeatureFlags.ts";
@@ -21,87 +24,6 @@ describe("FeatureFlagWrapper", () => {
 
   afterEach(() => {
     vi.clearAllMocks();
-  });
-
-  describe("when feature is enabled", () => {
-    it("should render whenEnabled content", () => {
-      mockUseFeatureFlags.mockReturnValue({
-        flags: { "email-contact-form": { enabled: true } },
-        isLoading: false,
-        error: null,
-        refetch: vi.fn(),
-      });
-
-      render(
-        <FeatureFlagWrapper
-          flagKey="email-contact-form"
-          whenEnabled={<div>Feature is enabled</div>}
-          whenDisabled={<div>Feature is disabled</div>}
-        />,
-      );
-
-      expect(screen.getByText("Feature is enabled")).toBeInTheDocument();
-      expect(screen.queryByText("Feature is disabled")).not.toBeInTheDocument();
-    });
-
-    it("should not render whenDisabled content", () => {
-      mockUseFeatureFlags.mockReturnValue({
-        flags: { "email-contact-form": { enabled: true } },
-        isLoading: false,
-        error: null,
-        refetch: vi.fn(),
-      });
-
-      render(
-        <FeatureFlagWrapper
-          flagKey="email-contact-form"
-          whenEnabled={<div>Enabled</div>}
-          whenDisabled={<div>Disabled</div>}
-        />,
-      );
-
-      expect(screen.queryByText("Disabled")).not.toBeInTheDocument();
-    });
-  });
-
-  describe("when feature is disabled", () => {
-    it("should render whenDisabled content", () => {
-      mockUseFeatureFlags.mockReturnValue({
-        flags: defaultFlags,
-        isLoading: false,
-        error: null,
-        refetch: vi.fn(),
-      });
-
-      render(
-        <FeatureFlagWrapper
-          flagKey="email-contact-form"
-          whenEnabled={<div>Feature is enabled</div>}
-          whenDisabled={<div>Feature is disabled</div>}
-        />,
-      );
-
-      expect(screen.getByText("Feature is disabled")).toBeInTheDocument();
-      expect(screen.queryByText("Feature is enabled")).not.toBeInTheDocument();
-    });
-
-    it("should render nothing when whenDisabled is not provided", () => {
-      mockUseFeatureFlags.mockReturnValue({
-        flags: defaultFlags,
-        isLoading: false,
-        error: null,
-        refetch: vi.fn(),
-      });
-
-      const { container } = render(
-        <FeatureFlagWrapper
-          flagKey="email-contact-form"
-          whenEnabled={<div>Enabled</div>}
-        />,
-      );
-
-      expect(container.textContent).toBe("");
-    });
   });
 
   describe("loading state", () => {
@@ -170,32 +92,8 @@ describe("FeatureFlagWrapper", () => {
     });
   });
 
-  describe("complex content", () => {
-    it("should render complex React elements when enabled", () => {
-      mockUseFeatureFlags.mockReturnValue({
-        flags: { "email-contact-form": { enabled: true } },
-        isLoading: false,
-        error: null,
-        refetch: vi.fn(),
-      });
-
-      render(
-        <FeatureFlagWrapper
-          flagKey="email-contact-form"
-          whenEnabled={
-            <div>
-              <h1>Contact Form</h1>
-              <p>Send us a message</p>
-            </div>
-          }
-        />,
-      );
-
-      expect(screen.getByText("Contact Form")).toBeInTheDocument();
-      expect(screen.getByText("Send us a message")).toBeInTheDocument();
-    });
-
-    it("should render complex React elements when disabled", () => {
+  describe("when feature is disabled", () => {
+    it("should render nothing when whenDisabled is not provided", () => {
       mockUseFeatureFlags.mockReturnValue({
         flags: defaultFlags,
         isLoading: false,
@@ -203,91 +101,14 @@ describe("FeatureFlagWrapper", () => {
         refetch: vi.fn(),
       });
 
-      render(
-        <FeatureFlagWrapper
-          flagKey="email-contact-form"
-          whenEnabled={<div>Form</div>}
-          whenDisabled={
-            <div>
-              <h2>Coming Soon</h2>
-              <p>This feature is not available yet</p>
-            </div>
-          }
-        />,
-      );
-
-      expect(screen.getByText("Coming Soon")).toBeInTheDocument();
-      expect(
-        screen.getByText("This feature is not available yet"),
-      ).toBeInTheDocument();
-    });
-  });
-
-  describe("flag key types", () => {
-    it("should work with email-contact-form flag", () => {
-      mockUseFeatureFlags.mockReturnValue({
-        flags: { "email-contact-form": { enabled: true } },
-        isLoading: false,
-        error: null,
-        refetch: vi.fn(),
-      });
-
-      render(
-        <FeatureFlagWrapper
-          flagKey="email-contact-form"
-          whenEnabled={<div>Contact form enabled</div>}
-        />,
-      );
-
-      expect(screen.getByText("Contact form enabled")).toBeInTheDocument();
-    });
-  });
-
-  describe("integration scenarios", () => {
-    it("should handle rapid flag changes", () => {
-      const { rerender } = render(
+      const { container } = render(
         <FeatureFlagWrapper
           flagKey="email-contact-form"
           whenEnabled={<div>Enabled</div>}
-          whenDisabled={<div>Disabled</div>}
         />,
       );
 
-      // Initially disabled
-      mockUseFeatureFlags.mockReturnValue({
-        flags: defaultFlags,
-        isLoading: false,
-        error: null,
-        refetch: vi.fn(),
-      });
-
-      rerender(
-        <FeatureFlagWrapper
-          flagKey="email-contact-form"
-          whenEnabled={<div>Enabled</div>}
-          whenDisabled={<div>Disabled</div>}
-        />,
-      );
-
-      expect(screen.getByText("Disabled")).toBeInTheDocument();
-
-      // Then enabled
-      mockUseFeatureFlags.mockReturnValue({
-        flags: { "email-contact-form": { enabled: true } },
-        isLoading: false,
-        error: null,
-        refetch: vi.fn(),
-      });
-
-      rerender(
-        <FeatureFlagWrapper
-          flagKey="email-contact-form"
-          whenEnabled={<div>Enabled</div>}
-          whenDisabled={<div>Disabled</div>}
-        />,
-      );
-
-      expect(screen.getByText("Enabled")).toBeInTheDocument();
+      expect(container.textContent).toBe("");
     });
   });
 });
