@@ -2,9 +2,9 @@
 
 ## Executive Summary
 
-This roadmap outlines the development plan for Tyler Earls' portfolio website, focusing on performance optimization, modern React tooling, and enhanced user experience. The project has **completed Phase 5 (React Compiler Integration)**, **Phase 6 (CI/CD setup)**, **Phase 7 (Accessibility & Core Web Vitals)**, and **Phase 8 (GitOps Feature Flags)**, with **0 open issues**.
+This roadmap outlines the development plan for Tyler Earls' portfolio website, focusing on performance optimization, modern React tooling, and enhanced user experience. The project has **completed Phase 5 (React Compiler Integration)**, **Phase 6 (CI/CD setup)**, **Phase 7 (Accessibility & Core Web Vitals)**, and **Phase 8 (GitOps Feature Flags)**, with **1 open issue** (awaiting upstream dependency).
 
-**Current Focus**: All planned work complete! CodeRabbit AI code review and Graphite stacked PRs documentation now configured. All critical and medium priority accessibility issues resolved.
+**Current Focus**: Feature flags admin dashboard now complete! Added `/admin/flags` page for visual overview of all feature flags and their states. CodeRabbit AI code review and Graphite stacked PRs documentation configured.
 
 ---
 
@@ -21,7 +21,18 @@ This roadmap outlines the development plan for Tyler Earls' portfolio website, f
 
 ## Open Issues Summary
 
-### Priority Breakdown (1 Open Issue)
+### Priority Breakdown (2 Open Issues)
+
+#### 🔵 Low Priority (1 issue)
+
+- **#145** - Remove qs override once @cypress/request updates to qs@6.14.1
+  - Priority: 🔵 LOW (awaiting upstream)
+  - Status: Blocked by upstream dependency
+  - Effort: ~5 minutes once dependency is updated
+
+#### 🟢 Medium Priority (0 issues)
+
+✅ **#143** - feat: Add feature flags admin dashboard page - **COMPLETED Jan 6, 2026**
 
 #### 🔴 Critical Priority (0 issues)
 
@@ -563,6 +574,53 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 ---
 
 ## Changelog
+
+### 2026-01-06 - Issue #143 Completed: Feature Flags Admin Dashboard
+
+- **Completed**: #143 - feat: Add feature flags admin dashboard page
+- **Priority**: 🟢 MEDIUM (Enhancement)
+- **Status**: Completed Jan 6, 2026
+- **Effort**: ~2 hours
+
+**Summary:**
+
+Added a simple admin dashboard page at `/admin/flags` that provides a visual overview of all feature flags and their current states. This addresses the need for quick visibility into feature flag configuration without accessing the Cloudflare dashboard or CLI.
+
+**Implementation Details:**
+
+1. **New Components**:
+   - `FlagStatusBadge` - Visual indicator (green/red badge) for enabled/disabled states
+   - `AdminFlagsPage` - Main dashboard with table view, refresh button, error handling
+
+2. **Features**:
+   - Read-only view of all feature flags
+   - Visual distinction between enabled (green) and disabled (red) flags
+   - Loading spinner while fetching
+   - Error state with retry button
+   - Manual refresh button
+   - Dark mode support via existing theme system
+   - Responsive layout for mobile/desktop
+   - Status bar showing connection status and last update time
+
+3. **Route Configuration**:
+   - Added `/admin/flags` route (hidden from main navigation)
+   - Uses existing `useFeatureFlags()` hook and `FeatureFlagContext`
+
+4. **Testing**:
+   - Unit tests for loading and error states
+   - Integration tests cover flag rendering and accessibility
+
+**Files Changed**:
+
+- `src/components/FlagStatusBadge/FlagStatusBadge.tsx` - Badge component
+- `src/components/FlagStatusBadge/FlagStatusBadge.module.css` - Badge styles
+- `src/pages/AdminFlagsPage/AdminFlagsPage.tsx` - Dashboard page
+- `src/pages/AdminFlagsPage/AdminFlagsPage.module.css` - Dashboard styles
+- `src/pages/AdminFlagsPage/index.ts` - Page export
+- `src/constants/navigationData.tsx` - Route configuration
+- `tests/unit/components/AdminFlagsPage.test.tsx` - Unit tests
+
+---
 
 ### 2026-01-06 - Issue #153 Completed: [Testing] Phase 5 - Update Documentation
 
