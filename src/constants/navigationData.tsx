@@ -1,12 +1,19 @@
 import type { ComponentType } from "react";
 
+import { lazy } from "react";
+
 // Eagerly load all pages for instant navigation
-import AdminFlagsPage from "@/pages/AdminFlagsPage/index.ts";
 import CodePage from "@/pages/CodePage.tsx";
 import ContactPage from "@/pages/ContactPage.tsx";
 import HomePage from "@/pages/HomePage.tsx";
 import NotFoundPage from "@/pages/NotFoundPage.tsx";
 import ResumePage from "@/pages/ResumePage.tsx";
+
+// Dev-only: AdminFlagsPage is lazy-loaded only in development
+// In production, import.meta.env.DEV is false, so this entire branch is tree-shaken
+const AdminFlagsPage: ComponentType | null = import.meta.env.DEV
+  ? lazy(() => import("@/pages/AdminFlagsPage/index.ts"))
+  : null;
 
 export type RouteDataChildItem = {
   href: string;
@@ -49,13 +56,18 @@ const routes: Array<RouteDataItem> = [
     href: "/contact",
     name: "Contact",
   },
-  {
-    Component: AdminFlagsPage,
-    ariaLabel: "Visit Admin Feature Flags Page",
-    hidden: true,
-    href: "/admin/flags",
-    name: "Feature Flags",
-  },
+  // Admin page only available in development - completely excluded from production builds
+  ...(import.meta.env.DEV && AdminFlagsPage
+    ? [
+        {
+          Component: AdminFlagsPage,
+          ariaLabel: "Visit Admin Feature Flags Page",
+          hidden: true,
+          href: "/admin/flags",
+          name: "Feature Flags",
+        },
+      ]
+    : []),
   {
     Component: NotFoundPage,
     ariaLabel: "Navigate To 404 Page",

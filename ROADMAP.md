@@ -584,7 +584,7 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 
 **Summary:**
 
-Added a simple admin dashboard page at `/admin/flags` that provides a visual overview of all feature flags and their current states. This addresses the need for quick visibility into feature flag configuration without accessing the Cloudflare dashboard or CLI.
+Added a simple admin dashboard page at `/admin/flags` that provides a visual overview of all feature flags and their current states. This addresses the need for quick visibility into feature flag configuration without accessing the Cloudflare dashboard or CLI. **Important**: This page is development-only and completely tree-shaken from production builds for security.
 
 **Implementation Details:**
 
@@ -606,7 +606,12 @@ Added a simple admin dashboard page at `/admin/flags` that provides a visual ove
    - Added `/admin/flags` route (hidden from main navigation)
    - Uses existing `useFeatureFlags()` hook and `FeatureFlagContext`
 
-4. **Testing**:
+4. **Security**:
+   - **Development-only**: Page is completely excluded from production builds
+   - Uses `import.meta.env.DEV` conditional with `React.lazy()` for tree-shaking
+   - AdminFlagsPage and FlagStatusBadge components not bundled in production
+
+5. **Testing**:
    - Unit tests for loading and error states
    - Integration tests cover flag rendering and accessibility
 
