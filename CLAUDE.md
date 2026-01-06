@@ -95,10 +95,103 @@ This project uses **npm workspaces** for managing multiple packages:
 
 ### Testing Strategy
 
-- Unit tests run in jsdom environment
-- Integration tests use Cypress with a local dev server on port 4173
-- Test files follow `.test.ts` or `.spec.tsx` naming convention
-- Component tests use Testing Library utilities
+#### Test Architecture Overview
+
+- **Unit tests** (Vitest): Run in jsdom environment, focus on isolated logic
+- **Integration tests** (Cypress): Run against dev server on port 4173, test user journeys
+- **Test files**: `.test.ts` or `.spec.tsx` naming convention
+- **Component tests**: Use Testing Library utilities
+
+**Current test counts** (as of Jan 2026):
+
+- Unit tests: 288 tests (14 test files)
+- Integration tests: 74 tests (5 spec files)
+
+#### Parametrized Test Matrix Pattern
+
+Integration tests use a `FLAG_TEST_MATRIX` pattern for comprehensive feature flag coverage. This ensures all flag states are tested without code duplication.
+
+```typescript
+// tests/integration/support/test-matrix.ts
+export const FLAG_TEST_MATRIX: Array<FlagTestScenario> = [
+  {
+    id: "enabled",
+    description: "Feature flag enabled - form visible and functional",
+    flags: { "email-contact-form": { enabled: true } },
+    expectations: { formVisible: true, showsMessage: false },
+  },
+  {
+    id: "disabled",
+    description: "Feature flag disabled with custom message",
+    flags: {
+      "email-contact-form": {
+        enabled: false,
+        message: "Contact form is temporarily unavailable.",
+      },
+    },
+    expectations: {
+      formVisible: false,
+      showsMessage: true,
+      messageText: "Contact form is temporarily unavailable.",
+    },
+  },
+];
+
+// Usage in tests:
+forEachScenario((scenario) => {
+  it(`${scenario.description}`, () => {
+    cy.setFlagsCache(scenario.flags);
+    cy.visit("/contact");
+    // Assert based on scenario.expectations
+  });
+});
+```
+
+**Benefits:**
+
+- Single source of truth for all flag states
+- Self-documenting - reading matrix shows expected outcomes
+- Easy to extend - add new flag state = add one object
+- Clear test output - reports each flag state separately
+
+#### Adding a New Flag State
+
+1. Add entry to `FLAG_TEST_MATRIX` in `tests/integration/support/test-matrix.ts`
+2. Define expected outcomes in `expectations` object
+3. Tests automatically run with new configuration
+
+#### Unit vs Integration Test Guidelines
+
+**Use Unit Tests for:**
+
+- State machine logic (XState)
+- Pure utility functions with edge cases
+- Loading/error states hard to trigger in integration
+- Rapid state transitions
+- localStorage/cache error handling
+- Component behavior with mocked dependencies
+
+**Use Integration Tests for:**
+
+- Feature flag conditional rendering
+- Form validation and submission flows
+- User interactions (clicks, typing, navigation)
+- Accessibility attributes and ARIA compliance
+- API integration and error handling
+- Full user journeys across pages
+
+#### Tests Kept at Unit Level
+
+| File                          | Rationale                                 |
+| ----------------------------- | ----------------------------------------- |
+| `feature-flags.util.test.ts`  | Cache edge cases, localStorage errors     |
+| `FeatureFlagWrapper.test.tsx` | Loading states, whenLoading prop behavior |
+| `AdminFlagsPage.test.tsx`     | Loading/error UI states                   |
+| `ErrorBoundary.test.tsx`      | Error boundary behavior, error catching   |
+| `themeMachine.test.ts`        | State machine transitions                 |
+| `ActionButton.test.tsx`       | Loading states, async onClick handling    |
+| `useOnPropChange.test.ts`     | Hook behavior with prop changes           |
+| `styling.utils.test.ts`       | Pure utility function coverage            |
 
 #### Testing Best Practices
 
@@ -116,6 +209,16 @@ This project uses **npm workspaces** for managing multiple packages:
 - They create false positives/negatives based on machine speed
 - They increase test execution time unnecessarily
 - Framework retry logic is more reliable and maintainable
+
+#### Cypress Custom Commands
+
+Custom commands are defined in `tests/integration/support/support.ts`:
+
+- `cy.setFlagsCache(flags, timestamp?)` - Pre-populate localStorage with flag configuration
+- `cy.stubTurnstile()` - Mock Turnstile CAPTCHA for form tests
+- `cy.fillContactForm({ name, email, message })` - Fill contact form fields
+- `cy.waitForFormReady()` - Wait for form and Turnstile to be ready
+- `cy.waitForTurnstile()` - Wait for Turnstile token
 
 ### Development Notes
 

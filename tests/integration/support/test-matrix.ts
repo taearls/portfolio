@@ -6,9 +6,42 @@
  * use this matrix to ensure comprehensive coverage across different
  * flag states.
  *
+ * ## Architecture
+ *
  * Implements the parametrized test matrix pattern for:
- * - contact-form.cy.ts
- * - feature-flags.cy.ts
+ * - contact-form.cy.ts - Form display and submission tests
+ * - feature-flags.cy.ts - Flag behavior and admin dashboard tests
+ *
+ * ## Adding a New Flag State
+ *
+ * 1. Add a new entry to FLAG_TEST_MATRIX with:
+ *    - `id`: Unique string identifier (e.g., "enabledWithWarning")
+ *    - `description`: Human-readable test name shown in output
+ *    - `flags`: FeatureFlags configuration object
+ *    - `expectations`: Expected UI outcomes for assertions
+ *
+ * 2. Run tests - new scenario automatically included in all parametrized tests
+ *
+ * @example Adding a new scenario
+ * ```typescript
+ * {
+ *   id: "enabledWithMaintenance",
+ *   description: "Feature enabled but showing maintenance notice",
+ *   flags: {
+ *     "email-contact-form": {
+ *       enabled: true,
+ *       message: "Scheduled maintenance at midnight",
+ *     },
+ *   },
+ *   expectations: {
+ *     formVisible: true,
+ *     showsMessage: true,
+ *     messageText: "Scheduled maintenance at midnight",
+ *   },
+ * }
+ * ```
+ *
+ * @see CLAUDE.md for testing guidelines and unit vs integration test boundaries
  */
 
 import type { FeatureFlags } from "../../../src/types/featureFlags.ts";
