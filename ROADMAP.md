@@ -601,11 +601,11 @@ Verify that CI correctly runs all test matrix scenarios and that test output cle
 
 **Test Execution Metrics:**
 
-| Metric | Before (PR #155) | After (PR #156+) | Change |
-|--------|------------------|------------------|--------|
-| Unit test count | ~331 | 288 | -43 (~13%) |
-| Integration test count | ~85 | 74 | -11 (refactored) |
-| CI Test job time | ~2 min | ~2 min | No regression |
+| Metric                 | Before (PR #155) | After (PR #156+) | Change           |
+| ---------------------- | ---------------- | ---------------- | ---------------- |
+| Unit test count        | ~331             | 288              | -43 (~13%)       |
+| Integration test count | ~85              | 74               | -11 (refactored) |
+| CI Test job time       | ~2 min           | ~2 min           | No regression    |
 
 **Related PRs:**
 
