@@ -27,6 +27,8 @@ export type WebProjectProps = {
   tagline: string;
   tags: Array<string>;
   isLast: boolean;
+  /** ISO date string of last modification (YYYY-MM-DD) for sorting */
+  lastModified?: string;
 };
 
 export default function WebProject({

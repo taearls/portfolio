@@ -6,6 +6,21 @@ export { EMAIL_REGEX } from "@portfolio/shared-types";
 
 export const WEB_PROJECTS: Array<Omit<WebProjectProps, "isLast">> = [
   {
+    alt: "Screenshot of catshield macOS utility showing semi-transparent overlay",
+    cloudinaryId: { default: "screenshots/catshield-screenshot" },
+    descriptions: [
+      "A macOS utility that protects your work from cats walking on your keyboard by creating a semi-transparent fullscreen overlay that blocks input events.",
+      "Built with Rust using native macOS frameworks (Cocoa/AppKit, CoreGraphics, IOKit) for low-level event interception and power management. Unlocks with Cmd+Option+U.",
+    ],
+    height: 630,
+    href: "https://github.com/taearls/catshield",
+    name: "catshield",
+    tagline: "View on GitHub",
+    tags: ["Rust", "macOS", "Desktop", "CoreGraphics"],
+    width: 1200,
+    lastModified: "2025-12-31",
+  },
+  {
     alt: "Screenshot of the Cuckoo and the Birds band website homepage",
     analytics: {
       campaign: "portfolio",

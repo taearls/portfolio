@@ -136,7 +136,7 @@ export default function CodePage() {
   const tabs = [
     {
       id: "projects",
-      label: "Projects",
+      label: "Personal Projects",
       children: <ProjectsTab />,
     },
     {
