@@ -21,6 +21,8 @@ export type WebProjectProps = {
   descriptions: Array<string>;
   emoji?: ReactNode;
   href: string;
+  /** Optional GitHub repository URL (shown alongside external link) */
+  githubUrl?: string;
   name: string;
   width?: number;
   height?: number;
@@ -37,6 +39,7 @@ export default function WebProject({
   alt,
   descriptions,
   href,
+  githubUrl,
   name,
   width,
   height,
@@ -45,21 +48,39 @@ export default function WebProject({
 }: WebProjectProps) {
   const isLightMode =
     ThemeContext.useSelector((state) => state.value) === THEME_STATES.LIGHT;
+  const isGitHubLink = href.includes("github.com");
 
   return (
     <FlexContainer flexFlow={FlexFlowCSSValue.COLUMN} gapY={2}>
-      {/* Project name with external link */}
-      <FlexContainer inline gapX={2} alignItems={AlignItemsCSSValue.BASELINE}>
+      {/* Project name with external link(s) */}
+      <FlexContainer inline gapX={6} alignItems={AlignItemsCSSValue.BASELINE}>
         <HeadingTwo>{name}</HeadingTwo>
-        <a
-          href={getLinkWithAnalytics(href, analytics)}
-          target="_blank"
-          rel="noreferrer"
-          aria-label={`Visit ${name}`}
-          className="text-primary-text hover:text-accent-color -my-2 inline-flex min-h-11 min-w-11 items-center justify-center transition-colors"
-        >
-          <SvgIcon name="ExternalLinkIcon" width="18" height="18" />
-        </a>
+        <FlexContainer inline gapX={1} alignItems={AlignItemsCSSValue.BASELINE}>
+          <RenderIf condition={githubUrl != null}>
+            <a
+              href={githubUrl}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`View ${name} on GitHub`}
+              className="text-primary-text hover:text-accent-color inline-flex items-center justify-center p-1 transition-colors"
+            >
+              <SvgIcon name="GithubIcon" width="18" height="18" />
+            </a>
+          </RenderIf>
+          <a
+            href={getLinkWithAnalytics(href, analytics)}
+            target="_blank"
+            rel="noreferrer"
+            aria-label={`Visit ${name}`}
+            className="text-primary-text hover:text-accent-color inline-flex items-center justify-center p-1 transition-colors"
+          >
+            <SvgIcon
+              name={isGitHubLink ? "GithubIcon" : "ExternalLinkIcon"}
+              width="18"
+              height="18"
+            />
+          </a>
+        </FlexContainer>
       </FlexContainer>
 
       {/* Metadata line */}

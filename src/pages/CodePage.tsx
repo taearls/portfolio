@@ -86,6 +86,7 @@ function ProjectsTab() {
               descriptions={project.descriptions}
               emoji={project.emoji}
               href={project.href}
+              githubUrl={project.githubUrl}
               name={project.name}
               tagline={project.tagline}
               tags={project.tags}
