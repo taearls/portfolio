@@ -152,9 +152,10 @@ export default function FilterableProjectList<T extends FilterableItem>({
           onClearAll={handleClearAllTags}
         />
 
-        {/* Global expand/collapse control */}
+        {/* Global expand/collapse control with divider */}
         <RenderIf condition={filteredItems.length > 0}>
           <div className={styles.globalControls}>
+            <div className={styles.verticalDivider} aria-hidden="true" />
             {anyExpanded ? (
               <button
                 type="button"
