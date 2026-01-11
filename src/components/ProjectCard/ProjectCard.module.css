@@ -42,7 +42,7 @@
 }
 
 .toggleButton:focus-visible {
-  outline: 2px solid var(--accent-color);
+  outline: 2px solid var(--active-color);
   outline-offset: 2px;
 }
 
@@ -89,7 +89,7 @@
 }
 
 .globalControlButton:focus-visible {
-  outline: 2px solid var(--accent-color);
+  outline: 2px solid var(--active-color);
   outline-offset: 2px;
 }
 
