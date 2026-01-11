@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { useCallback, useMemo, useState } from "react";
 
 import FlexContainer from "@/components/layout/containers/FlexContainer/FlexContainer.tsx";
+import Divider from "@/components/layout/Divider/Divider.tsx";
 import Paragraph from "@/components/layout/Paragraph/Paragraph.tsx";
 import RenderIf from "@/components/layout/RenderIf.tsx";
 import SearchInput from "@/components/SearchInput/SearchInput.tsx";
@@ -155,7 +156,7 @@ export default function FilterableProjectList<T extends FilterableItem>({
         {/* Global expand/collapse control with divider */}
         <RenderIf condition={filteredItems.length > 0}>
           <div className={styles.globalControls}>
-            <div className={styles.verticalDivider} aria-hidden="true" />
+            <Divider orientation="vertical" />
             {anyExpanded ? (
               <button
                 type="button"

@@ -98,13 +98,6 @@
   transform: scale(0.98);
 }
 
-/* Vertical divider between filter tags and view controls */
-.verticalDivider {
-  background-color: color-mix(in srgb, var(--text-color) 25%, transparent);
-  height: var(--touch-target-min);
-  width: 1px;
-}
-
 /* Reduced motion preferences */
 @media (prefers-reduced-motion: reduce) {
   .collapsibleContent {
