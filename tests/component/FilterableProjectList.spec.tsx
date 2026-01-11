@@ -99,7 +99,7 @@ describe("<FilterableProjectList />", () => {
       ).toBeInTheDocument();
     });
 
-    it("should render expand/collapse buttons", () => {
+    it("should render Collapse All button when items are expanded", () => {
       render(
         <FilterableProjectList
           items={testItems}
@@ -108,12 +108,13 @@ describe("<FilterableProjectList />", () => {
         />,
       );
 
-      expect(
-        screen.getByRole("button", { name: "Expand all projects" }),
-      ).toBeInTheDocument();
+      // Items are expanded by default, so Collapse All should be shown
       expect(
         screen.getByRole("button", { name: "Collapse all projects" }),
       ).toBeInTheDocument();
+      expect(
+        screen.queryByRole("button", { name: "Expand all projects" }),
+      ).not.toBeInTheDocument();
     });
   });
 
@@ -162,7 +163,7 @@ describe("<FilterableProjectList />", () => {
       expect(toggleAlpha).toHaveAttribute("aria-expanded", "true");
     });
 
-    it("should collapse all items when Collapse All is clicked", async () => {
+    it("should collapse all items when Collapse All is clicked and switch to Expand All", async () => {
       const user = userEvent.setup();
 
       render(
@@ -187,9 +188,17 @@ describe("<FilterableProjectList />", () => {
       expect(toggleAlpha).toHaveAttribute("aria-expanded", "false");
       expect(toggleBeta).toHaveAttribute("aria-expanded", "false");
       expect(toggleGamma).toHaveAttribute("aria-expanded", "false");
+
+      // Button should switch to Expand All
+      expect(
+        screen.getByRole("button", { name: "Expand all projects" }),
+      ).toBeInTheDocument();
+      expect(
+        screen.queryByRole("button", { name: "Collapse all projects" }),
+      ).not.toBeInTheDocument();
     });
 
-    it("should expand all items when Expand All is clicked", async () => {
+    it("should expand all items when Expand All is clicked and switch to Collapse All", async () => {
       const user = userEvent.setup();
 
       render(
@@ -220,26 +229,17 @@ describe("<FilterableProjectList />", () => {
       expect(toggleAlpha).toHaveAttribute("aria-expanded", "true");
       expect(toggleBeta).toHaveAttribute("aria-expanded", "true");
       expect(toggleGamma).toHaveAttribute("aria-expanded", "true");
+
+      // Button should switch back to Collapse All
+      expect(
+        screen.getByRole("button", { name: "Collapse all projects" }),
+      ).toBeInTheDocument();
+      expect(
+        screen.queryByRole("button", { name: "Expand all projects" }),
+      ).not.toBeInTheDocument();
     });
 
-    it("should disable Expand All when all items are expanded", () => {
-      render(
-        <FilterableProjectList
-          items={testItems}
-          allTags={allTags}
-          renderItem={renderItem}
-        />,
-      );
-
-      const expandAllButton = screen.getByRole("button", {
-        name: "Expand all projects",
-      });
-
-      // All items expanded by default, so Expand All should be disabled
-      expect(expandAllButton).toBeDisabled();
-    });
-
-    it("should disable Collapse All when all items are collapsed", async () => {
+    it("should show Collapse All when any item is expanded after individual toggle", async () => {
       const user = userEvent.setup();
 
       render(
@@ -250,49 +250,63 @@ describe("<FilterableProjectList />", () => {
         />,
       );
 
-      const collapseAllButton = screen.getByRole("button", {
-        name: "Collapse all projects",
-      });
-
-      await user.click(collapseAllButton);
-
-      // All items collapsed, so Collapse All should be disabled
-      expect(collapseAllButton).toBeDisabled();
-    });
-
-    it("should maintain individual item state when using global controls", async () => {
-      const user = userEvent.setup();
-
-      render(
-        <FilterableProjectList
-          items={testItems}
-          allTags={allTags}
-          renderItem={renderItem}
-        />,
+      // Collapse all first
+      await user.click(
+        screen.getByRole("button", { name: "Collapse all projects" }),
       );
 
-      // Collapse one item individually
+      // Now Expand All should be shown
+      expect(
+        screen.getByRole("button", { name: "Expand all projects" }),
+      ).toBeInTheDocument();
+
+      // Expand one item individually
       const toggleAlpha = screen.getByTestId("toggle-Project Alpha");
       await user.click(toggleAlpha);
-      expect(toggleAlpha).toHaveAttribute("aria-expanded", "false");
 
-      // Other items should still be expanded
+      // Now Collapse All should be shown (since at least one is expanded)
+      expect(
+        screen.getByRole("button", { name: "Collapse all projects" }),
+      ).toBeInTheDocument();
+      expect(
+        screen.queryByRole("button", { name: "Expand all projects" }),
+      ).not.toBeInTheDocument();
+    });
+
+    it("should collapse all items including individually expanded ones", async () => {
+      const user = userEvent.setup();
+
+      render(
+        <FilterableProjectList
+          items={testItems}
+          allTags={allTags}
+          renderItem={renderItem}
+        />,
+      );
+
+      // All items are expanded by default
+      const toggleAlpha = screen.getByTestId("toggle-Project Alpha");
       const toggleBeta = screen.getByTestId("toggle-Project Beta");
-      expect(toggleBeta).toHaveAttribute("aria-expanded", "true");
-
-      // Expand All should expand the collapsed one
-      const expandAllButton = screen.getByRole("button", {
-        name: "Expand all projects",
-      });
-      await user.click(expandAllButton);
+      const toggleGamma = screen.getByTestId("toggle-Project Gamma");
 
       expect(toggleAlpha).toHaveAttribute("aria-expanded", "true");
       expect(toggleBeta).toHaveAttribute("aria-expanded", "true");
+      expect(toggleGamma).toHaveAttribute("aria-expanded", "true");
+
+      // Collapse All should collapse all items
+      const collapseAllButton = screen.getByRole("button", {
+        name: "Collapse all projects",
+      });
+      await user.click(collapseAllButton);
+
+      expect(toggleAlpha).toHaveAttribute("aria-expanded", "false");
+      expect(toggleBeta).toHaveAttribute("aria-expanded", "false");
+      expect(toggleGamma).toHaveAttribute("aria-expanded", "false");
     });
   });
 
   describe("accessibility", () => {
-    it("should have proper aria labels on global controls", () => {
+    it("should have proper aria label on global control button", () => {
       render(
         <FilterableProjectList
           items={testItems}
@@ -301,9 +315,7 @@ describe("<FilterableProjectList />", () => {
         />,
       );
 
-      expect(
-        screen.getByRole("button", { name: "Expand all projects" }),
-      ).toBeInTheDocument();
+      // Items expanded by default, so Collapse All should be shown with proper aria-label
       expect(
         screen.getByRole("button", { name: "Collapse all projects" }),
       ).toBeInTheDocument();

@@ -128,14 +128,9 @@ export default function FilterableProjectList<T extends FilterableItem>({
     });
   }, [filteredItems]);
 
-  // Check if all filtered items are expanded or collapsed
-  const allExpanded = useMemo(
-    () => filteredItems.every((item) => isItemExpanded(item.name)),
-    [filteredItems, isItemExpanded],
-  );
-
-  const allCollapsed = useMemo(
-    () => filteredItems.every((item) => !isItemExpanded(item.name)),
+  // Check if any filtered items are expanded (to determine which button to show)
+  const anyExpanded = useMemo(
+    () => filteredItems.some((item) => isItemExpanded(item.name)),
     [filteredItems, isItemExpanded],
   );
 
@@ -157,27 +152,28 @@ export default function FilterableProjectList<T extends FilterableItem>({
           onClearAll={handleClearAllTags}
         />
 
-        {/* Global expand/collapse controls */}
+        {/* Global expand/collapse control */}
         <RenderIf condition={filteredItems.length > 0}>
           <div className={styles.globalControls}>
-            <button
-              type="button"
-              className={styles.globalControlButton}
-              onClick={handleExpandAll}
-              disabled={allExpanded}
-              aria-label="Expand all projects"
-            >
-              Expand All
-            </button>
-            <button
-              type="button"
-              className={styles.globalControlButton}
-              onClick={handleCollapseAll}
-              disabled={allCollapsed}
-              aria-label="Collapse all projects"
-            >
-              Collapse All
-            </button>
+            {anyExpanded ? (
+              <button
+                type="button"
+                className={styles.globalControlButton}
+                onClick={handleCollapseAll}
+                aria-label="Collapse all projects"
+              >
+                Collapse All
+              </button>
+            ) : (
+              <button
+                type="button"
+                className={styles.globalControlButton}
+                onClick={handleExpandAll}
+                aria-label="Expand all projects"
+              >
+                Expand All
+              </button>
+            )}
           </div>
         </RenderIf>
 

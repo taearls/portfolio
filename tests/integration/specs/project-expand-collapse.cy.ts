@@ -7,45 +7,39 @@
 describe("Project Expand/Collapse", () => {
   beforeEach(() => {
     cy.visit("/code");
-    // Ensure Projects tab is active (it's the default)
-    cy.get('[role="tabpanel"]').should("be.visible");
+    // Wait for the visible Collapse All button (indicates page is fully loaded)
+    cy.get('[aria-label="Collapse all projects"]:visible').should("exist");
   });
 
   describe("Global Controls", () => {
-    it("should display Expand All and Collapse All buttons", () => {
-      cy.contains("button", "Expand All").should("be.visible");
-      cy.contains("button", "Collapse All").should("be.visible");
+    it("should display Collapse All button when projects are expanded (default)", () => {
+      // All projects expanded by default, so Collapse All should be shown
+      cy.get('[aria-label="Collapse all projects"]:visible').should("exist");
+      cy.get('[aria-label="Expand all projects"]:visible').should("not.exist");
     });
 
-    it("should have Expand All disabled when all projects are expanded", () => {
-      // All projects expanded by default
-      cy.contains("button", "Expand All").should("be.disabled");
-      cy.contains("button", "Collapse All").should("not.be.disabled");
+    it("should switch to Expand All button when all projects are collapsed", () => {
+      // Click the visible Collapse All button
+      cy.get('[aria-label="Collapse all projects"]:visible').click();
+
+      // Button should switch to Expand All
+      cy.get('[aria-label="Expand all projects"]:visible').should("exist");
+      cy.get('[aria-label="Collapse all projects"]:visible').should("not.exist");
     });
 
-    it("should collapse all projects when Collapse All is clicked", () => {
-      cy.contains("button", "Collapse All").click();
-
-      // All toggle buttons should show collapsed state
-      cy.get('[aria-expanded="false"]').should("have.length.at.least", 1);
-
-      // Expand All should now be enabled
-      cy.contains("button", "Expand All").should("not.be.disabled");
-      cy.contains("button", "Collapse All").should("be.disabled");
-    });
-
-    it("should expand all projects when Expand All is clicked", () => {
+    it("should switch to Collapse All button when Expand All is clicked", () => {
       // First collapse all
-      cy.contains("button", "Collapse All").click();
+      cy.get('[aria-label="Collapse all projects"]:visible').click();
 
       // Then expand all
-      cy.contains("button", "Expand All").click();
+      cy.get('[aria-label="Expand all projects"]:visible').click();
 
       // All projects should be expanded
-      cy.get('[aria-expanded="true"]').should("have.length.at.least", 1);
+      cy.get('[aria-expanded="true"]:visible').should("have.length.at.least", 1);
 
-      // Expand All should be disabled again
-      cy.contains("button", "Expand All").should("be.disabled");
+      // Button should switch back to Collapse All
+      cy.get('[aria-label="Collapse all projects"]:visible').should("exist");
+      cy.get('[aria-label="Expand all projects"]:visible').should("not.exist");
     });
   });
 
@@ -114,16 +108,20 @@ describe("Project Expand/Collapse", () => {
         .should("have.prop", "tagName", "BUTTON");
     });
 
-    it("should have accessible global control buttons", () => {
-      cy.contains("button", "Expand All").should(
-        "have.attr",
-        "aria-label",
-        "Expand all projects",
-      );
+    it("should have accessible global control button", () => {
+      // Initially shows Collapse All
       cy.contains("button", "Collapse All").should(
         "have.attr",
         "aria-label",
         "Collapse all projects",
+      );
+
+      // After collapsing, should show Expand All with proper label
+      cy.contains("button", "Collapse All").click();
+      cy.contains("button", "Expand All").should(
+        "have.attr",
+        "aria-label",
+        "Expand all projects",
       );
     });
   });
@@ -148,11 +146,10 @@ describe("Project Expand/Collapse", () => {
   });
 
   describe("Open Source Tab", () => {
-    it("should have expand/collapse controls on Open Source tab", () => {
+    it("should have expand/collapse control on Open Source tab", () => {
       // Click to switch to Open Source tab from Projects
       cy.contains('[role="tab"]', "Open Source").click();
-      // Wait for content to load
-      cy.contains("button", "Expand All").should("exist");
+      // Wait for content to load - should show Collapse All since items are expanded by default
       cy.contains("button", "Collapse All").should("exist");
     });
   });
