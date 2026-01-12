@@ -70,6 +70,7 @@ export default function OpenSourceContribution({
         className={styles.collapsibleContent}
         data-collapsed={!isExpanded}
         aria-hidden={!isExpanded}
+        inert={!isExpanded ? true : undefined}
       >
         <div className={styles.collapsibleInner}>
           {/* Tags and links on same row */}

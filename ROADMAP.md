@@ -2684,6 +2684,6 @@ All high-priority accessibility issues (#61, #62, #63) have been resolved. Mediu
 
 ---
 
-**Last Updated**: December 27, 2025 (Navigation Accessibility Sprint - 7 Open Issues)
+**Last Updated**: January 12, 2026 (Project card expand/collapse shipped)
 **Maintained By**: Tyler Earls
 **Generated With**: Claude Code

@@ -321,7 +321,7 @@ describe("<FilterableProjectList />", () => {
       ).toBeInTheDocument();
     });
 
-    it("should support keyboard activation for global controls", async () => {
+    it("should support keyboard activation for global controls via Enter key", async () => {
       const user = userEvent.setup();
 
       render(
@@ -336,8 +336,9 @@ describe("<FilterableProjectList />", () => {
         name: "Collapse all projects",
       });
 
-      // Click instead of focus + keyboard to avoid userEvent timing issues
-      await user.click(collapseAllButton);
+      // Focus the button and press Enter to test keyboard activation
+      collapseAllButton.focus();
+      await user.keyboard("{Enter}");
 
       // All items should be collapsed
       const toggleAlpha = screen.getByTestId("toggle-Project Alpha");

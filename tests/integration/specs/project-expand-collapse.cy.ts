@@ -69,28 +69,34 @@ describe("Project Expand/Collapse", () => {
     });
 
     it("should hide content when collapsed", () => {
-      // Get the first project's collapsible content
-      cy.get('[data-collapsed="false"]').first().as("content");
+      // Get first toggle button and its controlled content
+      cy.get('[aria-expanded="true"]').first().as("toggle");
 
-      // Find and click the toggle button
-      cy.get('[aria-expanded="true"]').first().click();
-
-      // Content should be collapsed
-      cy.get('[data-collapsed="true"]').should("exist");
+      cy.get("@toggle")
+        .invoke("attr", "aria-controls")
+        .then((contentId) => {
+          expect(contentId, "aria-controls").to.be.a("string").and.not.be.empty;
+          cy.get("@toggle").click();
+          // Assert on the specific content element controlled by this toggle
+          cy.get(`#${contentId}`).should("have.attr", "data-collapsed", "true");
+        });
     });
 
     it("should show content when expanded", () => {
       // Collapse a project first
       cy.get('[aria-expanded="true"]').first().click();
 
-      // Find the collapsed content
-      cy.get('[data-collapsed="true"]').first().should("exist");
+      // Get the collapsed toggle and its controlled content
+      cy.get('[aria-expanded="false"]').first().as("toggle");
 
-      // Expand it again
-      cy.get('[aria-expanded="false"]').first().click();
-
-      // Content should be visible
-      cy.get('[data-collapsed="false"]').should("exist");
+      cy.get("@toggle")
+        .invoke("attr", "aria-controls")
+        .then((contentId) => {
+          expect(contentId, "aria-controls").to.be.a("string").and.not.be.empty;
+          cy.get("@toggle").click();
+          // Assert on the specific content element controlled by this toggle
+          cy.get(`#${contentId}`).should("have.attr", "data-collapsed", "false");
+        });
     });
   });
 
