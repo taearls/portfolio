@@ -72,20 +72,22 @@ export default function OpenSourceProject({
       >
         <div className={styles.collapsibleInner}>
           {/* Links and tags on same row */}
-          <FlexContainer inline gapX={2} alignItems={AlignItemsCSSValue.CENTER}>
-            <a
-              href={githubUrl}
-              target="_blank"
-              rel="noreferrer"
-              aria-label={`View ${name} on GitHub`}
-              className="text-primary-text hover:text-accent-color inline-flex items-center justify-center transition-colors"
-            >
-              <SvgIcon name="GithubIcon" width="18" height="18" />
-            </a>
-            <span className="text-secondary-text ml-2 text-lg lg:text-xl">
+          <div className="flex items-center gap-x-4">
+            <div className="flex items-center gap-x-2">
+              <a
+                href={githubUrl}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`View ${name} on GitHub`}
+                className="text-primary-text hover:text-accent-color inline-flex items-center justify-center transition-colors"
+              >
+                <SvgIcon name="GithubIcon" width="18" height="18" />
+              </a>
+            </div>
+            <span className="text-secondary-text text-lg lg:text-xl">
               <span className="text-accent-color">Tags:</span> {tags.join(" · ")}
             </span>
-          </FlexContainer>
+          </div>
 
           {/* Descriptions */}
           {descriptions.map((description) => (
