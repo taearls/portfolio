@@ -38,18 +38,9 @@ export default function OpenSourceContribution({
 
   return (
     <FlexContainer flexFlow={FlexFlowCSSValue.COLUMN} gapY={2}>
-      {/* Project name with GitHub link and expand/collapse toggle */}
+      {/* Project name with expand/collapse toggle */}
       <FlexContainer inline gapX={2} alignItems={AlignItemsCSSValue.BASELINE}>
         <HeadingTwo>{projectName}</HeadingTwo>
-        <a
-          href={projectUrl}
-          target="_blank"
-          rel="noreferrer"
-          aria-label={`View ${projectName} on GitHub`}
-          className="text-primary-text hover:text-accent-color -my-2 inline-flex min-h-11 min-w-11 items-center justify-center transition-colors"
-        >
-          <SvgIcon name="GithubIcon" width="18" height="18" />
-        </a>
         <button
           type="button"
           className={styles.toggleButton}
@@ -81,15 +72,27 @@ export default function OpenSourceContribution({
         aria-hidden={!isExpanded}
       >
         <div className={styles.collapsibleInner}>
-          {/* Metadata lines */}
+          {/* Links and tags on same row */}
+          <FlexContainer inline gapX={2} alignItems={AlignItemsCSSValue.CENTER}>
+            <a
+              href={projectUrl}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`View ${projectName} on GitHub`}
+              className="text-primary-text hover:text-accent-color inline-flex items-center justify-center transition-colors"
+            >
+              <SvgIcon name="GithubIcon" width="18" height="18" />
+            </a>
+            <span className="text-secondary-text text-lg lg:text-xl">
+              {tags.join(" · ")}
+            </span>
+          </FlexContainer>
+
+          {/* PR count */}
           <CountLabel
             count={prCount}
             label={{ singular: "PR merged", plural: "PRs merged" }}
           />
-          <Paragraph secondary>
-            <span style={{ color: "var(--accent-color)" }}>Tags:</span>{" "}
-            {tags.join(" · ")}
-          </Paragraph>
 
           {/* Description */}
           <Paragraph>{description}</Paragraph>

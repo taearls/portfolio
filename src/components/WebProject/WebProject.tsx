@@ -23,6 +23,8 @@ export type WebProjectProps = {
   cursorStyle?: string;
   descriptions: Array<string>;
   emoji?: ReactNode;
+  /** Optional GitHub repository URL */
+  githubUrl?: string;
   href: string;
   name: string;
   width?: number;
@@ -41,6 +43,7 @@ export default function WebProject({
   cloudinaryId,
   alt,
   descriptions,
+  githubUrl,
   href,
   name,
   width,
@@ -61,18 +64,9 @@ export default function WebProject({
 
   return (
     <FlexContainer flexFlow={FlexFlowCSSValue.COLUMN} gapY={2}>
-      {/* Project name with external link and expand/collapse toggle */}
+      {/* Project name with expand/collapse toggle */}
       <FlexContainer inline gapX={2} alignItems={AlignItemsCSSValue.BASELINE}>
         <HeadingTwo>{name}</HeadingTwo>
-        <a
-          href={getLinkWithAnalytics(href, analytics)}
-          target="_blank"
-          rel="noreferrer"
-          aria-label={`Visit ${name}`}
-          className="text-primary-text hover:text-accent-color -my-2 inline-flex min-h-11 min-w-11 items-center justify-center transition-colors"
-        >
-          <SvgIcon name="ExternalLinkIcon" width="18" height="18" />
-        </a>
         <button
           type="button"
           className={styles.toggleButton}
@@ -102,11 +96,32 @@ export default function WebProject({
         aria-hidden={!isExpanded}
       >
         <div className={styles.collapsibleInner}>
-          {/* Metadata line */}
-          <Paragraph secondary>
-            <span style={{ color: "var(--accent-color)" }}>Tags:</span>{" "}
-            {tags.join(" · ")}
-          </Paragraph>
+          {/* Links and tags on same row */}
+          <FlexContainer inline gapX={2} alignItems={AlignItemsCSSValue.CENTER}>
+            <RenderIf condition={!!githubUrl}>
+              <a
+                href={githubUrl}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`View ${name} on GitHub`}
+                className="text-primary-text hover:text-accent-color inline-flex items-center justify-center transition-colors"
+              >
+                <SvgIcon name="GithubIcon" width="18" height="18" />
+              </a>
+            </RenderIf>
+            <a
+              href={getLinkWithAnalytics(href, analytics)}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`Visit ${name}`}
+              className="text-primary-text hover:text-accent-color inline-flex items-center justify-center transition-colors"
+            >
+              <SvgIcon name="ExternalLinkIcon" width="18" height="18" />
+            </a>
+            <span className="text-secondary-text text-lg lg:text-xl">
+              {tags.join(" · ")}
+            </span>
+          </FlexContainer>
 
           {/* Project image */}
           <div className="my-2 max-w-md">

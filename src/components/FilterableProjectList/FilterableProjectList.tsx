@@ -3,7 +3,6 @@ import type { ReactNode } from "react";
 import { useCallback, useMemo, useState } from "react";
 
 import FlexContainer from "@/components/layout/containers/FlexContainer/FlexContainer.tsx";
-import Divider from "@/components/layout/Divider/Divider.tsx";
 import Paragraph from "@/components/layout/Paragraph/Paragraph.tsx";
 import RenderIf from "@/components/layout/RenderIf.tsx";
 import SearchInput from "@/components/SearchInput/SearchInput.tsx";
@@ -153,10 +152,13 @@ export default function FilterableProjectList<T extends FilterableItem>({
           onClearAll={handleClearAllTags}
         />
 
-        {/* Global expand/collapse control with divider */}
+        {/* Results row with count and view controls */}
         <RenderIf condition={filteredItems.length > 0}>
-          <div className={styles.globalControls}>
-            <Divider orientation="vertical" />
+          <div className={styles.resultsRow}>
+            <span className={styles.resultsCount}>
+              Showing {filteredItems.length}{" "}
+              {filteredItems.length === 1 ? "project" : "projects"}
+            </span>
             {anyExpanded ? (
               <button
                 type="button"

@@ -85,6 +85,7 @@ function ProjectsTab() {
               cursorStyle={project.cursorStyle}
               descriptions={project.descriptions}
               emoji={project.emoji}
+              githubUrl={project.githubUrl}
               href={project.href}
               name={project.name}
               tagline={project.tagline}
@@ -148,7 +149,7 @@ export default function CodePage() {
   const tabs = [
     {
       id: "projects",
-      label: "Projects",
+      label: "Personal Projects",
       children: <ProjectsTab />,
     },
     {
