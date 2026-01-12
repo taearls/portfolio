@@ -24,7 +24,9 @@ describe("Project Expand/Collapse", () => {
 
       // Button should switch to Expand All
       cy.get('[aria-label="Expand all projects"]:visible').should("exist");
-      cy.get('[aria-label="Collapse all projects"]:visible').should("not.exist");
+      cy.get('[aria-label="Collapse all projects"]:visible').should(
+        "not.exist",
+      );
     });
 
     it("should switch to Collapse All button when Expand All is clicked", () => {
@@ -35,7 +37,10 @@ describe("Project Expand/Collapse", () => {
       cy.get('[aria-label="Expand all projects"]:visible').click();
 
       // All projects should be expanded
-      cy.get('[aria-expanded="true"]:visible').should("have.length.at.least", 1);
+      cy.get('[aria-expanded="true"]:visible').should(
+        "have.length.at.least",
+        1,
+      );
 
       // Button should switch back to Collapse All
       cy.get('[aria-label="Collapse all projects"]:visible').should("exist");

@@ -1,5 +1,4 @@
 import { mergeClasses } from "@/util/styling/styling.utils.ts";
-
 import styles from "./Divider.module.css";
 
 export type DividerOrientation = "horizontal" | "vertical";
