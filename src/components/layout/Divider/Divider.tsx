@@ -18,7 +18,7 @@ export type DividerProps = {
  */
 export default function Divider({
   orientation = "horizontal",
-  className,
+  className = "",
 }: DividerProps) {
   return (
     <div
