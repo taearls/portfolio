@@ -82,8 +82,8 @@ export default function OpenSourceProject({
             >
               <SvgIcon name="GithubIcon" width="18" height="18" />
             </a>
-            <span className="text-secondary-text text-lg lg:text-xl">
-              {tags.join(" · ")}
+            <span className="text-secondary-text ml-2 text-lg lg:text-xl">
+              <span className="text-accent-color">Tags:</span> {tags.join(" · ")}
             </span>
           </FlexContainer>
 
