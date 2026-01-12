@@ -1,5 +1,7 @@
 import type { OpenSourceContributionProps } from "@/util/constants.ts";
 
+import { useId } from "react";
+
 import CountLabel from "@/components/CountLabel/CountLabel.tsx";
 import FlexContainer from "@/components/layout/containers/FlexContainer/FlexContainer.tsx";
 import HeadingTwo from "@/components/layout/headings/HeadingTwo.tsx";
@@ -7,9 +9,14 @@ import Paragraph from "@/components/layout/Paragraph/Paragraph.tsx";
 import RenderIf from "@/components/layout/RenderIf.tsx";
 import SvgIcon from "@/components/SvgIcon/SvgIcon.tsx";
 import { AlignItemsCSSValue, FlexFlowCSSValue } from "@/types/layout.ts";
+import styles from "../ProjectCard/ProjectCard.module.css";
 
 type OpenSourceContributionComponentProps = OpenSourceContributionProps & {
   isLast: boolean;
+  /** Whether the contribution card is expanded */
+  isExpanded?: boolean;
+  /** Callback when expand/collapse state changes */
+  onExpandedChange?: (isExpanded: boolean) => void;
 };
 
 export default function OpenSourceContribution({
@@ -20,54 +27,99 @@ export default function OpenSourceContribution({
   highlights,
   tags,
   isLast,
+  isExpanded = true,
+  onExpandedChange,
 }: OpenSourceContributionComponentProps) {
+  const contentId = useId();
+
+  const handleToggle = () => {
+    onExpandedChange?.(!isExpanded);
+  };
+
   return (
     <FlexContainer flexFlow={FlexFlowCSSValue.COLUMN} gapY={2}>
-      {/* Project name with GitHub link */}
+      {/* Project name with expand/collapse toggle */}
       <FlexContainer inline gapX={2} alignItems={AlignItemsCSSValue.BASELINE}>
         <HeadingTwo>{projectName}</HeadingTwo>
-        <a
-          href={projectUrl}
-          target="_blank"
-          rel="noreferrer"
-          aria-label={`View ${projectName} on GitHub`}
-          className="text-primary-text hover:text-accent-color -my-2 inline-flex min-h-11 min-w-11 items-center justify-center transition-colors"
+        <button
+          type="button"
+          className={styles.toggleButton}
+          onClick={handleToggle}
+          aria-expanded={isExpanded}
+          aria-controls={contentId}
+          aria-label={
+            isExpanded ? `Collapse ${projectName}` : `Expand ${projectName}`
+          }
         >
-          <SvgIcon name="GithubIcon" width="18" height="18" />
-        </a>
+          <SvgIcon
+            name="ChevronIcon"
+            width="20"
+            height="20"
+            accent={false}
+            color="currentColor"
+            data-testid={`chevron-${projectName}`}
+            className={styles.chevronIcon}
+            data-expanded={isExpanded}
+          />
+        </button>
       </FlexContainer>
 
-      {/* Metadata lines */}
-      <CountLabel
-        count={prCount}
-        label={{ singular: "PR merged", plural: "PRs merged" }}
-      />
-      <Paragraph secondary>
-        <span style={{ color: "var(--accent-color)" }}>Tags:</span>{" "}
-        {tags.join(" · ")}
-      </Paragraph>
-
-      {/* Description */}
-      <Paragraph>{description}</Paragraph>
-
-      {/* Highlights */}
-      <ul
-        className="m-0 list-disc space-y-1 pl-5"
-        aria-label={`Contribution highlights for ${projectName}`}
+      {/* Collapsible content */}
+      <div
+        id={contentId}
+        className={styles.collapsibleContent}
+        data-collapsed={!isExpanded}
+        aria-hidden={!isExpanded}
       >
-        {highlights.map((highlight) => (
-          <li
-            key={highlight}
-            className="text-primary-text text-lg leading-normal lg:text-xl"
-          >
-            {highlight}
-          </li>
-        ))}
-      </ul>
+        <div className={styles.collapsibleInner}>
+          {/* Tags and links on same row */}
+          <div className="flex items-center gap-x-4">
+            <span className="text-secondary-text text-lg lg:text-xl">
+              <span style={{ color: "var(--accent-color)" }}>Tags:</span>{" "}
+              {tags.join(" · ")}
+            </span>
+            <div className="flex items-center gap-x-2">
+              <a
+                href={projectUrl}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`View ${projectName} on GitHub`}
+                className="text-primary-text hover:text-accent-color inline-flex items-center justify-center transition-colors"
+              >
+                <SvgIcon name="GithubIcon" width="18" height="18" />
+              </a>
+            </div>
+          </div>
 
-      <RenderIf condition={!isLast}>
-        <hr className="line-break mt-3" />
-      </RenderIf>
+          {/* PR count */}
+          <CountLabel
+            count={prCount}
+            label={{ singular: "PR merged", plural: "PRs merged" }}
+          />
+
+          {/* Description */}
+          <Paragraph>{description}</Paragraph>
+
+          {/* Highlights */}
+          <ul
+            className="m-0 list-disc space-y-1 pl-5"
+            aria-label={`Contribution highlights for ${projectName}`}
+          >
+            {highlights.map((highlight) => (
+              <li
+                key={highlight}
+                className="text-primary-text text-lg leading-normal lg:text-xl"
+              >
+                {highlight}
+              </li>
+            ))}
+          </ul>
+
+          <RenderIf condition={!isLast}>
+            <hr className="line-break mt-3" />
+          </RenderIf>
+        </div>
+      </div>
     </FlexContainer>
   );
 }

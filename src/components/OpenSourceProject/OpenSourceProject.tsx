@@ -1,9 +1,12 @@
+import { useId } from "react";
+
 import FlexContainer from "@/components/layout/containers/FlexContainer/FlexContainer.tsx";
 import HeadingTwo from "@/components/layout/headings/HeadingTwo.tsx";
 import Paragraph from "@/components/layout/Paragraph/Paragraph.tsx";
 import RenderIf from "@/components/layout/RenderIf.tsx";
 import SvgIcon from "@/components/SvgIcon/SvgIcon.tsx";
 import { AlignItemsCSSValue, FlexFlowCSSValue } from "@/types/layout.ts";
+import styles from "../ProjectCard/ProjectCard.module.css";
 
 export type OpenSourceProjectProps = {
   name: string;
@@ -13,6 +16,10 @@ export type OpenSourceProjectProps = {
   isLast: boolean;
   /** ISO date string for sorting (YYYY-MM-DD) */
   lastModified?: string;
+  /** Whether the project card is expanded */
+  isExpanded?: boolean;
+  /** Callback when expand/collapse state changes */
+  onExpandedChange?: (isExpanded: boolean) => void;
 };
 
 export default function OpenSourceProject({
@@ -21,37 +28,78 @@ export default function OpenSourceProject({
   githubUrl,
   tags,
   isLast,
+  isExpanded = true,
+  onExpandedChange,
 }: OpenSourceProjectProps) {
+  const contentId = useId();
+
+  const handleToggle = () => {
+    onExpandedChange?.(!isExpanded);
+  };
+
   return (
     <FlexContainer flexFlow={FlexFlowCSSValue.COLUMN} gapY={2}>
-      {/* Project name with GitHub link */}
+      {/* Project name with expand/collapse toggle */}
       <FlexContainer inline gapX={2} alignItems={AlignItemsCSSValue.BASELINE}>
         <HeadingTwo>{name}</HeadingTwo>
-        <a
-          href={githubUrl}
-          target="_blank"
-          rel="noreferrer"
-          aria-label={`View ${name} on GitHub`}
-          className="text-primary-text hover:text-accent-color -my-2 inline-flex min-h-11 min-w-11 items-center justify-center transition-colors"
+        <button
+          type="button"
+          className={styles.toggleButton}
+          onClick={handleToggle}
+          aria-expanded={isExpanded}
+          aria-controls={contentId}
+          aria-label={isExpanded ? `Collapse ${name}` : `Expand ${name}`}
         >
-          <SvgIcon name="GithubIcon" width="18" height="18" />
-        </a>
+          <SvgIcon
+            name="ChevronIcon"
+            width="20"
+            height="20"
+            accent={false}
+            color="currentColor"
+            data-testid={`chevron-${name}`}
+            className={styles.chevronIcon}
+            data-expanded={isExpanded}
+          />
+        </button>
       </FlexContainer>
 
-      {/* Metadata line */}
-      <Paragraph secondary>
-        <span style={{ color: "var(--accent-color)" }}>Tags:</span>{" "}
-        {tags.join(" · ")}
-      </Paragraph>
+      {/* Collapsible content */}
+      <div
+        id={contentId}
+        className={styles.collapsibleContent}
+        data-collapsed={!isExpanded}
+        aria-hidden={!isExpanded}
+      >
+        <div className={styles.collapsibleInner}>
+          {/* Tags and links on same row */}
+          <div className="flex items-center gap-x-4">
+            <span className="text-secondary-text text-lg lg:text-xl">
+              <span style={{ color: "var(--accent-color)" }}>Tags:</span>{" "}
+              {tags.join(" · ")}
+            </span>
+            <div className="flex items-center gap-x-2">
+              <a
+                href={githubUrl}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`View ${name} on GitHub`}
+                className="text-primary-text hover:text-accent-color inline-flex items-center justify-center transition-colors"
+              >
+                <SvgIcon name="GithubIcon" width="18" height="18" />
+              </a>
+            </div>
+          </div>
 
-      {/* Descriptions */}
-      {descriptions.map((description) => (
-        <Paragraph key={description}>{description}</Paragraph>
-      ))}
+          {/* Descriptions */}
+          {descriptions.map((description) => (
+            <Paragraph key={description}>{description}</Paragraph>
+          ))}
 
-      <RenderIf condition={!isLast}>
-        <hr className="line-break mt-3" />
-      </RenderIf>
+          <RenderIf condition={!isLast}>
+            <hr className="line-break mt-3" />
+          </RenderIf>
+        </div>
+      </div>
     </FlexContainer>
   );
 }

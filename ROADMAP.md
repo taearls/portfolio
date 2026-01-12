@@ -4,7 +4,7 @@
 
 This roadmap outlines the development plan for Tyler Earls' portfolio website, focusing on performance optimization, modern React tooling, and enhanced user experience. The project has **completed Phase 5 (React Compiler Integration)**, **Phase 6 (CI/CD setup)**, **Phase 7 (Accessibility & Core Web Vitals)**, and **Phase 8 (GitOps Feature Flags)**, with **2 open issues** (#145 awaiting upstream, #160 admin toggle enhancement).
 
-**Current Focus**: Feature flags admin dashboard now complete! Added `/admin/flags` page for visual overview of all feature flags and their states. CodeRabbit AI code review and Graphite stacked PRs documentation configured.
+**Current Focus**: Project card expand/collapse feature now complete! Added collapsible project cards with smooth CSS animations, global expand/collapse controls, and full accessibility support (ARIA attributes, keyboard navigation).
 
 ---
 
@@ -38,6 +38,8 @@ This roadmap outlines the development plan for Tyler Earls' portfolio website, f
   - Effort: ~2-4 hours
 
 ✅ **#143** - feat: Add feature flags admin dashboard page - **COMPLETED Jan 6, 2026**
+
+✅ **#164** - feat: Add expand/collapse functionality to project cards - **COMPLETED Jan 10, 2026**
 
 #### 🔴 Critical Priority (0 issues)
 
@@ -579,6 +581,70 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 ---
 
 ## Changelog
+
+### 2026-01-10 - Issue #164 Completed: Project Card Expand/Collapse
+
+- **Completed**: #164 - feat: Add expand/collapse functionality to project cards
+- **Priority**: 🟢 MEDIUM (Enhancement)
+- **Status**: Completed Jan 10, 2026
+- **Effort**: ~3 hours
+
+**Summary:**
+
+Added collapsible project cards with smooth CSS animations, global expand/collapse controls, and full accessibility support. Users can now collapse individual project cards to scan through projects quickly, with "Expand All" and "Collapse All" buttons for bulk operations.
+
+**Implementation Details:**
+
+1. **New CSS Module**:
+   - `ProjectCard.module.css` - CSS Grid-based collapse animation using `grid-template-rows: 0fr/1fr` for smooth height transitions
+
+2. **Component Updates**:
+   - `WebProject.tsx` - Added `isExpanded` prop and toggle button with chevron icon
+   - `OpenSourceProject.tsx` - Added `isExpanded` prop and toggle button
+   - `OpenSourceContribution.tsx` - Added `isExpanded` prop and toggle button
+   - `FilterableProjectList.tsx` - Added global expand/collapse state management and controls
+   - `SvgIcon.tsx` - Added `className` and `data-expanded` prop support
+
+3. **New Icon**:
+   - Added `ChevronIcon` to SVG sprite for expand/collapse indicator
+   - Updated `svg.ts` types to include new icon variant
+
+4. **Features**:
+   - Individual project cards can be expanded/collapsed via chevron button
+   - Chevron rotates 90° when expanded (smooth CSS transition)
+   - Global "Expand All" / "Collapse All" buttons
+   - Buttons disabled when all items are already in that state
+   - State persists within session when switching tabs
+   - Respects `prefers-reduced-motion` for animations
+
+5. **Accessibility (WCAG 2.1 AA)**:
+   - `aria-expanded` attribute on toggle buttons
+   - `aria-controls` linking button to collapsible content
+   - `aria-hidden` on collapsed content
+   - Descriptive `aria-label` (e.g., "Collapse ProjectName" / "Expand ProjectName")
+   - 44x44px minimum touch targets
+   - Native `<button>` elements for keyboard support
+
+6. **Testing**:
+   - 13 new unit tests in `FilterableProjectList.spec.tsx`
+   - 13 new integration tests in `project-expand-collapse.cy.ts`
+   - Tests cover toggle behavior, global controls, accessibility, and state persistence
+
+**Files Changed**:
+
+- `public/icons/sprite.svg` - Added ChevronIcon
+- `src/types/svg.ts` - Added CHEVRON variant
+- `src/components/ProjectCard/ProjectCard.module.css` - New CSS module
+- `src/components/WebProject/WebProject.tsx` - Expand/collapse support
+- `src/components/OpenSourceProject/OpenSourceProject.tsx` - Expand/collapse support
+- `src/components/OpenSourceContribution/OpenSourceContribution.tsx` - Expand/collapse support
+- `src/components/FilterableProjectList/FilterableProjectList.tsx` - Global controls
+- `src/components/SvgIcon/SvgIcon.tsx` - className and data-expanded props
+- `src/pages/CodePage.tsx` - Pass expanded state to components
+- `tests/component/FilterableProjectList.spec.tsx` - New unit tests
+- `tests/integration/specs/project-expand-collapse.cy.ts` - New integration tests
+
+---
 
 ### 2026-01-06 - Issue #143 Completed: Feature Flags Admin Dashboard
 

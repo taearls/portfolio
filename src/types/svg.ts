@@ -3,6 +3,7 @@ import type { ValueOf } from "./util.ts";
 export const SVG_ICON_VARIANTS = {
   BANDCAMP: "BandcampIcon",
   BLUESKY: "BlueskyIcon",
+  CHEVRON: "ChevronIcon",
   EXTERNAL_LINK: "ExternalLinkIcon",
   GITHUB: "GithubIcon",
   INSTAGRAM: "InstagramIcon",

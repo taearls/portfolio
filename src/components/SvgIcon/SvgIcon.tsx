@@ -8,7 +8,9 @@ export type SvgIconProps = {
   name: SvgIconVariant;
   id?: string;
   "data-testid"?: string;
+  "data-expanded"?: boolean;
   accent?: boolean;
+  className?: string;
   color?: string;
   title?: string;
   hoverOpacity?: boolean;
@@ -26,7 +28,9 @@ export default function SvgIcon({
   id,
   name,
   "data-testid": testId,
+  "data-expanded": dataExpanded,
   accent = true,
+  className,
   color = defaultColor,
   width,
   title,
@@ -41,12 +45,14 @@ export default function SvgIcon({
     <svg
       id={id}
       data-testid={testId}
+      data-expanded={dataExpanded}
       fill={color}
       width={width}
       height={height}
       className={mergeClasses(
         accent && "accent",
         hoverOpacity && "hover:opacity-75",
+        className ?? false,
       )}
       role={role}
     >
