@@ -96,8 +96,12 @@ export default function WebProject({
         aria-hidden={!isExpanded}
       >
         <div className={styles.collapsibleInner}>
-          {/* Links and tags on same row */}
+          {/* Tags and links on same row */}
           <div className="flex items-center gap-x-4">
+            <span className="text-secondary-text text-lg lg:text-xl">
+              <span style={{ color: "var(--accent-color)" }}>Tags:</span>{" "}
+              {tags.join(" · ")}
+            </span>
             <div className="flex items-center gap-x-2">
               <RenderIf condition={!!githubUrl}>
                 <a
@@ -120,10 +124,6 @@ export default function WebProject({
                 <SvgIcon name="ExternalLinkIcon" width="18" height="18" />
               </a>
             </div>
-            <span className="text-secondary-text text-lg lg:text-xl">
-              <span style={{ color: "var(--accent-color)" }}>Tags:</span>{" "}
-              {tags.join(" · ")}
-            </span>
           </div>
 
           {/* Project image */}

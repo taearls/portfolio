@@ -71,8 +71,12 @@ export default function OpenSourceProject({
         aria-hidden={!isExpanded}
       >
         <div className={styles.collapsibleInner}>
-          {/* Links and tags on same row */}
+          {/* Tags and links on same row */}
           <div className="flex items-center gap-x-4">
+            <span className="text-secondary-text text-lg lg:text-xl">
+              <span style={{ color: "var(--accent-color)" }}>Tags:</span>{" "}
+              {tags.join(" · ")}
+            </span>
             <div className="flex items-center gap-x-2">
               <a
                 href={githubUrl}
@@ -84,10 +88,6 @@ export default function OpenSourceProject({
                 <SvgIcon name="GithubIcon" width="18" height="18" />
               </a>
             </div>
-            <span className="text-secondary-text text-lg lg:text-xl">
-              <span style={{ color: "var(--accent-color)" }}>Tags:</span>{" "}
-              {tags.join(" · ")}
-            </span>
           </div>
 
           {/* Descriptions */}
