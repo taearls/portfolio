@@ -86,7 +86,8 @@ export default function OpenSourceContribution({
               </a>
             </div>
             <span className="text-secondary-text text-lg lg:text-xl">
-              <span className="text-accent-color">Tags:</span> {tags.join(" · ")}
+              <span style={{ color: "var(--accent-color)" }}>Tags:</span>{" "}
+              {tags.join(" · ")}
             </span>
           </div>
 
