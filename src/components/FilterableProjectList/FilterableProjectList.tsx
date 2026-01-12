@@ -128,11 +128,17 @@ export default function FilterableProjectList<T extends FilterableItem>({
     });
   }, [filteredItems]);
 
-  // Check if any filtered items are expanded (to determine which button to show)
-  const anyExpanded = useMemo(
-    () => filteredItems.some((item) => isItemExpanded(item.name)),
+  // Count how many filtered items are expanded
+  const expandedCount = useMemo(
+    () => filteredItems.filter((item) => isItemExpanded(item.name)).length,
     [filteredItems, isItemExpanded],
   );
+
+  // Check if any filtered items are expanded (to determine which button to show)
+  const anyExpanded = expandedCount > 0;
+
+  // Check if all filtered items are expanded
+  const allExpanded = expandedCount === filteredItems.length;
 
   const hasActiveFilters = searchTerm !== "" || selectedTags.length > 0;
   const noResultsFound = filteredItems.length === 0 && hasActiveFilters;
@@ -156,8 +162,9 @@ export default function FilterableProjectList<T extends FilterableItem>({
         <RenderIf condition={filteredItems.length > 0}>
           <div className={styles.resultsRow}>
             <span className={styles.resultsCount}>
-              Showing {filteredItems.length}{" "}
-              {filteredItems.length === 1 ? "project" : "projects"}
+              {allExpanded
+                ? `Showing ${filteredItems.length} ${filteredItems.length === 1 ? "project" : "projects"}`
+                : `Showing ${expandedCount} of ${filteredItems.length} ${filteredItems.length === 1 ? "project" : "projects"}`}
             </span>
             {anyExpanded ? (
               <button
