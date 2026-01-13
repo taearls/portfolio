@@ -65,6 +65,7 @@
   align-items: center;
   display: flex;
   gap: 0.5rem;
+  margin-left: 0.5rem;
   opacity: 0;
   pointer-events: none;
   transform: translateX(-8px);
