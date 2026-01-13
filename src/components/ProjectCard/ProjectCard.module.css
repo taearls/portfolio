@@ -78,7 +78,6 @@
 .headerIcons[data-expanded="true"] {
   /* Enough width for 2 icons + gap */
   max-width: 5rem;
-  margin-left: 0.5rem;
   opacity: 1;
   pointer-events: auto;
 }
