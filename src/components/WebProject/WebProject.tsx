@@ -65,7 +65,7 @@ export default function WebProject({
   return (
     <FlexContainer flexFlow={FlexFlowCSSValue.COLUMN} gapY={2}>
       {/* Project name with animated icons and expand/collapse toggle */}
-      <FlexContainer inline gapX={2} alignItems={AlignItemsCSSValue.BASELINE}>
+      <FlexContainer inline gapX={2} alignItems={AlignItemsCSSValue.CENTER}>
         <HeadingTwo>{name}</HeadingTwo>
 
         {/* Animated icon links - visible when expanded */}
