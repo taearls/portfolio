@@ -71,6 +71,8 @@
   pointer-events: none;
   /* Collapse width when hidden so chevron stays near title */
   max-width: 0;
+  /* Nudge down to align with text x-height rather than geometric center */
+  transform: translateY(2px);
   transition:
     max-width 0.3s ease-out,
     opacity 0.3s ease-out;
