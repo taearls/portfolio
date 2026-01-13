@@ -38,9 +38,27 @@ export default function OpenSourceContribution({
 
   return (
     <FlexContainer flexFlow={FlexFlowCSSValue.COLUMN} gapY={2}>
-      {/* Project name with expand/collapse toggle */}
+      {/* Project name with animated icons and expand/collapse toggle */}
       <FlexContainer inline gapX={2} alignItems={AlignItemsCSSValue.BASELINE}>
         <HeadingTwo>{projectName}</HeadingTwo>
+
+        {/* Animated icon links - visible when expanded */}
+        <div
+          className={styles.headerIcons}
+          data-expanded={isExpanded}
+          aria-hidden={!isExpanded}
+        >
+          <a
+            href={projectUrl}
+            target="_blank"
+            rel="noreferrer"
+            aria-label={`View ${projectName} on GitHub`}
+            tabIndex={isExpanded ? 0 : -1}
+          >
+            <SvgIcon name="GithubIcon" width="18" height="18" />
+          </a>
+        </div>
+
         <button
           type="button"
           className={styles.toggleButton}
@@ -73,24 +91,11 @@ export default function OpenSourceContribution({
         inert={!isExpanded ? true : undefined}
       >
         <div className={styles.collapsibleInner}>
-          {/* Tags and links on same row */}
-          <div className="flex items-center gap-x-4">
-            <span className="text-secondary-text text-lg lg:text-xl">
-              <span style={{ color: "var(--accent-color)" }}>Tags:</span>{" "}
-              {tags.join(" · ")}
-            </span>
-            <div className="flex items-center gap-x-2">
-              <a
-                href={projectUrl}
-                target="_blank"
-                rel="noreferrer"
-                aria-label={`View ${projectName} on GitHub`}
-                className="text-primary-text hover:text-accent-color inline-flex items-center justify-center transition-colors"
-              >
-                <SvgIcon name="GithubIcon" width="18" height="18" />
-              </a>
-            </div>
-          </div>
+          {/* Tags */}
+          <span className="text-secondary-text text-lg lg:text-xl">
+            <span style={{ color: "var(--accent-color)" }}>Tags:</span>{" "}
+            {tags.join(" · ")}
+          </span>
 
           {/* PR count */}
           <CountLabel

@@ -64,9 +64,38 @@ export default function WebProject({
 
   return (
     <FlexContainer flexFlow={FlexFlowCSSValue.COLUMN} gapY={2}>
-      {/* Project name with expand/collapse toggle */}
+      {/* Project name with animated icons and expand/collapse toggle */}
       <FlexContainer inline gapX={2} alignItems={AlignItemsCSSValue.BASELINE}>
         <HeadingTwo>{name}</HeadingTwo>
+
+        {/* Animated icon links - visible when expanded */}
+        <div
+          className={styles.headerIcons}
+          data-expanded={isExpanded}
+          aria-hidden={!isExpanded}
+        >
+          <RenderIf condition={!!githubUrl}>
+            <a
+              href={githubUrl}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`View ${name} on GitHub`}
+              tabIndex={isExpanded ? 0 : -1}
+            >
+              <SvgIcon name="GithubIcon" width="18" height="18" />
+            </a>
+          </RenderIf>
+          <a
+            href={getLinkWithAnalytics(href, analytics)}
+            target="_blank"
+            rel="noreferrer"
+            aria-label={`Visit ${name}`}
+            tabIndex={isExpanded ? 0 : -1}
+          >
+            <SvgIcon name="ExternalLinkIcon" width="18" height="18" />
+          </a>
+        </div>
+
         <button
           type="button"
           className={styles.toggleButton}
@@ -97,35 +126,11 @@ export default function WebProject({
         inert={!isExpanded ? true : undefined}
       >
         <div className={styles.collapsibleInner}>
-          {/* Tags and links on same row */}
-          <div className="flex items-center gap-x-4">
-            <span className="text-secondary-text text-lg lg:text-xl">
-              <span style={{ color: "var(--accent-color)" }}>Tags:</span>{" "}
-              {tags.join(" · ")}
-            </span>
-            <div className="flex items-center gap-x-2">
-              <RenderIf condition={!!githubUrl}>
-                <a
-                  href={githubUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={`View ${name} on GitHub`}
-                  className="text-primary-text hover:text-accent-color inline-flex items-center justify-center transition-colors"
-                >
-                  <SvgIcon name="GithubIcon" width="18" height="18" />
-                </a>
-              </RenderIf>
-              <a
-                href={getLinkWithAnalytics(href, analytics)}
-                target="_blank"
-                rel="noreferrer"
-                aria-label={`Visit ${name}`}
-                className="text-primary-text hover:text-accent-color inline-flex items-center justify-center transition-colors"
-              >
-                <SvgIcon name="ExternalLinkIcon" width="18" height="18" />
-              </a>
-            </div>
-          </div>
+          {/* Tags */}
+          <span className="text-secondary-text text-lg lg:text-xl">
+            <span style={{ color: "var(--accent-color)" }}>Tags:</span>{" "}
+            {tags.join(" · ")}
+          </span>
 
           {/* Project image */}
           <div className="my-2 max-w-md">

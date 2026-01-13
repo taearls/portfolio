@@ -60,6 +60,37 @@
   transform: rotate(90deg);
 }
 
+/* Animated header icons - appear when project is expanded */
+.headerIcons {
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-8px);
+  transition:
+    opacity 0.3s ease-out,
+    transform 0.3s ease-out;
+}
+
+.headerIcons[data-expanded="true"] {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(0);
+}
+
+.headerIcons a {
+  align-items: center;
+  color: var(--text-color);
+  display: inline-flex;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.headerIcons a:hover {
+  color: var(--accent-color);
+}
+
 /* Results row with count and view controls */
 .resultsRow {
   align-items: center;
@@ -117,6 +148,15 @@
   }
 
   .chevronIcon {
+    transition: none;
+  }
+
+  .headerIcons {
+    transform: none;
+    transition: none;
+  }
+
+  .headerIcons a {
     transition: none;
   }
 
