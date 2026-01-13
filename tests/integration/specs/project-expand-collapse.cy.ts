@@ -95,7 +95,11 @@ describe("Project Expand/Collapse", () => {
           expect(contentId, "aria-controls").to.be.a("string").and.not.be.empty;
           cy.get("@toggle").click();
           // Assert on the specific content element controlled by this toggle
-          cy.get(`#${contentId}`).should("have.attr", "data-collapsed", "false");
+          cy.get(`#${contentId}`).should(
+            "have.attr",
+            "data-collapsed",
+            "false",
+          );
         });
     });
   });
