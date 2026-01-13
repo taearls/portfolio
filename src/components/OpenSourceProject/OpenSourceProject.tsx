@@ -49,6 +49,7 @@ export default function OpenSourceProject({
           data-expanded={isExpanded}
           aria-hidden={!isExpanded}
         >
+          <span className={styles.headerIconsSpacer} aria-hidden="true" />
           <a
             href={githubUrl}
             target="_blank"

@@ -48,6 +48,7 @@ export default function OpenSourceContribution({
           data-expanded={isExpanded}
           aria-hidden={!isExpanded}
         >
+          <span className={styles.headerIconsSpacer} aria-hidden="true" />
           <a
             href={projectUrl}
             target="_blank"

@@ -64,6 +64,7 @@
 .headerIcons {
   align-items: center;
   display: flex;
+  /* Extra gap creates spacing: first value is leading space, icons use internal gap */
   gap: 0.5rem;
   opacity: 0;
   overflow: hidden;
@@ -76,10 +77,16 @@
 }
 
 .headerIcons[data-expanded="true"] {
-  /* Enough width for 2 icons + gap */
-  max-width: 5rem;
+  /* Enough width for 2 icons + gaps + leading space */
+  max-width: 6rem;
   opacity: 1;
   pointer-events: auto;
+}
+
+/* Spacer element creates gap-based leading space before icons */
+.headerIconsSpacer {
+  width: 0.5rem;
+  flex-shrink: 0;
 }
 
 .headerIcons a {

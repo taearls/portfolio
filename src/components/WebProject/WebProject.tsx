@@ -74,6 +74,7 @@ export default function WebProject({
           data-expanded={isExpanded}
           aria-hidden={!isExpanded}
         >
+          <span className={styles.headerIconsSpacer} aria-hidden="true" />
           <RenderIf condition={!!githubUrl}>
             <a
               href={githubUrl}
