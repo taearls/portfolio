@@ -68,7 +68,8 @@
   margin-left: 0.5rem;
   opacity: 0;
   pointer-events: none;
-  transform: translateX(-8px);
+  /* Slide in from right when expanding, slide out to right when collapsing */
+  transform: translateX(8px);
   transition:
     opacity 0.3s ease-out,
     transform 0.3s ease-out;
