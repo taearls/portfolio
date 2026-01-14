@@ -8,6 +8,7 @@ import RenderIf from "@/components/layout/RenderIf.tsx";
 import SearchInput from "@/components/SearchInput/SearchInput.tsx";
 import TagFilter from "@/components/TagFilter/TagFilter.tsx";
 import { AlignItemsCSSValue, FlexFlowCSSValue } from "@/types/layout.ts";
+import styles from "../ProjectCard/ProjectCard.module.css";
 
 export type FilterableItem = {
   name: string;
@@ -21,7 +22,13 @@ type FilterableProjectListProps<T extends FilterableItem> = {
   /** All available tags for the filter */
   allTags: Array<string>;
   /** Function to render each item */
-  renderItem: (item: T, index: number, isLast: boolean) => ReactNode;
+  renderItem: (
+    item: T,
+    index: number,
+    isLast: boolean,
+    isExpanded: boolean,
+    onExpandedChange: (isExpanded: boolean) => void,
+  ) => ReactNode;
   /** Placeholder text for the search input */
   searchPlaceholder?: string;
 };
@@ -60,6 +67,11 @@ export default function FilterableProjectList<T extends FilterableItem>({
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedTags, setSelectedTags] = useState<Array<string>>([]);
 
+  // Track expanded state per item by name
+  const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>(
+    {},
+  );
+
   const filteredItems = useMemo(
     () => filterItems(items, searchTerm, selectedTags),
     [items, searchTerm, selectedTags],
@@ -74,6 +86,59 @@ export default function FilterableProjectList<T extends FilterableItem>({
   const handleClearAllTags = useCallback(() => {
     setSelectedTags([]);
   }, []);
+
+  // Check if an item is expanded (default is true)
+  const isItemExpanded = useCallback(
+    (itemName: string): boolean => {
+      return expandedItems[itemName] ?? true;
+    },
+    [expandedItems],
+  );
+
+  // Handle individual item expand/collapse
+  const handleItemExpandedChange = useCallback(
+    (itemName: string, isExpanded: boolean) => {
+      setExpandedItems((prev) => ({
+        ...prev,
+        [itemName]: isExpanded,
+      }));
+    },
+    [],
+  );
+
+  // Expand all filtered items
+  const handleExpandAll = useCallback(() => {
+    setExpandedItems((prev) => {
+      const next = { ...prev };
+      for (const item of filteredItems) {
+        next[item.name] = true;
+      }
+      return next;
+    });
+  }, [filteredItems]);
+
+  // Collapse all filtered items
+  const handleCollapseAll = useCallback(() => {
+    setExpandedItems((prev) => {
+      const next = { ...prev };
+      for (const item of filteredItems) {
+        next[item.name] = false;
+      }
+      return next;
+    });
+  }, [filteredItems]);
+
+  // Count how many filtered items are expanded
+  const expandedCount = useMemo(
+    () => filteredItems.filter((item) => isItemExpanded(item.name)).length,
+    [filteredItems, isItemExpanded],
+  );
+
+  // Check if any filtered items are expanded (to determine which button to show)
+  const anyExpanded = expandedCount > 0;
+
+  // Check if all filtered items are expanded
+  const allExpanded = expandedCount === filteredItems.length;
 
   const hasActiveFilters = searchTerm !== "" || selectedTags.length > 0;
   const noResultsFound = filteredItems.length === 0 && hasActiveFilters;
@@ -92,6 +157,37 @@ export default function FilterableProjectList<T extends FilterableItem>({
           onTagToggle={handleTagToggle}
           onClearAll={handleClearAllTags}
         />
+
+        {/* Results row with count and view controls */}
+        <RenderIf condition={filteredItems.length > 0}>
+          <div className={styles.resultsRow}>
+            <span className={styles.resultsCount}>
+              {allExpanded
+                ? `Showing ${filteredItems.length} ${filteredItems.length === 1 ? "project" : "projects"}`
+                : `Showing ${expandedCount} of ${filteredItems.length} ${filteredItems.length === 1 ? "project" : "projects"}`}
+            </span>
+            {anyExpanded ? (
+              <button
+                type="button"
+                className={styles.globalControlButton}
+                onClick={handleCollapseAll}
+                aria-label="Collapse all projects"
+              >
+                Collapse All
+              </button>
+            ) : (
+              <button
+                type="button"
+                className={styles.globalControlButton}
+                onClick={handleExpandAll}
+                aria-label="Expand all projects"
+              >
+                Expand All
+              </button>
+            )}
+          </div>
+        </RenderIf>
+
         <div aria-live="polite" aria-atomic="true" className="sr-only">
           {hasActiveFilters &&
             (noResultsFound
@@ -117,7 +213,13 @@ export default function FilterableProjectList<T extends FilterableItem>({
       <RenderIf condition={!noResultsFound}>
         <FlexContainer flexFlow={FlexFlowCSSValue.COLUMN} gapY={8}>
           {filteredItems.map((item, index) =>
-            renderItem(item, index, index === filteredItems.length - 1),
+            renderItem(
+              item,
+              index,
+              index === filteredItems.length - 1,
+              isItemExpanded(item.name),
+              (isExpanded) => handleItemExpandedChange(item.name, isExpanded),
+            ),
           )}
         </FlexContainer>
       </RenderIf>

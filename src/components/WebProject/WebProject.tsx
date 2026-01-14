@@ -1,6 +1,8 @@
 import type { WebProjectAnalytics } from "@/types/WebProject.ts";
 import type { ReactNode } from "react";
 
+import { useId } from "react";
+
 import InlineAnchor from "@/components/InlineAnchor/InlineAnchor.tsx";
 import FlexContainer from "@/components/layout/containers/FlexContainer/FlexContainer.tsx";
 import HeadingTwo from "@/components/layout/headings/HeadingTwo.tsx";
@@ -12,6 +14,7 @@ import { THEME_STATES } from "@/state/machines/themeMachine.ts";
 import { AlignItemsCSSValue, FlexFlowCSSValue } from "@/types/layout.ts";
 import { getLinkWithAnalytics } from "@/util/utils.ts";
 import WebProjectImage from "../CloudinaryImage/images/WebProjectImage.tsx";
+import styles from "../ProjectCard/ProjectCard.module.css";
 
 export type WebProjectProps = {
   analytics?: WebProjectAnalytics;
@@ -20,9 +23,9 @@ export type WebProjectProps = {
   cursorStyle?: string;
   descriptions: Array<string>;
   emoji?: ReactNode;
-  href: string;
-  /** Optional GitHub repository URL (shown alongside external link) */
+  /** Optional GitHub repository URL */
   githubUrl?: string;
+  href: string;
   name: string;
   width?: number;
   height?: number;
@@ -31,6 +34,10 @@ export type WebProjectProps = {
   isLast: boolean;
   /** ISO date string of last modification (YYYY-MM-DD) for sorting */
   lastModified?: string;
+  /** Whether the project card is expanded */
+  isExpanded?: boolean;
+  /** Callback when expand/collapse state changes */
+  onExpandedChange?: (isExpanded: boolean) => void;
 };
 
 export default function WebProject({
@@ -38,31 +45,45 @@ export default function WebProject({
   cloudinaryId,
   alt,
   descriptions,
-  href,
   githubUrl,
+  href,
   name,
   width,
   height,
   tags,
   isLast,
+  isExpanded = true,
+  onExpandedChange,
 }: WebProjectProps) {
   const isLightMode =
     ThemeContext.useSelector((state) => state.value) === THEME_STATES.LIGHT;
-  const isGitHubLink = href.includes("github.com");
+
+  const contentId = useId();
+
+  const handleToggle = () => {
+    onExpandedChange?.(!isExpanded);
+  };
 
   return (
     <FlexContainer flexFlow={FlexFlowCSSValue.COLUMN} gapY={2}>
-      {/* Project name with external link(s) */}
-      <FlexContainer inline gapX={6} alignItems={AlignItemsCSSValue.BASELINE}>
+      {/* Project name with animated icons and expand/collapse toggle */}
+      <FlexContainer inline gapX={2} alignItems={AlignItemsCSSValue.CENTER}>
         <HeadingTwo>{name}</HeadingTwo>
-        <FlexContainer inline gapX={1} alignItems={AlignItemsCSSValue.BASELINE}>
-          <RenderIf condition={githubUrl != null}>
+
+        {/* Animated icon links - visible when expanded */}
+        <div
+          className={styles.headerIcons}
+          data-expanded={isExpanded}
+          aria-hidden={!isExpanded}
+        >
+          <span className={styles.headerIconsSpacer} aria-hidden="true" />
+          <RenderIf condition={!!githubUrl}>
             <a
               href={githubUrl}
               target="_blank"
               rel="noreferrer"
               aria-label={`View ${name} on GitHub`}
-              className="text-primary-text hover:text-accent-color inline-flex items-center justify-center p-1 transition-colors"
+              tabIndex={isExpanded ? 0 : -1}
             >
               <SvgIcon name="GithubIcon" width="18" height="18" />
             </a>
@@ -72,51 +93,78 @@ export default function WebProject({
             target="_blank"
             rel="noreferrer"
             aria-label={`Visit ${name}`}
-            className="text-primary-text hover:text-accent-color inline-flex items-center justify-center p-1 transition-colors"
+            tabIndex={isExpanded ? 0 : -1}
           >
-            <SvgIcon
-              name={isGitHubLink ? "GithubIcon" : "ExternalLinkIcon"}
-              width="18"
-              height="18"
-            />
+            <SvgIcon name="ExternalLinkIcon" width="18" height="18" />
           </a>
-        </FlexContainer>
+        </div>
+
+        <button
+          type="button"
+          className={styles.toggleButton}
+          onClick={handleToggle}
+          aria-expanded={isExpanded}
+          aria-controls={contentId}
+          aria-label={isExpanded ? `Collapse ${name}` : `Expand ${name}`}
+        >
+          <SvgIcon
+            name="ChevronIcon"
+            width="20"
+            height="20"
+            accent={false}
+            color="currentColor"
+            data-testid={`chevron-${name}`}
+            className={styles.chevronIcon}
+            data-expanded={isExpanded}
+          />
+        </button>
       </FlexContainer>
 
-      {/* Metadata line */}
-      <Paragraph secondary>
-        <span style={{ color: "var(--accent-color)" }}>Tags:</span>{" "}
-        {tags.join(" · ")}
-      </Paragraph>
+      {/* Collapsible content */}
+      <div
+        id={contentId}
+        className={styles.collapsibleContent}
+        data-collapsed={!isExpanded}
+        aria-hidden={!isExpanded}
+        inert={!isExpanded ? true : undefined}
+      >
+        <div className={styles.collapsibleInner}>
+          {/* Tags */}
+          <span className="text-secondary-text text-lg lg:text-xl">
+            <span style={{ color: "var(--accent-color)" }}>Tags:</span>{" "}
+            {tags.join(" · ")}
+          </span>
 
-      {/* Project image */}
-      <div className="my-2 max-w-md">
-        <InlineAnchor
-          href={getLinkWithAnalytics(href, analytics)}
-          ariaLabel={`Navigate to ${name}`}
-          underline={false}
-        >
-          <WebProjectImage
-            alt={alt}
-            publicId={
-              isLightMode && cloudinaryId.dark
-                ? cloudinaryId.dark
-                : cloudinaryId.default
-            }
-            width={width}
-            height={height}
-          />
-        </InlineAnchor>
+          {/* Project image */}
+          <div className="my-2 max-w-md">
+            <InlineAnchor
+              href={getLinkWithAnalytics(href, analytics)}
+              ariaLabel={`Navigate to ${name}`}
+              underline={false}
+            >
+              <WebProjectImage
+                alt={alt}
+                publicId={
+                  isLightMode && cloudinaryId.dark
+                    ? cloudinaryId.dark
+                    : cloudinaryId.default
+                }
+                width={width}
+                height={height}
+              />
+            </InlineAnchor>
+          </div>
+
+          {/* Descriptions */}
+          {descriptions.map((description) => (
+            <Paragraph key={description}>{description}</Paragraph>
+          ))}
+
+          <RenderIf condition={!isLast}>
+            <hr className="line-break mt-3" />
+          </RenderIf>
+        </div>
       </div>
-
-      {/* Descriptions */}
-      {descriptions.map((description) => (
-        <Paragraph key={description}>{description}</Paragraph>
-      ))}
-
-      <RenderIf condition={!isLast}>
-        <hr className="line-break mt-3" />
-      </RenderIf>
     </FlexContainer>
   );
 }

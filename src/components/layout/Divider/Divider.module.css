@@ -1,0 +1,14 @@
+.divider {
+  background-color: color-mix(in srgb, var(--text-color) 25%, transparent);
+  flex-shrink: 0;
+}
+
+.horizontal {
+  height: 1px;
+  width: 100%;
+}
+
+.vertical {
+  height: var(--touch-target-min);
+  width: 1px;
+}

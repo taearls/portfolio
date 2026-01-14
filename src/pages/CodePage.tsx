@@ -74,7 +74,7 @@ function ProjectsTab() {
     <FilterableProjectList<CombinedProject>
       items={ALL_PROJECTS}
       allTags={ALL_COMBINED_TAGS}
-      renderItem={(project, _index, isLast) => {
+      renderItem={(project, _index, isLast, isExpanded, onExpandedChange) => {
         if (project.projectType === "web") {
           return (
             <WebProject
@@ -85,12 +85,14 @@ function ProjectsTab() {
               cursorStyle={project.cursorStyle}
               descriptions={project.descriptions}
               emoji={project.emoji}
-              href={project.href}
               githubUrl={project.githubUrl}
+              href={project.href}
               name={project.name}
               tagline={project.tagline}
               tags={project.tags}
               isLast={isLast}
+              isExpanded={isExpanded}
+              onExpandedChange={onExpandedChange}
             />
           );
         }
@@ -102,6 +104,8 @@ function ProjectsTab() {
             githubUrl={project.githubUrl}
             tags={project.tags}
             isLast={isLast}
+            isExpanded={isExpanded}
+            onExpandedChange={onExpandedChange}
           />
         );
       }}
@@ -117,7 +121,13 @@ function OpenSourceTab() {
     <FilterableProjectList<FilterableContribution>
       items={FILTERABLE_CONTRIBUTIONS}
       allTags={ALL_CONTRIBUTION_TAGS}
-      renderItem={(contribution, _index, isLast) => (
+      renderItem={(
+        contribution,
+        _index,
+        isLast,
+        isExpanded,
+        onExpandedChange,
+      ) => (
         <OpenSourceContribution
           key={contribution.projectName}
           projectName={contribution.projectName}
@@ -127,6 +137,8 @@ function OpenSourceTab() {
           highlights={contribution.highlights}
           tags={contribution.tags}
           isLast={isLast}
+          isExpanded={isExpanded}
+          onExpandedChange={onExpandedChange}
         />
       )}
     />
