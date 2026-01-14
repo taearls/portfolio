@@ -664,7 +664,7 @@ Added catshield macOS desktop application to the portfolio. This required renami
 2. **New Project Entry**: Added catshield to WEB_PROJECTS array with:
    - Description of the macOS utility for keyboard protection from cats
    - Tags: Rust, macOS, Desktop, CoreGraphics
-   - GitHub link: https://github.com/taearls/catshield
+   - GitHub link: <https://github.com/taearls/catshield>
    - Cloudinary screenshot placeholder
 3. **Type Update**: Added optional `lastModified` field to `WebProjectProps` for consistent sorting with open source projects
 
