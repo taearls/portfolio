@@ -41,6 +41,8 @@ This roadmap outlines the development plan for Tyler Earls' portfolio website, f
 
 ✅ **#164** - feat: Add expand/collapse functionality to project cards - **COMPLETED Jan 10, 2026**
 
+✅ **#173** - fix: Fix .gitignore to ignore all node_modules directories across workspaces - **COMPLETED Feb 11, 2026**
+
 #### 🔴 Critical Priority (0 issues)
 
 ✅ **#108** - fix(a11y): add accessible name to dark mode toggle button - **COMPLETED Dec 27, 2025**
@@ -495,15 +497,15 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 | 🔴 Critical | 0     | 0           | 3                 | 0          |
 | 🟡 High     | 0     | 0           | 13                | 0          |
 | 🟢 Medium   | 1     | 0           | 6                 | 1          |
-| 🔵 Low      | 1     | 0           | 10                | 1          |
-| **TOTAL**   | **2** | **0**       | **32**            | **2**      |
+| 🔵 Low      | 1     | 0           | 11                | 1          |
+| **TOTAL**   | **2** | **0**       | **33**            | **2**      |
 
 ### Issues by Category
 
 **React Compiler** (0 open, 8 closed): Closed: #38 (epic), #39, #40, #41, #42, #43, #44, #123
 **Bugs** (0 open, 3 closed): Closed: #108 (a11y toggle name), #107 (nav auto-close), #51 (navigation header overflow)
 **Infrastructure** (1 open, 3 closed): Open: #160 (admin toggle) | Closed: #143 (admin dashboard), #80 (GitOps feature flags), #72 (Cloudflare feature flags)
-**CI/CD** (1 open, 3 closed): Open: #145 (awaiting upstream) | Closed: #114 (Stylelint), #18 (GitHub Actions pipeline)
+**CI/CD** (1 open, 4 closed): Open: #145 (awaiting upstream) | Closed: #173 (.gitignore node_modules fix), #114 (Stylelint), #18 (GitHub Actions pipeline)
 **Accessibility** (0 open, 6 closed): Closed: #108, #61 (navigation contrast), #62 (touch targets), #63 (CLS mobile), #64 (WCAG AAA), #65 (font size readability)
 **Navigation UX** (0 open, 6 closed): Closed: #111, #112, #113, #109, #110, #107, #120, #105
 **UI/UX** (0 open, 10 closed): Closed: #10 (resume page), #13 (descriptions), #15 (tags/search), #103 (mobile tabs), #58 (left-align text), #28 (React 19 Meta), #11 (SVG preload), #27 (lazy routes), #14 (contact form), #125 (useOnPropChange hook)
@@ -581,6 +583,22 @@ _None - All prerequisites for #43 are complete. Ready to implement._
 ---
 
 ## Changelog
+
+### 2026-02-11 - Issue #173 Completed: Fix .gitignore for Workspace node_modules
+
+- **Completed**: #173 - fix: Fix .gitignore to ignore all node_modules directories across workspaces
+- **Priority**: 🔵 LOW (maintenance)
+- **Status**: Completed Feb 11, 2026
+- **Effort**: ~15 minutes
+
+**Summary:**
+
+Fixed `.gitignore` to ignore `node_modules` at any depth instead of only the root directory. Removed tracked `node_modules` files from workspace packages that were accidentally committed.
+
+**Changes:**
+
+1. Updated `.gitignore`: Changed `/node_modules` to `node_modules` (removed leading slash for recursive matching)
+2. Removed tracked files: `packages/feature-flags/node_modules/.cache/wrangler/wrangler-account.json` and `packages/feature-flags/node_modules/.mf/cf.json`
 
 ### 2026-01-10 - Issue #164 Completed: Project Card Expand/Collapse
 
