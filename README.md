@@ -1,3 +1,7 @@
+> **⚠️ This repository has been archived.** Development has moved to the [websites-monorepo](https://github.com/taearls/websites-monorepo). The portfolio app lives at [`apps/portfolio/`](https://github.com/taearls/websites-monorepo/tree/main/apps/portfolio) in the monorepo.
+
+---
+
 # About Me
 
 I'm a fullstack developer and musician based in Chicago, IL. Outside of tech, I'm also a [musician](https://www.cuckooandthebirds.com) and an avid fan of Star Trek.
