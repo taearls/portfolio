@@ -32,6 +32,8 @@ export type WebProjectProps = {
   tagline: string;
   tags: Array<string>;
   isLast: boolean;
+  /** ISO date string of last modification (YYYY-MM-DD) for sorting */
+  lastModified?: string;
   /** Whether the project card is expanded */
   isExpanded?: boolean;
   /** Callback when expand/collapse state changes */
@@ -55,6 +57,18 @@ export default function WebProject({
 }: WebProjectProps) {
   const isLightMode =
     ThemeContext.useSelector((state) => state.value) === THEME_STATES.LIGHT;
+
+  // Securely check if href points to GitHub (for icon selection)
+  const isHrefGitHub = (() => {
+    try {
+      const url = new URL(href);
+      return (
+        url.hostname === "github.com" || url.hostname.endsWith(".github.com")
+      );
+    } catch {
+      return false;
+    }
+  })();
 
   const contentId = useId();
 
@@ -90,10 +104,16 @@ export default function WebProject({
             href={getLinkWithAnalytics(href, analytics)}
             target="_blank"
             rel="noreferrer"
-            aria-label={`Visit ${name}`}
+            aria-label={
+              isHrefGitHub ? `View ${name} on GitHub` : `Visit ${name}`
+            }
             tabIndex={isExpanded ? 0 : -1}
           >
-            <SvgIcon name="ExternalLinkIcon" width="18" height="18" />
+            <SvgIcon
+              name={isHrefGitHub ? "GithubIcon" : "ExternalLinkIcon"}
+              width="18"
+              height="18"
+            />
           </a>
         </div>
 
