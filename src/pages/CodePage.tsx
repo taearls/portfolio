@@ -29,11 +29,12 @@ type CombinedProject =
 // Combine web projects and open source projects, sorted by lastModified (descending)
 // Projects without lastModified date are sorted last
 const ALL_PROJECTS: Array<CombinedProject> = [
-  ...WEB_PROJECTS.map((p) => ({ ...p, projectType: "web" as const })),
-  ...OPEN_SOURCE_PROJECTS.map((p) => ({
-    ...p,
-    projectType: "openSource" as const,
-  })),
+  ...WEB_PROJECTS.map((p) =>
+    Object.assign({}, p, { projectType: "web" as const }),
+  ),
+  ...OPEN_SOURCE_PROJECTS.map((p) =>
+    Object.assign({}, p, { projectType: "openSource" as const }),
+  ),
 ].sort((a, b) => {
   const aDate = "lastModified" in a ? a.lastModified : undefined;
   const bDate = "lastModified" in b ? b.lastModified : undefined;
@@ -60,11 +61,12 @@ type FilterableContribution = OpenSourceContributionProps & {
 
 // Transform contributions to match FilterableItem interface
 const FILTERABLE_CONTRIBUTIONS: Array<FilterableContribution> =
-  OPEN_SOURCE_CONTRIBUTIONS.map((c) => ({
-    ...c,
-    name: c.projectName,
-    descriptions: [c.description, ...c.highlights],
-  }));
+  OPEN_SOURCE_CONTRIBUTIONS.map((c) =>
+    Object.assign({}, c, {
+      name: c.projectName,
+      descriptions: [c.description, ...c.highlights],
+    }),
+  );
 
 /**
  * Projects tab content with search and filtering (combines web and open source projects).
