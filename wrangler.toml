@@ -1,11 +1,15 @@
 name = "portfolio-feature-flags"
-main = "packages/feature-flags/src/index.ts"
-compatibility_date = "2024-11-28"
+main = "workers/feature-flags/src/index.ts"
+compatibility_date = "2025-02-04"
+compatibility_flags = ["nodejs_compat"]
 
 [[kv_namespaces]]
-binding = "FEATURE_FLAGS"
-id = "39adbb9db8fb437db45d5bd0bc285f4f"
-preview_id = "2321e67477194ac696eb2c708e248d1e"
+binding = "FEATURE_FLAGS_KV"
+id = "55a586e168e54566bcfb0a1e6dd11f88"
+preview_id = "790d0a984ac748aaae24cba1038901cb"
 
 [vars]
-ALLOWED_ORIGINS = "https://tylerearls.com,http://localhost:5173,http://localhost:3000,http://localhost:4173"
+ALLOWED_ORIGINS = "https://tylerearls.com,http://localhost:3000,http://localhost:4173"
+
+[observability]
+enabled = true
