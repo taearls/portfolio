@@ -87,8 +87,8 @@
 
 /* Spacer element creates gap-based leading space before icons */
 .headerIconsSpacer {
-  width: 0.5rem;
   flex-shrink: 0;
+  width: 0.5rem;
 }
 
 .headerIcons a {
