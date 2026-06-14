@@ -48,7 +48,9 @@
     "xstate": "^5.23.0"
   },
   "overrides": {
-    "qs": "6.14.2"
+    "qs": "6.15.2",
+    "esbuild": "^0.28.1",
+    "unrs-resolver": "1.11.1"
   },
   "devDependencies": {
     "@dreamsicle.io/stylelint-config-tailwindcss": "^1.1.2",
@@ -90,7 +92,7 @@
     "globals": "^16.4.0",
     "jiti": "^2.6.1",
     "jsdom": "^27.0.0",
-    "oxlint": "^1.29.0",
+    "oxlint": "1.36.0",
     "postcss": "^8.5.14",
     "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.6.14",
