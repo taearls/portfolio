@@ -48,7 +48,8 @@
     "xstate": "^5.23.0"
   },
   "overrides": {
-    "qs": "6.14.2"
+    "qs": "6.15.2",
+    "esbuild": "^0.28.1"
   },
   "devDependencies": {
     "@dreamsicle.io/stylelint-config-tailwindcss": "^1.1.2",
