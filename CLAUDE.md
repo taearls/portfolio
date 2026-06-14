@@ -102,10 +102,10 @@ This project uses **npm workspaces** for managing multiple packages:
 - **Test files**: `.test.ts` or `.spec.tsx` naming convention
 - **Component tests**: Use Testing Library utilities
 
-**Current test counts** (as of Jan 2026):
+**Current test counts** (as of Jun 2026):
 
-- Unit tests: 288 tests (14 test files)
-- Integration tests: 74 tests (5 spec files)
+- Unit tests: 300 tests (15 test files)
+- Integration tests: 93 tests (6 spec files)
 
 #### Parametrized Test Matrix Pattern
 
