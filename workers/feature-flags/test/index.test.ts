@@ -37,8 +37,11 @@ const mockKVNamespace = {
 };
 
 describe("Feature Flags Worker", () => {
-  beforeEach(() => {
-    // Reset any mocks if needed
+  beforeEach(async () => {
+    // handleGetFlags caches GET /api/flags responses in caches.default keyed
+    // by request URL. The Workers test pool does not reset the Cache API
+    // between tests, so clear the cached entry to keep tests isolated.
+    await caches.default.delete("http://localhost/api/flags");
   });
 
   describe("GET /api/flags", () => {
