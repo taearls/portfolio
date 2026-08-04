@@ -75,7 +75,7 @@
     "@welldone-software/why-did-you-render": "^10.0.1",
     "autoprefixer": "^10.4.21",
     "babel-plugin-react-compiler": "1.0.0",
-    "concurrently": "^10.0.3",
+    "concurrently": "^10.0.4",
     "cypress": "^15.16.0",
     "cypress-real-events": "^1.15.0",
     "eslint": "^9.37.0",
