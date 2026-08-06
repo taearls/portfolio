@@ -4,7 +4,7 @@
 
 This roadmap outlines the development plan for Tyler Earls' portfolio website, focusing on performance optimization, modern React tooling, and enhanced user experience. The project has **completed Phase 5 (React Compiler Integration)**, **Phase 6 (CI/CD setup)**, **Phase 7 (Accessibility & Core Web Vitals)**, and **Phase 8 (GitOps Feature Flags)**, with **2 open issues** (#145 awaiting upstream, #160 admin toggle enhancement).
 
-**Current Focus**: Project card expand/collapse feature now complete! Added collapsible project cards with smooth CSS animations, global expand/collapse controls, and full accessibility support (ARIA attributes, keyboard navigation).
+**Current Focus**: Added catshield macOS desktop application to Personal Projects. Project card expand/collapse feature now complete with smooth CSS animations, global controls, and full accessibility support.
 
 ---
 
@@ -36,6 +36,8 @@ This roadmap outlines the development plan for Tyler Earls' portfolio website, f
   - Priority: 🟢 MEDIUM (enhancement)
   - Status: Open - follow-up to #143
   - Effort: ~2-4 hours
+
+✅ **#162** - feat: Add catshield to Personal Projects (rename from Web Projects) - **COMPLETED Jan 9, 2026**
 
 ✅ **#143** - feat: Add feature flags admin dashboard page - **COMPLETED Jan 6, 2026**
 
@@ -661,6 +663,34 @@ Added collapsible project cards with smooth CSS animations, global expand/collap
 - `src/pages/CodePage.tsx` - Pass expanded state to components
 - `tests/component/FilterableProjectList.spec.tsx` - New unit tests
 - `tests/integration/specs/project-expand-collapse.cy.ts` - New integration tests
+
+---
+
+### 2026-01-09 - Issue #162 Completed: Add catshield to Personal Projects
+
+- **Completed**: #162 - feat: Add catshield to Personal Projects (rename from Web Projects)
+- **Priority**: 🟢 MEDIUM (Enhancement)
+- **Status**: Completed Jan 9, 2026
+
+**Summary:**
+
+Added catshield macOS desktop application to the portfolio. This required renaming "Web Projects" to "Personal Projects" to accommodate non-web projects like desktop applications.
+
+**Implementation Details:**
+
+1. **Tab Rename**: Changed "Projects" tab label to "Personal Projects" in CodePage.tsx
+2. **New Project Entry**: Added catshield to WEB_PROJECTS array with:
+   - Description of the macOS utility for keyboard protection from cats
+   - Tags: Rust, macOS, Desktop, CoreGraphics
+   - GitHub link: <https://github.com/taearls/catshield>
+   - Cloudinary screenshot placeholder
+3. **Type Update**: Added optional `lastModified` field to `WebProjectProps` for consistent sorting with open source projects
+
+**Files Changed**:
+
+- `src/pages/CodePage.tsx` - Updated tab label
+- `src/components/WebProject/WebProject.tsx` - Added lastModified prop to type
+- `src/util/constants.ts` - Added catshield project entry
 
 ---
 
